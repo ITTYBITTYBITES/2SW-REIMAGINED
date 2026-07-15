@@ -300,7 +300,7 @@ func _refresh_identity() -> void:
 	
 	greeting_label.text = "Witness"
 	rank_label.text = "Observe what others miss."
-	level_text.text = "LVL %d" % int(summary.get("level", 1))
+	level_text.text = "RANK %d" % int(summary.get("level", 1))
 	if level_pill:
 		level_pill.visible = false
 	if progress_bar:
@@ -351,7 +351,7 @@ func _refresh_progress() -> void:
 		streak_sub.text = "completed observations" if moments != 1 else "completed observation"
 	ach_value.text = "%d%%" % accuracy if moments > 0 else "New"
 	if ach_sub:
-		ach_sub.text = "%s · Level %d" % [rank, level]
+		ach_sub.text = "%s · Rank %d" % [rank, level]
 
 func _refresh_discovery() -> void:
 	if discovery_header_label:

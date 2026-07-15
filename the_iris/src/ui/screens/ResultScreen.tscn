@@ -96,7 +96,7 @@ autowrap_mode = 3
 [node name="ProgressSummary" type="Label" parent="MainMargin/Scroll/Content/ResultCard/Margin/VBox"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "+0 Witness Progress"
+text = "+0 Insight"
 autowrap_mode = 3
 
 [node name="Actions" type="VBoxContainer" parent="MainMargin/Scroll/Content"]
@@ -108,19 +108,19 @@ theme_override_constants/separation = 10
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "NEXT CHALLENGE  →"
+text = "NEXT OBSERVATION  →"
 
 [node name="ReplayButton" type="Button" parent="MainMargin/Scroll/Content/Actions"]
 custom_minimum_size = Vector2(0, 54)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "RETRY CHALLENGE"
+text = "REVISIT OBSERVATION"
 
 [node name="LibraryButton" type="Button" parent="MainMargin/Scroll/Content/Actions"]
 custom_minimum_size = Vector2(0, 54)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "CHALLENGE LIBRARY"
+text = "OBSERVATION LIBRARY"
 
 [node name="MenuButton" type="Button" parent="MainMargin/Scroll/Content/Actions"]
 custom_minimum_size = Vector2(0, 48)

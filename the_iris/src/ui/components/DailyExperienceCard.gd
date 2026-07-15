@@ -59,7 +59,7 @@ func _find_full_item(available: Array) -> Dictionary:
 func _refresh_ui() -> void:
 	if _data.is_empty():
 		title_label.text = "Witness Experience"
-		reason_label.text = "A new challenge is being prepared."
+		reason_label.text = "A new observation is being prepared."
 		start_button.text = "BEGIN OBSERVATION"
 		start_button.disabled = true
 		return
@@ -82,7 +82,7 @@ func _refresh_ui() -> void:
 	start_button.disabled = _is_locked
 	if _is_locked:
 		var req: int = int(_data.get("required_level", 1))
-		start_button.text = "LEVEL %d REQUIRED" % req
+		start_button.text = "RANK %d REQUIRED" % req
 		eyebrow.text = "TODAY'S WITNESS EXPERIENCE"
 	elif is_continue:
 		start_button.text = "CONTINUE OBSERVATION"
@@ -201,7 +201,7 @@ func set_disabled(disabled: bool) -> void:
 			start_button.text = "START"
 		elif _is_locked:
 			var req: int = int(_data.get("required_level", 1))
-			start_button.text = "LEVEL %d REQUIRED" % req
+			start_button.text = "RANK %d REQUIRED" % req
 		elif bool(_data.get("is_continue", false)):
 			start_button.text = "CONTINUE OBSERVATION"
 		else:

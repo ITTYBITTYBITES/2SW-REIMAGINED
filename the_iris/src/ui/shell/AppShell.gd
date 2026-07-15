@@ -335,7 +335,7 @@ func _on_user_message(message: String, _severity: int) -> void:
 	_show_error(message)
 
 func _on_session_failed(reason: String) -> void:
-	_show_error(reason if not reason.is_empty() else "That challenge could not be prepared. Please try again.")
+	_show_error(reason if not reason.is_empty() else "That observation could not be prepared. Please try again.")
 
 func _show_error(message: String) -> void:
 	if error_banner:

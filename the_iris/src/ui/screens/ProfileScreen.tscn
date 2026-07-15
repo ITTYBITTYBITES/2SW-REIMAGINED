@@ -136,7 +136,7 @@ theme_override_constants/v_separation = 10
 
 [node name="MasteryHeader" type="Label" parent="Margin/Scroll/VBox"]
 layout_mode = 2
-text = "CHALLENGE TYPE MASTERY"
+text = "OBSERVATION MODE AWARENESS"
 
 [node name="MasteryIntro" type="Label" parent="Margin/Scroll/VBox"]
 layout_mode = 2
@@ -186,7 +186,7 @@ text = "EXPLORE ACHIEVEMENTS  →"
 
 [node name="HistoryHeader" type="Label" parent="Margin/Scroll/VBox"]
 layout_mode = 2
-text = "RECENT CHALLENGES"
+text = "RECENT OBSERVATIONS"
 
 [node name="HistoryIntro" type="Label" parent="Margin/Scroll/VBox"]
 layout_mode = 2
@@ -219,7 +219,7 @@ layout_mode = 2
 [node name="FavoritesHeader" type="Label" parent="Margin/Scroll/VBox"]
 visible = false
 layout_mode = 2
-text = "FAVORITE CHALLENGE TYPES"
+text = "FAVORITE OBSERVATION MODES"
 
 [node name="FavoritesList" type="VBoxContainer" parent="Margin/Scroll/VBox"]
 visible = false
@@ -251,7 +251,7 @@ text = "COLLECTION PROGRESS"
 
 [node name="Copy" type="Label" parent="Margin/Scroll/VBox/CollectionsCard/Margin/VBox"]
 layout_mode = 2
-text = "Challenge Types discovered: 0 / 0\nAchievements collected: 0 / 0\nCurated runs completed: 0"
+text = "Observation Modes discovered: 0 / 0\nAchievements collected: 0 / 0\nCurated runs completed: 0"
 autowrap_mode = 3
 
 [node name="BottomSpacer" type="Control" parent="Margin/Scroll/VBox"]

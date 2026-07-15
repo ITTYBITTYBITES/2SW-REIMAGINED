@@ -56,12 +56,16 @@ func _on_configure() -> void:
     if moment_definition:
         _moment_data = moment_definition.to_blueprint()
         var env = _moment_data.get("environment", {})
-        _duration = float(env.get("observation", {})).get("duration_seconds", 2.0) if env.get("observation", {}) else 2.0
+        var observation_data = _moment_data.get("observation", {})
+        _duration = float(observation_data.get("duration_seconds", 2.0))
         
         # Load moment-specific background if available
+        # Prefer action_image (shows the character moment) for the observation phase
+        var action_path = env.get("action_image", "")
         var bg_path = env.get("background_image", "")
-        if bg_path and ResourceLoader.exists(bg_path):
-            moment_scene.texture = load(bg_path) as Texture2D
+        var primary_path = action_path if (action_path and ResourceLoader.exists(action_path)) else bg_path
+        if primary_path and ResourceLoader.exists(primary_path):
+            moment_scene.texture = load(primary_path) as Texture2D
 
         if _shader_material:
             var mode := 1.0
@@ -87,7 +91,7 @@ func _on_begin() -> void:
         _intro_duration = 2.4
     
     # Attunement prompt appears after short breathing pause
-    var intro_text = "PREPARING OPTICAL FIELD...\nSTAY WITH IT. DO NOT NAME WHAT YOU SEE. ONLY NOTICE."
+    var intro_text = "THE OPTICAL FIELD OPENS...\nSTAY WITH IT. DO NOT NAME WHAT YOU SEE. ONLY NOTICE."
     _show_attunement_prompt(intro_text, _intro_duration * 0.75)
 
 func _process(delta: float) -> void:

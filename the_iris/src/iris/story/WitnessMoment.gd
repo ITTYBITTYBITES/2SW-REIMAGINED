@@ -52,6 +52,15 @@ static func from_dictionary(data: Dictionary) -> WitnessMoment:
 func is_placeholder() -> bool:
     return false
 
+func get_background_image() -> String:
+    return environment.get("background_image", "")
+
+func get_reveal_image() -> String:
+    return environment.get("reveal_image", "")
+
+func get_action_image() -> String:
+    return environment.get("action_image", "")
+
 func to_blueprint() -> Dictionary:
     return {
         "moment_id": moment_id,

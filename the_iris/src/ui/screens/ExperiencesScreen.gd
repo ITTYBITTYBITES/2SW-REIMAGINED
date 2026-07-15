@@ -44,8 +44,8 @@ func _apply_theme() -> void:
 		ThemeService.apply_label_style(title_label, "display", "text_primary")
 		ThemeService.apply_label_style(subtitle_label, "body_small", "text_secondary")
 		ThemeService.apply_label_style(count_label, "label_small", "text_tertiary")
-	title_label.text = "CHALLENGE LIBRARY"
-	subtitle_label.text = "Choose a Challenge Type, track Mastery, or replay its tutorial."
+	title_label.text = "OBSERVATION LIBRARY"
+	subtitle_label.text = "Choose an Observation Mode, track Awareness, or revisit its introduction."
 
 func _refresh_list() -> void:
 	for child: Node in challenge_list.get_children():
@@ -61,11 +61,11 @@ func _refresh_list() -> void:
 	for challenge: Dictionary in challenges:
 		if not bool(challenge.get("locked", false)):
 			unlocked_count += 1
-	count_label.text = "%d available · %d total Challenge Types" % [unlocked_count, challenges.size()]
+	count_label.text = "%d available · %d total Observation Modes" % [unlocked_count, challenges.size()]
 	if challenges.is_empty():
 		var empty := Label.new()
 		empty.name = "ChallengeEmpty"
-		empty.text = "No Challenge Types are available right now."
+		empty.text = "No Observation Modes are available right now."
 		empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		empty.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		if ThemeService:

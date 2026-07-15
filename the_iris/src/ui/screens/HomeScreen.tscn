@@ -103,7 +103,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="MainMargin/Scroll/Content/StatsRow/LevelCard/Margin/VBox"]
 layout_mode = 2
-text = "WITNESS LEVEL"
+text = "WITNESS RANK"
 horizontal_alignment = 1
 
 [node name="Value" type="Label" parent="MainMargin/Scroll/Content/StatsRow/LevelCard/Margin/VBox"]
@@ -184,11 +184,11 @@ text = "CONTINUE"
 custom_minimum_size = Vector2(0, 58)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "CHALLENGE LIBRARY"
+text = "OBSERVATION LIBRARY"
 
 [node name="FeaturedHeader" type="Label" parent="MainMargin/Scroll/Content"]
 layout_mode = 2
-text = "TODAY’S FEATURED CHALLENGE TYPE"
+text = "TODAY’S FEATURED OBSERVATION"
 
 [node name="FeaturedHost" type="VBoxContainer" parent="MainMargin/Scroll/Content"]
 layout_mode = 2
@@ -247,7 +247,7 @@ text = "PROGRAMS · CURATED RUNS"
 
 [node name="Copy" type="Label" parent="MainMargin/Scroll/Content/ProgramsCard/Margin/VBox"]
 layout_mode = 2
-text = "Pick a guided challenge journey from the available catalog."
+text = "Choose a guided observation journey from the available catalog."
 autowrap_mode = 3
 
 [node name="ProgramsButton" type="Button" parent="MainMargin/Scroll/Content/ProgramsCard/Margin/VBox"]

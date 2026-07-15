@@ -1,10 +1,12 @@
 extends WitnessMomentPhase
 class_name WitnessRevelationScreen
 
-## Witness Revelation Phase - Dynamic archive entry builds from player's choices
-## No score, no stars. Only what was carried.
+## Witness Revelation Phase — Dynamic archive entry builds from player's choices.
+## Only what was carried. The moment preserved.
 
 signal revelation_complete
+
+const ARCHIVE_FRAME_PATH := "res://assets/gameplay/wm_archive_frame.png"
 
 @onready var scroll: ScrollContainer = $ScrollContainer
 @onready var content: VBoxContainer = $ScrollContainer/Content
@@ -20,10 +22,12 @@ signal revelation_complete
 var _moment_data: Dictionary = {}
 var _revelation_step: int = 0
 var _archive_mapping: Dictionary = {}
+var _reveal_image: TextureRect = null
 
 func _ready() -> void:
     super._ready()
     phase_name = "revealing"
+    _apply_archive_frame()
     
     # Style
     if ThemeService:
@@ -80,6 +84,19 @@ func _ready() -> void:
         if sep and ThemeService:
             sep.add_theme_color_override("separator_color", ThemeService.get_color("border", Color("#2E2E3A")))
 
+func _apply_archive_frame() -> void:
+    if not ResourceLoader.exists(ARCHIVE_FRAME_PATH):
+        return
+    var frame := TextureRect.new()
+    frame.name = "ArchiveFrame"
+    frame.texture = load(ARCHIVE_FRAME_PATH) as Texture2D
+    frame.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+    frame.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+    frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+    frame.modulate = Color(1.0, 1.0, 1.0, 0.32)
+    archive_entry.add_child(frame)
+    archive_entry.move_child(frame, 0)
+
 func _style_continue_button() -> void:
     var tokens = ThemeService.tokens if ThemeService else {}
     var radius = int(tokens.get("radius_lg", 18)) if not tokens.is_empty() else 18
@@ -109,12 +126,41 @@ func _style_continue_button() -> void:
 
 func configure(definition: WitnessMoment) -> void:
     super.configure(definition)
-    # Reconstruction and investigation data are passed via phase_data in orchestrator
-    # This screen reads from the accumulated phase_data when _on_begin is called
+    # Reconstruction and investigation data are passed via phase_data in orchestrator.
+    # Keep the complete blueprint here for reveal imagery and archive lookups.
+    _moment_data = definition.to_blueprint() if definition else {}
     _archive_mapping = definition.archive_mapping if definition else {}
 
 func _on_begin() -> void:
+    _try_load_reveal_image()
     _build_archive_entry_stepwise()
+
+func _try_load_reveal_image() -> void:
+    if is_instance_valid(_reveal_image):
+        _reveal_image.free()
+    _reveal_image = null
+
+    var env = _moment_data.get("environment", {})
+    var reveal_path = env.get("reveal_image", "")
+    if reveal_path and ResourceLoader.exists(reveal_path):
+        _reveal_image = TextureRect.new()
+        _reveal_image.name = "MomentReveal"
+        _reveal_image.texture = load(reveal_path) as Texture2D
+        _reveal_image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+        _reveal_image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+        _reveal_image.custom_minimum_size = Vector2(0, 200)
+        _reveal_image.modulate.a = 0.0
+        _reveal_image.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+        _reveal_image.mouse_filter = Control.MOUSE_FILTER_IGNORE
+        # Insert before the archive entry
+        content.add_child(_reveal_image)
+        content.move_child(_reveal_image, 0)
+        if _should_animate:
+            var tween = create_tween()
+            tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+            tween.tween_property(_reveal_image, "modulate:a", 0.85, 1.2).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
+        else:
+            _reveal_image.modulate.a = 0.85
 
 func _build_archive_entry_stepwise() -> void:
     _revelation_step = 0
@@ -266,7 +312,7 @@ func _reveal_attunements() -> void:
     # Show count
     var total = all_attunements.size()
     var label = Label.new()
-    label.text = "%d of %d attunements completed" % [completed.size(), total]
+    label.text = "%d of %d attunements carried" % [completed.size(), total]
     label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
     if ThemeService:
         ThemeService.apply_label_style(label, "caption", "text_tertiary")
@@ -336,11 +382,11 @@ func _reveal_progress() -> void:
         
         var lines = []
         if progress_points > 0:
-            lines.append("+%d Witness Progress" % progress_points)
+            lines.append("+%d Insight" % progress_points)
         for family, value in mastery:
-            lines.append("%s mastery +%.0f%%" % [family.capitalize(), value * 100])
+            lines.append("%s awareness deepened +%.0f%%" % [family.capitalize(), value * 100])
         for ach in achievements:
-            lines.append("Achievement unlocked: %s" % ach.replace("_", " ").capitalize())
+            lines.append("Memory preserved: %s" % ach.replace("_", " ").capitalize())
         
         progress_label.text = "\n".join(lines)
         progress_label.visible = true

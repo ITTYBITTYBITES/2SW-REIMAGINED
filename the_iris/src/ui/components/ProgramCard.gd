@@ -93,7 +93,7 @@ func _refresh() -> void:
 	if not bool(program.get("scheduled", true)):
 		status_label.text = "WEEKEND"
 	elif bool(program.get("locked", false)):
-		status_label.text = "LEVEL %d" % int(program.get("required_level", 1))
+		status_label.text = "RANK %d" % int(program.get("required_level", 1))
 	else:
 		status_label.text = "%d ROUNDS" % round_count
 	progress_bar.max_value = float(round_count)

@@ -15,6 +15,8 @@
   },
   "environment": {
     "background_image": "res://assets/gameplay/wm_001_studio_background.png",
+    "action_image": "res://assets/gameplay/wm_001_hand_action.png",
+    "reveal_image": "res://assets/gameplay/wm_001_prism_reveal.png",
     "location": "artist studio loft, window ledge, afternoon",
     "time": "5:14 PM",
     "lighting": {
