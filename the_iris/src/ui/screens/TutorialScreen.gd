@@ -1,4 +1,6 @@
 extends Control
+## LEGACY_SUPPORT - Temporary compatibility layer for challenge family tutorials.
+## NOT used by Witness Moment Story Mode (WM_001+).
 ## Generic family tutorial host. Mechanic-specific tutorial behavior lives inside
 ## the selected ChallengeFamily module.
 

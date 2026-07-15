@@ -1,0 +1,123 @@
+[gd_scene load_steps=3 format=3 uid="uid://witness_revelation_screen"]
+
+[ext_resource type="Script" path="res://src/ui/screens/WitnessRevelationScreen.gd" id="1_script"]
+
+[node name="WitnessRevelationScreen" type="Control" groups=["app_screen"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.027451, 0.0745098, 0.101961, 1)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 1
+
+[node name="Content" type="VBoxContainer" parent="ScrollContainer"]
+alignment = 1
+
+[node name="ArchiveEntry" type="PanelContainer" parent="ScrollContainer/Content"]
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 0)
+
+[node name="EntryMargin" type="MarginContainer" parent="ScrollContainer/Content/ArchiveEntry"]
+theme_override_constants = {"margin_left": 24, "margin_right": 24, "margin_top": 24, "margin_bottom": 24}
+
+[node name="EntryVBox" type="VBoxContainer" parent="ScrollContainer/Content/ArchiveEntry/EntryMargin"]
+alignment = 1
+
+[node name="EntryHeader" type="HBoxContainer" parent="ScrollContainer/Content/ArchiveEntry/EntryMargin/EntryVBox"]
+alignment = 1
+
+[node name="EntryTitle" type="Label" parent="ScrollContainer/Content/ArchiveEntry/EntryMargin/EntryVBox/EntryHeader"]
+text = "FIRST ATTENTION FIELD"
+horizontal_alignment = 1
+size_flags_horizontal = 3
+
+[node name="EntryMeta" type="Label" parent="ScrollContainer/Content/ArchiveEntry/EntryMargin/EntryVBox/EntryHeader"]
+text = "WM_001 · Chapter 1 · 7:47 AM · 2.0 seconds"
+horizontal_alignment = 1
+size_flags_horizontal = 3
+
+[node name="Divider1" type="HSeparator" parent="ScrollContainer/Content/ArchiveEntry/EntryMargin/EntryVBox"]
+
+[node name="CarriedSection" type="VBoxContainer" parent="ScrollContainer/Content/ArchiveEntry/EntryMargin/EntryVBox"]
+alignment = 1
+
+[node name="CarriedLabel" type="Label" parent="ScrollContainer/Content/ArchiveEntry/EntryMargin/EntryVBox/CarriedSection"]
+text = "WHAT YOU CARRIED"
+horizontal_alignment = 1
+size_flags_horizontal = 3
+
+[node name="CarriedList" type="VBoxContainer" parent="ScrollContainer/Content/ArchiveEntry/EntryMargin/EntryVBox/CarriedSection"]
+alignment = 1
+
+[node name="Divider2" type="HSeparator" parent="ScrollContainer/Content/ArchiveEntry/EntryMargin/EntryVBox"]
+
+[node name="AttunementsSection" type="VBoxContainer" parent="ScrollContainer/Content/ArchiveEntry/EntryMargin/EntryVBox"]
+alignment = 1
+
+[node name="AttunementsLabel" type="Label" parent="ScrollContainer/Content/ArchiveEntry/EntryMargin/EntryVBox/AttunementsSection"]
+text = "ATTUNEMENTS"
+horizontal_alignment = 1
+size_flags_horizontal = 3
+
+[node name="AttunementsList" type="VBoxContainer" parent="ScrollContainer/Content/ArchiveEntry/EntryMargin/EntryVBox/AttunementsSection"]
+alignment = 1
+
+[node name="Divider3" type="HSeparator" parent="ScrollContainer/Content/ArchiveEntry/EntryMargin/EntryVBox"]
+
+[node name="IrisNoteSection" type="VBoxContainer" parent="ScrollContainer/Content/ArchiveEntry/EntryMargin/EntryVBox"]
+alignment = 1
+
+[node name="IrisNoteLabel" type="Label" parent="ScrollContainer/Content/ArchiveEntry/EntryMargin/EntryVBox/IrisNoteSection"]
+text = "IRIS NOTE"
+horizontal_alignment = 1
+size_flags_horizontal = 3
+
+[node name="IrisNoteText" type="Label" parent="ScrollContainer/Content/ArchiveEntry/EntryMargin/EntryVBox/IrisNoteSection"]
+text = ""
+horizontal_alignment = 1
+autowrap_mode = 3
+size_flags_horizontal = 3
+
+[node name="ProgressSection" type="HBoxContainer" parent="ScrollContainer/Content"]
+alignment = 1
+size_flags_horizontal = 3
+
+[node name="ProgressLabel" type="Label" parent="ScrollContainer/Content/ProgressSection"]
+text = ""
+horizontal_alignment = 1
+size_flags_horizontal = 3
+
+[node name="ContinueButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -160.0
+offset_top = -90.0
+offset_right = 160.0
+offset_bottom = -24.0
+grow_horizontal = 2
+text = "RETURN TO THE IRIS"
+visible = false

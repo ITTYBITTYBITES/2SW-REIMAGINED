@@ -1,4 +1,7 @@
 extends Control
+## LEGACY_SUPPORT - Temporary compatibility layer for challenge result phase.
+## NOT used by Witness Moment Story Mode (WM_001+).
+## Replaced by: WitnessRevelationScreen
 ## ResultScreen – Premium result feedback
 ## Matches Home / Tutorial visual language
 ## Gameplay / scoring logic unchanged

@@ -1,5 +1,9 @@
 extends Control
 class_name ProductionWitnessHost
+## LEGACY_SUPPORT - Temporary compatibility layer bridging Witness Moment Runtime
+## to legacy ChallengeSessionService screens (Tutorial → Observation → Memory → Result).
+## NOT used by Witness Moment Story Mode (WM_001+).
+## Replaced by: WitnessMomentOrchestrator + Phase Screens
 
 signal request_home
 signal production_phase(phase: String, params: Dictionary)

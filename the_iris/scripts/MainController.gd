@@ -6,7 +6,7 @@ class_name IrisMainController
 @onready var back_navigation: IrisBackNavigationController = $BackNavigationController
 @onready var production_bridge: TwoSecondWitnessProductionBridge = $ProductionBridge
 @onready var witness_director: WitnessExperienceDirector = $WitnessExperienceDirector
-@onready var witness_runtime: WitnessMomentRuntime = $WitnessMomentRuntime
+@onready var witness_runtime: WitnessMomentOrchestrator = $WitnessMomentRuntime
 @onready var input_intents: IrisInputIntentController = $InputIntentController
 @onready var device: DeviceCapabilityManager = $DeviceCapabilityManager
 @onready var orientation: OrientationManager = $OrientationManager
@@ -85,10 +85,12 @@ func _ready() -> void:
     witness.set_production_bridge(production_bridge)
     witness.set_runtime_active(false)
     witness_runtime.set_director(witness_director)
-    witness_runtime.set_production_host(witness.get_production_host())
     witness_runtime.enter_requested.connect(_on_runtime_enter_requested)
-    witness_runtime.production_start_requested.connect(_on_runtime_production_start_requested)
-    witness_runtime.runtime_failed.connect(_on_runtime_failed)
+    witness_runtime.phase_started.connect(_on_runtime_phase_started)
+    witness_runtime.phase_completed.connect(_on_runtime_phase_completed)
+    witness_runtime.moment_completed.connect(_on_runtime_moment_completed)
+    witness_runtime.moment_failed.connect(_on_runtime_moment_failed)
+    witness_runtime.return_requested.connect(_on_runtime_return_requested)
     archive.set_production_bridge(production_bridge)
     profile.set_production_bridge(production_bridge)
     settings.set_production_bridge(production_bridge)
@@ -428,14 +430,29 @@ func _on_runtime_enter_requested(_moment: WitnessMoment) -> void:
     witness.set_runtime_active(true)
     _show_screen("witness")
 
-func _on_runtime_production_start_requested(_moment: WitnessMoment) -> void:
-    # The runtime/adapter owns the actual production start. This hook exists
-    # for debug instrumentation and future attunement presentation.
-    pass
+func _on_runtime_phase_started(phase_name: String, _moment_id: String) -> void:
+    # Debug instrumentation for phase transitions
+    print("Witness Moment phase started: %s" % phase_name)
 
-func _on_runtime_failed(_moment_id: String, _reason: String) -> void:
+func _on_runtime_phase_completed(phase_name: String, _data: Dictionary) -> void:
+    # Debug instrumentation for phase completions
+    print("Witness Moment phase completed: %s" % phase_name)
+
+func _on_runtime_moment_completed(_moment_id: String, _result: Dictionary) -> void:
+    # Moment completed successfully - archive updated, profile updated
+    state_manager.complete_observation()
+    sound.discovery_tone()
+    voice_guide.on_witness_completed()
+    profile._refresh_copy()
+    # Return to home will be handled by the orchestrator
+
+func _on_runtime_moment_failed(_moment_id: String, _reason: String) -> void:
     if active_screen == "witness":
         show_home()
+
+func _on_runtime_return_requested(_moment_id: String) -> void:
+    # Orchestrator requests return to iris
+    show_home()
 
 func _on_future_destination(destination: String) -> void:
     match destination:
