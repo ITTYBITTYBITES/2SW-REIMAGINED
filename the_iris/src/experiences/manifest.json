@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "app_version": "2.0.0-foundation",
+  "last_updated": "2026-07-09",
+  "experiences": ["flashword"],
+  "categories": ["memory", "observation", "reaction", "quick-decision"],
+  "featured": "flashword",
+  "notes": "Foundation phase manifest - modular experience registry"
+}

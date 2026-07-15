@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/FuturePlaceholder.gd" id="1_future"]
+
+[node name="DailyWitnessPlaceholder" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_future")
+destination_key = "daily_witness"
+title_text = "DAILY WITNESS"
+eyebrow_text = "TODAY  ·  A SMALL SIGNAL"
+description_text = "One short observation to return to. Offline, personal, and built for consistency."
+progress_text = "TODAY  ·  READY  ·  PERSONAL BEST —"
+action_text = "THE DAILY MOMENT IS NOT YET BUILT"
+action_enabled = false
+accent_color = Color(0.84, 0.68, 0.40, 1)

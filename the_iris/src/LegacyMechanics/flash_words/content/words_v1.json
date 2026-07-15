@@ -1,0 +1,6745 @@
+{
+  "version": "1",
+  "language": "en",
+  "review_status": "production_reviewed",
+  "count": 373,
+  "words": [
+    {
+      "id": "book",
+      "word": "BOOK",
+      "category": "object",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 0.75,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "brook",
+        "look",
+        "bowl",
+        "box",
+        "cool",
+        "door"
+      ]
+    },
+    {
+      "id": "chair",
+      "word": "CHAIR",
+      "category": "object",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "fair",
+        "bear",
+        "cabin",
+        "cafe",
+        "cake",
+        "calm"
+      ]
+    },
+    {
+      "id": "table",
+      "word": "TABLE",
+      "category": "object",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "eagle",
+        "pale",
+        "tall",
+        "apple",
+        "cabin",
+        "cafe"
+      ]
+    },
+    {
+      "id": "lamp",
+      "word": "LAMP",
+      "category": "object",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "camp",
+        "flame",
+        "jump",
+        "lake",
+        "map",
+        "stamp"
+      ]
+    },
+    {
+      "id": "clock",
+      "word": "CLOCK",
+      "category": "object",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "lock",
+        "close",
+        "cloud",
+        "look",
+        "rock",
+        "book"
+      ]
+    },
+    {
+      "id": "pencil",
+      "word": "PENCIL",
+      "category": "object",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "peach",
+        "snail"
+      ]
+    },
+    {
+      "id": "paper",
+      "word": "PAPER",
+      "category": "object",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "later",
+        "pale",
+        "pepper",
+        "water",
+        "cafe",
+        "cake"
+      ]
+    },
+    {
+      "id": "window",
+      "word": "WINDOW",
+      "category": "object",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "meadow",
+        "pillow",
+        "shadow",
+        "winter"
+      ]
+    },
+    {
+      "id": "door",
+      "word": "DOOR",
+      "category": "object",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 0.75,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "book",
+        "cool",
+        "deer",
+        "dog",
+        "good",
+        "hour"
+      ]
+    },
+    {
+      "id": "bottle",
+      "word": "BOTTLE",
+      "category": "object",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "little",
+        "bounce",
+        "button",
+        "gentle",
+        "hotel",
+        "notice"
+      ]
+    },
+    {
+      "id": "basket",
+      "word": "BASKET",
+      "category": "object",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "blanket",
+        "market",
+        "carpet",
+        "wallet"
+      ]
+    },
+    {
+      "id": "blanket",
+      "word": "BLANKET",
+      "category": "object",
+      "length": 7,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L7_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "basket",
+        "balance",
+        "market"
+      ]
+    },
+    {
+      "id": "camera",
+      "word": "CAMERA",
+      "category": "object",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": [
+        "carry",
+        "later",
+        "paper",
+        "water"
+      ]
+    },
+    {
+      "id": "candle",
+      "word": "CANDLE",
+      "category": "object",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "apple",
+        "dance",
+        "eagle",
+        "gentle",
+        "panda",
+        "table"
+      ]
+    },
+    {
+      "id": "mirror",
+      "word": "MIRROR",
+      "category": "object",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.667,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "carrot",
+        "harbor",
+        "parrot"
+      ]
+    },
+    {
+      "id": "pillow",
+      "word": "PILLOW",
+      "category": "object",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "follow",
+        "window"
+      ]
+    },
+    {
+      "id": "plate",
+      "word": "PLATE",
+      "category": "object",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "place",
+        "flame",
+        "lake",
+        "later",
+        "pale",
+        "path"
+      ]
+    },
+    {
+      "id": "spoon",
+      "word": "SPOON",
+      "category": "object",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "moon",
+        "noon",
+        "spin",
+        "acorn",
+        "book",
+        "brook"
+      ]
+    },
+    {
+      "id": "fork",
+      "word": "FORK",
+      "category": "object",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "work",
+        "book",
+        "corn",
+        "dark",
+        "farm",
+        "fox"
+      ]
+    },
+    {
+      "id": "bowl",
+      "word": "BOWL",
+      "category": "object",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "owl",
+        "book",
+        "box",
+        "cool",
+        "low",
+        "now"
+      ]
+    },
+    {
+      "id": "cup",
+      "word": "CUP",
+      "category": "object",
+      "length": 3,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L3_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "camp",
+        "cat",
+        "jump",
+        "map",
+        "mug",
+        "soup"
+      ]
+    },
+    {
+      "id": "brush",
+      "word": "BRUSH",
+      "category": "object",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "fresh",
+        "beach",
+        "branch",
+        "bread",
+        "bright",
+        "brook"
+      ]
+    },
+    {
+      "id": "button",
+      "word": "BUTTON",
+      "category": "object",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "autumn",
+        "bottle"
+      ]
+    },
+    {
+      "id": "carpet",
+      "word": "CARPET",
+      "category": "object",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "carrot",
+        "market",
+        "basket",
+        "carry",
+        "corner",
+        "creek"
+      ]
+    },
+    {
+      "id": "curtain",
+      "word": "CURTAIN",
+      "category": "object",
+      "length": 7,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L7_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "mountain"
+      ]
+    },
+    {
+      "id": "drawer",
+      "word": "DRAWER",
+      "category": "object",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cracker",
+        "drive",
+        "flower",
+        "frame",
+        "grape",
+        "later"
+      ]
+    },
+    {
+      "id": "folder",
+      "word": "FOLDER",
+      "category": "object",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "golden",
+        "corner",
+        "flower",
+        "follow",
+        "ladder",
+        "ruler"
+      ]
+    },
+    {
+      "id": "glass",
+      "word": "GLASS",
+      "category": "object",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "grass",
+        "glad",
+        "close",
+        "coast",
+        "cross",
+        "easy"
+      ]
+    },
+    {
+      "id": "key",
+      "word": "KEY",
+      "category": "object",
+      "length": 3,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L3_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "dew",
+        "new",
+        "red",
+        "sky",
+        "ant",
+        "bean"
+      ]
+    },
+    {
+      "id": "ladder",
+      "word": "LADDER",
+      "category": "object",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "later",
+        "folder",
+        "gather",
+        "hidden",
+        "large",
+        "paper"
+      ]
+    },
+    {
+      "id": "map",
+      "word": "MAP",
+      "category": "object",
+      "length": 3,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L3_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "camp",
+        "cat",
+        "cup",
+        "fan",
+        "hat",
+        "jar"
+      ]
+    },
+    {
+      "id": "notebook",
+      "word": "NOTEBOOK",
+      "category": "object",
+      "length": 8,
+      "frequency": "familiar",
+      "letter_uniqueness": 0.75,
+      "visual_similarity_group": "L8_V4",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "painting",
+      "word": "PAINTING",
+      "category": "object",
+      "length": 8,
+      "frequency": "familiar",
+      "letter_uniqueness": 0.75,
+      "visual_similarity_group": "L8_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "phone",
+      "word": "PHONE",
+      "category": "object",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "home",
+        "honey",
+        "pine",
+        "pond",
+        "shine",
+        "shoe"
+      ]
+    },
+    {
+      "id": "picture",
+      "word": "PICTURE",
+      "category": "object",
+      "length": 7,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L7_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": [
+        "future"
+      ]
+    },
+    {
+      "id": "radio",
+      "word": "RADIO",
+      "category": "object",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "patio",
+        "rain",
+        "cabin",
+        "fair",
+        "rabbit",
+        "read"
+      ]
+    },
+    {
+      "id": "ruler",
+      "word": "RULER",
+      "category": "object",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "river",
+        "clear",
+        "deer",
+        "drawer",
+        "enter",
+        "folder"
+      ]
+    },
+    {
+      "id": "shelf",
+      "word": "SHELF",
+      "category": "object",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "shell",
+        "help",
+        "sheep",
+        "field",
+        "hall",
+        "hill"
+      ]
+    },
+    {
+      "id": "shoe",
+      "word": "SHOE",
+      "category": "object",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "shop",
+        "shore",
+        "home",
+        "phone",
+        "safe",
+        "share"
+      ]
+    },
+    {
+      "id": "soap",
+      "word": "SOAP",
+      "category": "object",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "soup",
+        "goat",
+        "map",
+        "seal",
+        "sharp",
+        "shop"
+      ]
+    },
+    {
+      "id": "suitcase",
+      "word": "SUITCASE",
+      "category": "object",
+      "length": 8,
+      "frequency": "familiar",
+      "letter_uniqueness": 0.875,
+      "visual_similarity_group": "L8_V4",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "towel",
+      "word": "TOWEL",
+      "category": "object",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "tower",
+        "bowl",
+        "hotel",
+        "tool",
+        "cool",
+        "flower"
+      ]
+    },
+    {
+      "id": "umbrella",
+      "word": "UMBRELLA",
+      "category": "object",
+      "length": 8,
+      "frequency": "familiar",
+      "letter_uniqueness": 0.875,
+      "visual_similarity_group": "L8_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "wallet",
+      "word": "WALLET",
+      "category": "object",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "valley",
+        "basket",
+        "carpet",
+        "collect",
+        "eagle",
+        "market"
+      ]
+    },
+    {
+      "id": "watch",
+      "word": "WATCH",
+      "category": "object",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "catch",
+        "march",
+        "path",
+        "wash",
+        "water",
+        "beach"
+      ]
+    },
+    {
+      "id": "whistle",
+      "word": "WHISTLE",
+      "category": "object",
+      "length": 7,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L7_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "little",
+        "whisper"
+      ]
+    },
+    {
+      "id": "box",
+      "word": "BOX",
+      "category": "object",
+      "length": 3,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L3_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "fox",
+        "book",
+        "bowl",
+        "dog",
+        "low",
+        "now"
+      ]
+    },
+    {
+      "id": "card",
+      "word": "CARD",
+      "category": "object",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "hard",
+        "yard",
+        "bird",
+        "cafe",
+        "cake",
+        "calm"
+      ]
+    },
+    {
+      "id": "coin",
+      "word": "COIN",
+      "category": "object",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "corn",
+        "acorn",
+        "cabin",
+        "comb",
+        "cool",
+        "count"
+      ]
+    },
+    {
+      "id": "comb",
+      "word": "COMB",
+      "category": "object",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "camp",
+        "climb",
+        "coin",
+        "cool",
+        "corn",
+        "cozy"
+      ]
+    },
+    {
+      "id": "desk",
+      "word": "DESK",
+      "category": "object",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "dark",
+        "deep",
+        "deer",
+        "dew",
+        "duck",
+        "rest"
+      ]
+    },
+    {
+      "id": "fan",
+      "word": "FAN",
+      "category": "object",
+      "length": 3,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L3_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "pan",
+        "ant",
+        "bean",
+        "cat",
+        "dawn",
+        "fair"
+      ]
+    },
+    {
+      "id": "flag",
+      "word": "FLAG",
+      "category": "object",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "fan",
+        "flame",
+        "float",
+        "frog",
+        "glad",
+        "play"
+      ]
+    },
+    {
+      "id": "frame",
+      "word": "FRAME",
+      "category": "object",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "flame",
+        "grape",
+        "cafe",
+        "cake",
+        "camp",
+        "crab"
+      ]
+    },
+    {
+      "id": "glove",
+      "word": "GLOVE",
+      "category": "object",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "close",
+        "glow",
+        "move",
+        "clever",
+        "clock",
+        "cloud"
+      ]
+    },
+    {
+      "id": "hat",
+      "word": "HAT",
+      "category": "object",
+      "length": 3,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L3_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cat",
+        "ant",
+        "fan",
+        "fast",
+        "goat",
+        "hall"
+      ]
+    },
+    {
+      "id": "jar",
+      "word": "JAR",
+      "category": "object",
+      "length": 3,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L3_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bear",
+        "card",
+        "cat",
+        "dark",
+        "fair",
+        "fan"
+      ]
+    },
+    {
+      "id": "kite",
+      "word": "KITE",
+      "category": "object",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "kind",
+        "nice",
+        "pine",
+        "rice",
+        "ride",
+        "sit"
+      ]
+    },
+    {
+      "id": "lock",
+      "word": "LOCK",
+      "category": "object",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "clock",
+        "look",
+        "rock",
+        "book",
+        "duck",
+        "fork"
+      ]
+    },
+    {
+      "id": "mug",
+      "word": "MUG",
+      "category": "object",
+      "length": 3,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L3_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cup",
+        "dog",
+        "map",
+        "sun",
+        "ant",
+        "box"
+      ]
+    },
+    {
+      "id": "pan",
+      "word": "PAN",
+      "category": "object",
+      "length": 3,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L3_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "fan",
+        "ant",
+        "bean",
+        "cat",
+        "dawn",
+        "hat"
+      ]
+    },
+    {
+      "id": "ring",
+      "word": "RING",
+      "category": "object",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "drink",
+        "find",
+        "kind",
+        "long",
+        "pine",
+        "rain"
+      ]
+    },
+    {
+      "id": "rope",
+      "word": "ROPE",
+      "category": "object",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "grape",
+        "home",
+        "move",
+        "open",
+        "rice",
+        "ride"
+      ]
+    },
+    {
+      "id": "screen",
+      "word": "SCREEN",
+      "category": "object",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "creek",
+        "green",
+        "street",
+        "clean",
+        "ocean",
+        "sheep"
+      ]
+    },
+    {
+      "id": "stamp",
+      "word": "STAMP",
+      "category": "object",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "camp",
+        "lamp",
+        "sharp",
+        "soap",
+        "stand",
+        "star"
+      ]
+    },
+    {
+      "id": "tool",
+      "word": "TOOL",
+      "category": "object",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 0.75,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cool",
+        "book",
+        "bowl",
+        "door",
+        "good",
+        "look"
+      ]
+    },
+    {
+      "id": "vase",
+      "word": "VASE",
+      "category": "object",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cafe",
+        "cake",
+        "easy",
+        "fast",
+        "lake",
+        "pale"
+      ]
+    },
+    {
+      "id": "wheel",
+      "word": "WHEEL",
+      "category": "object",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "sheep",
+        "shell",
+        "wheat",
+        "cheese",
+        "creek",
+        "deep"
+      ]
+    },
+    {
+      "id": "acorn",
+      "word": "ACORN",
+      "category": "nature",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "corn",
+        "coin",
+        "card",
+        "comb",
+        "cool",
+        "corner"
+      ]
+    },
+    {
+      "id": "beach",
+      "word": "BEACH",
+      "category": "nature",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "peach",
+        "bean",
+        "bear",
+        "branch",
+        "search",
+        "begin"
+      ]
+    },
+    {
+      "id": "branch",
+      "word": "BRANCH",
+      "category": "nature",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "beach",
+        "balance",
+        "bounce",
+        "brush",
+        "catch",
+        "dance"
+      ]
+    },
+    {
+      "id": "brook",
+      "word": "BROOK",
+      "category": "nature",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "book",
+        "look",
+        "rock",
+        "room",
+        "bowl",
+        "bread"
+      ]
+    },
+    {
+      "id": "cloud",
+      "word": "CLOUD",
+      "category": "nature",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cloudy",
+        "loud",
+        "clock",
+        "close",
+        "card",
+        "clean"
+      ]
+    },
+    {
+      "id": "coast",
+      "word": "COAST",
+      "category": "nature",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "toast",
+        "count",
+        "fast",
+        "goat",
+        "cafe",
+        "cake"
+      ]
+    },
+    {
+      "id": "creek",
+      "word": "CREEK",
+      "category": "nature",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "green",
+        "screen",
+        "tree",
+        "bread",
+        "breeze",
+        "brook"
+      ]
+    },
+    {
+      "id": "dawn",
+      "word": "DAWN",
+      "category": "nature",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "dark",
+        "dew",
+        "draw",
+        "fan",
+        "pan",
+        "rain"
+      ]
+    },
+    {
+      "id": "desert",
+      "word": "DESERT",
+      "category": "nature",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "insect"
+      ]
+    },
+    {
+      "id": "dew",
+      "word": "DEW",
+      "category": "nature",
+      "length": 3,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L3_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "new",
+        "dawn",
+        "deep",
+        "deer",
+        "desk",
+        "dog"
+      ]
+    },
+    {
+      "id": "field",
+      "word": "FIELD",
+      "category": "nature",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "find",
+        "wild",
+        "bird",
+        "bread",
+        "build",
+        "fish"
+      ]
+    },
+    {
+      "id": "flame",
+      "word": "FLAME",
+      "category": "nature",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "frame",
+        "flag",
+        "lake",
+        "lamp",
+        "place",
+        "plate"
+      ]
+    },
+    {
+      "id": "flower",
+      "word": "FLOWER",
+      "category": "nature",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "tower",
+        "clever",
+        "close",
+        "drawer",
+        "flame",
+        "float"
+      ]
+    },
+    {
+      "id": "forest",
+      "word": "FOREST",
+      "category": "nature",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "fresh",
+        "frost",
+        "coast",
+        "horse",
+        "street",
+        "toast"
+      ]
+    },
+    {
+      "id": "frost",
+      "word": "FROST",
+      "category": "nature",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cross",
+        "fast",
+        "float",
+        "forest",
+        "fresh",
+        "frog"
+      ]
+    },
+    {
+      "id": "grass",
+      "word": "GRASS",
+      "category": "nature",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "glass",
+        "cross",
+        "grape",
+        "brush",
+        "coast",
+        "crab"
+      ]
+    },
+    {
+      "id": "hill",
+      "word": "HILL",
+      "category": "nature",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 0.75,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "hall",
+        "help",
+        "high",
+        "roll",
+        "shell",
+        "still"
+      ]
+    },
+    {
+      "id": "island",
+      "word": "ISLAND",
+      "category": "nature",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "stand",
+        "plant",
+        "salad"
+      ]
+    },
+    {
+      "id": "lake",
+      "word": "LAKE",
+      "category": "nature",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cake",
+        "cafe",
+        "flame",
+        "lamp",
+        "large",
+        "later"
+      ]
+    },
+    {
+      "id": "leaf",
+      "word": "LEAF",
+      "category": "nature",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bean",
+        "bear",
+        "clean",
+        "clear",
+        "learn",
+        "neat"
+      ]
+    },
+    {
+      "id": "meadow",
+      "word": "MEADOW",
+      "category": "nature",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "shadow",
+        "melon",
+        "ready",
+        "season",
+        "window"
+      ]
+    },
+    {
+      "id": "moon",
+      "word": "MOON",
+      "category": "nature",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 0.75,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "noon",
+        "book",
+        "coin",
+        "cool",
+        "corn",
+        "door"
+      ]
+    },
+    {
+      "id": "mountain",
+      "word": "MOUNTAIN",
+      "category": "nature",
+      "length": 8,
+      "frequency": "familiar",
+      "letter_uniqueness": 0.875,
+      "visual_similarity_group": "L8_V4",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "curtain"
+      ]
+    },
+    {
+      "id": "ocean",
+      "word": "OCEAN",
+      "category": "nature",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bean",
+        "clean",
+        "open",
+        "acorn",
+        "bear",
+        "bread"
+      ]
+    },
+    {
+      "id": "pebble",
+      "word": "PEBBLE",
+      "category": "nature",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.667,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "eagle",
+        "gentle",
+        "table"
+      ]
+    },
+    {
+      "id": "pine",
+      "word": "PINE",
+      "category": "nature",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "find",
+        "kind",
+        "kite",
+        "nice",
+        "paint",
+        "pale"
+      ]
+    },
+    {
+      "id": "plant",
+      "word": "PLANT",
+      "category": "nature",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "paint",
+        "place",
+        "plate",
+        "play",
+        "point",
+        "bean"
+      ]
+    },
+    {
+      "id": "pond",
+      "word": "POND",
+      "category": "nature",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "find",
+        "good",
+        "kind",
+        "long",
+        "loud",
+        "pan"
+      ]
+    },
+    {
+      "id": "rain",
+      "word": "RAIN",
+      "category": "nature",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cabin",
+        "coin",
+        "dawn",
+        "fair",
+        "fan",
+        "paint"
+      ]
+    },
+    {
+      "id": "river",
+      "word": "RIVER",
+      "category": "nature",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "drive",
+        "rice",
+        "ride",
+        "ruler",
+        "tiger",
+        "arrive"
+      ]
+    },
+    {
+      "id": "rock",
+      "word": "ROCK",
+      "category": "nature",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "lock",
+        "book",
+        "brook",
+        "clock",
+        "duck",
+        "fork"
+      ]
+    },
+    {
+      "id": "sand",
+      "word": "SAND",
+      "category": "nature",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "stand",
+        "ant",
+        "card",
+        "fan",
+        "find",
+        "hard"
+      ]
+    },
+    {
+      "id": "shadow",
+      "word": "SHADOW",
+      "category": "nature",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "meadow",
+        "season",
+        "share",
+        "sharp",
+        "throw",
+        "window"
+      ]
+    },
+    {
+      "id": "shell",
+      "word": "SHELL",
+      "category": "nature",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "shelf",
+        "hall",
+        "help",
+        "hill",
+        "seal",
+        "sheep"
+      ]
+    },
+    {
+      "id": "shore",
+      "word": "SHORE",
+      "category": "nature",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "share",
+        "shoe",
+        "short",
+        "home",
+        "horse",
+        "phone"
+      ]
+    },
+    {
+      "id": "sky",
+      "word": "SKY",
+      "category": "nature",
+      "length": 3,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L3_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "key",
+        "sit",
+        "sun",
+        "ant",
+        "box",
+        "cake"
+      ]
+    },
+    {
+      "id": "snow",
+      "word": "SNOW",
+      "category": "nature",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "now",
+        "slow",
+        "glow",
+        "grow",
+        "low",
+        "new"
+      ]
+    },
+    {
+      "id": "soil",
+      "word": "SOIL",
+      "category": "nature",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bowl",
+        "coin",
+        "cool",
+        "owl",
+        "roll",
+        "seal"
+      ]
+    },
+    {
+      "id": "star",
+      "word": "STAR",
+      "category": "nature",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "start",
+        "bear",
+        "jar",
+        "pear",
+        "seal",
+        "share"
+      ]
+    },
+    {
+      "id": "stone",
+      "word": "STONE",
+      "category": "nature",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "phone",
+        "shine",
+        "shoe",
+        "shore",
+        "stand",
+        "stop"
+      ]
+    },
+    {
+      "id": "storm",
+      "word": "STORM",
+      "category": "nature",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "shore",
+        "short",
+        "star",
+        "start",
+        "stone",
+        "stop"
+      ]
+    },
+    {
+      "id": "stream",
+      "word": "STREAM",
+      "category": "nature",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "dream",
+        "street",
+        "bread",
+        "screen",
+        "stamp",
+        "storm"
+      ]
+    },
+    {
+      "id": "sun",
+      "word": "SUN",
+      "category": "nature",
+      "length": 3,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L3_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cup",
+        "fan",
+        "mug",
+        "pan",
+        "sand",
+        "sit"
+      ]
+    },
+    {
+      "id": "sunset",
+      "word": "SUNSET",
+      "category": "nature",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "insect",
+        "quiet",
+        "street",
+        "summer",
+        "sweet"
+      ]
+    },
+    {
+      "id": "thunder",
+      "word": "THUNDER",
+      "category": "nature",
+      "length": 7,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L7_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "trail",
+      "word": "TRAIL",
+      "category": "nature",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "rain",
+        "snail",
+        "tall",
+        "travel",
+        "chair",
+        "crab"
+      ]
+    },
+    {
+      "id": "tree",
+      "word": "TREE",
+      "category": "nature",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 0.75,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "creek",
+        "green",
+        "red",
+        "bread",
+        "cafe",
+        "cake"
+      ]
+    },
+    {
+      "id": "valley",
+      "word": "VALLEY",
+      "category": "nature",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "wallet",
+        "daily",
+        "eagle",
+        "early",
+        "table"
+      ]
+    },
+    {
+      "id": "wave",
+      "word": "WAVE",
+      "category": "nature",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cafe",
+        "cake",
+        "lake",
+        "move",
+        "pale",
+        "safe"
+      ]
+    },
+    {
+      "id": "wind",
+      "word": "WIND",
+      "category": "nature",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "find",
+        "kind",
+        "wild",
+        "bird",
+        "pine",
+        "pond"
+      ]
+    },
+    {
+      "id": "wood",
+      "word": "WOOD",
+      "category": "nature",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 0.75,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "good",
+        "book",
+        "cool",
+        "door",
+        "look",
+        "loud"
+      ]
+    },
+    {
+      "id": "ant",
+      "word": "ANT",
+      "category": "animal",
+      "length": 3,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L3_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cat",
+        "fan",
+        "fast",
+        "hat",
+        "pan",
+        "sand"
+      ]
+    },
+    {
+      "id": "bear",
+      "word": "BEAR",
+      "category": "animal",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bean",
+        "pear",
+        "beach",
+        "berry",
+        "bread",
+        "clear"
+      ]
+    },
+    {
+      "id": "bird",
+      "word": "BIRD",
+      "category": "animal",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "build",
+        "card",
+        "find",
+        "hard",
+        "kind",
+        "wild"
+      ]
+    },
+    {
+      "id": "butterfly",
+      "word": "BUTTERFLY",
+      "category": "animal",
+      "length": 9,
+      "frequency": "familiar",
+      "letter_uniqueness": 0.889,
+      "visual_similarity_group": "L9_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "cat",
+      "word": "CAT",
+      "category": "animal",
+      "length": 3,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L3_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "hat",
+        "ant",
+        "cafe",
+        "cake",
+        "calm",
+        "camp"
+      ]
+    },
+    {
+      "id": "crab",
+      "word": "CRAB",
+      "category": "animal",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cat",
+        "comb",
+        "draw",
+        "bean",
+        "bear",
+        "bread"
+      ]
+    },
+    {
+      "id": "deer",
+      "word": "DEER",
+      "category": "animal",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 0.75,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "deep",
+        "bear",
+        "desk",
+        "dew",
+        "door",
+        "pear"
+      ]
+    },
+    {
+      "id": "dog",
+      "word": "DOG",
+      "category": "animal",
+      "length": 3,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L3_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "box",
+        "dew",
+        "door",
+        "fox",
+        "frog",
+        "long"
+      ]
+    },
+    {
+      "id": "dolphin",
+      "word": "DOLPHIN",
+      "category": "animal",
+      "length": 7,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L7_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "duck",
+      "word": "DUCK",
+      "category": "animal",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "dark",
+        "desk",
+        "lock",
+        "lucky",
+        "quick",
+        "rock"
+      ]
+    },
+    {
+      "id": "eagle",
+      "word": "EAGLE",
+      "category": "animal",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "early",
+        "pale",
+        "table",
+        "apple",
+        "cafe",
+        "cake"
+      ]
+    },
+    {
+      "id": "fish",
+      "word": "FISH",
+      "category": "animal",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "fast",
+        "find",
+        "fresh",
+        "high",
+        "wash",
+        "bird"
+      ]
+    },
+    {
+      "id": "fox",
+      "word": "FOX",
+      "category": "animal",
+      "length": 3,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L3_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "box",
+        "dog",
+        "fan",
+        "fork",
+        "frog",
+        "low"
+      ]
+    },
+    {
+      "id": "frog",
+      "word": "FROG",
+      "category": "animal",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "dog",
+        "flag",
+        "fox",
+        "frost",
+        "grow",
+        "book"
+      ]
+    },
+    {
+      "id": "goat",
+      "word": "GOAT",
+      "category": "animal",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cat",
+        "coast",
+        "float",
+        "glad",
+        "good",
+        "hat"
+      ]
+    },
+    {
+      "id": "horse",
+      "word": "HORSE",
+      "category": "animal",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "house",
+        "choose",
+        "home",
+        "mouse",
+        "shore",
+        "cheese"
+      ]
+    },
+    {
+      "id": "insect",
+      "word": "INSECT",
+      "category": "animal",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "desert",
+        "sunset"
+      ]
+    },
+    {
+      "id": "lion",
+      "word": "LION",
+      "category": "animal",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "lemon",
+        "long",
+        "look",
+        "low",
+        "moon",
+        "noon"
+      ]
+    },
+    {
+      "id": "mouse",
+      "word": "MOUSE",
+      "category": "animal",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "house",
+        "horse",
+        "move",
+        "bounce",
+        "brush",
+        "choose"
+      ]
+    },
+    {
+      "id": "owl",
+      "word": "OWL",
+      "category": "animal",
+      "length": 3,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L3_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bowl",
+        "cool",
+        "low",
+        "now",
+        "roll",
+        "soil"
+      ]
+    },
+    {
+      "id": "panda",
+      "word": "PANDA",
+      "category": "animal",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "pond",
+        "sand",
+        "banana",
+        "candle",
+        "card",
+        "dance"
+      ]
+    },
+    {
+      "id": "parrot",
+      "word": "PARROT",
+      "category": "animal",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "carrot",
+        "carpet",
+        "carry",
+        "harbor",
+        "market",
+        "mirror"
+      ]
+    },
+    {
+      "id": "rabbit",
+      "word": "RABBIT",
+      "category": "animal",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cabin",
+        "radio"
+      ]
+    },
+    {
+      "id": "seal",
+      "word": "SEAL",
+      "category": "animal",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bean",
+        "bear",
+        "leaf",
+        "neat",
+        "pear",
+        "read"
+      ]
+    },
+    {
+      "id": "sheep",
+      "word": "SHEEP",
+      "category": "animal",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "deep",
+        "help",
+        "sharp",
+        "shelf",
+        "shell",
+        "shoe"
+      ]
+    },
+    {
+      "id": "snail",
+      "word": "SNAIL",
+      "category": "animal",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "seal",
+        "small",
+        "soil",
+        "trail",
+        "chair",
+        "daily"
+      ]
+    },
+    {
+      "id": "spider",
+      "word": "SPIDER",
+      "category": "animal",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "spice",
+        "folder",
+        "ladder",
+        "paper",
+        "river",
+        "shine"
+      ]
+    },
+    {
+      "id": "squirrel",
+      "word": "SQUIRREL",
+      "category": "animal",
+      "length": 8,
+      "frequency": "familiar",
+      "letter_uniqueness": 0.875,
+      "visual_similarity_group": "L8_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "tiger",
+      "word": "TIGER",
+      "category": "animal",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "river",
+        "tower",
+        "deer",
+        "enter",
+        "high",
+        "kite"
+      ]
+    },
+    {
+      "id": "turtle",
+      "word": "TURTLE",
+      "category": "animal",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bottle",
+        "gentle",
+        "little",
+        "table"
+      ]
+    },
+    {
+      "id": "whale",
+      "word": "WHALE",
+      "category": "animal",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "hall",
+        "pale",
+        "share",
+        "walk",
+        "wave",
+        "apple"
+      ]
+    },
+    {
+      "id": "wolf",
+      "word": "WOLF",
+      "category": "animal",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "roll",
+        "walk",
+        "wild",
+        "wood",
+        "work",
+        "book"
+      ]
+    },
+    {
+      "id": "zebra",
+      "word": "ZEBRA",
+      "category": "animal",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bear",
+        "berry",
+        "deer",
+        "learn",
+        "pear"
+      ]
+    },
+    {
+      "id": "apple",
+      "word": "APPLE",
+      "category": "food",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "pale",
+        "candle",
+        "eagle",
+        "happy",
+        "pine",
+        "rope"
+      ]
+    },
+    {
+      "id": "banana",
+      "word": "BANANA",
+      "category": "food",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.5,
+      "visual_similarity_group": "L6_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": [
+        "balance",
+        "panda"
+      ]
+    },
+    {
+      "id": "bean",
+      "word": "BEAN",
+      "category": "food",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bear",
+        "beach",
+        "begin",
+        "bread",
+        "clean",
+        "fan"
+      ]
+    },
+    {
+      "id": "berry",
+      "word": "BERRY",
+      "category": "food",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bear",
+        "carry",
+        "cherry",
+        "beach",
+        "bean",
+        "begin"
+      ]
+    },
+    {
+      "id": "bread",
+      "word": "BREAD",
+      "category": "food",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "read",
+        "bean",
+        "bear",
+        "dream",
+        "ready",
+        "beach"
+      ]
+    },
+    {
+      "id": "cake",
+      "word": "CAKE",
+      "category": "food",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cafe",
+        "lake",
+        "calm",
+        "camp",
+        "card",
+        "cat"
+      ]
+    },
+    {
+      "id": "carrot",
+      "word": "CARROT",
+      "category": "food",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "parrot",
+        "carpet",
+        "carry",
+        "harbor",
+        "market",
+        "mirror"
+      ]
+    },
+    {
+      "id": "cheese",
+      "word": "CHEESE",
+      "category": "food",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.667,
+      "visual_similarity_group": "L6_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "choose",
+        "breeze",
+        "cherry",
+        "close",
+        "creek",
+        "horse"
+      ]
+    },
+    {
+      "id": "cherry",
+      "word": "CHERRY",
+      "category": "food",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "berry",
+        "carry",
+        "chair",
+        "cheese",
+        "clear",
+        "heavy"
+      ]
+    },
+    {
+      "id": "corn",
+      "word": "CORN",
+      "category": "food",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "acorn",
+        "coin",
+        "card",
+        "comb",
+        "cool",
+        "count"
+      ]
+    },
+    {
+      "id": "cracker",
+      "word": "CRACKER",
+      "category": "food",
+      "length": 7,
+      "frequency": "common",
+      "letter_uniqueness": 0.714,
+      "visual_similarity_group": "L7_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "drawer"
+      ]
+    },
+    {
+      "id": "grape",
+      "word": "GRAPE",
+      "category": "food",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "frame",
+        "garage",
+        "grass",
+        "rope",
+        "cafe",
+        "cake"
+      ]
+    },
+    {
+      "id": "honey",
+      "word": "HONEY",
+      "category": "food",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "home",
+        "hotel",
+        "phone",
+        "corner",
+        "cozy",
+        "happy"
+      ]
+    },
+    {
+      "id": "lemon",
+      "word": "LEMON",
+      "category": "food",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "learn",
+        "lion",
+        "melon",
+        "bean",
+        "begin",
+        "clean"
+      ]
+    },
+    {
+      "id": "melon",
+      "word": "MELON",
+      "category": "food",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "lemon",
+        "moon",
+        "bean",
+        "begin",
+        "glow",
+        "help"
+      ]
+    },
+    {
+      "id": "orange",
+      "word": "ORANGE",
+      "category": "food",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": [
+        "branch",
+        "bridge",
+        "dance",
+        "frame",
+        "garage",
+        "grape"
+      ]
+    },
+    {
+      "id": "peach",
+      "word": "PEACH",
+      "category": "food",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "beach",
+        "path",
+        "pear",
+        "place",
+        "porch",
+        "search"
+      ]
+    },
+    {
+      "id": "pear",
+      "word": "PEAR",
+      "category": "food",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bear",
+        "bean",
+        "clear",
+        "deer",
+        "jar",
+        "leaf"
+      ]
+    },
+    {
+      "id": "pepper",
+      "word": "PEPPER",
+      "category": "food",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.5,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "paper",
+        "enter"
+      ]
+    },
+    {
+      "id": "plum",
+      "word": "PLUM",
+      "category": "food",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "play",
+        "calm",
+        "climb",
+        "cloud",
+        "cup",
+        "farm"
+      ]
+    },
+    {
+      "id": "potato",
+      "word": "POTATO",
+      "category": "food",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.667,
+      "visual_similarity_group": "L6_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": [
+        "tomato",
+        "patio",
+        "plate",
+        "point"
+      ]
+    },
+    {
+      "id": "rice",
+      "word": "RICE",
+      "category": "food",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "nice",
+        "ride",
+        "drive",
+        "kite",
+        "pine",
+        "ring"
+      ]
+    },
+    {
+      "id": "salad",
+      "word": "SALAD",
+      "category": "food",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "glad",
+        "sand",
+        "solid",
+        "bread",
+        "calm",
+        "card"
+      ]
+    },
+    {
+      "id": "sandwich",
+      "word": "SANDWICH",
+      "category": "food",
+      "length": 8,
+      "frequency": "familiar",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L8_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "soup",
+      "word": "SOUP",
+      "category": "food",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "soap",
+        "cup",
+        "hour",
+        "loud",
+        "shop",
+        "soft"
+      ]
+    },
+    {
+      "id": "spice",
+      "word": "SPICE",
+      "category": "food",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "nice",
+        "pine",
+        "rice",
+        "shine",
+        "smile",
+        "spider"
+      ]
+    },
+    {
+      "id": "sugar",
+      "word": "SUGAR",
+      "category": "food",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "star",
+        "bear",
+        "clear",
+        "pear",
+        "ruler",
+        "salad"
+      ]
+    },
+    {
+      "id": "toast",
+      "word": "TOAST",
+      "category": "food",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "coast",
+        "fast",
+        "goat",
+        "count",
+        "easy",
+        "float"
+      ]
+    },
+    {
+      "id": "tomato",
+      "word": "TOMATO",
+      "category": "food",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.667,
+      "visual_similarity_group": "L6_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": [
+        "potato",
+        "toast",
+        "today"
+      ]
+    },
+    {
+      "id": "vanilla",
+      "word": "VANILLA",
+      "category": "food",
+      "length": 7,
+      "frequency": "common",
+      "letter_uniqueness": 0.714,
+      "visual_similarity_group": "L7_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "water",
+      "word": "WATER",
+      "category": "food",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "later",
+        "enter",
+        "gather",
+        "paper",
+        "watch",
+        "wave"
+      ]
+    },
+    {
+      "id": "wheat",
+      "word": "WHEAT",
+      "category": "food",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "neat",
+        "wheel",
+        "bean",
+        "bear",
+        "bread",
+        "clean"
+      ]
+    },
+    {
+      "id": "attic",
+      "word": "ATTIC",
+      "category": "place",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "notice",
+        "patio",
+        "thin"
+      ]
+    },
+    {
+      "id": "balcony",
+      "word": "BALCONY",
+      "category": "place",
+      "length": 7,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L7_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "bridge",
+      "word": "BRIDGE",
+      "category": "place",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "breeze",
+        "bright",
+        "drive",
+        "friday",
+        "orange",
+        "write"
+      ]
+    },
+    {
+      "id": "cabin",
+      "word": "CABIN",
+      "category": "place",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "coin",
+        "rain",
+        "begin",
+        "cafe",
+        "cake",
+        "calm"
+      ]
+    },
+    {
+      "id": "cafe",
+      "word": "CAFE",
+      "category": "place",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cake",
+        "safe",
+        "calm",
+        "camp",
+        "card",
+        "cat"
+      ]
+    },
+    {
+      "id": "camp",
+      "word": "CAMP",
+      "category": "place",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "lamp",
+        "cafe",
+        "cake",
+        "calm",
+        "card",
+        "cat"
+      ]
+    },
+    {
+      "id": "cellar",
+      "word": "CELLAR",
+      "category": "place",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "clear",
+        "clean"
+      ]
+    },
+    {
+      "id": "corner",
+      "word": "CORNER",
+      "category": "place",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "acorn",
+        "carpet",
+        "clever",
+        "count",
+        "creek",
+        "folder"
+      ]
+    },
+    {
+      "id": "farm",
+      "word": "FARM",
+      "category": "place",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "warm",
+        "calm",
+        "card",
+        "dark",
+        "fair",
+        "fan"
+      ]
+    },
+    {
+      "id": "garage",
+      "word": "GARAGE",
+      "category": "place",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.667,
+      "visual_similarity_group": "L6_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": [
+        "grape",
+        "large",
+        "frame",
+        "grass",
+        "orange"
+      ]
+    },
+    {
+      "id": "hall",
+      "word": "HALL",
+      "category": "place",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 0.75,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "hill",
+        "tall",
+        "calm",
+        "hard",
+        "hat",
+        "help"
+      ]
+    },
+    {
+      "id": "harbor",
+      "word": "HARBOR",
+      "category": "place",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "carrot",
+        "mirror",
+        "parrot"
+      ]
+    },
+    {
+      "id": "home",
+      "word": "HOME",
+      "category": "place",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "comb",
+        "honey",
+        "horse",
+        "hotel",
+        "hour",
+        "house"
+      ]
+    },
+    {
+      "id": "hotel",
+      "word": "HOTEL",
+      "category": "place",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "home",
+        "honey",
+        "towel",
+        "bottle",
+        "bowl",
+        "cool"
+      ]
+    },
+    {
+      "id": "house",
+      "word": "HOUSE",
+      "category": "place",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "horse",
+        "mouse",
+        "choose",
+        "home",
+        "hour",
+        "bounce"
+      ]
+    },
+    {
+      "id": "kitchen",
+      "word": "KITCHEN",
+      "category": "place",
+      "length": 7,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L7_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "library",
+      "word": "LIBRARY",
+      "category": "place",
+      "length": 7,
+      "frequency": "common",
+      "letter_uniqueness": 0.857,
+      "visual_similarity_group": "L7_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "market",
+      "word": "MARKET",
+      "category": "place",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "basket",
+        "carpet",
+        "blanket",
+        "carrot",
+        "large",
+        "march"
+      ]
+    },
+    {
+      "id": "office",
+      "word": "OFFICE",
+      "category": "place",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": [
+        "notice",
+        "spice"
+      ]
+    },
+    {
+      "id": "park",
+      "word": "PARK",
+      "category": "place",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "dark",
+        "card",
+        "farm",
+        "fork",
+        "hard",
+        "jar"
+      ]
+    },
+    {
+      "id": "path",
+      "word": "PATH",
+      "category": "place",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cat",
+        "catch",
+        "hat",
+        "pale",
+        "pan",
+        "park"
+      ]
+    },
+    {
+      "id": "patio",
+      "word": "PATIO",
+      "category": "place",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "path",
+        "radio",
+        "attic",
+        "cabin",
+        "catch",
+        "fair"
+      ]
+    },
+    {
+      "id": "porch",
+      "word": "PORCH",
+      "category": "place",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "march",
+        "peach",
+        "touch",
+        "beach",
+        "catch",
+        "corn"
+      ]
+    },
+    {
+      "id": "room",
+      "word": "ROOM",
+      "category": "place",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 0.75,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "book",
+        "brook",
+        "cool",
+        "door",
+        "good",
+        "look"
+      ]
+    },
+    {
+      "id": "school",
+      "word": "SCHOOL",
+      "category": "place",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "choose",
+        "shell",
+        "shore",
+        "short",
+        "spoon"
+      ]
+    },
+    {
+      "id": "shop",
+      "word": "SHOP",
+      "category": "place",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "shoe",
+        "stop",
+        "sharp",
+        "sheep",
+        "shore",
+        "short"
+      ]
+    },
+    {
+      "id": "station",
+      "word": "STATION",
+      "category": "place",
+      "length": 7,
+      "frequency": "common",
+      "letter_uniqueness": 0.857,
+      "visual_similarity_group": "L7_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "season",
+        "studio"
+      ]
+    },
+    {
+      "id": "street",
+      "word": "STREET",
+      "category": "place",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.667,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "screen",
+        "stream",
+        "sweet",
+        "carpet",
+        "creek",
+        "forest"
+      ]
+    },
+    {
+      "id": "studio",
+      "word": "STUDIO",
+      "category": "place",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "study",
+        "radio",
+        "station"
+      ]
+    },
+    {
+      "id": "tower",
+      "word": "TOWER",
+      "category": "place",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "towel",
+        "flower",
+        "tiger",
+        "bowl",
+        "corner",
+        "deer"
+      ]
+    },
+    {
+      "id": "village",
+      "word": "VILLAGE",
+      "category": "place",
+      "length": 7,
+      "frequency": "common",
+      "letter_uniqueness": 0.857,
+      "visual_similarity_group": "L7_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "workshop",
+      "word": "WORKSHOP",
+      "category": "place",
+      "length": 8,
+      "frequency": "familiar",
+      "letter_uniqueness": 0.875,
+      "visual_similarity_group": "L8_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "yard",
+      "word": "YARD",
+      "category": "place",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "card",
+        "hard",
+        "bird",
+        "dark",
+        "farm",
+        "jar"
+      ]
+    },
+    {
+      "id": "arrive",
+      "word": "ARRIVE",
+      "category": "action",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": [
+        "drive",
+        "river",
+        "write"
+      ]
+    },
+    {
+      "id": "balance",
+      "word": "BALANCE",
+      "category": "action",
+      "length": 7,
+      "frequency": "common",
+      "letter_uniqueness": 0.857,
+      "visual_similarity_group": "L7_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": [
+        "banana",
+        "blanket",
+        "bounce",
+        "branch"
+      ]
+    },
+    {
+      "id": "begin",
+      "word": "BEGIN",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bean",
+        "beach",
+        "bear",
+        "berry",
+        "cabin",
+        "coin"
+      ]
+    },
+    {
+      "id": "bounce",
+      "word": "BOUNCE",
+      "category": "action",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "balance",
+        "bottle",
+        "branch",
+        "count",
+        "dance",
+        "house"
+      ]
+    },
+    {
+      "id": "build",
+      "word": "BUILD",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bird",
+        "wild",
+        "bowl",
+        "bread",
+        "daily",
+        "field"
+      ]
+    },
+    {
+      "id": "carry",
+      "word": "CARRY",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "berry",
+        "card",
+        "carrot",
+        "cherry",
+        "early",
+        "cabin"
+      ]
+    },
+    {
+      "id": "catch",
+      "word": "CATCH",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "watch",
+        "march",
+        "path",
+        "beach",
+        "branch",
+        "cabin"
+      ]
+    },
+    {
+      "id": "choose",
+      "word": "CHOOSE",
+      "category": "action",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cheese",
+        "close",
+        "horse",
+        "house",
+        "coast",
+        "cross"
+      ]
+    },
+    {
+      "id": "climb",
+      "word": "CLIMB",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "comb",
+        "calm",
+        "camp",
+        "clean",
+        "clear",
+        "clock"
+      ]
+    },
+    {
+      "id": "close",
+      "word": "CLOSE",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "choose",
+        "clock",
+        "cloud",
+        "cross",
+        "glove",
+        "cafe"
+      ]
+    },
+    {
+      "id": "collect",
+      "word": "COLLECT",
+      "category": "action",
+      "length": 7,
+      "frequency": "common",
+      "letter_uniqueness": 0.714,
+      "visual_similarity_group": "L7_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "wallet"
+      ]
+    },
+    {
+      "id": "count",
+      "word": "COUNT",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "coast",
+        "coin",
+        "corn",
+        "point",
+        "round",
+        "young"
+      ]
+    },
+    {
+      "id": "cross",
+      "word": "CROSS",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "close",
+        "crisp",
+        "frost",
+        "grass",
+        "brook",
+        "brush"
+      ]
+    },
+    {
+      "id": "dance",
+      "word": "DANCE",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bounce",
+        "branch",
+        "cafe",
+        "cake",
+        "candle",
+        "catch"
+      ]
+    },
+    {
+      "id": "discover",
+      "word": "DISCOVER",
+      "category": "action",
+      "length": 8,
+      "frequency": "familiar",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L8_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "draw",
+      "word": "DRAW",
+      "category": "action",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "crab",
+        "dawn",
+        "dew",
+        "dream",
+        "grow",
+        "bean"
+      ]
+    },
+    {
+      "id": "dream",
+      "word": "DREAM",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bread",
+        "draw",
+        "read",
+        "stream",
+        "bean",
+        "bear"
+      ]
+    },
+    {
+      "id": "drink",
+      "word": "DRINK",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "drive",
+        "ring",
+        "think",
+        "brook",
+        "coin",
+        "creek"
+      ]
+    },
+    {
+      "id": "drive",
+      "word": "DRIVE",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "arrive",
+        "drink",
+        "rice",
+        "ride",
+        "river",
+        "write"
+      ]
+    },
+    {
+      "id": "enter",
+      "word": "ENTER",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "later",
+        "water",
+        "winter",
+        "deer",
+        "gather",
+        "gentle"
+      ]
+    },
+    {
+      "id": "explore",
+      "word": "EXPLORE",
+      "category": "action",
+      "length": 7,
+      "frequency": "common",
+      "letter_uniqueness": 0.857,
+      "visual_similarity_group": "L7_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "find",
+      "word": "FIND",
+      "category": "action",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "kind",
+        "wind",
+        "bird",
+        "fan",
+        "field",
+        "fish"
+      ]
+    },
+    {
+      "id": "finish",
+      "word": "FINISH",
+      "category": "action",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "fresh"
+      ]
+    },
+    {
+      "id": "float",
+      "word": "FLOAT",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "flag",
+        "frost",
+        "goat",
+        "clean",
+        "clear",
+        "clock"
+      ]
+    },
+    {
+      "id": "follow",
+      "word": "FOLLOW",
+      "category": "action",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.667,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "pillow",
+        "folder"
+      ]
+    },
+    {
+      "id": "gather",
+      "word": "GATHER",
+      "category": "action",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "later",
+        "water",
+        "enter",
+        "ladder",
+        "paper"
+      ]
+    },
+    {
+      "id": "glow",
+      "word": "GLOW",
+      "category": "action",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "grow",
+        "low",
+        "slow",
+        "glad",
+        "glove",
+        "good"
+      ]
+    },
+    {
+      "id": "grow",
+      "word": "GROW",
+      "category": "action",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "glow",
+        "draw",
+        "frog",
+        "good",
+        "low",
+        "now"
+      ]
+    },
+    {
+      "id": "help",
+      "word": "HELP",
+      "category": "action",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "deep",
+        "hall",
+        "hill",
+        "sheep",
+        "shelf",
+        "shell"
+      ]
+    },
+    {
+      "id": "jump",
+      "word": "JUMP",
+      "category": "action",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "camp",
+        "cup",
+        "lamp",
+        "comb",
+        "deep",
+        "duck"
+      ]
+    },
+    {
+      "id": "laugh",
+      "word": "LAUGH",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "large",
+        "brush",
+        "catch",
+        "flag",
+        "high",
+        "lake"
+      ]
+    },
+    {
+      "id": "learn",
+      "word": "LEARN",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bean",
+        "bear",
+        "clean",
+        "clear",
+        "leaf",
+        "lemon"
+      ]
+    },
+    {
+      "id": "listen",
+      "word": "LISTEN",
+      "category": "action",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "hidden",
+        "later",
+        "little",
+        "winter"
+      ]
+    },
+    {
+      "id": "look",
+      "word": "LOOK",
+      "category": "action",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 0.75,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "book",
+        "lock",
+        "brook",
+        "clock",
+        "cool",
+        "door"
+      ]
+    },
+    {
+      "id": "march",
+      "word": "MARCH",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "catch",
+        "porch",
+        "search",
+        "watch",
+        "beach",
+        "branch"
+      ]
+    },
+    {
+      "id": "move",
+      "word": "MOVE",
+      "category": "action",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "glove",
+        "home",
+        "moon",
+        "mouse",
+        "rope",
+        "wave"
+      ]
+    },
+    {
+      "id": "notice",
+      "word": "NOTICE",
+      "category": "action",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": [
+        "attic",
+        "bottle",
+        "bounce",
+        "office",
+        "spice"
+      ]
+    },
+    {
+      "id": "open",
+      "word": "OPEN",
+      "category": "action",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "ocean",
+        "pan",
+        "rope",
+        "spin",
+        "bean",
+        "clean"
+      ]
+    },
+    {
+      "id": "paint",
+      "word": "PAINT",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "point",
+        "pine",
+        "plant",
+        "rain",
+        "cabin",
+        "coin"
+      ]
+    },
+    {
+      "id": "place",
+      "word": "PLACE",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "plate",
+        "flame",
+        "lake",
+        "pale",
+        "peach",
+        "plant"
+      ]
+    },
+    {
+      "id": "play",
+      "word": "PLAY",
+      "category": "action",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "flag",
+        "glad",
+        "pan",
+        "pear",
+        "place",
+        "plant"
+      ]
+    },
+    {
+      "id": "point",
+      "word": "POINT",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "paint",
+        "coin",
+        "count",
+        "pine",
+        "plant",
+        "pond"
+      ]
+    },
+    {
+      "id": "read",
+      "word": "READ",
+      "category": "action",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bread",
+        "ready",
+        "red",
+        "bean",
+        "bear",
+        "dream"
+      ]
+    },
+    {
+      "id": "remember",
+      "word": "REMEMBER",
+      "category": "action",
+      "length": 8,
+      "frequency": "familiar",
+      "letter_uniqueness": 0.5,
+      "visual_similarity_group": "L8_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "rest",
+      "word": "REST",
+      "category": "action",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "desk",
+        "fast",
+        "fresh",
+        "frost",
+        "neat",
+        "read"
+      ]
+    },
+    {
+      "id": "ride",
+      "word": "RIDE",
+      "category": "action",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "rice",
+        "wide",
+        "drive",
+        "kite",
+        "nice",
+        "pine"
+      ]
+    },
+    {
+      "id": "roll",
+      "word": "ROLL",
+      "category": "action",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 0.75,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bowl",
+        "cool",
+        "hall",
+        "hill",
+        "owl",
+        "rock"
+      ]
+    },
+    {
+      "id": "search",
+      "word": "SEARCH",
+      "category": "action",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "beach",
+        "march",
+        "peach",
+        "branch",
+        "catch",
+        "early"
+      ]
+    },
+    {
+      "id": "share",
+      "word": "SHARE",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "sharp",
+        "shore",
+        "hard",
+        "safe",
+        "shine",
+        "shoe"
+      ]
+    },
+    {
+      "id": "shine",
+      "word": "SHINE",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "phone",
+        "pine",
+        "share",
+        "shoe",
+        "shore",
+        "smile"
+      ]
+    },
+    {
+      "id": "sit",
+      "word": "SIT",
+      "category": "action",
+      "length": 3,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L3_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "ant",
+        "cat",
+        "hat",
+        "kite",
+        "sky",
+        "soft"
+      ]
+    },
+    {
+      "id": "smile",
+      "word": "SMILE",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "shine",
+        "simple",
+        "small",
+        "soil",
+        "spice",
+        "still"
+      ]
+    },
+    {
+      "id": "spin",
+      "word": "SPIN",
+      "category": "action",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "coin",
+        "open",
+        "pan",
+        "pine",
+        "rain",
+        "shine"
+      ]
+    },
+    {
+      "id": "stand",
+      "word": "STAND",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "sand",
+        "island",
+        "stamp",
+        "star",
+        "start",
+        "stone"
+      ]
+    },
+    {
+      "id": "start",
+      "word": "START",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "star",
+        "share",
+        "sharp",
+        "short",
+        "stamp",
+        "stand"
+      ]
+    },
+    {
+      "id": "stop",
+      "word": "STOP",
+      "category": "action",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "shop",
+        "shoe",
+        "slow",
+        "snow",
+        "soap",
+        "soup"
+      ]
+    },
+    {
+      "id": "study",
+      "word": "STUDY",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "studio",
+        "cloudy",
+        "loud",
+        "ready",
+        "sand",
+        "soup"
+      ]
+    },
+    {
+      "id": "swim",
+      "word": "SWIM",
+      "category": "action",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "sit",
+        "soil",
+        "spin",
+        "swing",
+        "calm",
+        "climb"
+      ]
+    },
+    {
+      "id": "swing",
+      "word": "SWING",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "ring",
+        "shine",
+        "spin",
+        "spring",
+        "swim",
+        "wind"
+      ]
+    },
+    {
+      "id": "think",
+      "word": "THINK",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "thin",
+        "drink",
+        "shine",
+        "tiny",
+        "coin",
+        "find"
+      ]
+    },
+    {
+      "id": "throw",
+      "word": "THROW",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "grow",
+        "draw",
+        "frog",
+        "glow",
+        "shadow",
+        "shoe"
+      ]
+    },
+    {
+      "id": "touch",
+      "word": "TOUCH",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "porch",
+        "beach",
+        "bounce",
+        "brush",
+        "catch",
+        "count"
+      ]
+    },
+    {
+      "id": "travel",
+      "word": "TRAVEL",
+      "category": "action",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "trail",
+        "drawer",
+        "drive",
+        "frame",
+        "grape",
+        "river"
+      ]
+    },
+    {
+      "id": "turn",
+      "word": "TURN",
+      "category": "action",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "corn",
+        "sun",
+        "thin",
+        "acorn",
+        "bean",
+        "bird"
+      ]
+    },
+    {
+      "id": "walk",
+      "word": "WALK",
+      "category": "action",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "calm",
+        "dark",
+        "hall",
+        "pale",
+        "park",
+        "tall"
+      ]
+    },
+    {
+      "id": "wash",
+      "word": "WASH",
+      "category": "action",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "easy",
+        "fast",
+        "fish",
+        "path",
+        "vase",
+        "walk"
+      ]
+    },
+    {
+      "id": "whisper",
+      "word": "WHISPER",
+      "category": "action",
+      "length": 7,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L7_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "whistle",
+        "winter"
+      ]
+    },
+    {
+      "id": "work",
+      "word": "WORK",
+      "category": "action",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "fork",
+        "book",
+        "corn",
+        "dark",
+        "lock",
+        "look"
+      ]
+    },
+    {
+      "id": "write",
+      "word": "WRITE",
+      "category": "action",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "drive",
+        "kite",
+        "rice",
+        "ride",
+        "wide",
+        "arrive"
+      ]
+    },
+    {
+      "id": "bright",
+      "word": "BRIGHT",
+      "category": "quality",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "light",
+        "night",
+        "bridge",
+        "brush"
+      ]
+    },
+    {
+      "id": "calm",
+      "word": "CALM",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cafe",
+        "cake",
+        "camp",
+        "card",
+        "cat",
+        "farm"
+      ]
+    },
+    {
+      "id": "careful",
+      "word": "CAREFUL",
+      "category": "quality",
+      "length": 7,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L7_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "clean",
+      "word": "CLEAN",
+      "category": "quality",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "clear",
+        "bean",
+        "leaf",
+        "learn",
+        "ocean",
+        "bear"
+      ]
+    },
+    {
+      "id": "clear",
+      "word": "CLEAR",
+      "category": "quality",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "clean",
+        "bear",
+        "cellar",
+        "clever",
+        "leaf",
+        "learn"
+      ]
+    },
+    {
+      "id": "clever",
+      "word": "CLEVER",
+      "category": "quality",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "clear",
+        "clean",
+        "close",
+        "corner",
+        "creek",
+        "flower"
+      ]
+    },
+    {
+      "id": "cool",
+      "word": "COOL",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 0.75,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "tool",
+        "book",
+        "bowl",
+        "coin",
+        "comb",
+        "corn"
+      ]
+    },
+    {
+      "id": "cozy",
+      "word": "COZY",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "coin",
+        "comb",
+        "cool",
+        "corn",
+        "acorn",
+        "book"
+      ]
+    },
+    {
+      "id": "crisp",
+      "word": "CRISP",
+      "category": "quality",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cross",
+        "brush",
+        "camp",
+        "climb",
+        "close",
+        "coast"
+      ]
+    },
+    {
+      "id": "dark",
+      "word": "DARK",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "park",
+        "card",
+        "dawn",
+        "desk",
+        "duck",
+        "farm"
+      ]
+    },
+    {
+      "id": "deep",
+      "word": "DEEP",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 0.75,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "deer",
+        "desk",
+        "dew",
+        "help",
+        "sheep",
+        "bean"
+      ]
+    },
+    {
+      "id": "easy",
+      "word": "EASY",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "early",
+        "fast",
+        "heavy",
+        "ready",
+        "vase",
+        "wash"
+      ]
+    },
+    {
+      "id": "empty",
+      "word": "EMPTY",
+      "category": "quality",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "early",
+        "easy",
+        "happy"
+      ]
+    },
+    {
+      "id": "fair",
+      "word": "FAIR",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "chair",
+        "fan",
+        "farm",
+        "fast",
+        "jar",
+        "rain"
+      ]
+    },
+    {
+      "id": "fast",
+      "word": "FAST",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "ant",
+        "cat",
+        "coast",
+        "easy",
+        "fair",
+        "fan"
+      ]
+    },
+    {
+      "id": "fresh",
+      "word": "FRESH",
+      "category": "quality",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "brush",
+        "fish",
+        "forest",
+        "frost",
+        "rest",
+        "bread"
+      ]
+    },
+    {
+      "id": "gentle",
+      "word": "GENTLE",
+      "category": "quality",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bottle",
+        "candle",
+        "eagle",
+        "enter",
+        "little",
+        "pebble"
+      ]
+    },
+    {
+      "id": "glad",
+      "word": "GLAD",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "flag",
+        "glass",
+        "glow",
+        "goat",
+        "good",
+        "play"
+      ]
+    },
+    {
+      "id": "golden",
+      "word": "GOLDEN",
+      "category": "quality",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "folder",
+        "green",
+        "hidden"
+      ]
+    },
+    {
+      "id": "good",
+      "word": "GOOD",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 0.75,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "wood",
+        "book",
+        "cool",
+        "door",
+        "glad",
+        "glow"
+      ]
+    },
+    {
+      "id": "green",
+      "word": "GREEN",
+      "category": "quality",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "creek",
+        "screen",
+        "tree",
+        "bean",
+        "bread",
+        "breeze"
+      ]
+    },
+    {
+      "id": "happy",
+      "word": "HAPPY",
+      "category": "quality",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "apple",
+        "camp",
+        "carry",
+        "daily",
+        "early",
+        "easy"
+      ]
+    },
+    {
+      "id": "hard",
+      "word": "HARD",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "card",
+        "yard",
+        "bird",
+        "dark",
+        "farm",
+        "hall"
+      ]
+    },
+    {
+      "id": "heavy",
+      "word": "HEAVY",
+      "category": "quality",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "easy",
+        "ready",
+        "beach",
+        "bean",
+        "bear",
+        "berry"
+      ]
+    },
+    {
+      "id": "hidden",
+      "word": "HIDDEN",
+      "category": "quality",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "golden",
+        "ladder",
+        "listen"
+      ]
+    },
+    {
+      "id": "high",
+      "word": "HIGH",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 0.75,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "fish",
+        "hill",
+        "light",
+        "night",
+        "bird",
+        "dog"
+      ]
+    },
+    {
+      "id": "kind",
+      "word": "KIND",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "find",
+        "wind",
+        "bird",
+        "kite",
+        "pine",
+        "pond"
+      ]
+    },
+    {
+      "id": "large",
+      "word": "LARGE",
+      "category": "quality",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "garage",
+        "lake",
+        "laugh",
+        "cafe",
+        "cake",
+        "card"
+      ]
+    },
+    {
+      "id": "light",
+      "word": "LIGHT",
+      "category": "quality",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "night",
+        "bright",
+        "high",
+        "fish",
+        "laugh",
+        "lion"
+      ]
+    },
+    {
+      "id": "little",
+      "word": "LITTLE",
+      "category": "quality",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.667,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bottle",
+        "gentle",
+        "listen",
+        "simple",
+        "turtle",
+        "whistle"
+      ]
+    },
+    {
+      "id": "long",
+      "word": "LONG",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "dog",
+        "lion",
+        "lock",
+        "look",
+        "loud",
+        "low"
+      ]
+    },
+    {
+      "id": "loud",
+      "word": "LOUD",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cloud",
+        "good",
+        "hour",
+        "lock",
+        "long",
+        "look"
+      ]
+    },
+    {
+      "id": "low",
+      "word": "LOW",
+      "category": "quality",
+      "length": 3,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L3_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "glow",
+        "now",
+        "slow",
+        "bowl",
+        "box",
+        "dew"
+      ]
+    },
+    {
+      "id": "lucky",
+      "word": "LUCKY",
+      "category": "quality",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "duck",
+        "lock",
+        "clock",
+        "lake",
+        "look",
+        "quick"
+      ]
+    },
+    {
+      "id": "neat",
+      "word": "NEAT",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bean",
+        "bear",
+        "cat",
+        "goat",
+        "hat",
+        "leaf"
+      ]
+    },
+    {
+      "id": "new",
+      "word": "NEW",
+      "category": "quality",
+      "length": 3,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L3_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "dew",
+        "now",
+        "key",
+        "low",
+        "neat",
+        "red"
+      ]
+    },
+    {
+      "id": "nice",
+      "word": "NICE",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "rice",
+        "kite",
+        "pine",
+        "ride",
+        "spice",
+        "wide"
+      ]
+    },
+    {
+      "id": "pale",
+      "word": "PALE",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "apple",
+        "cafe",
+        "cake",
+        "calm",
+        "eagle",
+        "hall"
+      ]
+    },
+    {
+      "id": "quiet",
+      "word": "QUIET",
+      "category": "quality",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V3",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "quick",
+        "build",
+        "paint",
+        "point",
+        "ruler",
+        "sunset"
+      ]
+    },
+    {
+      "id": "quick",
+      "word": "QUICK",
+      "category": "quality",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "duck",
+        "quiet",
+        "build",
+        "clock",
+        "drink",
+        "lock"
+      ]
+    },
+    {
+      "id": "ready",
+      "word": "READY",
+      "category": "quality",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "read",
+        "bread",
+        "easy",
+        "heavy",
+        "beach",
+        "bean"
+      ]
+    },
+    {
+      "id": "red",
+      "word": "RED",
+      "category": "quality",
+      "length": 3,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L3_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "read",
+        "dew",
+        "key",
+        "new",
+        "rest",
+        "ride"
+      ]
+    },
+    {
+      "id": "round",
+      "word": "ROUND",
+      "category": "quality",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "count",
+        "loud",
+        "pond",
+        "young",
+        "bounce",
+        "cloud"
+      ]
+    },
+    {
+      "id": "safe",
+      "word": "SAFE",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cafe",
+        "cake",
+        "lake",
+        "pale",
+        "sand",
+        "share"
+      ]
+    },
+    {
+      "id": "sharp",
+      "word": "SHARP",
+      "category": "quality",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "share",
+        "hard",
+        "sheep",
+        "shop",
+        "shore",
+        "short"
+      ]
+    },
+    {
+      "id": "short",
+      "word": "SHORT",
+      "category": "quality",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "shore",
+        "share",
+        "sharp",
+        "shoe",
+        "shop",
+        "soft"
+      ]
+    },
+    {
+      "id": "simple",
+      "word": "SIMPLE",
+      "category": "quality",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "smile",
+        "apple",
+        "little",
+        "small"
+      ]
+    },
+    {
+      "id": "slow",
+      "word": "SLOW",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "glow",
+        "low",
+        "snow",
+        "grow",
+        "now",
+        "shoe"
+      ]
+    },
+    {
+      "id": "small",
+      "word": "SMALL",
+      "category": "quality",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "hall",
+        "seal",
+        "shell",
+        "smile",
+        "snail",
+        "still"
+      ]
+    },
+    {
+      "id": "smooth",
+      "word": "SMOOTH",
+      "category": "quality",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "short",
+        "spoon"
+      ]
+    },
+    {
+      "id": "soft",
+      "word": "SOFT",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "goat",
+        "safe",
+        "short",
+        "sit",
+        "soap",
+        "soil"
+      ]
+    },
+    {
+      "id": "solid",
+      "word": "SOLID",
+      "category": "quality",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "salad",
+        "soil",
+        "coin",
+        "glad",
+        "good",
+        "loud"
+      ]
+    },
+    {
+      "id": "still",
+      "word": "STILL",
+      "category": "quality",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "hill",
+        "shell",
+        "small",
+        "smile",
+        "soil",
+        "tall"
+      ]
+    },
+    {
+      "id": "strong",
+      "word": "STRONG",
+      "category": "quality",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "spring",
+        "stone",
+        "spoon",
+        "stand",
+        "storm",
+        "stream"
+      ]
+    },
+    {
+      "id": "sweet",
+      "word": "SWEET",
+      "category": "quality",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 0.8,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "sheep",
+        "street",
+        "creek",
+        "deep",
+        "deer",
+        "green"
+      ]
+    },
+    {
+      "id": "tall",
+      "word": "TALL",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 0.75,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "hall",
+        "calm",
+        "hill",
+        "pale",
+        "roll",
+        "small"
+      ]
+    },
+    {
+      "id": "thin",
+      "word": "THIN",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "think",
+        "coin",
+        "rain",
+        "shine",
+        "spin",
+        "tiny"
+      ]
+    },
+    {
+      "id": "tiny",
+      "word": "TINY",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "find",
+        "kind",
+        "pine",
+        "ring",
+        "thin",
+        "think"
+      ]
+    },
+    {
+      "id": "warm",
+      "word": "WARM",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "farm",
+        "calm",
+        "card",
+        "dark",
+        "hard",
+        "jar"
+      ]
+    },
+    {
+      "id": "wide",
+      "word": "WIDE",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "ride",
+        "kite",
+        "nice",
+        "pine",
+        "rice",
+        "wave"
+      ]
+    },
+    {
+      "id": "wild",
+      "word": "WILD",
+      "category": "quality",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "wind",
+        "bird",
+        "build",
+        "field",
+        "find",
+        "hill"
+      ]
+    },
+    {
+      "id": "young",
+      "word": "YOUNG",
+      "category": "quality",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V3",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "count",
+        "long",
+        "round",
+        "bounce",
+        "coin",
+        "corn"
+      ]
+    },
+    {
+      "id": "afternoon",
+      "word": "AFTERNOON",
+      "category": "time_weather",
+      "length": 9,
+      "frequency": "familiar",
+      "letter_uniqueness": 0.778,
+      "visual_similarity_group": "L9_V4",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "autumn",
+      "word": "AUTUMN",
+      "category": "time_weather",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "button",
+        "future"
+      ]
+    },
+    {
+      "id": "breeze",
+      "word": "BREEZE",
+      "category": "time_weather",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.667,
+      "visual_similarity_group": "L6_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bread",
+        "bridge",
+        "cheese",
+        "creek",
+        "green"
+      ]
+    },
+    {
+      "id": "cloudy",
+      "word": "CLOUDY",
+      "category": "time_weather",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cloud",
+        "clock",
+        "close",
+        "count",
+        "study"
+      ]
+    },
+    {
+      "id": "daily",
+      "word": "DAILY",
+      "category": "time_weather",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "early",
+        "build",
+        "calm",
+        "carry",
+        "dance",
+        "dark"
+      ]
+    },
+    {
+      "id": "early",
+      "word": "EARLY",
+      "category": "time_weather",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "carry",
+        "daily",
+        "eagle",
+        "easy",
+        "bear",
+        "berry"
+      ]
+    },
+    {
+      "id": "evening",
+      "word": "EVENING",
+      "category": "time_weather",
+      "length": 7,
+      "frequency": "common",
+      "letter_uniqueness": 0.714,
+      "visual_similarity_group": "L7_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": [
+        "morning"
+      ]
+    },
+    {
+      "id": "friday",
+      "word": "FRIDAY",
+      "category": "time_weather",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "bridge",
+        "today"
+      ]
+    },
+    {
+      "id": "future",
+      "word": "FUTURE",
+      "category": "time_weather",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": [
+        "autumn",
+        "picture"
+      ]
+    },
+    {
+      "id": "hour",
+      "word": "HOUR",
+      "category": "time_weather",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "door",
+        "home",
+        "house",
+        "loud",
+        "soup",
+        "bear"
+      ]
+    },
+    {
+      "id": "later",
+      "word": "LATER",
+      "category": "time_weather",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "water",
+        "enter",
+        "gather",
+        "ladder",
+        "lake",
+        "paper"
+      ]
+    },
+    {
+      "id": "minute",
+      "word": "MINUTE",
+      "category": "time_weather",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": [
+        "mouse",
+        "winter"
+      ]
+    },
+    {
+      "id": "morning",
+      "word": "MORNING",
+      "category": "time_weather",
+      "length": 7,
+      "frequency": "common",
+      "letter_uniqueness": 0.857,
+      "visual_similarity_group": "L7_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "evening",
+        "spring"
+      ]
+    },
+    {
+      "id": "night",
+      "word": "NIGHT",
+      "category": "time_weather",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "light",
+        "bright",
+        "high",
+        "fish",
+        "neat",
+        "nice"
+      ]
+    },
+    {
+      "id": "noon",
+      "word": "NOON",
+      "category": "time_weather",
+      "length": 4,
+      "frequency": "core",
+      "letter_uniqueness": 0.5,
+      "visual_similarity_group": "L4_V2",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "moon",
+        "book",
+        "coin",
+        "cool",
+        "corn",
+        "door"
+      ]
+    },
+    {
+      "id": "now",
+      "word": "NOW",
+      "category": "time_weather",
+      "length": 3,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L3_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "low",
+        "new",
+        "snow",
+        "bowl",
+        "box",
+        "dew"
+      ]
+    },
+    {
+      "id": "season",
+      "word": "SEASON",
+      "category": "time_weather",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "learn",
+        "lemon",
+        "meadow",
+        "melon",
+        "search",
+        "shadow"
+      ]
+    },
+    {
+      "id": "spring",
+      "word": "SPRING",
+      "category": "time_weather",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V1",
+      "syllable_count": 1,
+      "safe": true,
+      "orthographic_neighbors": [
+        "strong",
+        "swing",
+        "drink",
+        "morning",
+        "paint",
+        "point"
+      ]
+    },
+    {
+      "id": "summer",
+      "word": "SUMMER",
+      "category": "time_weather",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 0.833,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "ruler",
+        "spider",
+        "sugar",
+        "sunset"
+      ]
+    },
+    {
+      "id": "today",
+      "word": "TODAY",
+      "category": "time_weather",
+      "length": 5,
+      "frequency": "core",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L5_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "cozy",
+        "friday",
+        "goat",
+        "honey",
+        "play",
+        "soap"
+      ]
+    },
+    {
+      "id": "tomorrow",
+      "word": "TOMORROW",
+      "category": "time_weather",
+      "length": 8,
+      "frequency": "familiar",
+      "letter_uniqueness": 0.625,
+      "visual_similarity_group": "L8_V3",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "twilight",
+      "word": "TWILIGHT",
+      "category": "time_weather",
+      "length": 8,
+      "frequency": "familiar",
+      "letter_uniqueness": 0.75,
+      "visual_similarity_group": "L8_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "weekend",
+      "word": "WEEKEND",
+      "category": "time_weather",
+      "length": 7,
+      "frequency": "common",
+      "letter_uniqueness": 0.714,
+      "visual_similarity_group": "L7_V3",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": []
+    },
+    {
+      "id": "winter",
+      "word": "WINTER",
+      "category": "time_weather",
+      "length": 6,
+      "frequency": "common",
+      "letter_uniqueness": 1.0,
+      "visual_similarity_group": "L6_V2",
+      "syllable_count": 2,
+      "safe": true,
+      "orthographic_neighbors": [
+        "enter",
+        "water",
+        "later",
+        "listen",
+        "minute",
+        "river"
+      ]
+    },
+    {
+      "id": "yesterday",
+      "word": "YESTERDAY",
+      "category": "time_weather",
+      "length": 9,
+      "frequency": "familiar",
+      "letter_uniqueness": 0.778,
+      "visual_similarity_group": "L9_V5",
+      "syllable_count": 3,
+      "safe": true,
+      "orthographic_neighbors": []
+    }
+  ]
+}

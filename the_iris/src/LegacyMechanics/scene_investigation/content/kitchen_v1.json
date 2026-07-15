@@ -1,0 +1,328 @@
+{
+  "id": "kitchen_v1",
+  "version": "2",
+  "title": "Kitchen",
+  "description": "A warm kitchen counter with food, containers, utensils, and appliances.",
+  "background": {
+    "top": "#E8DDC9",
+    "surface": "#BE936C",
+    "line": "#7D604A",
+    "image_path": "res://assets/gameplay/scene_investigation/kitchen_background.png",
+    "surface_y": 0.5
+  },
+  "required_groups": [
+    "food",
+    "container",
+    "utensil",
+    "appliance"
+  ],
+  "question_types": [
+    "count",
+    "attribute",
+    "position",
+    "adjacency",
+    "presence"
+  ],
+  "objects": [
+    {
+      "id": "bowl",
+      "name": "bowl",
+      "visual_kind": "bowl",
+      "groups": [
+        "container"
+      ],
+      "colors": [
+        "blue",
+        "green",
+        "cream"
+      ]
+    },
+    {
+      "id": "plate",
+      "name": "plate",
+      "visual_kind": "plate",
+      "groups": [
+        "container"
+      ],
+      "colors": [
+        "cream",
+        "blue",
+        "green"
+      ]
+    },
+    {
+      "id": "mug",
+      "name": "mug",
+      "visual_kind": "mug",
+      "groups": [
+        "container"
+      ],
+      "colors": [
+        "violet",
+        "green",
+        "orange"
+      ]
+    },
+    {
+      "id": "glass",
+      "name": "glass",
+      "visual_kind": "glass",
+      "groups": [
+        "container"
+      ],
+      "colors": [
+        "blue",
+        "cream"
+      ]
+    },
+    {
+      "id": "spoon",
+      "name": "spoon",
+      "visual_kind": "spoon",
+      "groups": [
+        "utensil"
+      ],
+      "colors": [
+        "gray",
+        "blue"
+      ]
+    },
+    {
+      "id": "fork",
+      "name": "fork",
+      "visual_kind": "fork",
+      "groups": [
+        "utensil"
+      ],
+      "colors": [
+        "gray",
+        "green"
+      ]
+    },
+    {
+      "id": "whisk",
+      "name": "whisk",
+      "visual_kind": "whisk",
+      "groups": [
+        "utensil"
+      ],
+      "colors": [
+        "gray",
+        "red"
+      ]
+    },
+    {
+      "id": "cutting_board",
+      "name": "cutting board",
+      "visual_kind": "board",
+      "groups": [
+        "preparation"
+      ],
+      "colors": [
+        "brown",
+        "cream"
+      ]
+    },
+    {
+      "id": "jar",
+      "name": "jar",
+      "visual_kind": "jar",
+      "groups": [
+        "container"
+      ],
+      "colors": [
+        "yellow",
+        "red",
+        "green"
+      ]
+    },
+    {
+      "id": "kettle",
+      "name": "kettle",
+      "visual_kind": "kettle",
+      "groups": [
+        "appliance"
+      ],
+      "colors": [
+        "blue",
+        "red",
+        "gray"
+      ]
+    },
+    {
+      "id": "apple",
+      "name": "apple",
+      "visual_kind": "fruit_round",
+      "groups": [
+        "food",
+        "fruit"
+      ],
+      "colors": [
+        "red",
+        "green"
+      ]
+    },
+    {
+      "id": "orange",
+      "name": "orange",
+      "visual_kind": "fruit_round",
+      "groups": [
+        "food",
+        "fruit"
+      ],
+      "colors": [
+        "orange"
+      ]
+    },
+    {
+      "id": "bread",
+      "name": "bread",
+      "visual_kind": "bread",
+      "groups": [
+        "food"
+      ],
+      "colors": [
+        "brown",
+        "yellow"
+      ]
+    },
+    {
+      "id": "bottle",
+      "name": "bottle",
+      "visual_kind": "bottle",
+      "groups": [
+        "container"
+      ],
+      "colors": [
+        "blue",
+        "green",
+        "violet"
+      ]
+    },
+    {
+      "id": "pan",
+      "name": "pan",
+      "visual_kind": "pan",
+      "groups": [
+        "appliance"
+      ],
+      "colors": [
+        "black",
+        "blue"
+      ]
+    },
+    {
+      "id": "towel",
+      "name": "towel",
+      "visual_kind": "towel",
+      "groups": [
+        "preparation"
+      ],
+      "colors": [
+        "red",
+        "green",
+        "blue"
+      ]
+    },
+    {
+      "id": "measuring_cup",
+      "name": "measuring cup",
+      "visual_kind": "measuring_cup",
+      "groups": [
+        "container"
+      ],
+      "colors": [
+        "cream",
+        "blue"
+      ]
+    },
+    {
+      "id": "toaster",
+      "name": "toaster",
+      "visual_kind": "toaster",
+      "groups": [
+        "appliance"
+      ],
+      "colors": [
+        "gray",
+        "blue",
+        "red"
+      ]
+    },
+    {
+      "id": "banana",
+      "name": "banana",
+      "visual_kind": "banana",
+      "groups": [
+        "food",
+        "fruit"
+      ],
+      "colors": [
+        "yellow"
+      ]
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "visual_kind": "fruit_round",
+      "groups": [
+        "food",
+        "fruit"
+      ],
+      "colors": [
+        "yellow"
+      ]
+    },
+    {
+      "id": "spatula",
+      "name": "spatula",
+      "visual_kind": "spatula",
+      "groups": [
+        "utensil"
+      ],
+      "colors": [
+        "gray",
+        "red",
+        "blue"
+      ]
+    },
+    {
+      "id": "timer",
+      "name": "kitchen timer",
+      "visual_kind": "clock",
+      "groups": [
+        "appliance"
+      ],
+      "colors": [
+        "cream",
+        "red",
+        "blue"
+      ]
+    },
+    {
+      "id": "napkin",
+      "name": "napkin",
+      "visual_kind": "towel",
+      "groups": [
+        "preparation"
+      ],
+      "colors": [
+        "cream",
+        "green",
+        "blue"
+      ]
+    },
+    {
+      "id": "grater",
+      "name": "grater",
+      "visual_kind": "grater",
+      "groups": [
+        "utensil"
+      ],
+      "colors": [
+        "gray",
+        "blue"
+      ]
+    }
+  ]
+}

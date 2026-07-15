@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/FuturePlaceholder.gd" id="1_future"]
+
+[node name="WeeklyInvestigationPlaceholder" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_future")
+destination_key = "weekly_investigation"
+title_text = "WEEKLY INVESTIGATION"
+eyebrow_text = "A LONGER THREAD"
+description_text = "A featured case will unfold here, with evidence gathered across a wider arc."
+progress_text = "CASE 01  ·  NOT STARTED  ·  ARCHIVE REWARD —"
+action_text = "THE INVESTIGATION IS STILL FORMING"
+action_enabled = false
+accent_color = Color(0.47, 0.62, 0.86, 1)

@@ -1,0 +1,339 @@
+{
+  "id": "travel_desk_v1",
+  "version": "1",
+  "title": "Travel Desk",
+  "description": "An organized packing desk with documents, accessories, containers, and travel gear.",
+  "background": {
+    "top": "#CBDCE5",
+    "surface": "#9A765C",
+    "line": "#516873",
+    "image_path": "res://assets/gameplay/scene_investigation/travel_desk_background.png",
+    "surface_y": 0.4
+  },
+  "required_groups": [
+    "travel_document",
+    "travel_gear",
+    "container",
+    "accessory"
+  ],
+  "question_types": [
+    "count",
+    "attribute",
+    "position",
+    "adjacency",
+    "presence"
+  ],
+  "objects": [
+    {
+      "id": "passport",
+      "name": "passport",
+      "visual_kind": "book",
+      "groups": [
+        "travel_document"
+      ],
+      "colors": [
+        "blue",
+        "red",
+        "green"
+      ]
+    },
+    {
+      "id": "map",
+      "name": "folded map",
+      "visual_kind": "paper",
+      "groups": [
+        "travel_document"
+      ],
+      "colors": [
+        "cream",
+        "yellow",
+        "sky"
+      ]
+    },
+    {
+      "id": "tickets",
+      "name": "tickets",
+      "visual_kind": "paper",
+      "groups": [
+        "travel_document"
+      ],
+      "colors": [
+        "cream",
+        "blue",
+        "yellow"
+      ]
+    },
+    {
+      "id": "itinerary",
+      "name": "itinerary",
+      "visual_kind": "paper",
+      "groups": [
+        "travel_document"
+      ],
+      "colors": [
+        "cream",
+        "mint",
+        "sky"
+      ]
+    },
+    {
+      "id": "camera",
+      "name": "camera",
+      "visual_kind": "camera",
+      "groups": [
+        "travel_gear",
+        "device"
+      ],
+      "colors": [
+        "black",
+        "blue",
+        "red"
+      ]
+    },
+    {
+      "id": "compass",
+      "name": "compass",
+      "visual_kind": "compass",
+      "groups": [
+        "travel_gear"
+      ],
+      "colors": [
+        "gray",
+        "yellow",
+        "blue"
+      ]
+    },
+    {
+      "id": "binoculars",
+      "name": "binoculars",
+      "visual_kind": "glasses",
+      "groups": [
+        "travel_gear"
+      ],
+      "colors": [
+        "black",
+        "green",
+        "blue"
+      ]
+    },
+    {
+      "id": "flashlight",
+      "name": "flashlight",
+      "visual_kind": "flashlight",
+      "groups": [
+        "travel_gear"
+      ],
+      "colors": [
+        "blue",
+        "red",
+        "gray"
+      ]
+    },
+    {
+      "id": "bottle",
+      "name": "water bottle",
+      "visual_kind": "bottle",
+      "groups": [
+        "container"
+      ],
+      "colors": [
+        "blue",
+        "green",
+        "violet"
+      ]
+    },
+    {
+      "id": "mug",
+      "name": "travel mug",
+      "visual_kind": "mug",
+      "groups": [
+        "container"
+      ],
+      "colors": [
+        "red",
+        "blue",
+        "green"
+      ]
+    },
+    {
+      "id": "case",
+      "name": "small case",
+      "visual_kind": "toolbox",
+      "groups": [
+        "container"
+      ],
+      "colors": [
+        "blue",
+        "red",
+        "gray"
+      ]
+    },
+    {
+      "id": "pouch",
+      "name": "zip pouch",
+      "visual_kind": "folder",
+      "groups": [
+        "container"
+      ],
+      "colors": [
+        "violet",
+        "green",
+        "orange"
+      ]
+    },
+    {
+      "id": "sunglasses",
+      "name": "sunglasses",
+      "visual_kind": "glasses",
+      "groups": [
+        "accessory"
+      ],
+      "colors": [
+        "black",
+        "blue",
+        "red"
+      ]
+    },
+    {
+      "id": "keys",
+      "name": "keys",
+      "visual_kind": "keys",
+      "groups": [
+        "accessory"
+      ],
+      "colors": [
+        "gray",
+        "yellow"
+      ]
+    },
+    {
+      "id": "watch",
+      "name": "watch",
+      "visual_kind": "clock",
+      "groups": [
+        "accessory"
+      ],
+      "colors": [
+        "blue",
+        "gray",
+        "black"
+      ]
+    },
+    {
+      "id": "tag",
+      "name": "luggage tag",
+      "visual_kind": "tag",
+      "groups": [
+        "accessory"
+      ],
+      "colors": [
+        "red",
+        "yellow",
+        "blue"
+      ]
+    },
+    {
+      "id": "pen",
+      "name": "pen",
+      "visual_kind": "pen",
+      "groups": [
+        "writing"
+      ],
+      "colors": [
+        "black",
+        "blue",
+        "green"
+      ]
+    },
+    {
+      "id": "notebook",
+      "name": "notebook",
+      "visual_kind": "book",
+      "groups": [
+        "travel_document"
+      ],
+      "colors": [
+        "blue",
+        "green",
+        "red"
+      ]
+    },
+    {
+      "id": "charger",
+      "name": "charger",
+      "visual_kind": "coil",
+      "groups": [
+        "device"
+      ],
+      "colors": [
+        "black",
+        "gray",
+        "blue"
+      ]
+    },
+    {
+      "id": "phone",
+      "name": "phone",
+      "visual_kind": "phone",
+      "groups": [
+        "device"
+      ],
+      "colors": [
+        "black",
+        "blue"
+      ]
+    },
+    {
+      "id": "snack",
+      "name": "snack box",
+      "visual_kind": "block",
+      "groups": [
+        "food"
+      ],
+      "colors": [
+        "orange",
+        "green",
+        "yellow"
+      ]
+    },
+    {
+      "id": "scarf",
+      "name": "scarf",
+      "visual_kind": "towel",
+      "groups": [
+        "accessory"
+      ],
+      "colors": [
+        "red",
+        "violet",
+        "blue"
+      ]
+    },
+    {
+      "id": "earbuds",
+      "name": "earbuds",
+      "visual_kind": "double",
+      "groups": [
+        "device"
+      ],
+      "colors": [
+        "cream",
+        "blue",
+        "black"
+      ]
+    },
+    {
+      "id": "coin_pouch",
+      "name": "coin pouch",
+      "visual_kind": "folder",
+      "groups": [
+        "container"
+      ],
+      "colors": [
+        "brown",
+        "green",
+        "blue"
+      ]
+    }
+  ]
+}

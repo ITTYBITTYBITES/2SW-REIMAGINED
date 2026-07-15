@@ -1,0 +1,67 @@
+{
+  "version": "2",
+  "templates": [
+    {
+      "id": "single_word_v1",
+      "title": "Single Word",
+      "description": "Catch one word in a quick flash.",
+      "mode": "single",
+      "question_types": [
+        "word_recognition"
+      ],
+      "allowed_distractors": [
+        "orthographic",
+        "substitution",
+        "transposition",
+        "similar_length",
+        "semantic"
+      ]
+    },
+    {
+      "id": "word_pair_order_v1",
+      "title": "Word Pair",
+      "description": "Remember two words in the exact order.",
+      "mode": "pair",
+      "question_types": [
+        "pair_order"
+      ],
+      "allowed_distractors": [
+        "reversed_order",
+        "single_substitution",
+        "orthographic",
+        "similar_length",
+        "semantic"
+      ]
+    },
+    {
+      "id": "word_stream_presence_v1",
+      "title": "Word Stream",
+      "description": "Spot which word appeared in a short sequence.",
+      "mode": "stream",
+      "question_types": [
+        "stream_presence"
+      ],
+      "allowed_distractors": [
+        "orthographic",
+        "similar_length",
+        "semantic"
+      ]
+    },
+    {
+      "id": "position_catch_v1",
+      "title": "Position Catch",
+      "mode": "position",
+      "description": "Catch the word shown in one exact position of a short stream.",
+      "question_types": [
+        "position_recall"
+      ],
+      "allowed_distractors": [
+        "orthographic",
+        "similar_length",
+        "semantic",
+        "single_substitution",
+        "transposition"
+      ]
+    }
+  ]
+}

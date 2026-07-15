@@ -1,0 +1,330 @@
+{
+  "id": "workshop_v1",
+  "version": "2",
+  "title": "Workshop",
+  "description": "An organized workbench with tools, parts, equipment, and materials.",
+  "background": {
+    "top": "#B8BEC3",
+    "surface": "#8B6B50",
+    "line": "#4D4F52",
+    "image_path": "res://assets/gameplay/scene_investigation/workshop_background.png",
+    "surface_y": 0.43
+  },
+  "required_groups": [
+    "tool",
+    "hardware",
+    "safety",
+    "material"
+  ],
+  "question_types": [
+    "count",
+    "attribute",
+    "position",
+    "adjacency",
+    "presence"
+  ],
+  "objects": [
+    {
+      "id": "hammer",
+      "name": "hammer",
+      "visual_kind": "hammer",
+      "groups": [
+        "tool"
+      ],
+      "colors": [
+        "brown",
+        "blue",
+        "red"
+      ]
+    },
+    {
+      "id": "screwdriver",
+      "name": "screwdriver",
+      "visual_kind": "screwdriver",
+      "groups": [
+        "tool"
+      ],
+      "colors": [
+        "red",
+        "yellow",
+        "blue"
+      ]
+    },
+    {
+      "id": "wrench",
+      "name": "wrench",
+      "visual_kind": "wrench",
+      "groups": [
+        "tool"
+      ],
+      "colors": [
+        "gray",
+        "blue"
+      ]
+    },
+    {
+      "id": "pliers",
+      "name": "pliers",
+      "visual_kind": "pliers",
+      "groups": [
+        "tool"
+      ],
+      "colors": [
+        "red",
+        "green",
+        "blue"
+      ]
+    },
+    {
+      "id": "tape_measure",
+      "name": "tape measure",
+      "visual_kind": "tape_measure",
+      "groups": [
+        "measurement"
+      ],
+      "colors": [
+        "yellow",
+        "red",
+        "blue"
+      ]
+    },
+    {
+      "id": "level",
+      "name": "level",
+      "visual_kind": "level",
+      "groups": [
+        "measurement"
+      ],
+      "colors": [
+        "yellow",
+        "green",
+        "blue"
+      ]
+    },
+    {
+      "id": "safety_glasses",
+      "name": "safety glasses",
+      "visual_kind": "glasses",
+      "groups": [
+        "safety"
+      ],
+      "colors": [
+        "blue",
+        "yellow"
+      ]
+    },
+    {
+      "id": "gloves",
+      "name": "gloves",
+      "visual_kind": "gloves",
+      "groups": [
+        "safety"
+      ],
+      "colors": [
+        "yellow",
+        "red",
+        "blue"
+      ]
+    },
+    {
+      "id": "bolts",
+      "name": "bolts",
+      "visual_kind": "hardware",
+      "groups": [
+        "hardware"
+      ],
+      "colors": [
+        "gray",
+        "blue"
+      ]
+    },
+    {
+      "id": "screws",
+      "name": "screws",
+      "visual_kind": "hardware",
+      "groups": [
+        "hardware"
+      ],
+      "colors": [
+        "gray",
+        "yellow"
+      ]
+    },
+    {
+      "id": "drill",
+      "name": "drill",
+      "visual_kind": "drill",
+      "groups": [
+        "equipment"
+      ],
+      "colors": [
+        "blue",
+        "red",
+        "green"
+      ]
+    },
+    {
+      "id": "clamp",
+      "name": "clamp",
+      "visual_kind": "clamp",
+      "groups": [
+        "tool"
+      ],
+      "colors": [
+        "red",
+        "blue",
+        "gray"
+      ]
+    },
+    {
+      "id": "brush",
+      "name": "brush",
+      "visual_kind": "brush",
+      "groups": [
+        "tool"
+      ],
+      "colors": [
+        "brown",
+        "red",
+        "blue"
+      ]
+    },
+    {
+      "id": "wood_block",
+      "name": "wood block",
+      "visual_kind": "block",
+      "groups": [
+        "material"
+      ],
+      "colors": [
+        "brown",
+        "yellow"
+      ]
+    },
+    {
+      "id": "bracket",
+      "name": "metal bracket",
+      "visual_kind": "bracket",
+      "groups": [
+        "material"
+      ],
+      "colors": [
+        "gray",
+        "blue"
+      ]
+    },
+    {
+      "id": "toolbox",
+      "name": "toolbox",
+      "visual_kind": "toolbox",
+      "groups": [
+        "equipment"
+      ],
+      "colors": [
+        "red",
+        "blue",
+        "green"
+      ]
+    },
+    {
+      "id": "pencil",
+      "name": "pencil",
+      "visual_kind": "pencil",
+      "groups": [
+        "measurement"
+      ],
+      "colors": [
+        "yellow",
+        "red"
+      ]
+    },
+    {
+      "id": "flashlight",
+      "name": "flashlight",
+      "visual_kind": "flashlight",
+      "groups": [
+        "equipment"
+      ],
+      "colors": [
+        "blue",
+        "red",
+        "gray"
+      ]
+    },
+    {
+      "id": "sandpaper",
+      "name": "sandpaper",
+      "visual_kind": "paper",
+      "groups": [
+        "material"
+      ],
+      "colors": [
+        "brown",
+        "yellow"
+      ]
+    },
+    {
+      "id": "nuts",
+      "name": "nuts",
+      "visual_kind": "hardware",
+      "groups": [
+        "hardware"
+      ],
+      "colors": [
+        "gray",
+        "blue"
+      ]
+    },
+    {
+      "id": "square",
+      "name": "carpenter square",
+      "visual_kind": "bracket",
+      "groups": [
+        "measurement"
+      ],
+      "colors": [
+        "gray",
+        "yellow"
+      ]
+    },
+    {
+      "id": "saw",
+      "name": "hand saw",
+      "visual_kind": "saw",
+      "groups": [
+        "tool"
+      ],
+      "colors": [
+        "gray",
+        "red",
+        "blue"
+      ]
+    },
+    {
+      "id": "mask",
+      "name": "dust mask",
+      "visual_kind": "mask",
+      "groups": [
+        "safety"
+      ],
+      "colors": [
+        "cream",
+        "blue",
+        "gray"
+      ]
+    },
+    {
+      "id": "wire",
+      "name": "wire coil",
+      "visual_kind": "coil",
+      "groups": [
+        "material"
+      ],
+      "colors": [
+        "red",
+        "blue",
+        "black"
+      ]
+    }
+  ]
+}

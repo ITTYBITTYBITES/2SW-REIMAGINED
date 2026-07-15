@@ -1,0 +1,32 @@
+{
+  "id": "flashword",
+  "title": "Flashword",
+  "short_description": "Observe. Remember. Recall.",
+  "description": "A 2-second glance at a word, then recall from memory under pressure. Tests observation, memory, and quick decision-making.",
+  "category": "memory",
+  "tags": ["memory", "observation", "quick", "word"],
+  "version": "1.0.0-foundation",
+  "min_app_version": "2.0.0",
+  "difficulty": ["easy", "medium", "hard"],
+  "estimated_duration_sec": 15,
+  "icon": "flashword",
+  "preview_color": "#7C5CFF",
+  "preview_gradient": ["#7C5CFF", "#9B83FF"],
+  "is_locked": false,
+  "coming_soon": false,
+  "is_featured": true,
+  "author": "Two Second Witness Team",
+  "rules": {
+    "observation_ms": 2000,
+    "recall_ms": 5000,
+    "choices_count": 4
+  },
+  "scoring": {
+    "base_points": 10,
+    "speed_bonus": true,
+    "streak_bonus": true
+  },
+  "assets": {
+    "word_list": "res://src/experiences/flashword/words.json"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "moment_id": "WM_001",
+  "chapter_id": "chapter_01_learning_to_notice",
+  "title": "Learning to Notice",
+  "setting": "A first witness field",
+  "theme": "Attention begins with staying present",
+  "rank_requirement": 1,
+  "narrative_introduction": "The instrument opens a small field and waits for you to stay with it.",
+  "mechanics": {
+    "observation": "Observation Mechanic TBD",
+    "memory": "Memory Reconstruction Mechanic TBD",
+    "discovery": "Discovery Mechanic TBD",
+    "evidence": "Evidence Connection Mechanic TBD",
+    "reflection": "Reflection Mechanic TBD"
+  },
+  "production_context": {
+    "family_id": "scene_investigation",
+    "template_id": "office_v1",
+    "source": "story_mode_runtime_skeleton"
+  },
+  "rewards": {
+    "progress_points": 12,
+    "archive_entry": "first_attention_field"
+  },
+  "archive_mapping": {
+    "title": "First Attention Field",
+    "category": "chapter_01"
+  }
+}

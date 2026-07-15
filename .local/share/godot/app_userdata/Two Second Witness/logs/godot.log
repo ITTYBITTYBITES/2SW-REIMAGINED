@@ -1,0 +1,7 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+SKELETON boot=true
+SKELETON active_screen=witness
+SKELETON phase=true
+SKELETON route=tutorial
+SKELETON snapshot={ "moment_id": "WM_001", "moment_version": 1, "phase": 2, "beat_index": 2, "production_route": "", "production_session_id": "", "started_at_ms": 2091, "result_committed": false, "resume_allowed": true }

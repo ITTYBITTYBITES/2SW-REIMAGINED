@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/VoiceGuide.gd" id="1_voice"]
+
+[node name="VoiceGuide" type="Node"]
+script = ExtResource("1_voice")
+
+[node name="VoicePlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -9.0

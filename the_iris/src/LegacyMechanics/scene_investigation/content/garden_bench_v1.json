@@ -1,0 +1,339 @@
+{
+  "id": "garden_bench_v1",
+  "version": "1",
+  "title": "Garden Bench",
+  "description": "A bright garden work surface with tools, plant care items, containers, and materials.",
+  "background": {
+    "top": "#CFE4D4",
+    "surface": "#927052",
+    "line": "#496A52",
+    "image_path": "res://assets/gameplay/scene_investigation/garden_bench_background.png",
+    "surface_y": 0.44
+  },
+  "required_groups": [
+    "garden_tool",
+    "plant_care",
+    "container",
+    "material"
+  ],
+  "question_types": [
+    "count",
+    "attribute",
+    "position",
+    "adjacency",
+    "presence"
+  ],
+  "objects": [
+    {
+      "id": "trowel",
+      "name": "trowel",
+      "visual_kind": "trowel",
+      "groups": [
+        "garden_tool"
+      ],
+      "colors": [
+        "gray",
+        "green",
+        "blue"
+      ]
+    },
+    {
+      "id": "fork",
+      "name": "hand fork",
+      "visual_kind": "fork",
+      "groups": [
+        "garden_tool"
+      ],
+      "colors": [
+        "gray",
+        "green",
+        "red"
+      ]
+    },
+    {
+      "id": "pruners",
+      "name": "pruners",
+      "visual_kind": "scissors",
+      "groups": [
+        "garden_tool"
+      ],
+      "colors": [
+        "green",
+        "red",
+        "blue"
+      ]
+    },
+    {
+      "id": "dibber",
+      "name": "planting tool",
+      "visual_kind": "pencil",
+      "groups": [
+        "garden_tool"
+      ],
+      "colors": [
+        "brown",
+        "green",
+        "blue"
+      ]
+    },
+    {
+      "id": "watering_can",
+      "name": "watering can",
+      "visual_kind": "watering_can",
+      "groups": [
+        "plant_care",
+        "container"
+      ],
+      "colors": [
+        "green",
+        "blue",
+        "red"
+      ]
+    },
+    {
+      "id": "spray_bottle",
+      "name": "spray bottle",
+      "visual_kind": "bottle",
+      "groups": [
+        "plant_care",
+        "container"
+      ],
+      "colors": [
+        "blue",
+        "green",
+        "violet"
+      ]
+    },
+    {
+      "id": "fertilizer",
+      "name": "plant food",
+      "visual_kind": "bottle",
+      "groups": [
+        "plant_care"
+      ],
+      "colors": [
+        "green",
+        "yellow",
+        "blue"
+      ]
+    },
+    {
+      "id": "labels",
+      "name": "plant labels",
+      "visual_kind": "hardware",
+      "groups": [
+        "plant_care"
+      ],
+      "colors": [
+        "cream",
+        "yellow",
+        "blue"
+      ]
+    },
+    {
+      "id": "pot",
+      "name": "plant pot",
+      "visual_kind": "pot",
+      "groups": [
+        "container"
+      ],
+      "colors": [
+        "brown",
+        "red",
+        "blue"
+      ]
+    },
+    {
+      "id": "seed_tray",
+      "name": "seed tray",
+      "visual_kind": "board",
+      "groups": [
+        "container"
+      ],
+      "colors": [
+        "black",
+        "green",
+        "brown"
+      ]
+    },
+    {
+      "id": "bucket",
+      "name": "small bucket",
+      "visual_kind": "mug",
+      "groups": [
+        "container"
+      ],
+      "colors": [
+        "blue",
+        "red",
+        "yellow"
+      ]
+    },
+    {
+      "id": "jar",
+      "name": "seed jar",
+      "visual_kind": "jar",
+      "groups": [
+        "container"
+      ],
+      "colors": [
+        "cream",
+        "yellow",
+        "green"
+      ]
+    },
+    {
+      "id": "twine",
+      "name": "twine",
+      "visual_kind": "coil",
+      "groups": [
+        "material"
+      ],
+      "colors": [
+        "brown",
+        "yellow"
+      ]
+    },
+    {
+      "id": "seed_packets",
+      "name": "seed packets",
+      "visual_kind": "paper",
+      "groups": [
+        "material"
+      ],
+      "colors": [
+        "yellow",
+        "green",
+        "red"
+      ]
+    },
+    {
+      "id": "stones",
+      "name": "garden stones",
+      "visual_kind": "hardware",
+      "groups": [
+        "material"
+      ],
+      "colors": [
+        "gray",
+        "brown",
+        "cream"
+      ]
+    },
+    {
+      "id": "cloth",
+      "name": "garden cloth",
+      "visual_kind": "towel",
+      "groups": [
+        "material"
+      ],
+      "colors": [
+        "green",
+        "blue",
+        "cream"
+      ]
+    },
+    {
+      "id": "gloves",
+      "name": "garden gloves",
+      "visual_kind": "gloves",
+      "groups": [
+        "safety"
+      ],
+      "colors": [
+        "green",
+        "yellow",
+        "red"
+      ]
+    },
+    {
+      "id": "brush",
+      "name": "soft brush",
+      "visual_kind": "brush",
+      "groups": [
+        "garden_tool"
+      ],
+      "colors": [
+        "brown",
+        "green",
+        "blue"
+      ]
+    },
+    {
+      "id": "ruler",
+      "name": "plant ruler",
+      "visual_kind": "ruler",
+      "groups": [
+        "measurement"
+      ],
+      "colors": [
+        "yellow",
+        "green",
+        "blue"
+      ]
+    },
+    {
+      "id": "notebook",
+      "name": "garden notebook",
+      "visual_kind": "book",
+      "groups": [
+        "plant_care"
+      ],
+      "colors": [
+        "green",
+        "blue",
+        "brown"
+      ]
+    },
+    {
+      "id": "pencil",
+      "name": "pencil",
+      "visual_kind": "pencil",
+      "groups": [
+        "writing"
+      ],
+      "colors": [
+        "yellow",
+        "red",
+        "blue"
+      ]
+    },
+    {
+      "id": "magnifier",
+      "name": "magnifier",
+      "visual_kind": "magnifier",
+      "groups": [
+        "garden_tool"
+      ],
+      "colors": [
+        "gray",
+        "blue",
+        "green"
+      ]
+    },
+    {
+      "id": "plant",
+      "name": "small plant",
+      "visual_kind": "plant",
+      "groups": [
+        "plant_care"
+      ],
+      "colors": [
+        "green"
+      ]
+    },
+    {
+      "id": "basket",
+      "name": "garden basket",
+      "visual_kind": "basket",
+      "groups": [
+        "container"
+      ],
+      "colors": [
+        "brown",
+        "yellow",
+        "red"
+      ]
+    }
+  ]
+}

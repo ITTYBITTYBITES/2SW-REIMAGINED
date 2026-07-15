@@ -1,0 +1,244 @@
+[gd_scene load_steps=6 format=3 uid="uid://app_shell"]
+
+[ext_resource type="Script" path="res://src/ui/shell/AppShell.gd" id="1_shell"]
+[ext_resource type="Script" path="res://src/ui/shell/TopBar.gd" id="2_topbar"]
+[ext_resource type="Script" path="res://src/ui/shell/MainNavigation.gd" id="3_nav"]
+[ext_resource type="Texture2D" uid="uid://c3gj5np5jt5ss" path="res://assets/brand/witness_eye_glow.png" id="4_eye"]
+
+[node name="AppShell" type="Control"]
+layout_mode=3
+anchors_preset=15
+anchor_right=1.0
+anchor_bottom=1.0
+grow_horizontal=2
+grow_vertical=2
+script=ExtResource("1_shell")
+
+[node name="BackgroundLayer" type="Panel" parent="."]
+layout_mode=1
+anchors_preset=15
+anchor_right=1.0
+anchor_bottom=1.0
+grow_horizontal=2
+grow_vertical=2
+mouse_filter=2
+
+[node name="ContentLayer" type="Control" parent="."]
+layout_mode=1
+anchors_preset=15
+anchor_right=1.0
+anchor_bottom=1.0
+grow_horizontal=2
+grow_vertical=2
+mouse_filter=2
+
+[node name="TopBarContainer" type="Control" parent="ContentLayer"]
+layout_mode=1
+anchors_preset=10
+anchor_right=1.0
+grow_horizontal=2
+mouse_filter=2
+
+[node name="ContentContainer" type="Control" parent="ContentLayer"]
+layout_mode=1
+anchors_preset=15
+anchor_right=1.0
+anchor_bottom=1.0
+grow_horizontal=2
+grow_vertical=2
+mouse_filter=2
+custom_minimum_size=Vector2(0,0)
+
+[node name="NavigationLayer" type="Control" parent="."]
+layout_mode=1
+anchors_preset=12
+anchor_top=1.0
+anchor_right=1.0
+anchor_bottom=1.0
+grow_horizontal=2
+grow_vertical=0
+mouse_filter=2
+
+[node name="TopBarLayer" type="Control" parent="."]
+layout_mode=1
+anchors_preset=10
+anchor_right=1.0
+grow_horizontal=2
+mouse_filter=2
+
+[node name="TopBar" type="Panel" parent="TopBarLayer"]
+layout_mode=1
+anchors_preset=10
+anchor_right=1.0
+grow_horizontal=2
+script=ExtResource("2_topbar")
+
+[node name="Margin" type="MarginContainer" parent="TopBarLayer/TopBar"]
+layout_mode=1
+anchors_preset=15
+anchor_right=1.0
+anchor_bottom=1.0
+grow_horizontal=2
+grow_vertical=2
+
+[node name="HBox" type="HBoxContainer" parent="TopBarLayer/TopBar/Margin"]
+layout_mode=2
+alignment=1
+
+[node name="BackButton" type="Button" parent="TopBarLayer/TopBar/Margin/HBox"]
+custom_minimum_size=Vector2(40, 40)
+layout_mode=2
+text="Back"
+
+[node name="Title" type="Label" parent="TopBarLayer/TopBar/Margin/HBox"]
+custom_minimum_size=Vector2(100, 0)
+layout_mode=2
+size_flags_horizontal=3
+text="Two Second Witness"
+vertical_alignment=1
+
+[node name="Actions" type="HBoxContainer" parent="TopBarLayer/TopBar/Margin/HBox"]
+layout_mode=2
+alignment=2
+
+[node name="SettingsButton" type="Button" parent="TopBarLayer/TopBar/Margin/HBox/Actions"]
+custom_minimum_size=Vector2(40, 40)
+layout_mode=2
+text="Settings"
+
+[node name="ProfileButton" type="Button" parent="TopBarLayer/TopBar/Margin/HBox/Actions"]
+custom_minimum_size=Vector2(40, 40)
+layout_mode=2
+text="Record"
+
+[node name="MainNavigation" type="Panel" parent="NavigationLayer"]
+layout_mode=1
+anchors_preset=12
+anchor_top=1.0
+anchor_right=1.0
+anchor_bottom=1.0
+grow_horizontal=2
+grow_vertical=0
+script=ExtResource("3_nav")
+
+[node name="Margin" type="MarginContainer" parent="NavigationLayer/MainNavigation"]
+layout_mode=1
+anchors_preset=15
+anchor_right=1.0
+anchor_bottom=1.0
+grow_horizontal=2
+grow_vertical=2
+
+[node name="HBox" type="HBoxContainer" parent="NavigationLayer/MainNavigation/Margin"]
+layout_mode=2
+alignment=1
+
+[node name="home_Container" type="VBoxContainer" parent="NavigationLayer/MainNavigation/Margin/HBox"]
+layout_mode=2
+size_flags_horizontal=3
+alignment=1
+
+[node name="home_Button" type="Button" parent="NavigationLayer/MainNavigation/Margin/HBox/home_Container"]
+custom_minimum_size=Vector2(0, 60)
+layout_mode=2
+size_flags_horizontal=3
+text="Begin\nWitness"
+
+[node name="experiences_Container" type="VBoxContainer" parent="NavigationLayer/MainNavigation/Margin/HBox"]
+visible = false
+layout_mode=2
+size_flags_horizontal=3
+alignment=1
+
+[node name="experiences_Button" type="Button" parent="NavigationLayer/MainNavigation/Margin/HBox/experiences_Container"]
+custom_minimum_size=Vector2(0, 60)
+layout_mode=2
+size_flags_horizontal=3
+text="Explore\nLibrary"
+
+[node name="profile_Container" type="VBoxContainer" parent="NavigationLayer/MainNavigation/Margin/HBox"]
+layout_mode=2
+size_flags_horizontal=3
+alignment=1
+
+[node name="profile_Button" type="Button" parent="NavigationLayer/MainNavigation/Margin/HBox/profile_Container"]
+custom_minimum_size=Vector2(0, 60)
+layout_mode=2
+size_flags_horizontal=3
+text="Yours\nRecord"
+
+[node name="settings_Container" type="VBoxContainer" parent="NavigationLayer/MainNavigation/Margin/HBox"]
+layout_mode=2
+size_flags_horizontal=3
+alignment=1
+
+[node name="settings_Button" type="Button" parent="NavigationLayer/MainNavigation/Margin/HBox/settings_Container"]
+custom_minimum_size=Vector2(0, 60)
+layout_mode=2
+size_flags_horizontal=3
+text="Settings"
+
+[node name="OverlayLayer" type="Control" parent="."]
+layout_mode=1
+anchors_preset=15
+anchor_right=1.0
+anchor_bottom=1.0
+grow_horizontal=2
+grow_vertical=2
+mouse_filter=2
+
+[node name="LoadingOverlay" type="Panel" parent="OverlayLayer" groups=["overlay"]]
+visible=false
+layout_mode=1
+anchors_preset=15
+anchor_right=1.0
+anchor_bottom=1.0
+grow_horizontal=2
+grow_vertical=2
+mouse_filter=0
+
+[node name="Center" type="CenterContainer" parent="OverlayLayer/LoadingOverlay"]
+layout_mode=1
+anchors_preset=15
+anchor_right=1.0
+anchor_bottom=1.0
+grow_horizontal=2
+grow_vertical=2
+
+[node name="VBox" type="VBoxContainer" parent="OverlayLayer/LoadingOverlay/Center"]
+layout_mode=2
+alignment=1
+theme_override_constants/separation=12
+
+[node name="Spinner" type="TextureRect" parent="OverlayLayer/LoadingOverlay/Center/VBox"]
+custom_minimum_size=Vector2(120, 54)
+layout_mode=2
+texture=ExtResource("4_eye")
+expand_mode=1
+stretch_mode=5
+
+[node name="Message" type="Label" parent="OverlayLayer/LoadingOverlay/Center/VBox"]
+layout_mode=2
+text="Preparing…"
+horizontal_alignment=1
+
+[node name="ErrorBanner" type="Panel" parent="OverlayLayer"]
+visible=false
+layout_mode=1
+anchors_preset=10
+anchor_right=1.0
+grow_horizontal=2
+custom_minimum_size=Vector2(0, 60)
+
+[node name="Margin" type="MarginContainer" parent="OverlayLayer/ErrorBanner"]
+layout_mode=1
+anchors_preset=15
+anchor_right=1.0
+anchor_bottom=1.0
+grow_horizontal=2
+grow_vertical=2
+
+[node name="Label" type="Label" parent="OverlayLayer/ErrorBanner/Margin"]
+layout_mode=2
+text="Error message"
+autowrap_mode=3

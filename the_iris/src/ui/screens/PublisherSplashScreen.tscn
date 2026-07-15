@@ -1,0 +1,63 @@
+[gd_scene load_steps=3 format=3 uid="uid://publisher_splash"]
+
+[ext_resource type="Script" path="res://src/ui/screens/PublisherSplashScreen.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/splash/ittybittybites_splash.png" id="2_sponsor"]
+
+[node name="PublisherSplashScreen" type="Control" groups=["app_screen"]]
+layout_mode=3
+anchors_preset=15
+anchor_right=1.0
+anchor_bottom=1.0
+grow_horizontal=2
+grow_vertical=2
+script=ExtResource("1_script")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode=1
+anchors_preset=15
+anchor_right=1.0
+anchor_bottom=1.0
+grow_horizontal=2
+grow_vertical=2
+color=Color(0.0588235, 0.0588235, 0.0705882, 1)
+
+[node name="SponsorArtwork" type="TextureRect" parent="."]
+layout_mode=1
+anchors_preset=15
+anchor_right=1.0
+anchor_bottom=1.0
+grow_horizontal=2
+grow_vertical=2
+texture=ExtResource("2_sponsor")
+expand_mode=1
+stretch_mode=6
+mouse_filter=2
+
+[node name="Center" type="CenterContainer" parent="."]
+visible=false
+layout_mode=1
+anchors_preset=15
+anchor_right=1.0
+anchor_bottom=1.0
+grow_horizontal=2
+grow_vertical=2
+
+[node name="VBox" type="VBoxContainer" parent="Center"]
+layout_mode=2
+alignment=1
+
+[node name="Brand" type="Label" parent="Center/VBox"]
+layout_mode=2
+text="ITTYBITTYBITES"
+horizontal_alignment=1
+
+[node name="Subtitle" type="Label" parent="Center/VBox"]
+layout_mode=2
+text="Interactive Experiences"
+horizontal_alignment=1
+
+[node name="Dot" type="Label" parent="Center/VBox"]
+layout_mode=2
+text="•"
+horizontal_alignment=1
+visible=false

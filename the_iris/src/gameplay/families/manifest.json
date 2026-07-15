@@ -1,0 +1,5 @@
+{
+  "deprecated": true,
+  "canonical_manifest": "res://src/LegacyMechanics/manifest.json",
+  "note": "Legacy mechanic family registry moved to src/LegacyMechanics. This compatibility marker is not loaded by the runtime."
+}

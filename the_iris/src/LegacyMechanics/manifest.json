@@ -1,0 +1,41 @@
+{
+  "version": 3,
+  "families": [
+    {
+      "id": "scene_investigation",
+      "enabled": true,
+      "module_script": "res://src/LegacyMechanics/scene_investigation/SceneInvestigationFamily.gd",
+      "content_role": "production"
+    },
+    {
+      "id": "flash_words",
+      "enabled": true,
+      "module_script": "res://src/LegacyMechanics/flash_words/FlashWordsFamily.gd",
+      "content_role": "production"
+    },
+    {
+      "id": "spot_the_difference",
+      "enabled": true,
+      "module_script": "res://src/LegacyMechanics/spot_the_difference/SpotDifferenceFamily.gd",
+      "content_role": "production"
+    },
+    {
+      "id": "object_recall",
+      "enabled": true,
+      "module_script": "res://src/LegacyMechanics/object_recall/ObjectRecallFamily.gd",
+      "content_role": "production"
+    },
+    {
+      "id": "pattern_recall",
+      "enabled": true,
+      "module_script": "res://src/LegacyMechanics/pattern_recall/PatternRecallFamily.gd",
+      "content_role": "production"
+    },
+    {
+      "id": "scene_investigation_fixtures",
+      "enabled": true,
+      "module_script": "res://src/LegacyMechanics/scene_investigation/SceneInvestigationFixtureFamily.gd",
+      "content_role": "regression_compatibility"
+    }
+  ]
+}

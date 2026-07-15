@@ -1,0 +1,487 @@
+{
+  "version": 2,
+  "review_status": "phase_5_5_curated",
+  "count": 48,
+  "objects": [
+    {
+      "id": "anchor",
+      "label": "Anchor",
+      "kind": "anchor",
+      "category": "travel",
+      "colors": [
+        "#5B7FD0",
+        "#C7A548"
+      ]
+    },
+    {
+      "id": "bell",
+      "label": "Bell",
+      "kind": "bell",
+      "category": "sound",
+      "colors": [
+        "#C96854",
+        "#8A68C5"
+      ]
+    },
+    {
+      "id": "camera",
+      "label": "Camera",
+      "kind": "camera",
+      "category": "device",
+      "colors": [
+        "#4E9A72",
+        "#4F9B9B"
+      ]
+    },
+    {
+      "id": "cup",
+      "label": "Cup",
+      "kind": "cup",
+      "category": "container",
+      "colors": [
+        "#C7A548",
+        "#D17B9E"
+      ]
+    },
+    {
+      "id": "feather",
+      "label": "Feather",
+      "kind": "feather",
+      "category": "nature",
+      "colors": [
+        "#8A68C5",
+        "#7B8290"
+      ]
+    },
+    {
+      "id": "glove",
+      "label": "Glove",
+      "kind": "glove",
+      "category": "clothing",
+      "colors": [
+        "#4F9B9B",
+        "#5B7FD0"
+      ]
+    },
+    {
+      "id": "key",
+      "label": "Key",
+      "kind": "key",
+      "category": "tool",
+      "colors": [
+        "#D17B9E",
+        "#C96854"
+      ]
+    },
+    {
+      "id": "leaf",
+      "label": "Leaf",
+      "kind": "leaf",
+      "category": "nature",
+      "colors": [
+        "#7B8290",
+        "#4E9A72"
+      ]
+    },
+    {
+      "id": "moon",
+      "label": "Moon",
+      "kind": "moon",
+      "category": "sky",
+      "colors": [
+        "#5B7FD0",
+        "#C7A548"
+      ]
+    },
+    {
+      "id": "pencil",
+      "label": "Pencil",
+      "kind": "pencil",
+      "category": "writing",
+      "colors": [
+        "#C96854",
+        "#8A68C5"
+      ]
+    },
+    {
+      "id": "shell",
+      "label": "Shell",
+      "kind": "shell",
+      "category": "nature",
+      "colors": [
+        "#4E9A72",
+        "#4F9B9B"
+      ]
+    },
+    {
+      "id": "star",
+      "label": "Star",
+      "kind": "star",
+      "category": "sky",
+      "colors": [
+        "#C7A548",
+        "#D17B9E"
+      ]
+    },
+    {
+      "id": "watch",
+      "label": "Watch",
+      "kind": "watch",
+      "category": "device",
+      "colors": [
+        "#8A68C5",
+        "#7B8290"
+      ]
+    },
+    {
+      "id": "wheel",
+      "label": "Wheel",
+      "kind": "wheel",
+      "category": "travel",
+      "colors": [
+        "#4F9B9B",
+        "#5B7FD0"
+      ]
+    },
+    {
+      "id": "book",
+      "label": "Book",
+      "kind": "book",
+      "category": "reading",
+      "colors": [
+        "#D17B9E",
+        "#C96854"
+      ]
+    },
+    {
+      "id": "apple",
+      "label": "Apple",
+      "kind": "fruit",
+      "category": "food",
+      "colors": [
+        "#7B8290",
+        "#4E9A72"
+      ]
+    },
+    {
+      "id": "lamp",
+      "label": "Lamp",
+      "kind": "lamp",
+      "category": "home",
+      "colors": [
+        "#5B7FD0",
+        "#C7A548"
+      ]
+    },
+    {
+      "id": "hat",
+      "label": "Hat",
+      "kind": "hat",
+      "category": "clothing",
+      "colors": [
+        "#C96854",
+        "#8A68C5"
+      ]
+    },
+    {
+      "id": "kite",
+      "label": "Kite",
+      "kind": "kite",
+      "category": "play",
+      "colors": [
+        "#4E9A72",
+        "#4F9B9B"
+      ]
+    },
+    {
+      "id": "compass",
+      "label": "Compass",
+      "kind": "compass",
+      "category": "travel",
+      "colors": [
+        "#C7A548",
+        "#D17B9E"
+      ]
+    },
+    {
+      "id": "brush",
+      "label": "Brush",
+      "kind": "brush",
+      "category": "tool",
+      "colors": [
+        "#8A68C5",
+        "#7B8290"
+      ]
+    },
+    {
+      "id": "bottle",
+      "label": "Bottle",
+      "kind": "bottle",
+      "category": "container",
+      "colors": [
+        "#4F9B9B",
+        "#5B7FD0"
+      ]
+    },
+    {
+      "id": "glasses",
+      "label": "Glasses",
+      "kind": "glasses",
+      "category": "clothing",
+      "colors": [
+        "#D17B9E",
+        "#C96854"
+      ]
+    },
+    {
+      "id": "spoon",
+      "label": "Spoon",
+      "kind": "spoon",
+      "category": "food",
+      "colors": [
+        "#7B8290",
+        "#4E9A72"
+      ]
+    },
+    {
+      "id": "clock",
+      "label": "Clock",
+      "kind": "clock",
+      "category": "home",
+      "colors": [
+        "#5B7FD0",
+        "#C7A548"
+      ]
+    },
+    {
+      "id": "plant",
+      "label": "Plant",
+      "kind": "plant",
+      "category": "nature",
+      "colors": [
+        "#C96854",
+        "#8A68C5"
+      ]
+    },
+    {
+      "id": "folder",
+      "label": "Folder",
+      "kind": "folder",
+      "category": "writing",
+      "colors": [
+        "#4E9A72",
+        "#4F9B9B"
+      ]
+    },
+    {
+      "id": "mug",
+      "label": "Mug",
+      "kind": "mug",
+      "category": "container",
+      "colors": [
+        "#C7A548",
+        "#D17B9E"
+      ]
+    },
+    {
+      "id": "ring",
+      "label": "Ring",
+      "kind": "ring",
+      "category": "accessory",
+      "colors": [
+        "#8A68C5",
+        "#7B8290"
+      ]
+    },
+    {
+      "id": "umbrella",
+      "label": "Umbrella",
+      "kind": "umbrella",
+      "category": "weather",
+      "colors": [
+        "#4F9B9B",
+        "#5B7FD0"
+      ]
+    },
+    {
+      "id": "boat",
+      "label": "Boat",
+      "kind": "boat",
+      "category": "travel",
+      "colors": [
+        "#D17B9E",
+        "#C96854"
+      ]
+    },
+    {
+      "id": "pear",
+      "label": "Pear",
+      "kind": "fruit",
+      "category": "food",
+      "colors": [
+        "#7B8290",
+        "#4E9A72"
+      ]
+    },
+    {
+      "id": "ribbon",
+      "label": "Ribbon",
+      "kind": "ribbon",
+      "category": "accessory",
+      "colors": [
+        "#5B7FD0",
+        "#C7A548"
+      ]
+    },
+    {
+      "id": "magnet",
+      "label": "Magnet",
+      "kind": "magnet",
+      "category": "tool",
+      "colors": [
+        "#C96854",
+        "#8A68C5"
+      ]
+    },
+    {
+      "id": "whistle",
+      "label": "Whistle",
+      "kind": "whistle",
+      "category": "sound",
+      "colors": [
+        "#4E9A72",
+        "#4F9B9B"
+      ]
+    },
+    {
+      "id": "acorn",
+      "label": "Acorn",
+      "kind": "acorn",
+      "category": "nature",
+      "colors": [
+        "#C7A548",
+        "#D17B9E"
+      ]
+    },
+    {
+      "id": "candle",
+      "label": "Candle",
+      "kind": "candle",
+      "category": "home",
+      "colors": [
+        "#8A68C5",
+        "#7B8290"
+      ]
+    },
+    {
+      "id": "scissors",
+      "label": "Scissors",
+      "kind": "scissors",
+      "category": "tool",
+      "colors": [
+        "#4F9B9B",
+        "#5B7FD0"
+      ]
+    },
+    {
+      "id": "comb",
+      "label": "Comb",
+      "kind": "comb",
+      "category": "accessory",
+      "colors": [
+        "#D17B9E",
+        "#C96854"
+      ]
+    },
+    {
+      "id": "button",
+      "label": "Button",
+      "kind": "button",
+      "category": "clothing",
+      "colors": [
+        "#7B8290",
+        "#4E9A72"
+      ]
+    },
+    {
+      "id": "basket",
+      "label": "Basket",
+      "kind": "basket",
+      "category": "container",
+      "colors": [
+        "#5B7FD0",
+        "#C7A548"
+      ]
+    },
+    {
+      "id": "boot",
+      "label": "Boot",
+      "kind": "boot",
+      "category": "clothing",
+      "colors": [
+        "#C96854",
+        "#8A68C5"
+      ]
+    },
+    {
+      "id": "gem",
+      "label": "Gem",
+      "kind": "gem",
+      "category": "accessory",
+      "colors": [
+        "#4E9A72",
+        "#4F9B9B"
+      ]
+    },
+    {
+      "id": "map",
+      "label": "Map",
+      "kind": "map",
+      "category": "travel",
+      "colors": [
+        "#C7A548",
+        "#D17B9E"
+      ]
+    },
+    {
+      "id": "drum",
+      "label": "Drum",
+      "kind": "drum",
+      "category": "sound",
+      "colors": [
+        "#8A68C5",
+        "#7B8290"
+      ]
+    },
+    {
+      "id": "flag",
+      "label": "Flag",
+      "kind": "flag",
+      "category": "symbol",
+      "colors": [
+        "#4F9B9B",
+        "#5B7FD0"
+      ]
+    },
+    {
+      "id": "cloud",
+      "label": "Cloud",
+      "kind": "cloud",
+      "category": "weather",
+      "colors": [
+        "#D17B9E",
+        "#C96854"
+      ]
+    },
+    {
+      "id": "flower",
+      "label": "Flower",
+      "kind": "flower",
+      "category": "nature",
+      "colors": [
+        "#7B8290",
+        "#4E9A72"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+[gd_scene load_steps=2 format=3 uid="uid://scene_investigation_tutorial"]
+
+[ext_resource type="Script" path="res://src/LegacyMechanics/scene_investigation/tutorial/SceneInvestigationTutorial.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://c3gj5np5jt5ss" path="res://assets/brand/witness_eye_glow.png" id="2_eye"]
+
+[node name="SceneInvestigationTutorial" type="Control" groups=["app_screen"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0588235, 0.0588235, 0.0705882, 1)
+
+[node name="MainMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="Scroll" type="ScrollContainer" parent="MainMargin"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Content" type="VBoxContainer" parent="MainMargin/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+theme_override_constants/separation = 20
+
+[node name="Hero" type="VBoxContainer" parent="MainMargin/Scroll/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="BrandLabel" type="Label" parent="MainMargin/Scroll/Content/Hero"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TWO SECOND WITNESS"
+horizontal_alignment = 1
+
+[node name="StepTitle" type="Label" parent="MainMargin/Scroll/Content/Hero"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "OBSERVE"
+horizontal_alignment = 1
+
+[node name="EyeWrap" type="CenterContainer" parent="MainMargin/Scroll/Content/Hero"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Eye" type="TextureRect" parent="MainMargin/Scroll/Content/Hero/EyeWrap"]
+layout_mode = 2
+texture = ExtResource("2_eye")
+expand_mode = 1
+custom_minimum_size = Vector2(190, 76)
+stretch_mode = 5
+
+[node name="Description" type="Label" parent="MainMargin/Scroll/Content/Hero"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "You have exactly two seconds to study the scene. Every detail matters."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="PageIndicator" type="HBoxContainer" parent="MainMargin/Scroll/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+theme_override_constants/separation = 12
+
+[node name="Dot1" type="PanelContainer" parent="MainMargin/Scroll/Content/PageIndicator"]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+
+[node name="Dot2" type="PanelContainer" parent="MainMargin/Scroll/Content/PageIndicator"]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+
+[node name="Dot3" type="PanelContainer" parent="MainMargin/Scroll/Content/PageIndicator"]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+
+[node name="Actions" type="VBoxContainer" parent="MainMargin/Scroll/Content"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="NextButton" type="Button" parent="MainMargin/Scroll/Content/Actions"]
+custom_minimum_size = Vector2(0, 72)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "NEXT  →"
+
+[node name="SkipButton" type="Button" parent="MainMargin/Scroll/Content/Actions"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Skip Tutorial"
+flat = true

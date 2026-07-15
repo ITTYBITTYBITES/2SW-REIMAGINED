@@ -1,0 +1,201 @@
+{
+  "version": 2,
+  "achievements": [
+    {
+      "id": "first_witness",
+      "title": "First Witness",
+      "description": "Complete your first challenge.",
+      "criterion": "total_plays",
+      "target": 1
+    },
+    {
+      "id": "keen_eye",
+      "title": "Keen Eye",
+      "description": "Answer 10 Scene Investigation challenges correctly.",
+      "criterion": "family_correct",
+      "family_id": "scene_investigation",
+      "target": 10
+    },
+    {
+      "id": "perfect_memory",
+      "title": "Perfect Memory",
+      "description": "Reach a five-answer streak.",
+      "criterion": "best_streak",
+      "target": 5
+    },
+    {
+      "id": "sharp_shooter",
+      "title": "Sharp Shooter",
+      "description": "Answer correctly within 1.5 seconds.",
+      "criterion": "fast_response",
+      "threshold_ms": 1500,
+      "target": 1
+    },
+    {
+      "id": "word_watcher",
+      "title": "Word Watcher",
+      "description": "Answer 10 Flash Words challenges correctly.",
+      "criterion": "family_correct",
+      "family_id": "flash_words",
+      "target": 10
+    },
+    {
+      "id": "scene_specialist",
+      "title": "Scene Specialist",
+      "description": "Reach 50 Scene Investigation Mastery.",
+      "criterion": "family_mastery",
+      "family_id": "scene_investigation",
+      "target": 50
+    },
+    {
+      "id": "consistency",
+      "title": "Consistency",
+      "description": "Complete 20 challenges.",
+      "criterion": "total_plays",
+      "target": 20
+    },
+    {
+      "id": "comeback",
+      "title": "Comeback",
+      "description": "Answer correctly after a missed challenge.",
+      "criterion": "comeback",
+      "target": 1
+    },
+    {
+      "id": "marathon",
+      "title": "Marathon",
+      "description": "Complete 50 challenges.",
+      "criterion": "total_plays",
+      "target": 50
+    },
+    {
+      "id": "flawless_finish",
+      "title": "Flawless Finish",
+      "description": "Reach a ten-answer streak.",
+      "criterion": "best_streak",
+      "target": 10
+    },
+    {
+      "id": "versatile_witness",
+      "title": "Versatile Witness",
+      "description": "Complete a round in two different Challenge Types.",
+      "criterion": "unique_families_played",
+      "target": 2
+    },
+    {
+      "id": "curator",
+      "title": "Curator",
+      "description": "Mark your first favorite Challenge Type.",
+      "criterion": "favorites_count",
+      "target": 1
+    },
+    {
+      "id": "first_journey",
+      "title": "First Journey",
+      "description": "Complete your first curated program run.",
+      "criterion": "program_runs",
+      "target": 1
+    },
+    {
+      "id": "all_angles",
+      "title": "All Angles",
+      "description": "Reach 10 Mastery in two Challenge Types.",
+      "criterion": "families_mastery_at_least",
+      "mastery_threshold": 10,
+      "target": 2
+    },
+    {
+      "id": "difference_detective",
+      "title": "Difference Detective",
+      "description": "Spot 10 differences correctly.",
+      "criterion": "family_correct",
+      "family_id": "spot_the_difference",
+      "target": 10
+    },
+    {
+      "id": "object_keeper",
+      "title": "Object Keeper",
+      "description": "Complete 10 Object Recall rounds correctly.",
+      "criterion": "family_correct",
+      "family_id": "object_recall",
+      "target": 10
+    },
+    {
+      "id": "pattern_witness",
+      "title": "Pattern Witness",
+      "description": "Repeat 10 Pattern Recall sequences correctly.",
+      "criterion": "family_correct",
+      "family_id": "pattern_recall",
+      "target": 10
+    },
+    {
+      "id": "five_ways",
+      "title": "Five Ways",
+      "description": "Complete a round in five different Challenge Types.",
+      "criterion": "unique_families_played",
+      "target": 5
+    },
+    {
+      "id": "scene_surveyor",
+      "title": "Scene Surveyor",
+      "description": "Answer 50 Scene Investigation challenges correctly.",
+      "criterion": "family_correct",
+      "family_id": "scene_investigation",
+      "target": 50
+    },
+    {
+      "id": "word_collector",
+      "title": "Word Collector",
+      "description": "Answer 50 Flash Words challenges correctly.",
+      "criterion": "family_correct",
+      "family_id": "flash_words",
+      "target": 50
+    },
+    {
+      "id": "change_tracker",
+      "title": "Change Tracker",
+      "description": "Reach 50 Spot the Difference Mastery.",
+      "criterion": "family_mastery",
+      "family_id": "spot_the_difference",
+      "target": 50
+    },
+    {
+      "id": "set_specialist",
+      "title": "Set Specialist",
+      "description": "Reach 50 Object Recall Mastery.",
+      "criterion": "family_mastery",
+      "family_id": "object_recall",
+      "target": 50
+    },
+    {
+      "id": "sequence_specialist",
+      "title": "Sequence Specialist",
+      "description": "Reach 50 Pattern Recall Mastery.",
+      "criterion": "family_mastery",
+      "family_id": "pattern_recall",
+      "target": 50
+    },
+    {
+      "id": "five_strong",
+      "title": "Five Strong",
+      "description": "Reach 10 Mastery in all five Challenge Types.",
+      "criterion": "families_mastery_at_least",
+      "mastery_threshold": 10,
+      "target": 5
+    },
+    {
+      "id": "hundred_moments",
+      "title": "Hundred Moments",
+      "description": "Complete 100 challenges.",
+      "criterion": "total_plays",
+      "target": 100
+    },
+    {
+      "id": "journey_regular",
+      "title": "Journey Regular",
+      "description": "Complete five curated program runs.",
+      "criterion": "program_runs",
+      "target": 5
+    }
+  ]
+}

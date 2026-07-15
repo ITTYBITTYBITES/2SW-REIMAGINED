@@ -1,0 +1,517 @@
+extends Node2D
+class_name IrisMainController
+
+@onready var state_manager: IrisStateManager = $StateManager
+@onready var navigation: IrisNavigationController = $NavigationController
+@onready var back_navigation: IrisBackNavigationController = $BackNavigationController
+@onready var production_bridge: TwoSecondWitnessProductionBridge = $ProductionBridge
+@onready var witness_director: WitnessExperienceDirector = $WitnessExperienceDirector
+@onready var witness_runtime: WitnessMomentRuntime = $WitnessMomentRuntime
+@onready var input_intents: IrisInputIntentController = $InputIntentController
+@onready var device: DeviceCapabilityManager = $DeviceCapabilityManager
+@onready var orientation: OrientationManager = $OrientationManager
+@onready var transition: IrisTransitionController = $Interface/TransitionController
+@onready var iris: IrisController = $Interface/ScreenRoot/IrisScreen
+@onready var witness: WitnessModeScreen = $Interface/ScreenRoot/WitnessMode
+@onready var archive: ArchiveScreen = $Interface/ScreenRoot/Archive
+@onready var discovery: DiscoveryScreen = $Interface/ScreenRoot/Discovery
+@onready var profile: ProfileScreen = $Interface/ScreenRoot/Profile
+@onready var settings: SettingsScreen = $Interface/ScreenRoot/Settings
+@onready var story_mode: FuturePlaceholder = $Interface/ScreenRoot/StoryMode
+@onready var daily_witness: FuturePlaceholder = $Interface/ScreenRoot/DailyWitness
+@onready var weekly_investigation: FuturePlaceholder = $Interface/ScreenRoot/WeeklyInvestigation
+@onready var your_iris: FuturePlaceholder = $Interface/ScreenRoot/YourIris
+@onready var calibration: FuturePlaceholder = $Interface/ScreenRoot/Calibration
+@onready var edge_glow: EdgeGlow = $Interface/HUD/EdgeGlow
+@onready var sound: ProceduralIrisSound = $ProceduralSound
+@onready var voice_guide: VoiceGuide = $Interface/VoiceGuide
+@onready var caption_overlay: IrisCaptionOverlay = $Interface/CaptionOverlay
+@onready var accessibility_panel: IrisAccessibilityPanel = $Interface/AccessibilityPanel
+@onready var production_startup: ProductionStartup = $Interface/ProductionStartup
+
+var active_screen := "home"
+var hud_labels: Dictionary = {}
+var intro_elapsed := 0.0
+var intro_running := false
+var pending_after_return := Callable()
+var pending_return_from_witness := false
+
+func _notification(what: int) -> void:
+    if what == NOTIFICATION_WM_GO_BACK_REQUEST:
+        _handle_back()
+
+func _ready() -> void:
+    input_intents.intent_requested.connect(_on_intent)
+    input_intents.set_sources(navigation, back_navigation)
+    device.capabilities_changed.connect(_on_capabilities_changed)
+    device.motion_changed.connect(_on_motion_changed)
+    orientation.transition_progress.connect(_on_orientation_transition)
+    orientation.orientation_changed.connect(_on_orientation_changed)
+    orientation.set_orientation_lock(state_manager.orientation_lock)
+    navigation.pointer_started.connect(_on_pointer_started)
+    navigation.pointer_moved.connect(_on_pointer_moved)
+    navigation.pointer_ended.connect(_on_pointer_ended)
+    navigation.dragged.connect(_on_dragged)
+    navigation.cursor_moved.connect(_on_cursor_moved)
+    accessibility_panel.action_requested.connect(_on_accessibility_action)
+    voice_guide.caption_changed.connect(_on_caption_changed)
+    voice_guide.set_state_manager(state_manager)
+    voice_guide.set_iris(iris)
+    transition.transition_finished.connect(_on_transition_finished)
+    state_manager.state_changed.connect(_on_state_changed)
+    state_manager.progress_changed.connect(_on_progress_changed)
+    state_manager.preferences_changed.connect(_on_preferences_changed)
+    witness.request_home.connect(show_home)
+    witness.request_action.connect(_on_screen_action)
+    archive.request_home.connect(show_home)
+    archive.request_witness.connect(show_witness)
+    discovery.request_home.connect(show_home)
+    discovery.request_future_destination.connect(_on_future_destination)
+    profile.request_home.connect(show_home)
+    story_mode.request_home.connect(show_home)
+    story_mode.request_witness.connect(show_witness)
+    story_mode.request_moment.connect(_on_moment_requested)
+    daily_witness.request_home.connect(show_home)
+    daily_witness.request_witness.connect(show_witness)
+    weekly_investigation.request_home.connect(show_home)
+    weekly_investigation.request_witness.connect(show_witness)
+    your_iris.request_home.connect(show_home)
+    calibration.request_home.connect(show_home)
+    profile.request_witness.connect(show_witness)
+    settings.request_home.connect(show_home)
+    settings.request_witness.connect(show_witness)
+    profile.set_state_manager(state_manager)
+    settings.set_state_manager(state_manager)
+    witness.set_production_bridge(production_bridge)
+    witness.set_runtime_active(false)
+    witness_runtime.set_director(witness_director)
+    witness_runtime.set_production_host(witness.get_production_host())
+    witness_runtime.enter_requested.connect(_on_runtime_enter_requested)
+    witness_runtime.production_start_requested.connect(_on_runtime_production_start_requested)
+    witness_runtime.runtime_failed.connect(_on_runtime_failed)
+    archive.set_production_bridge(production_bridge)
+    profile.set_production_bridge(production_bridge)
+    settings.set_production_bridge(production_bridge)
+    iris.set_animation_intensity(0.18 if state_manager.reduced_motion else state_manager.animation_intensity)
+    iris.set_desktop_mode(not device.has_touchscreen)
+    iris.set_parallax_enabled(state_manager.parallax_enabled and not state_manager.reduced_motion)
+    transition.set_reduced_motion(state_manager.reduced_motion)
+    sound.set_enabled(state_manager.sound_enabled and device.has_audio)
+    voice_guide.set_enabled(state_manager.sound_enabled and device.has_audio)
+    voice_guide.set_captions_enabled(state_manager.captions_enabled)
+    accessibility_panel.visible = state_manager.accessible_navigation
+    _build_hud()
+    voice_guide.begin_session()
+    _switch_screen("home")
+    if state_manager.first_launch:
+        _start_first_launch_intro()
+
+func _process(delta: float) -> void:
+    if intro_running:
+        intro_elapsed += delta
+        if intro_elapsed > 8.4:
+            _finish_first_launch_intro()
+
+func _build_hud() -> void:
+    var hud := $Interface/HUD
+    hud_labels["brand"] = _hud_label(hud, "THE IRIS", 17, Color("#dff4ee"), Vector2(30, 28), Vector2(280, 30))
+    hud_labels["descriptor"] = _hud_label(hud, "A LIVING PERCEPTION INSTRUMENT", 10, Color("#557a76"), Vector2(31, 57), Vector2(350, 22))
+    hud_labels["archive"] = _hud_label(hud, "←  ARCHIVE", 12, Color("#67938b"), Vector2(18, 612), Vector2(116, 30))
+    hud_labels["discovery"] = _hud_label(hud, "DISCOVER  →", 12, Color("#67938b"), Vector2(586, 612), Vector2(116, 30), HORIZONTAL_ALIGNMENT_RIGHT)
+    hud_labels["profile"] = _hud_label(hud, "PROFILE  ↑", 11, Color("#67938b"), Vector2(540, 83), Vector2(150, 26), HORIZONTAL_ALIGNMENT_RIGHT)
+    hud_labels["settings"] = _hud_label(hud, "SETTINGS  ↓", 11, Color("#67938b"), Vector2(540, 1172), Vector2(150, 26), HORIZONTAL_ALIGNMENT_RIGHT)
+    hud_labels["prompt"] = _hud_label(hud, "tap center  ·  look", 14, Color("#9ddbc7"), Vector2(30, 843), Vector2(660, 30), HORIZONTAL_ALIGNMENT_CENTER)
+    hud_labels["subprompt"] = _hud_label(hud, "hold  ·  focus", 11, Color("#557a76"), Vector2(30, 875), Vector2(660, 24), HORIZONTAL_ALIGNMENT_CENTER)
+    hud_labels["intro_title"] = _hud_label(hud, "", 15, Color("#dff4ee"), Vector2(30, 395), Vector2(660, 34), HORIZONTAL_ALIGNMENT_CENTER)
+    hud_labels["intro_line"] = _hud_label(hud, "", 12, Color("#77afa2"), Vector2(30, 432), Vector2(660, 28), HORIZONTAL_ALIGNMENT_CENTER)
+    hud_labels["intro_title"].modulate.a = 0.0
+    hud_labels["intro_line"].modulate.a = 0.0
+    _layout_hud(get_viewport_rect().size, orientation.current_orientation)
+
+func _hud_label(parent: Control, text_value: String, size: int, color: Color, pos: Vector2, box: Vector2, align := HORIZONTAL_ALIGNMENT_LEFT) -> Label:
+    var label := Label.new()
+    label.text = text_value
+    label.position = pos
+    label.size = box
+    label.add_theme_font_size_override("font_size", size)
+    label.add_theme_color_override("font_color", color)
+    label.horizontal_alignment = align
+    label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+    label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+    parent.add_child(label)
+    return label
+
+# All experience changes pass through this function. The Iris is never
+# replaced by a page; it is the optical origin of every destination.
+func _show_screen(next_screen: String, animate := true) -> void:
+    if next_screen == active_screen:
+        return
+    if not animate:
+        _switch_screen(next_screen)
+        return
+    if transition.busy:
+        return
+    if next_screen == "home":
+        _return_to_iris()
+    elif active_screen == "home":
+        _enter_experience(next_screen)
+    else:
+        # Even lateral movement between future destinations returns through
+        # the anchor first, preserving one coherent mental model.
+        _return_to_iris(func(): _enter_experience(next_screen))
+
+func _enter_experience(next_screen: String) -> void:
+    if next_screen == "home" or transition.busy:
+        return
+    transition.play_enter(iris, func(): _switch_screen(next_screen))
+
+func _return_to_iris(after_return := Callable()) -> void:
+    if active_screen == "home":
+        if after_return.is_valid():
+            after_return.call()
+        return
+    pending_after_return = after_return
+    pending_return_from_witness = active_screen == "witness"
+    transition.play_return(iris, func(): _switch_screen("home"))
+
+func _switch_screen(next_screen: String) -> void:
+    var target: Control
+    match next_screen:
+        "home": target = iris
+        "witness": target = witness
+        "archive": target = archive
+        "discovery": target = discovery
+        "profile": target = profile
+        "settings": target = settings
+        "story_mode": target = story_mode
+        "daily_witness": target = daily_witness
+        "weekly_investigation": target = weekly_investigation
+        "your_iris": target = your_iris
+        "calibration": target = calibration
+        _: target = iris
+    for child in $Interface/ScreenRoot.get_children():
+        child.visible = child == target
+    active_screen = next_screen
+    edge_glow.set_mode(next_screen)
+    _update_hud(next_screen)
+    if next_screen == "home":
+        iris.set_transition_open(0.0)
+        var home_state := IrisStateManager.CURIOUS if state_manager.discovery_count > state_manager.completed_observations else IrisStateManager.IDLE
+        state_manager.set_living_state(home_state)
+    elif next_screen == "witness":
+        state_manager.set_living_state(IrisStateManager.FOCUS)
+        witness.enter()
+        if witness_runtime.is_active():
+            witness_runtime.notify_witness_surface_ready()
+        voice_guide.on_witness_entered()
+    elif next_screen == "archive":
+        state_manager.set_living_state(IrisStateManager.MEMORY)
+        archive.enter()
+    else:
+        state_manager.set_living_state(IrisStateManager.IDLE)
+        if next_screen == "discovery":
+            discovery.enter()
+        elif next_screen == "profile":
+            profile.enter()
+        elif next_screen == "settings":
+            settings.enter()
+            voice_guide.on_calibration_opened()
+
+func show_home() -> void:
+    witness.set_runtime_active(false)
+    _show_screen("home")
+
+func _on_transition_finished(kind: String) -> void:
+    if kind != "return":
+        return
+    if pending_return_from_witness:
+        iris.remember_recent_activity()
+        voice_guide.on_return_from_witness()
+        pending_return_from_witness = false
+    if pending_after_return.is_valid():
+        var next := pending_after_return
+        pending_after_return = Callable()
+        next.call()
+
+func _on_intent(intent: int, position: Vector2, _vector: Vector2, source: String) -> void:
+    if production_startup and production_startup.is_active():
+        return
+    match intent:
+        IrisInputIntent.ENTER:
+            _on_tap(position)
+        IrisInputIntent.FOCUS:
+            var focus_position := position
+            if source == "keyboard" or source == "controller":
+                focus_position = get_viewport_rect().size * 0.5
+            _on_hold(focus_position)
+        IrisInputIntent.RETURN:
+            _handle_back()
+        IrisInputIntent.EXPLORE_LEFT:
+            _on_swipe("left")
+        IrisInputIntent.EXPLORE_RIGHT:
+            _on_swipe("right")
+        IrisInputIntent.EXPLORE_UP:
+            _on_swipe("up")
+        IrisInputIntent.EXPLORE_DOWN:
+            _on_swipe("down")
+
+func _on_capabilities_changed() -> void:
+    iris.set_desktop_mode(not device.has_touchscreen)
+    if not device.has_audio:
+        voice_guide.set_enabled(false)
+
+func _on_motion_changed(acceleration: Vector3) -> void:
+    if not state_manager.reduced_motion and state_manager.parallax_enabled:
+        iris.set_sensor_offset(acceleration)
+
+func _on_orientation_transition(progress: float, _current: int, _previous: int) -> void:
+    var motion := 0.0 if state_manager.reduced_motion else sin(progress * PI)
+    iris.set_orientation_motion(motion)
+
+func _on_orientation_changed(current: int, _previous: int) -> void:
+    _layout_hud(get_viewport_rect().size, current)
+    caption_overlay.set_landscape(get_viewport_rect().size.x > get_viewport_rect().size.y)
+
+func _layout_hud(viewport_size: Vector2, _orientation: int) -> void:
+    var landscape := viewport_size.x > viewport_size.y
+    var brand: Label = hud_labels.get("brand")
+    var descriptor: Label = hud_labels.get("descriptor")
+    if not brand or not descriptor:
+        return
+    if landscape:
+        brand.position = Vector2(38, 24)
+        brand.size = Vector2(320, 30)
+        descriptor.position = Vector2(40, 53)
+        descriptor.size = Vector2(420, 22)
+    else:
+        brand.position = Vector2(30, 28)
+        brand.size = Vector2(280, 30)
+        descriptor.position = Vector2(31, 57)
+        descriptor.size = Vector2(350, 22)
+
+func _on_cursor_moved(position: Vector2) -> void:
+    if active_screen == "home" and device.has_mouse and not transition.busy:
+        iris.set_gaze_target(position, get_viewport_rect().size)
+
+func _on_pointer_started(position: Vector2) -> void:
+    if active_screen == "home" and not transition.busy:
+        iris.set_interaction(true)
+        voice_guide.set_interaction_active(true)
+        iris.set_gaze_target(position, get_viewport_rect().size)
+
+func _on_pointer_moved(position: Vector2) -> void:
+    if active_screen == "home" and not transition.busy:
+        iris.set_gaze_target(position, get_viewport_rect().size)
+
+func _on_pointer_ended(_position: Vector2) -> void:
+    if active_screen == "home":
+        iris.set_interaction(false)
+        voice_guide.set_interaction_active(false)
+
+func _on_dragged(_position: Vector2, delta: Vector2) -> void:
+    if active_screen == "home" and not transition.busy:
+        iris.update_directional_anticipation(delta, get_viewport_rect().size)
+
+func _on_tap(position: Vector2) -> void:
+    if production_startup and production_startup.is_active():
+        return
+    state_manager.mark_first_launch_seen()
+    if intro_running:
+        _finish_first_launch_intro()
+    if transition.busy:
+        return
+    if active_screen == "home":
+        var view := get_viewport_rect().size
+        var normalized := Vector2(position.x / maxf(view.x, 1.0), position.y / maxf(view.y, 1.0))
+        if normalized.distance_to(Vector2(0.5, 0.50)) < 0.235:
+            voice_guide.on_first_touch()
+            _show_screen("story_mode")
+        elif normalized.x < 0.16:
+            _show_screen("archive")
+        elif normalized.x > 0.84:
+            _show_screen("discovery")
+        elif normalized.y < 0.16:
+            _show_screen("profile")
+        elif normalized.y > 0.84:
+            _show_screen("settings")
+        else:
+            iris.focus_pulse()
+    elif active_screen == "witness":
+        witness.handle_tap(position)
+    elif active_screen == "archive":
+        archive.handle_tap(position)
+    elif active_screen == "discovery":
+        discovery.handle_tap(position)
+    elif active_screen == "profile":
+        if position.y < 100.0:
+            show_home()
+    elif active_screen == "settings":
+        settings.handle_tap(position)
+    elif active_screen == "story_mode":
+        story_mode.handle_tap(position)
+    elif active_screen == "daily_witness":
+        daily_witness.handle_tap(position)
+    elif active_screen == "weekly_investigation":
+        weekly_investigation.handle_tap(position)
+    elif active_screen == "your_iris":
+        your_iris.handle_tap(position)
+    elif active_screen == "calibration":
+        calibration.handle_tap(position)
+
+func _on_hold(position: Vector2) -> void:
+    if production_startup and production_startup.is_active():
+        return
+    state_manager.mark_first_launch_seen()
+    if transition.busy:
+        return
+    if active_screen == "home":
+        var view := get_viewport_rect().size
+        var normalized := Vector2(position.x / maxf(view.x, 1.0), position.y / maxf(view.y, 1.0))
+        if normalized.distance_to(Vector2(0.5, 0.50)) < 0.26:
+            # Hold is intentionally not a second way to enter Witness. It is
+            # a quiet calibration state that can be felt before the next tap.
+            iris.start_deep_focus()
+    elif active_screen == "witness":
+        witness.pulse_focus()
+        iris.focus_pulse()
+
+func _on_swipe(direction: String) -> void:
+    if production_startup and production_startup.is_active():
+        return
+    state_manager.mark_first_launch_seen()
+    if transition.busy:
+        return
+    match direction:
+        "left": _show_screen("archive")
+        "right": _show_screen("discovery")
+        "down": _show_screen("profile")
+        "up": _show_screen("settings")
+
+func show_witness(_from_hold := false) -> void:
+    witness.set_runtime_active(false)
+    sound.focus_pulse()
+    _show_screen("witness")
+
+func _on_accessibility_action(action: String) -> void:
+    accessibility_panel.visible = false
+    match action:
+        "witness": show_witness()
+        "archive": _show_screen("archive")
+        "discovery": _show_screen("discovery")
+        "profile": _show_screen("profile")
+        "settings": _show_screen("settings")
+        "home": show_home()
+        "close": pass
+
+func _handle_back() -> void:
+    if accessibility_panel.visible:
+        accessibility_panel.visible = false
+        return
+    if intro_running:
+        _finish_first_launch_intro()
+    if transition.busy:
+        return
+    if active_screen == "home":
+        get_tree().quit()
+    else:
+        if active_screen == "witness":
+            if witness_runtime.is_active():
+                witness_runtime.request_return()
+            elif production_bridge:
+                production_bridge.return_to_iris()
+        show_home()
+
+func _on_moment_requested(moment_id: String) -> void:
+    witness_runtime.start_moment(moment_id)
+
+func _on_runtime_enter_requested(_moment: WitnessMoment) -> void:
+    witness.set_runtime_active(true)
+    _show_screen("witness")
+
+func _on_runtime_production_start_requested(_moment: WitnessMoment) -> void:
+    # The runtime/adapter owns the actual production start. This hook exists
+    # for debug instrumentation and future attunement presentation.
+    pass
+
+func _on_runtime_failed(_moment_id: String, _reason: String) -> void:
+    if active_screen == "witness":
+        show_home()
+
+func _on_future_destination(destination: String) -> void:
+    match destination:
+        "story_mode": _show_screen("story_mode")
+        "daily_witness": _show_screen("daily_witness")
+        "weekly_investigation": _show_screen("weekly_investigation")
+        "archive": _show_screen("archive")
+        "your_iris": _show_screen("your_iris")
+        "calibration": _show_screen("calibration")
+
+func _on_state_changed(new_state: int) -> void:
+    iris.set_living_state(new_state)
+
+func _on_progress_changed() -> void:
+    profile._refresh_copy()
+
+func _on_caption_changed(text: String, should_show: bool) -> void:
+    if should_show and state_manager.captions_enabled:
+        caption_overlay.show_caption(text)
+    else:
+        caption_overlay.hide_caption()
+
+func _on_preferences_changed() -> void:
+    sound.set_enabled(state_manager.sound_enabled and device.has_audio)
+    voice_guide.set_enabled(state_manager.sound_enabled and device.has_audio)
+    voice_guide.set_captions_enabled(state_manager.captions_enabled)
+    iris.set_animation_intensity(0.18 if state_manager.reduced_motion else state_manager.animation_intensity)
+    iris.set_parallax_enabled(state_manager.parallax_enabled and not state_manager.reduced_motion)
+    transition.set_reduced_motion(state_manager.reduced_motion)
+    orientation.set_orientation_lock(state_manager.orientation_lock)
+    accessibility_panel.visible = state_manager.accessible_navigation
+    var visibility_color := Color("#ffffff") if state_manager.high_contrast else Color("#dff4ee")
+    for label in hud_labels.values():
+        if label is Label:
+            label.add_theme_color_override("font_color", visibility_color)
+
+func _on_screen_action(action: String) -> void:
+    if action == "completed":
+        state_manager.complete_observation()
+        sound.discovery_tone()
+        voice_guide.on_witness_completed()
+        profile._refresh_copy()
+
+func _update_hud(screen_name: String) -> void:
+    var home := screen_name == "home"
+    # Navigation is now encoded in the Iris rim. The old text labels remain
+    # instantiated only for compatibility with the original prototype, but
+    # never compete with the optical cues.
+    hud_labels["archive"].visible = false
+    hud_labels["discovery"].visible = false
+    hud_labels["profile"].visible = false
+    hud_labels["settings"].visible = false
+    hud_labels["prompt"].visible = false
+    hud_labels["subprompt"].visible = false
+    hud_labels["brand"].visible = home
+    hud_labels["descriptor"].visible = home
+
+func _start_first_launch_intro() -> void:
+    # Phase 5 replaces the old text lesson with VoiceGuide. Keep the method
+    # as a compatibility hook for existing callers, but do not render a
+    # tutorial layer over the instrument.
+    intro_running = false
+    intro_elapsed = 0.0
+
+func _set_intro_explore() -> void:
+    hud_labels["intro_title"].text = "SWIPE  ·  EXPLORE"
+    hud_labels["intro_line"].text = "move through the instrument"
+
+func _set_intro_focus() -> void:
+    hud_labels["intro_title"].text = "HOLD  ·  FOCUS"
+    hud_labels["intro_line"].text = "let the field reveal itself"
+
+func _finish_first_launch_intro() -> void:
+    if not intro_running:
+        return
+    intro_running = false
+    hud_labels["intro_title"].modulate.a = 0.0
+    hud_labels["intro_line"].modulate.a = 0.0
+    state_manager.mark_first_launch_seen()

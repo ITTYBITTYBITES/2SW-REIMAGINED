@@ -1,0 +1,232 @@
+[gd_scene load_steps=5 format=3 uid="uid://home_v2_screen"]
+
+[ext_resource type="Script" path="res://src/ui/screens/HomeV2Screen.gd" id="1_v2"]
+[ext_resource type="PackedScene" uid="uid://daily_experience_card" path="res://src/ui/components/DailyExperienceCard.tscn" id="2_daily"]
+[ext_resource type="Texture2D" uid="uid://c3gj5np5jt5ss" path="res://assets/brand/witness_eye_glow.png" id="3_eye"]
+
+[node name="HomeV2Screen" type="Control" groups=["app_screen"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_v2")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0588, 0.0588, 0.0706, 1)
+mouse_filter = 2
+
+[node name="MainMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Scroll" type="ScrollContainer" parent="MainMargin"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Content" type="VBoxContainer" parent="MainMargin/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 24
+
+[node name="IdentityLayer" type="VBoxContainer" parent="MainMargin/Scroll/Content"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="BrandRow" type="HBoxContainer" parent="MainMargin/Scroll/Content/IdentityLayer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Eye" type="TextureRect" parent="MainMargin/Scroll/Content/IdentityLayer/BrandRow"]
+custom_minimum_size = Vector2(42, 42)
+layout_mode = 2
+texture = ExtResource("3_eye")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Greeting" type="Label" parent="MainMargin/Scroll/Content/IdentityLayer"]
+layout_mode = 2
+text = "Witness"
+horizontal_alignment = 1
+
+[node name="RankRow" type="HBoxContainer" parent="MainMargin/Scroll/Content/IdentityLayer"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 8
+
+[node name="RankLabel" type="Label" parent="MainMargin/Scroll/Content/IdentityLayer/RankRow"]
+layout_mode = 2
+text = "Observe what others miss."
+horizontal_alignment = 1
+
+[node name="LevelPill" type="PanelContainer" parent="MainMargin/Scroll/Content/IdentityLayer/RankRow"]
+layout_mode = 2
+
+[node name="LevelMargin" type="MarginContainer" parent="MainMargin/Scroll/Content/IdentityLayer/RankRow/LevelPill"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="LevelText" type="Label" parent="MainMargin/Scroll/Content/IdentityLayer/RankRow/LevelPill/LevelMargin"]
+layout_mode = 2
+text = "LVL 1"
+
+[node name="ProgressBar" type="ProgressBar" parent="MainMargin/Scroll/Content/IdentityLayer"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+max_value = 100.0
+show_percentage = false
+
+[node name="DailyExperienceLayer" type="VBoxContainer" parent="MainMargin/Scroll/Content"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="DailyCardHost" type="VBoxContainer" parent="MainMargin/Scroll/Content/DailyExperienceLayer"]
+layout_mode = 2
+
+[node name="DailyExperienceCard" parent="MainMargin/Scroll/Content/DailyExperienceLayer/DailyCardHost" instance=ExtResource("2_daily")]
+layout_mode = 2
+
+[node name="ProgressLayer" type="HBoxContainer" parent="MainMargin/Scroll/Content"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="StreakPill" type="PanelContainer" parent="MainMargin/Scroll/Content/ProgressLayer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="StreakMargin" type="MarginContainer" parent="MainMargin/Scroll/Content/ProgressLayer/StreakPill"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="StreakVBox" type="VBoxContainer" parent="MainMargin/Scroll/Content/ProgressLayer/StreakPill/StreakMargin"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 1
+
+[node name="StreakLabel" type="Label" parent="MainMargin/Scroll/Content/ProgressLayer/StreakPill/StreakMargin/StreakVBox"]
+layout_mode = 2
+text = "MOMENTS WITNESSED"
+horizontal_alignment = 1
+
+[node name="StreakValue" type="Label" parent="MainMargin/Scroll/Content/ProgressLayer/StreakPill/StreakMargin/StreakVBox"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+
+[node name="StreakSub" type="Label" parent="MainMargin/Scroll/Content/ProgressLayer/StreakPill/StreakMargin/StreakVBox"]
+layout_mode = 2
+text = "completed observations"
+horizontal_alignment = 1
+
+[node name="AchievementPill" type="PanelContainer" parent="MainMargin/Scroll/Content/ProgressLayer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AchMargin" type="MarginContainer" parent="MainMargin/Scroll/Content/ProgressLayer/AchievementPill"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="AchVBox" type="VBoxContainer" parent="MainMargin/Scroll/Content/ProgressLayer/AchievementPill/AchMargin"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 1
+
+[node name="AchLabel" type="Label" parent="MainMargin/Scroll/Content/ProgressLayer/AchievementPill/AchMargin/AchVBox"]
+layout_mode = 2
+text = "WITNESS RECORD"
+horizontal_alignment = 1
+
+[node name="AchValue" type="Label" parent="MainMargin/Scroll/Content/ProgressLayer/AchievementPill/AchMargin/AchVBox"]
+layout_mode = 2
+text = "New"
+horizontal_alignment = 1
+
+[node name="AchSub" type="Label" parent="MainMargin/Scroll/Content/ProgressLayer/AchievementPill/AchMargin/AchVBox"]
+layout_mode = 2
+text = "Observer · Level 1"
+horizontal_alignment = 1
+
+[node name="DiscoveryLayer" type="VBoxContainer" parent="MainMargin/Scroll/Content"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="DiscoveryHeader" type="HBoxContainer" parent="MainMargin/Scroll/Content/DiscoveryLayer"]
+layout_mode = 2
+
+[node name="HeaderLabel" type="Label" parent="MainMargin/Scroll/Content/DiscoveryLayer/DiscoveryHeader"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SECONDARY"
+
+[node name="SeeAllButton" type="Button" parent="MainMargin/Scroll/Content/DiscoveryLayer/DiscoveryHeader"]
+layout_mode = 2
+text = "Explore Experiences"
+
+[node name="DiscoveryScroll" type="ScrollContainer" parent="MainMargin/Scroll/Content/DiscoveryLayer"]
+layout_mode = 2
+horizontal_scroll_mode = 1
+vertical_scroll_mode = 0
+
+[node name="DiscoveryHBox" type="HBoxContainer" parent="MainMargin/Scroll/Content/DiscoveryLayer/DiscoveryScroll"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ProgramsCard" type="PanelContainer" parent="MainMargin/Scroll/Content/DiscoveryLayer/DiscoveryScroll/DiscoveryHBox"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+
+[node name="ProgramsMargin" type="MarginContainer" parent="MainMargin/Scroll/Content/DiscoveryLayer/DiscoveryScroll/DiscoveryHBox/ProgramsCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="ProgramsVBox" type="VBoxContainer" parent="MainMargin/Scroll/Content/DiscoveryLayer/DiscoveryScroll/DiscoveryHBox/ProgramsCard/ProgramsMargin"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ProgramsTitle" type="Label" parent="MainMargin/Scroll/Content/DiscoveryLayer/DiscoveryScroll/DiscoveryHBox/ProgramsCard/ProgramsMargin/ProgramsVBox"]
+layout_mode = 2
+text = "YOUR RECORD"
+
+[node name="ProgramsCopy" type="Label" parent="MainMargin/Scroll/Content/DiscoveryLayer/DiscoveryScroll/DiscoveryHBox/ProgramsCard/ProgramsMargin/ProgramsVBox"]
+layout_mode = 2
+text = "Review observations, accuracy, and personal milestones."
+autowrap_mode = 2
+
+[node name="ProgramsButton" type="Button" parent="MainMargin/Scroll/Content/DiscoveryLayer/DiscoveryScroll/DiscoveryHBox/ProgramsCard/ProgramsMargin/ProgramsVBox"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "OPEN RECORD"
+
+[node name="BottomSpacer" type="Control" parent="MainMargin/Scroll/Content"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2

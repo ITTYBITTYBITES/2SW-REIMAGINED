@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "adapters": [
+    {"id":"single_choice","script":"res://src/gameplay/interactions/adapters/SingleChoiceAdapter.gd"},
+    {"id":"multiple_choice","script":"res://src/gameplay/interactions/adapters/MultipleChoiceAdapter.gd"},
+    {"id":"spatial_tap","script":"res://src/gameplay/interactions/adapters/SpatialTapAdapter.gd"},
+    {"id":"region_selection","script":"res://src/gameplay/interactions/adapters/RegionSelectionAdapter.gd"},
+    {"id":"ordering","script":"res://src/gameplay/interactions/adapters/OrderingAdapter.gd"},
+    {"id":"sequence_input","script":"res://src/gameplay/interactions/adapters/SequenceInputAdapter.gd"}
+  ],
+  "future_modes": ["drag_drop", "text_entry"]
+}

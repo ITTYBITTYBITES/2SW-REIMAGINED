@@ -1,0 +1,335 @@
+{
+  "id": "office_v1",
+  "version": "2",
+  "title": "Office",
+  "description": "A clear desk scene with familiar work objects and organized details.",
+  "background": {
+    "top": "#D8E0E7",
+    "surface": "#A98261",
+    "line": "#6E5848",
+    "image_path": "res://assets/gameplay/scene_investigation/office_background.png",
+    "surface_y": 0.34
+  },
+  "required_groups": [
+    "document",
+    "writing",
+    "container",
+    "device"
+  ],
+  "question_types": [
+    "count",
+    "attribute",
+    "position",
+    "adjacency",
+    "presence"
+  ],
+  "objects": [
+    {
+      "id": "notebook",
+      "name": "notebook",
+      "visual_kind": "book",
+      "groups": [
+        "document"
+      ],
+      "colors": [
+        "blue",
+        "green",
+        "red"
+      ]
+    },
+    {
+      "id": "folder",
+      "name": "folder",
+      "visual_kind": "folder",
+      "groups": [
+        "document"
+      ],
+      "colors": [
+        "blue",
+        "yellow",
+        "red"
+      ]
+    },
+    {
+      "id": "paper_stack",
+      "name": "paper stack",
+      "visual_kind": "paper",
+      "groups": [
+        "document"
+      ],
+      "colors": [
+        "cream",
+        "blue"
+      ]
+    },
+    {
+      "id": "pencil",
+      "name": "pencil",
+      "visual_kind": "pencil",
+      "groups": [
+        "writing"
+      ],
+      "colors": [
+        "yellow",
+        "red",
+        "blue"
+      ]
+    },
+    {
+      "id": "pen",
+      "name": "pen",
+      "visual_kind": "pen",
+      "groups": [
+        "writing"
+      ],
+      "colors": [
+        "blue",
+        "black",
+        "green"
+      ]
+    },
+    {
+      "id": "marker",
+      "name": "marker",
+      "visual_kind": "marker",
+      "groups": [
+        "writing"
+      ],
+      "colors": [
+        "violet",
+        "orange",
+        "green"
+      ]
+    },
+    {
+      "id": "mug",
+      "name": "mug",
+      "visual_kind": "mug",
+      "groups": [
+        "container"
+      ],
+      "colors": [
+        "green",
+        "blue",
+        "orange"
+      ]
+    },
+    {
+      "id": "bottle",
+      "name": "bottle",
+      "visual_kind": "bottle",
+      "groups": [
+        "container"
+      ],
+      "colors": [
+        "blue",
+        "green",
+        "violet"
+      ]
+    },
+    {
+      "id": "phone",
+      "name": "phone",
+      "visual_kind": "phone",
+      "groups": [
+        "device"
+      ],
+      "colors": [
+        "black",
+        "blue"
+      ]
+    },
+    {
+      "id": "calculator",
+      "name": "calculator",
+      "visual_kind": "calculator",
+      "groups": [
+        "device"
+      ],
+      "colors": [
+        "blue",
+        "black",
+        "red"
+      ]
+    },
+    {
+      "id": "stapler",
+      "name": "stapler",
+      "visual_kind": "stapler",
+      "groups": [
+        "accessory"
+      ],
+      "colors": [
+        "red",
+        "blue",
+        "black"
+      ]
+    },
+    {
+      "id": "tape",
+      "name": "tape dispenser",
+      "visual_kind": "tape",
+      "groups": [
+        "accessory"
+      ],
+      "colors": [
+        "blue",
+        "violet",
+        "green"
+      ]
+    },
+    {
+      "id": "glasses",
+      "name": "glasses",
+      "visual_kind": "glasses",
+      "groups": [
+        "personal"
+      ],
+      "colors": [
+        "black",
+        "red",
+        "blue"
+      ]
+    },
+    {
+      "id": "keys",
+      "name": "keys",
+      "visual_kind": "keys",
+      "groups": [
+        "personal"
+      ],
+      "colors": [
+        "yellow",
+        "gray"
+      ]
+    },
+    {
+      "id": "clock",
+      "name": "clock",
+      "visual_kind": "clock",
+      "groups": [
+        "device"
+      ],
+      "colors": [
+        "cream",
+        "blue",
+        "green"
+      ]
+    },
+    {
+      "id": "plant",
+      "name": "plant",
+      "visual_kind": "plant",
+      "groups": [
+        "decoration"
+      ],
+      "colors": [
+        "green"
+      ]
+    },
+    {
+      "id": "ruler",
+      "name": "ruler",
+      "visual_kind": "ruler",
+      "groups": [
+        "writing"
+      ],
+      "colors": [
+        "yellow",
+        "blue",
+        "green"
+      ]
+    },
+    {
+      "id": "lamp",
+      "name": "lamp",
+      "visual_kind": "lamp",
+      "groups": [
+        "device"
+      ],
+      "colors": [
+        "yellow",
+        "blue",
+        "red"
+      ]
+    },
+    {
+      "id": "envelope",
+      "name": "envelope",
+      "visual_kind": "paper",
+      "groups": [
+        "document"
+      ],
+      "colors": [
+        "cream",
+        "blue",
+        "yellow"
+      ]
+    },
+    {
+      "id": "scissors",
+      "name": "scissors",
+      "visual_kind": "scissors",
+      "groups": [
+        "writing"
+      ],
+      "colors": [
+        "red",
+        "blue",
+        "gray"
+      ]
+    },
+    {
+      "id": "mouse",
+      "name": "computer mouse",
+      "visual_kind": "mouse",
+      "groups": [
+        "device"
+      ],
+      "colors": [
+        "gray",
+        "blue",
+        "black"
+      ]
+    },
+    {
+      "id": "paper_clips",
+      "name": "paper clips",
+      "visual_kind": "hardware",
+      "groups": [
+        "accessory"
+      ],
+      "colors": [
+        "gray",
+        "yellow",
+        "blue"
+      ]
+    },
+    {
+      "id": "sticky_notes",
+      "name": "sticky notes",
+      "visual_kind": "paper",
+      "groups": [
+        "document"
+      ],
+      "colors": [
+        "yellow",
+        "mint",
+        "sky"
+      ]
+    },
+    {
+      "id": "eraser",
+      "name": "eraser",
+      "visual_kind": "block",
+      "groups": [
+        "writing"
+      ],
+      "colors": [
+        "red",
+        "blue",
+        "cream"
+      ]
+    }
+  ]
+}
