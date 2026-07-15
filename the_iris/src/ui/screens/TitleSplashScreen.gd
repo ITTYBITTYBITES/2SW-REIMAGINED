@@ -342,7 +342,7 @@ func _on_privacy_accepted() -> void:
 		dialog_layer.visible = false
 	if _privacy_dialog:
 		_privacy_dialog.visible = false
-	# Continue boot flow to Home. Challenge Type tutorials are gated when a family is first entered.
+	# Continue boot flow to Home. Observation Mode tutorials are gated when a family is first entered.
 	_is_navigating = false
 	_elapsed = MIN_DISPLAY_TIME
 	set_process(true)

@@ -56,7 +56,7 @@ horizontal_alignment = 1
 
 [node name="Subtitle" type="Label" parent="MainMargin/Scroll/Content/Header"]
 layout_mode = 2
-text = "Curated challenge journeys that select rounds from the shared Challenge Runtime."
+text = "Curated observation journeys drawn from the shared Witness runtime."
 horizontal_alignment = 1
 autowrap_mode = 3
 

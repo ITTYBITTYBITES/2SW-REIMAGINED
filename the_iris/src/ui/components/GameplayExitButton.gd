@@ -6,7 +6,7 @@ var _dialog: ConfirmationDialog
 
 func _ready() -> void:
 	text = "×"
-	tooltip_text = "Leave challenge"
+	tooltip_text = "Leave observation"
 	custom_minimum_size = Vector2(48, 48)
 	focus_mode = Control.FOCUS_ALL
 	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
@@ -56,9 +56,9 @@ func _ensure_dialog() -> void:
 		return
 	_dialog = ConfirmationDialog.new()
 	_dialog.name = "LeaveChallengeDialog"
-	_dialog.title = "Leave this challenge?"
-	_dialog.dialog_text = "This round will end. Your existing Witness Progress is safe."
-	_dialog.ok_button_text = "LEAVE CHALLENGE"
+	_dialog.title = "Leave this observation?"
+	_dialog.dialog_text = "This observation will end. Your preserved Insight is safe."
+	_dialog.ok_button_text = "LEAVE OBSERVATION"
 	_dialog.cancel_button_text = "KEEP PLAYING"
 	_dialog.confirmed.connect(_leave_challenge)
 	add_child(_dialog)

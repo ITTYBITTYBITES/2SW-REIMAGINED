@@ -70,9 +70,9 @@ func _friendly_message(code: String) -> String:
 	if code.begins_with("NAV_") or code.begins_with("SCREEN_"):
 		return "That screen could not be opened. Please try again."
 	if code.begins_with("TUTORIAL_"):
-		return "The tutorial could not be opened. Please choose another challenge."
+		return "The introduction could not be opened. Please choose another observation."
 	if code.begins_with("INTERACTION_") or code.begins_with("RUNTIME_"):
-		return "That round could not continue. Please start another challenge."
+		return "That moment could not continue. Please begin another observation."
 	return "Something went wrong. Please try again."
 
 func _attempt_safe_recovery() -> void:

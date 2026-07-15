@@ -1,5 +1,5 @@
 extends Control
-## Data-driven Home product hub. It never names a concrete Challenge Type.
+## Data-driven Home product hub. It never names a concrete Observation Mode.
 
 @onready var brand_label: Label = $MainMargin/Scroll/Content/Hero/BrandLabel
 @onready var greeting_label: Label = $MainMargin/Scroll/Content/Hero/GreetingLabel
@@ -74,7 +74,7 @@ func _apply_theme() -> void:
 			"label",
 			"text_tertiary"
 		)
-	_style_stat_card(stat_level, "WITNESS LEVEL", tokens)
+	_style_stat_card(stat_level, "WITNESS RANK", tokens)
 	_style_stat_card(stat_progress, "PROGRESS", tokens)
 	_style_stat_card(stat_streak, "STREAK", tokens)
 	_style_button(play_now_button, true, tokens)
@@ -207,20 +207,20 @@ func _flash_rank_up() -> void:
 func _refresh_actions() -> void:
 	var play_recommendation: Dictionary = _home_data.get("play_now", {})
 	play_now_button.disabled = play_recommendation.is_empty()
-	play_now_button.text = "PLAY NOW\n%s" % str(play_recommendation.get("title", "Find a Challenge"))
+	play_now_button.text = "PLAY NOW\n%s" % str(play_recommendation.get("title", "Find an Observation"))
 	recommendation_reason.text = str(play_recommendation.get("reason_text", "Your next round is ready"))
 	var continue_recommendation: Dictionary = _home_data.get("continue", {})
 	var has_recent: bool = bool(_home_data.get("has_recent", false))
 	continue_button.disabled = continue_recommendation.is_empty()
 	continue_button.text = (
-		"CONTINUE · %s" % str(continue_recommendation.get("program_title", continue_recommendation.get("title", "Recent Challenge")))
+		"CONTINUE · %s" % str(continue_recommendation.get("program_title", continue_recommendation.get("title", "Recent Observation")))
 		if has_recent or not str(continue_recommendation.get("program_id", "")).is_empty()
 		else "CONTINUE · START RECOMMENDATION"
 	)
 	var featured_program: Dictionary = _home_data.get("featured_program", {})
 	var programs_copy: Label = programs_card.get_node("Margin/VBox/Copy") as Label
 	if featured_program.is_empty():
-		programs_copy.text = "Curated challenge journeys are ready from the Programs tab."
+		programs_copy.text = "Curated observation journeys are ready from the Programs tab."
 	else:
 		programs_copy.text = "%s · %s" % [
 			str(featured_program.get("title", "Featured Program")),
@@ -236,7 +236,7 @@ func _refresh_featured() -> void:
 	var card_data: Dictionary = _challenge_for_recommendation(featured, available)
 	if card_data.is_empty():
 		var empty := Label.new()
-		empty.text = "A featured Challenge Type will appear when content is available."
+		empty.text = "A featured Observation Mode will appear when content is available."
 		empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		if ThemeService:
 			ThemeService.apply_label_style(empty, "body_small", "text_secondary")

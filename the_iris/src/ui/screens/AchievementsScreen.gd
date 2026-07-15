@@ -55,7 +55,7 @@ func _refresh() -> void:
 	)
 	if statuses.is_empty():
 		var empty := Label.new()
-		empty.text = "Milestones will appear as the Challenge Library grows."
+		empty.text = "Milestones will appear as the Observation Library grows."
 		empty.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		if ThemeService:

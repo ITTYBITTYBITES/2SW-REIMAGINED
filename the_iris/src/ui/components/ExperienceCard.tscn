@@ -33,7 +33,7 @@ theme_override_constants/separation = 14
 [node name="Title" type="Label" parent="Margin/VBox/HeaderRow"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Challenge Type"
+text = "Observation Mode"
 autowrap_mode = 3
 
 [node name="FavoriteButton" type="Button" parent="Margin/VBox/HeaderRow"]
@@ -50,13 +50,13 @@ vertical_alignment = 1
 [node name="Description" type="Label" parent="Margin/VBox"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Challenge description"
+text = "Observation description"
 autowrap_mode = 3
 max_lines_visible = 3
 
 [node name="RequirementLabel" type="Label" parent="Margin/VBox"]
 layout_mode = 2
-text = "Witness Level 1 required"
+text = "Witness Rank 1 required"
 
 [node name="MasteryRow" type="HBoxContainer" parent="Margin/VBox"]
 layout_mode = 2
@@ -64,7 +64,7 @@ layout_mode = 2
 [node name="MasteryLabel" type="Label" parent="Margin/VBox/MasteryRow"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Mastery"
+text = "Awareness"
 
 [node name="MasteryValue" type="Label" parent="Margin/VBox/MasteryRow"]
 layout_mode = 2

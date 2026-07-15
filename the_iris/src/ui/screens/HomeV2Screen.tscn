@@ -170,7 +170,7 @@ horizontal_alignment = 1
 
 [node name="AchSub" type="Label" parent="MainMargin/Scroll/Content/ProgressLayer/AchievementPill/AchMargin/AchVBox"]
 layout_mode = 2
-text = "Observer · Level 1"
+text = "Observer · Rank 1"
 horizontal_alignment = 1
 
 [node name="DiscoveryLayer" type="VBoxContainer" parent="MainMargin/Scroll/Content"]

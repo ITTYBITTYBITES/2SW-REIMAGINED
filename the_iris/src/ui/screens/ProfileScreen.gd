@@ -130,7 +130,7 @@ func _refresh() -> void:
 	)
 	name_label.text = str(profile.get("display_name", "Witness"))
 	rank_label.text = (
-		"%s · Witness Level %d"
+		"%s · Witness Rank %d"
 		% [str(record.get("witness_rank", "Observer")), int(record.get("witness_level", 1))]
 	)
 	since_label.text = _membership_copy(str(profile.get("created_at", "")))
@@ -170,12 +170,12 @@ func _refresh_level(record: Dictionary) -> void:
 	margin.add_child(stack)
 
 	var eyebrow := Label.new()
-	eyebrow.text = "WITNESS PROGRESS"
+	eyebrow.text = "INSIGHT"
 	if ThemeService:
 		ThemeService.apply_label_style(eyebrow, "label_small", "primary_variant")
 	stack.add_child(eyebrow)
 	var title := Label.new()
-	title.text = "%d of 100 toward Witness Level %d" % [progress_in_level, level + 1]
+	title.text = "%d of 100 toward Witness Rank %d" % [progress_in_level, level + 1]
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	if ThemeService:
 		ThemeService.apply_label_style(title, "title", "text_primary")
@@ -193,7 +193,7 @@ func _refresh_level(record: Dictionary) -> void:
 	var next_rank_level: int = int(record.get("next_rank_level", level))
 	var milestone := Label.new()
 	milestone.text = (
-		"Next rank · %s at Witness Level %d" % [next_rank, next_rank_level]
+		"Next rank · %s at Witness Rank %d" % [next_rank, next_rank_level]
 		if next_rank != "Top Rank"
 		else "Master Witness rank achieved"
 	)
@@ -215,7 +215,7 @@ func _refresh_observation_record(record: Dictionary) -> void:
 			"highlight": true
 		},
 		{
-			"label": "Challenges Completed",
+			"label": "Moments Preserved",
 			"value": str(record.get("total_plays", 0)),
 			"highlight": false
 		},
@@ -243,14 +243,14 @@ func _refresh_family_mastery() -> void:
 		else []
 	)
 	if challenge_types.is_empty():
-		family_mastery.add_child(_empty_label("Your Challenge Type mastery will grow here."))
+		family_mastery.add_child(_empty_label("Your Observation Mode awareness will grow here."))
 		return
 	for challenge_type: Dictionary in challenge_types:
 		family_mastery.add_child(_mastery_card(challenge_type))
 
 
 func _mastery_card(challenge_type: Dictionary) -> Control:
-	var title_text: String = str(challenge_type.get("title", "Challenge Type"))
+	var title_text: String = str(challenge_type.get("title", "Observation Mode"))
 	var identity: String = str(challenge_type.get("family_id", title_text))
 	var accent: Color = _accent_for(identity)
 	var progress: Dictionary = challenge_type.get("progress", {})
@@ -430,7 +430,7 @@ func _history_row(entry: Dictionary) -> Control:
 	row.add_theme_constant_override("separation", 10)
 	stack.add_child(row)
 	var title := Label.new()
-	title.text = str(entry.get("family_title", "Challenge Type"))
+	title.text = str(entry.get("family_title", "Observation Mode"))
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	if ThemeService:
@@ -519,7 +519,7 @@ func _refresh_collections() -> void:
 	)
 	title.text = "COLLECTION PROGRESS · %d%%" % int(round(collection_ratio * 100.0))
 	copy.text = (
-		"Challenge Types discovered: %d / %d\nAchievements collected: %d / %d\nCurated runs completed: %d"
+		"Observation Modes discovered: %d / %d\nAchievements collected: %d / %d\nCurated runs preserved: %d"
 		% [discovered, catalog.size(), achievements_unlocked, achievement_total, completed_runs]
 	)
 

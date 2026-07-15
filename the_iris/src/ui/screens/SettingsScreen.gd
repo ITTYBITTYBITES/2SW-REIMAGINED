@@ -11,7 +11,7 @@ const SETTING_HELP := {
 	"color_assist_mode": "Reinforces visual cues so color is never the only signal.",
 	"accessibility_screen_reader_hints":
 	"Uses an alternate answer layout designed for assistive navigation when available.",
-	"show_tutorials": "Shows a short introduction before the first round of each Challenge Type.",
+	"show_tutorials": "Shows a short introduction before the first round of each Observation Mode.",
 	"comfortable_timing": "Adds time to observation moments without reducing progress.",
 	"analytics_enabled": (
 		"Keeps a private activity log on this device. Nothing is uploaded; "
@@ -144,7 +144,7 @@ func _refresh() -> void:
 	var sound_rows: Array[Control] = []
 	sound_rows.append(
 		_create_setting_row_slider(
-			"Audio Level",
+			"Audio Volume",
 			"volume_master",
 			SettingsService.get_value("volume_master", 0.95),
 			0.0,

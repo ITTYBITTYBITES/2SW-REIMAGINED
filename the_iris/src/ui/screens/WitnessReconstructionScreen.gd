@@ -536,9 +536,9 @@ func _check_continue_availability() -> void:
     var has_placements := placed_count > 0
     continue_btn.disabled = not has_placements
     if has_placements:
-        continue_btn.text = "PROCEED TO INVESTIGATION (%d PLACED)" % placed_count
+        continue_btn.text = "PROCEED TO DEEPER OBSERVATION (%d PLACED)" % placed_count
     else:
-        continue_btn.text = "PLACE SENSORY FRAGMENTS"
+        continue_btn.text = "PLACE WHAT YOU CARRY"
         
     if has_placements and not continue_btn.visible:
         continue_btn.visible = true

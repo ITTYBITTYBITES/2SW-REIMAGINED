@@ -43,7 +43,7 @@ func _refresh() -> void:
 	var programs: Array[Dictionary] = ProgramService.get_programs(player_state)
 	if programs.is_empty():
 		var empty := Label.new()
-		empty.text = "Choose an individual Challenge Type in the Library, or return here for curated runs."
+		empty.text = "Choose an individual Observation Mode in the Library, or return here for curated runs."
 		empty.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		if ThemeService:

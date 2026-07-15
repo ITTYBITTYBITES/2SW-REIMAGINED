@@ -41,7 +41,7 @@ horizontal_alignment = 0
 
 [node name="Title" type="Label" parent="Margin/VBox/Header/TitleStack"]
 layout_mode = 2
-text = "Recommended Challenge"
+text = "Recommended Observation"
 autowrap_mode = 3
 
 [node name="Reason" type="Label" parent="Margin/VBox"]
@@ -76,7 +76,7 @@ text = "2–3 min"
 
 [node name="Mastery" type="Label" parent="Margin/VBox/MetaRow"]
 layout_mode = 2
-text = "Mastery 0%"
+text = "Awareness 0%"
 
 [node name="Spacer" type="Control" parent="Margin/VBox/MetaRow"]
 layout_mode = 2

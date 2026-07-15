@@ -15,6 +15,8 @@
   },
   "environment": {
     "background_image": "res://assets/gameplay/wm_002_museum_corridor.png",
+    "action_image": "res://assets/gameplay/wm_002_guard_action.png",
+    "reveal_image": "res://assets/gameplay/wm_002_palm_reveal.png",
     "location": "natural history archive corridor, glass display case",
     "time": "9:30 PM",
     "lighting": {

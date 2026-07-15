@@ -119,18 +119,20 @@ func _on_configure() -> void:
         _attunements = _moment_data.get("investigation", {}).get("attunements", [])
         _discovery_threshold = int(_moment_data.get("investigation", {}).get("discovery_threshold", 3))
         
-        # Load frozen moment background
+        # Load frozen moment background — prefer action image for frozen scene
         var env = _moment_data.get("environment", {})
+        var action_path = env.get("action_image", "")
         var bg_path = env.get("background_image", "")
-        if bg_path and ResourceLoader.exists(bg_path):
-            frozen_moment.texture = load(bg_path) as Texture2D
+        var primary_path = action_path if (action_path and ResourceLoader.exists(action_path)) else bg_path
+        if primary_path and ResourceLoader.exists(primary_path):
+            frozen_moment.texture = load(primary_path) as Texture2D
         
         _create_hotspots()
 
 func _on_begin() -> void:
     _investigation_start_time = Time.get_ticks_msec() / 1000.0
     _show_continue_prompt()
-    _speak("Tap objects in the moment to attune. Discover what each perspective reveals.")
+    _speak("Each anomaly holds a perspective. Attune to what draws your attention.")
 
 func _process(delta: float) -> void:
     if _shader_material:
@@ -363,7 +365,7 @@ func _trigger_iris_intervention() -> void:
     _iris_intervened = true
     
     var intervention_text = _moment_data.get("investigation", {}).get("iris_intervention", 
-        "You have seen enough. Or you haven't. The moment does not require your completion. Only your presence.")
+        "You have seen enough. Or you haven't. The moment asks only for your presence.")
     
     iris_intervention.text = intervention_text
     iris_intervention.visible = true
@@ -384,7 +386,7 @@ func _trigger_iris_intervention() -> void:
     get_tree().create_timer(3.2).timeout.connect(_show_continue_prompt)
 
 func _show_continue_prompt() -> void:
-    continue_prompt.text = "TRUTH UNCOVERED · TAP TO PROCEED TO REVELATION"
+    continue_prompt.text = "THE TRUTH IS PRESERVED · TAP TO CONTINUE"
     continue_prompt.visible = true
     continue_prompt.modulate.a = 0.0
     if _should_animate:

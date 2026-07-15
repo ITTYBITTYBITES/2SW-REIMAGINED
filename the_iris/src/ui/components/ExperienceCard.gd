@@ -1,5 +1,5 @@
 extends PanelContainer
-## Premium, data-driven Challenge Type card used by Home and Challenge Library.
+## Premium, data-driven Observation Mode card used by Home and Challenge Library.
 
 signal experience_selected(template_id: String)
 signal tutorial_requested(family_id: String)
@@ -149,9 +149,9 @@ func _refresh_ui() -> void:
 	favorite_button.text = "★" if favorite else "☆"
 	favorite_button.tooltip_text = "Remove favorite" if favorite else "Add favorite"
 	description_label.text = description
-	requirement_label.text = "Witness Level %d required" % required_level
+	requirement_label.text = "Witness Rank %d required" % required_level
 	lock_label.text = "LOCKED" if locked else "READY"
-	mastery_label.text = "Mastery"
+	mastery_label.text = "Awareness"
 	mastery_value.text = "%d%%" % int(round(mastery))
 	mastery_bar.value = mastery
 	progress_label.text = "%d rounds · %d progress" % [plays, progress_points]
@@ -172,7 +172,7 @@ func _refresh_ui() -> void:
 	if bool(manifest.get("coming_soon", false)):
 		play_button.text = "COMING SOON"
 	elif locked:
-		play_button.text = "LEVEL %d" % required_level
+		play_button.text = "RANK %d" % required_level
 	else:
 		play_button.text = "PLAY NOW  →"
 	modulate = Color(0.82, 0.82, 0.88, 1.0) if locked else Color.WHITE

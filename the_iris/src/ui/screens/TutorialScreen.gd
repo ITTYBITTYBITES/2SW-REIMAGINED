@@ -40,7 +40,7 @@ func _recommended_family_id() -> String:
 func _load_family_tutorial() -> void:
 	_clear_tutorial()
 	if _family_id.is_empty() or not ChallengeFamilyRegistry:
-		_fail_to_home("No Challenge Type is available for tutorial")
+		_fail_to_home("No Observation Mode is available for tutorial")
 		return
 	var module: ChallengeFamilyModule = ChallengeFamilyRegistry.get_module(_family_id)
 	if module == null:

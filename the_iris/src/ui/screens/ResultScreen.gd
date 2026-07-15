@@ -140,7 +140,7 @@ func _display_result(data: Dictionary) -> void:
 	var selected := _format_response(data.get("player_response", data.get("selected", "")))
 	var correct := _format_response(data.get("correct_answer", data.get("correct", "")))
 	var detail := str(data.get("explanation", data.get("detail", "")))
-	var title := str(data.get("title", "Challenge"))
+	var title := str(data.get("title", "Witness Moment"))
 	var round_label := ""
 	var metadata_value: Variant = data.get("metadata", {})
 	if metadata_value is Dictionary:
@@ -199,11 +199,11 @@ func _display_result(data: Dictionary) -> void:
 		var family_progress: Variant = progress.get("family_progress", {})
 		var mastery := float((family_progress as Dictionary).get("mastery", 0.0)) if family_progress is Dictionary else 0.0
 		if points > 0:
-			progress_lines.append("+%d Witness Progress · Mastery %.1f%%" % [points, mastery])
+			progress_lines.append("+%d Insight · Awareness %.1f%%" % [points, mastery])
 		var unlocked_value: Variant = progress.get("achievements_unlocked", [])
 		if unlocked_value is Array:
 			for achievement_id: Variant in unlocked_value:
-				progress_lines.append("Achievement earned · %s" % _achievement_title(str(achievement_id)))
+				progress_lines.append("Memory preserved · %s" % _achievement_title(str(achievement_id)))
 	var result_metadata_value: Variant = data.get("metadata", {})
 	if result_metadata_value is Dictionary:
 		var program_value: Variant = (result_metadata_value as Dictionary).get("program_progress", {})
@@ -231,13 +231,13 @@ func _display_result(data: Dictionary) -> void:
 		continue_btn.text = (
 			"FINISH RUN  →"
 			if program_complete
-			else "NEXT CHALLENGE  →" if ChallengeSessionService and ChallengeSessionService.has_active_session() else "HOME"
+			else "NEXT OBSERVATION  →" if ChallengeSessionService and ChallengeSessionService.has_active_session() else "HOME"
 		)
 	if replay_btn:
-		replay_btn.text = "RETRY CHALLENGE"
+		replay_btn.text = "REVISIT OBSERVATION"
 		replay_btn.visible = true
 	if library_btn:
-		library_btn.text = "CHALLENGE LIBRARY"
+		library_btn.text = "OBSERVATION LIBRARY"
 		library_btn.visible = true
 	if menu_btn:
 		menu_btn.text = "RETURN HOME"

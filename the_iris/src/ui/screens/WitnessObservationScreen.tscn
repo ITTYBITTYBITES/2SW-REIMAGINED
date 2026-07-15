@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/ui/screens/WitnessObservationScreen.gd" id="1_script"]
 [ext_resource type="Shader" path="res://shaders/ObservationMomentShader.gdshader" id="2_shader"]
-[ext_resource type="Texture2D" path="res://assets/gameplay/observation_challenge_01.png" id="3_texture"]
+[ext_resource type="Texture2D" path="res://assets/gameplay/wm_001_studio_background.png" id="3_texture"]
 
 [node name="WitnessObservationScreen" type="Control" groups=["app_screen"]]
 layout_mode = 3

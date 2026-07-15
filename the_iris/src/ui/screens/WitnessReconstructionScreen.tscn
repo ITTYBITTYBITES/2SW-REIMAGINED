@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://witness_reconstruction_screen"]
 
 [ext_resource type="Script" path="res://src/ui/screens/WitnessReconstructionScreen.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/gameplay/observation_challenge_01.png" id="2_texture"]
+[ext_resource type="Texture2D" path="res://assets/gameplay/wm_001_studio_background.png" id="2_texture"]
 
 [node name="WitnessReconstructionScreen" type="Control" groups=["app_screen"]]
 layout_mode = 3

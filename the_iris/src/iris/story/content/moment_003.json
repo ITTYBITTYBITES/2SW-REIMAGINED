@@ -15,6 +15,8 @@
   },
   "environment": {
     "background_image": "res://assets/gameplay/wm_003_dressing_room.png",
+    "action_image": "res://assets/gameplay/wm_003_violinist_action.png",
+    "reveal_image": "res://assets/gameplay/wm_003_telegram_reveal.png",
     "location": "concert hall backstage dressing room, vanity table",
     "time": "10:45 PM",
     "lighting": {

@@ -237,10 +237,10 @@ func _commit_to_archive() -> void:
         var rewards = definition.rewards if definition else {}
         var points = rewards.get("progress_points", 12)
         
-        # Add XP (triggers level up logic)
+        # Add Insight (triggers progression logic)
         ProfileService.add_xp(points)
         
-        # Unlock achievement
+        # Preserve memory markers
         for ach in rewards.get("achievements", []):
             var achievements: Array = ProfileService.profile.get("achievements", [])
             if not achievements.has(ach):
