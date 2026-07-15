@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3]
+[gd_scene load_steps=30 format=3]
 
 [ext_resource type="Script" path="res://scripts/MainController.gd" id="1_main"]
 [ext_resource type="Script" path="res://scripts/StateManager.gd" id="2_state"]
@@ -28,6 +28,7 @@
 [ext_resource type="PackedScene" path="res://scenes/CalibrationPlaceholder.tscn" id="26_calibration"]
 [ext_resource type="Script" path="res://src/iris/story/WitnessExperienceDirector.gd" id="27_director"]
 [ext_resource type="PackedScene" path="res://scenes/WitnessMomentRuntime.tscn" id="28_runtime"]
+[ext_resource type="PackedScene" path="res://scenes/TutorialAwakeningScreen.tscn" id="29_tutorial"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
@@ -102,6 +103,9 @@ visible = false
 visible = false
 
 [node name="Calibration" parent="Interface/ScreenRoot" instance=ExtResource("26_calibration")]
+visible = false
+
+[node name="TutorialAwakening" parent="Interface/ScreenRoot" instance=ExtResource("29_tutorial")]
 visible = false
 
 [node name="HUD" type="Control" parent="Interface"]

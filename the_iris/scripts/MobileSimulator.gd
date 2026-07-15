@@ -124,7 +124,65 @@ func _handle_shortcut(keycode: int) -> bool:
 		KEY_4:
 			_set_profile(3)
 			return true
+		KEY_5:
+			_force_dev_first_launch()
+			return true
+		KEY_6:
+			_force_dev_returning_player()
+			return true
+		KEY_7:
+			_force_dev_reset_progression()
+			return true
+		KEY_8:
+			_force_dev_max_evolution()
+			return true
 	return false
+
+func _force_dev_first_launch() -> void:
+	if not is_instance_valid(main_instance):
+		return
+	var manager := main_instance.get_node_or_null("StateManager")
+	if manager:
+		manager.first_launch = true
+		manager.completed_observations = 0
+		manager.discovery_count = 0
+	if main_instance.has_method("_start_first_launch_intro"):
+		main_instance._start_first_launch_intro()
+
+func _force_dev_returning_player() -> void:
+	if not is_instance_valid(main_instance):
+		return
+	var manager := main_instance.get_node_or_null("StateManager")
+	if manager:
+		manager.first_launch = false
+		manager.completed_observations = 3
+		manager.discovery_count = 3
+	var iris := main_instance.get_node_or_null("Interface/ScreenRoot/IrisScreen")
+	if iris and iris.has_method("_sync_progression"):
+		iris._sync_progression()
+
+func _force_dev_reset_progression() -> void:
+	if not is_instance_valid(main_instance):
+		return
+	var manager := main_instance.get_node_or_null("StateManager")
+	if manager:
+		manager.completed_observations = 0
+		manager.attention_score = 0
+		manager.discovery_count = 0
+	var iris := main_instance.get_node_or_null("Interface/ScreenRoot/IrisScreen")
+	if iris and iris.has_method("_sync_progression"):
+		iris._sync_progression()
+
+func _force_dev_max_evolution() -> void:
+	if not is_instance_valid(main_instance):
+		return
+	var manager := main_instance.get_node_or_null("StateManager")
+	if manager:
+		manager.completed_observations = 10
+	var iris := main_instance.get_node_or_null("Interface/ScreenRoot/IrisScreen")
+	if iris:
+		iris.progression_level = 4
+		iris.glow_strength = 1.0
 
 func _cycle_profile() -> void:
 	_set_profile((profile_index + 1) % profile_order.size())
@@ -234,7 +292,7 @@ func _update_developer_overlay() -> void:
 	var display_size: Vector2i = _profile_size()
 	if orientation != 0:
 		display_size = Vector2i(display_size.y, display_size.x)
-	dev_label.text = "SIMULATOR  ·  %s\n%s  %s × %s\n%s  ·  Iris %s\nFPS %d  ·  F1 frame  F2/F3/F9 rotate  F4 back  F5 restart  F6 clear  F7 sound  F8 profile  F10 overlay" % [
+	dev_label.text = "SIMULATOR  ·  %s\n%s  %s × %s\n%s  ·  Iris %s\nFPS %d  ·  F1 frame  F2/F3/F9 rotate  F4 back  F5 restart  F6 clear\nDEV KEYS: 5 First Launch  |  6 Returning Player  |  7 Reset Prog  |  8 Max Evolution" % [
 		profile_name.to_upper(),
 		orientation_label,
 		display_size.x,

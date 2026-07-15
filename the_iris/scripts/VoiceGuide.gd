@@ -1,6 +1,9 @@
 extends Node
 class_name VoiceGuide
 
+# Centralized Iris Voice & Dialogue Trigger System for Two Second Witness 4.0
+# Enforces economy of expression, cooldown protection, voice/TTS fallback, and captions.
+
 signal voice_started(key: String)
 signal voice_finished(key: String)
 signal caption_changed(text: String, visible: bool)
@@ -16,8 +19,8 @@ enum GuideState {
 }
 
 const SAVE_PATH := "user://the_iris_voice.cfg"
-const ONBOARDING_GAP := 1.8
-const RETURNING_COOLDOWN := 180.0
+const ONBOARDING_GAP := 2.4
+const RETURNING_COOLDOWN := 45.0 # Enforces intentional silence between phrases
 
 @onready var voice_player: AudioStreamPlayer = $VoicePlayer
 
@@ -41,6 +44,8 @@ var first_return := false
 var first_discovery := false
 var calibration_guided := false
 
+var random := RandomNumberGenerator.new()
+
 var clips := {
     "initializing": preload("res://audio/initializing.mp3"),
     "touch_center": preload("res://audio/touch_center.mp3"),
@@ -52,6 +57,7 @@ var clips := {
 }
 
 func _ready() -> void:
+    random.randomize()
     voice_profile = VoiceProfile.new()
     voice_player.volume_db = -9.0
     voice_player.finished.connect(_on_voice_finished)
@@ -88,18 +94,69 @@ func set_enabled(enabled: bool) -> void:
         voice_player.stop()
         pending_lines.clear()
 
+# Centralized runtime trigger system for all Living Lens expression states
+func trigger_iris_expression(expression_state: String, context_key: String = "") -> void:
+    if not voice_enabled and not captions_enabled:
+        return
+    if interaction_active or voice_player.playing:
+        return
+    if not _cooldown_allows():
+        return
+        
+    match expression_state:
+        "NEW_PLAYER":
+            match context_key:
+                "awakening":
+                    _request_line("initializing", "Attention is the beginning of memory.")
+                "looking_through":
+                    _request_line("touch_center", "Something was missed.")
+                "tutorial_lesson":
+                    _request_line("hidden_detail", "The smallest detail can change the whole story.")
+                "tutorial_accepted":
+                    _request_line("remember", "The Archive has accepted your first observation.")
+                "curiosity":
+                    _request_line("touch_center", "Your attention holds the moment.")
+                _:
+                    _request_line("first_touch", "The pupil is a portal.")
+        "IDLE":
+            # Rare observations during extended idle periods (>45s cooldown)
+            if random.randf() < 0.5:
+                _request_line("idle_calm", "The field is calm.")
+            else:
+                _request_line("idle_instrument", "A living perception instrument.")
+        "FOCUS":
+            # Economical destination recognition (suppressed if recently spoken)
+            match context_key:
+                "story_mode":
+                    _request_line("focus_story", "Primary memory.")
+                "archive":
+                    _request_line("focus_archive", "Past witnessed moments.")
+                "daily_witness", "discovery":
+                    _request_line("focus_daily", "Unopened frequency.")
+                "profile", "your_iris":
+                    _request_line("focus_profile", "Perception evolution.")
+                "settings", "calibration":
+                    _request_line("focus_calibration", "Sensor diagnostics.")
+        "WITNESS_COMPLETE":
+            _request_line("hidden_detail", "The detail is held as light.")
+        "RETURN":
+            if first_return and not onboarding_session:
+                _request_line("return_welcome", "Welcome back, Observer.")
+            else:
+                on_return_from_witness()
+
 func _schedule_first_awakening() -> void:
     if awakening_timer_started or first_awakened:
         return
     awakening_timer_started = true
-    get_tree().create_timer(2.8).timeout.connect(_on_awakening_timer)
+    get_tree().create_timer(2.6).timeout.connect(_on_awakening_timer)
 
 func _on_awakening_timer() -> void:
     if first_awakened:
         return
     if is_instance_valid(iris):
         iris.start_awakening()
-    _request_line("initializing", "Initializing.")
+    trigger_iris_expression("NEW_PLAYER", "awakening")
 
 func on_first_touch() -> void:
     if first_touch:
@@ -110,8 +167,6 @@ func on_first_touch() -> void:
     current_state = GuideState.FIRST_TOUCH
     spoken_lines["touch_center"] = true
     save_progress()
-    # If the user found the pupil before the voice finished its invitation,
-    # the confirmation waits for the current phrase to finish.
     _request_line("first_touch", "Good. You found the focus point.")
 
 func on_witness_entered() -> void:
@@ -123,7 +178,7 @@ func on_witness_entered() -> void:
     _request_line("hold_attention", "Hold your attention.")
 
 func on_witness_completed() -> void:
-    _request_line("hidden_detail", "You noticed something hidden.")
+    trigger_iris_expression("WITNESS_COMPLETE")
 
 func on_return_from_witness() -> void:
     if not first_return:
@@ -151,7 +206,8 @@ func on_calibration_opened() -> void:
     _request_line("calibration", "Take your time.")
 
 func _request_line(key: String, text: String) -> void:
-    if spoken_lines.has(key):
+    # If phrase already spoken in this profile, suppress unless it's a dynamic state reflection
+    if spoken_lines.has(key) and not key.begins_with("focus_") and not key.begins_with("idle_") and not key.begins_with("return_"):
         return
     if not voice_enabled and not captions_enabled:
         return
@@ -184,8 +240,9 @@ func _speak(key: String, text: String) -> void:
         return
     current_key = key
     last_spoken_at = Time.get_ticks_msec() / 1000.0
-    spoken_lines[key] = true
-    save_progress()
+    if not key.begins_with("focus_") and not key.begins_with("idle_") and not key.begins_with("return_"):
+        spoken_lines[key] = true
+        save_progress()
     voice_started.emit(key)
     if captions_enabled:
         caption_changed.emit(text, true)
@@ -194,10 +251,8 @@ func _speak(key: String, text: String) -> void:
         voice_player.play()
     elif voice_enabled:
         _speak_with_tts(text)
-        # TTS has no reliable finished signal across Android providers.
         get_tree().create_timer(maxf(1.4, text.length() * 0.055)).timeout.connect(_on_tts_finished)
     else:
-        # Captions-only mode still gets a short visual reading window.
         get_tree().create_timer(maxf(1.4, text.length() * 0.055)).timeout.connect(_on_tts_finished)
 
 func _speak_with_tts(text: String) -> void:

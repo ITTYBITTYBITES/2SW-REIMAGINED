@@ -26,6 +26,7 @@ var _dragged_fragment: Control = null
 var _drag_offset: Vector2 = Vector2.ZERO
 var _original_palette_pos: Vector2 = Vector2.ZERO
 var _is_dragging: bool = false
+var _hovered_ghost: Control = null
 
 func _ready() -> void:
     super._ready()
@@ -89,23 +90,20 @@ func _style_continue_button() -> void:
 func _on_configure() -> void:
     if moment_definition:
         _moment_data = moment_definition.to_blueprint()
-        var recon = _moment_data.get("mechanics", {}).get("memory", {})
         
-        # Load ghost outlines from moment definition
-        var env = _moment_data.get("environment", {})
-        var ambient = env.get("ambient_details", [])
-        _build_ghost_outlines(ambient)
+        # Load fragment palette first so ghost outlines can bind labels
+        _fragment_definitions = _moment_data.get("reconstruction", {}).get("fragment_palette", [])
         
-        # Load fragment palette
-        var fragments = _moment_data.get("reconstruction", {}).get("fragment_palette", [])
-        _fragment_definitions = fragments
+        # Load ghost outlines dynamically from moment definition
+        var ghosts = _moment_data.get("reconstruction", {}).get("ghost_outlines", [])
+        _build_ghost_outlines(ghosts)
         
         # Load desk background
+        var env = _moment_data.get("environment", {})
         var bg_path = env.get("background_image", "")
         if bg_path and ResourceLoader.exists(bg_path):
             desk_bg.texture = load(bg_path) as Texture2D
         else:
-            # Use observation image as reference, desaturated
             desk_bg.modulate = Color(1, 1, 1, 0.12)
 
 func _on_begin() -> void:
@@ -113,18 +111,40 @@ func _on_begin() -> void:
     _create_fragment_palette()
     _show_iris_prompt()
 
-func _build_ghost_outlines(ambient_details: Array) -> void:
-    # Define ghost outline positions relative to desk (normalized 0-1)
-    # These correspond to the ambient objects in the moment
-    _ghost_outlines = [
-        {"id": "notebook", "label": "Notebook", "pos": Vector2(0.25, 0.55), "size": Vector2(0.18, 0.14)},
-        {"id": "primary_cup", "label": "Tea Cup", "pos": Vector2(0.65, 0.38), "size": Vector2(0.08, 0.10)},
-        {"id": "pen", "label": "Pen", "pos": Vector2(0.35, 0.50), "size": Vector2(0.06, 0.12)},
-        {"id": "glasses", "label": "Glasses", "pos": Vector2(0.20, 0.62), "size": Vector2(0.08, 0.05)},
-        {"id": "keys", "label": "Keys", "pos": Vector2(0.80, 0.70), "size": Vector2(0.07, 0.06)},
-        {"id": "plant", "label": "Plant", "pos": Vector2(0.10, 0.25), "size": Vector2(0.12, 0.20)},
-        {"id": "second_cup", "label": "Second Cup", "pos": Vector2(0.75, 0.55), "size": Vector2(0.07, 0.09)},
-    ]
+func _build_ghost_outlines(ghost_list: Array) -> void:
+    _ghost_outlines.clear()
+    
+    # Check if we have an explicit dictionary array or string ID list from JSON
+    for i in range(ghost_list.size()):
+        var item = ghost_list[i]
+        if item is Dictionary and item.has("pos"):
+            _ghost_outlines.append(item)
+        else:
+            var id_str := str(item if not (item is Dictionary) else item.get("id", ""))
+            var frag_def := _find_fragment_def(id_str)
+            var label_str := str(frag_def.get("label", id_str.replace("_", " ").capitalize()))
+            var col_idx := i % 3
+            var row_idx := int(i / 3)
+            var norm_pos := Vector2(0.22 + float(col_idx) * 0.28, 0.35 + float(row_idx) * 0.24)
+            _ghost_outlines.append({
+                "id": id_str,
+                "label": label_str,
+                "pos": norm_pos,
+                "size": Vector2(0.16, 0.14)
+            })
+            
+    # Fallback if no ghost outlines supplied at all
+    if _ghost_outlines.is_empty():
+        for i in range(_fragment_definitions.size()):
+            var frag := _fragment_definitions[i]
+            var col_idx := i % 3
+            var row_idx := int(i / 3)
+            _ghost_outlines.append({
+                "id": str(frag.get("id", "item_%d" % i)),
+                "label": str(frag.get("label", "Item %d" % i)),
+                "pos": Vector2(0.22 + float(col_idx) * 0.28, 0.35 + float(row_idx) * 0.24),
+                "size": Vector2(0.16, 0.14)
+            })
 
 func _create_ghost_outlines() -> void:
     for child in ghost_container.get_children():
@@ -330,10 +350,29 @@ func _update_drag(screen_pos: Vector2) -> void:
     if not _is_dragging or not _dragged_fragment:
         return
     _dragged_fragment.global_position = screen_pos + _drag_offset
+    
+    var ghost_at_pos := _get_ghost_at_position(screen_pos)
+    if ghost_at_pos != _hovered_ghost:
+        if is_instance_valid(_hovered_ghost):
+            _hovered_ghost.modulate = Color(1, 1, 1, 1)
+            _hovered_ghost.scale = Vector2(1.0, 1.0)
+        _hovered_ghost = ghost_at_pos
+        if is_instance_valid(_hovered_ghost):
+            _hovered_ghost.modulate = Color(0.35, 0.98, 0.88, 1.0)
+            _hovered_ghost.scale = Vector2(1.06, 1.06)
+            _vibrate(15)
+            var sound := get_tree().root.get_node_or_null("Main/ProceduralSound") if get_tree() and get_tree().root.has_node("Main/ProceduralSound") else null
+            if sound and sound.has_method("focus_notice_tone"):
+                sound.focus_notice_tone()
 
 func _end_drag(screen_pos: Vector2) -> void:
     if not _is_dragging or not _dragged_fragment:
         return
+    
+    if is_instance_valid(_hovered_ghost):
+        _hovered_ghost.modulate = Color(1, 1, 1, 1)
+        _hovered_ghost.scale = Vector2(1.0, 1.0)
+    _hovered_ghost = null
     
     var fragment_id = _dragged_fragment.get_meta("fragment_id")
     var dropped_on_ghost = false
@@ -388,6 +427,17 @@ func _place_fragment_on_ghost(fragment_id: String, ghost_id: String) -> void:
             tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
             tween.tween_property(placed, "scale", Vector2(1.0, 1.0), 0.3).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
             tween.parallel().tween_property(placed, "modulate:a", 1.0, 0.3).set_ease(Tween.EASE_OUT)
+    
+    # Restore desk background color and clarity as memory is rebuilt
+    if is_instance_valid(desk_bg):
+        var progress_ratio := clampf(float(_placed_fragments.size()) / maxf(float(_ghost_outlines.size()), 1.0), 0.0, 1.0)
+        desk_bg.modulate = Color(1, 1, 1, lerpf(0.12, 0.88, progress_ratio))
+        desk_bg.scale = Vector2(1.0, 1.0).lerp(Vector2(1.02, 1.02), progress_ratio)
+    
+    _vibrate(35)
+    var sound := get_tree().root.get_node_or_null("Main/ProceduralSound") if get_tree() and get_tree().root.has_node("Main/ProceduralSound") else null
+    if sound and sound.has_method("emit_destination_recognition"):
+        sound.emit_destination_recognition("story_mode")
     
     # Remove from palette
     var palette_card = _palette_fragments.get(fragment_id)
@@ -478,13 +528,18 @@ func _show_iris_prompt() -> void:
 
 func _check_continue_availability() -> void:
     # Continue available after at least one fragment placed OR after 10 seconds
-    var has_placements = false
+    var placed_count := 0
     for fragments in _placed_fragments.values():
         if fragments.size() > 0:
-            has_placements = true
-            break
+            placed_count += 1
     
+    var has_placements := placed_count > 0
     continue_btn.disabled = not has_placements
+    if has_placements:
+        continue_btn.text = "PROCEED TO INVESTIGATION (%d PLACED)" % placed_count
+    else:
+        continue_btn.text = "PLACE SENSORY FRAGMENTS"
+        
     if has_placements and not continue_btn.visible:
         continue_btn.visible = true
         if _should_animate:

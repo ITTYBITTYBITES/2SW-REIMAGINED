@@ -1,0 +1,101 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/TutorialAwakeningScreen.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/gameplay/featured_desk_scene.png" id="2_bg"]
+
+[node name="TutorialAwakeningScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="TextureRect" parent="."]
+modulate = Color(0.85, 0.95, 0.92, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ReflectionHighlight" type="ColorRect" parent="Background"]
+modulate = Color(0.96, 0.88, 0.52, 0)
+layout_mode = 0
+position = Vector2(320, 410)
+size = Vector2(160, 160)
+mouse_filter = 2
+color = Color(0.96, 0.88, 0.52, 0.35)
+
+[node name="QuestionContainer" type="Control" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="QuestionTitle" type="Label" parent="QuestionContainer"]
+layout_mode = 0
+position = Vector2(60, 680)
+size = Vector2(600, 40)
+theme_override_colors/font_color = Color(0.88, 0.96, 0.93, 1)
+theme_override_colors/font_shadow_color = Color(0.02, 0.06, 0.08, 0.85)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 22
+text = "WHAT CHANGED?"
+horizontal_alignment = 1
+vertical_alignment = 1
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="QuestionContainer"]
+layout_mode = 0
+position = Vector2(110, 740)
+size = Vector2(500, 240)
+theme_override_constants/separation = 16
+
+[node name="Option1" type="Button" parent="QuestionContainer/VBox"]
+custom_minimum_size = Vector2(500, 56)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.88, 0.96, 0.93, 1)
+theme_override_font_sizes/font_size = 16
+text = "THE BRUSH MOVED"
+
+[node name="Option2" type="Button" parent="QuestionContainer/VBox"]
+custom_minimum_size = Vector2(500, 56)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.88, 0.96, 0.93, 1)
+theme_override_font_sizes/font_size = 16
+text = "THE LIGHT CHANGED"
+
+[node name="Option3" type="Button" parent="QuestionContainer/VBox"]
+custom_minimum_size = Vector2(500, 56)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.88, 0.96, 0.93, 1)
+theme_override_font_sizes/font_size = 16
+text = "THE REFLECTION SHIFTED"
+
+[node name="LessonLabel" type="Label" parent="."]
+modulate = Color(0.96, 0.88, 0.52, 0)
+layout_mode = 0
+position = Vector2(60, 760)
+size = Vector2(600, 80)
+theme_override_colors/font_color = Color(0.96, 0.88, 0.52, 1)
+theme_override_colors/font_shadow_color = Color(0.02, 0.06, 0.08, 0.9)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 18
+text = "THE SMALLEST DETAIL CAN CHANGE THE WHOLE STORY"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+mouse_filter = 2

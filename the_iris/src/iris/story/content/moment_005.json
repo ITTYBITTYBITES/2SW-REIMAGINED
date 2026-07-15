@@ -1,0 +1,119 @@
+{
+  "moment_id": "WM_005",
+  "chapter_id": "chapter_01_learning_to_notice",
+  "title": "The Witness",
+  "setting": "An optical reflection inside the deepest plane of the living lens itself. Midnight cyan and starlight.",
+  "theme": "The player becoming aware of the Iris itself.",
+  "rank_requirement": 1,
+  "narrative_introduction": "The instrument does not open into a room. It turns inward. You are looking through the cornea, through the stroma fibers, right into the pupil aperture itself. For the first time, notice who is looking back.",
+  "mechanics": {
+    "observation": "Locked-off 2-second cinematic moment. The living iris breathes, the pupil aperture dilates to reveal four orbiting memory shards from the previous moments, and the center reflects the observer's own gaze.",
+    "memory": "Spatial fragment placement inside the eye: unfinished canvas reflection, museum pocket watch shard, violin bow fiber, quartz sensor crystal, golden collarette ring, central pupil portal.",
+    "discovery": "Frozen moment exploration. Attuning to the four memory shards reveals that every moment you witnessed literally altered the physical stroma of the eye.",
+    "evidence": "Archive entry reveals the ultimate truth of Two Second Witness: the observer and the instrument are one unified consciousness.",
+    "reflection": "Iris voice synthesizes the completion of Chapter 1. Rank 2: Witness unlocks. Archive entry: 'The Witness'."
+  },
+  "environment": {
+    "background_image": "res://assets/gameplay/wm_005_internal_stroma.png",
+    "location": "internal stroma plane of the Living Iris, pupillary boundary",
+    "time": "Midnight",
+    "lighting": {
+      "primary": "bioluminescent seafoam and emerald limbal glow",
+      "fill": "starlight reflections caught inside the transparent cornea glass",
+      "key_detail": "four orbiting memory shards reflecting the exact lighting of WM_001 through WM_004"
+    },
+    "camera": {
+      "style": "intimate internal optical macro lens shot",
+      "aspect": "4:3",
+      "depth_of_field": "infinite optical depth across all stroma layers",
+      "color_grade": "deep space cyan, rich golden collarette highlights, pristine crystal teal"
+    },
+    "animation": {
+      "iris_stroma": "breathes slowly (0.8s inhalation -> 1.2s exhalation) = 2.0s",
+      "memory_shards": "orbit smoothly in Keplerian ellipses around the central pupil aperture",
+      "pupil_portal": "dilates slightly to show deep infinite optical stars inside"
+    },
+    "ambient_details": [
+      "golden collarette fiber ring glowing around the aperture",
+      "Memory Shard 1 displaying the golden prism from The Unfinished Canvas",
+      "Memory Shard 2 displaying the brass watch from The Forgotten Museum",
+      "Memory Shard 3 displaying the Stradivarius bow from The Last Performance",
+      "Memory Shard 4 displaying the quartz sensor from The Faulty Reactor",
+      "curved cornea surface reflecting the observer's own silhouette"
+    ],
+    "audio": {
+      "base_layer": "deep 48 Hz Hippus sub-bass respiration, silent atmospheric vacuum",
+      "focus_layer": "crystalline 4.2 kHz optical resonance, soft organic stroma rustle",
+      "transition": "multi-octave Atmospheric Phase Lock chord C-G-E sustaining into infinity"
+    }
+  },
+  "observation": {
+    "duration_seconds": 2.0,
+    "input_accepted": false,
+    "transition": "soft optical dissolve 0.25s",
+    "noticeable_details": {
+      "surface": ["iris stroma breathes", "four memory shards orbit the pupil", "pupil dilates slowly"],
+      "subtle": ["golden collarette ring pulses exactly in time with your own respiration", "memory shards cast faint colored reflections onto the teal fibers"],
+      "deep": ["each memory shard rotates to show the exact detail you carried from that chapter", "cornea glass reflects your own observer silhouette looking into the lens"],
+      "intentionally_missed_first_view": ["pupil void contains an infinite spiral of future unwritten moments"]
+    }
+  },
+  "reconstruction": {
+    "ghost_outlines": ["canvas_shard", "museum_shard", "performance_shard", "reactor_shard", "golden_collarette", "pupil_portal"],
+    "fragment_palette": [
+      { "id": "canvas_shard", "icon": "💎", "label": "Unfinished canvas shard" },
+      { "id": "museum_shard", "icon": "⌚", "label": "Forgotten museum shard" },
+      { "id": "performance_shard", "icon": "🎻", "label": "Last performance shard" },
+      { "id": "reactor_shard", "icon": "💠", "label": "Faulty reactor shard" },
+      { "id": "golden_collarette", "icon": "✨", "label": "Golden collarette ring" },
+      { "id": "pupil_portal", "icon": "👁️", "label": "Central pupil portal" }
+    ],
+    "validation": "none",
+    "iris_prompt": "Reconstruct the Living Lens. Place the memories that shaped our perception."
+  },
+  "investigation": {
+    "attunements": [
+      {
+        "object": "canvas_shard",
+        "type": "spectral",
+        "reveals": "light from the artist's loft permanently brightened the upper ciliary stroma fibers"
+      },
+      {
+        "object": "museum_shard",
+        "type": "thermal",
+        "reveals": "warmth from the night guard's palm imprint remains preserved in the left collarette"
+      },
+      {
+        "object": "performance_shard",
+        "type": "trajectory",
+        "reveals": "dedication note from Bach's score vibrates in exact harmonic resonance with the right rim"
+      },
+      {
+        "object": "reactor_shard",
+        "type": "forensic",
+        "reveals": "precision quartz grid alignment permanently calibrated the pupil's optical focus"
+      }
+    ],
+    "discovery_threshold": 3,
+    "iris_intervention": "You have witnessed all five horizons. The empty eye is empty no more. We have learned to see."
+  },
+  "revelation": {
+    "iris_response": "You noticed the four memory shards orbiting the aperture. You noticed the golden collarette born from your attention. You noticed that every moment you carried became a physical part of this living eye. You did not solve five puzzles. You learned how to see. Rank 2: Witness unlocked.",
+    "archive_entry": {
+      "title": "The Witness",
+      "category": "chapter_01",
+      "fields": ["carried_fragments", "attunements_completed", "iris_note"]
+    }
+  },
+  "rewards": {
+    "progress_points": 50,
+    "archive_entry": "the_witness",
+    "mastery": { "attention": 0.25 },
+    "achievements": ["chapter_01_complete", "rank_2_witness"]
+  },
+  "archive_mapping": {
+    "title": "The Witness",
+    "category": "chapter_01",
+    "iris_note": "The instrument and the observer looked into each other and discovered they were holding the same light."
+  }
+}

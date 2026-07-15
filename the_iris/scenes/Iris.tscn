@@ -1,11 +1,29 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=12 format=3]
 
 [ext_resource type="Script" path="res://scripts/IrisController.gd" id="1_iris"]
 [ext_resource type="Shader" path="res://shaders/iris.gdshader" id="2_shader"]
 [ext_resource type="Texture2D" path="res://assets/iris_particle.svg" id="3_particle"]
+[ext_resource type="Texture2D" path="res://assets/iris/outer_glow.png" id="4_outer_glow"]
+[ext_resource type="Texture2D" path="res://assets/iris/pupil_portal.png" id="5_pupil_portal"]
+[ext_resource type="Shader" path="res://shaders/memory_portal.gdshader" id="6_portal_shader"]
+[ext_resource type="Texture2D" path="res://assets/iris/reflections/story_mode.png" id="7_story_preview"]
+[ext_resource type="Texture2D" path="res://assets/iris/cornea_reflection.png" id="8_cornea"]
+[ext_resource type="Texture2D" path="res://assets/iris/base.png" id="9_base_tex"]
+[ext_resource type="Texture2D" path="res://assets/iris/fibers.png" id="10_fibers_tex"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iris"]
 shader = ExtResource("2_shader")
+shader_parameter/base_tex = ExtResource("9_base_tex")
+shader_parameter/fibers_tex = ExtResource("10_fibers_tex")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_memory_portal"]
+shader = ExtResource("6_portal_shader")
+shader_parameter/time = 0.0
+shader_parameter/aperture = 0.105
+shader_parameter/memory_visibility = 0.0
+shader_parameter/gaze_offset = Vector2(0, 0)
+shader_parameter/distortion_intensity = 0.35
+shader_parameter/aspect = 0.5625
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dust"]
 emission_shape = 1
@@ -29,6 +47,17 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_iris")
 
+[node name="OuterEnergyLayer" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.45)
+layout_mode = 0
+position = Vector2(36, 310)
+size = Vector2(648, 648)
+pivot_offset = Vector2(324, 324)
+mouse_filter = 2
+texture = ExtResource("4_outer_glow")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Visual" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -39,6 +68,84 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 1)
 material = SubResource("ShaderMaterial_iris")
+
+[node name="PupilPortalLayer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PortalContainer" type="Control" parent="PupilPortalLayer"]
+layout_mode = 0
+position = Vector2(360, 634)
+pivot_offset = Vector2(140, 140)
+mouse_filter = 2
+
+[node name="PortalVoid" type="TextureRect" parent="PupilPortalLayer/PortalContainer"]
+layout_mode = 0
+position = Vector2(-140, -140)
+size = Vector2(280, 280)
+mouse_filter = 2
+texture = ExtResource("5_pupil_portal")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DestinationPreview" type="TextureRect" parent="PupilPortalLayer/PortalContainer"]
+material = SubResource("ShaderMaterial_memory_portal")
+layout_mode = 0
+position = Vector2(-140, -140)
+size = Vector2(280, 280)
+mouse_filter = 2
+texture = ExtResource("7_story_preview")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DestinationTitle" type="Label" parent="PupilPortalLayer"]
+modulate = Color(0.87, 0.96, 0.93, 0)
+layout_mode = 0
+position = Vector2(60, 440)
+size = Vector2(600, 36)
+theme_override_colors/font_color = Color(0.87, 0.96, 0.93, 1)
+theme_override_colors/font_shadow_color = Color(0.02, 0.06, 0.08, 0.8)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 19
+text = "STORY MODE"
+horizontal_alignment = 1
+vertical_alignment = 1
+mouse_filter = 2
+
+[node name="DestinationPrompt" type="Label" parent="PupilPortalLayer"]
+modulate = Color(0.48, 0.8, 0.72, 0)
+layout_mode = 0
+position = Vector2(60, 478)
+size = Vector2(600, 26)
+theme_override_colors/font_color = Color(0.48, 0.8, 0.72, 1)
+theme_override_colors/font_shadow_color = Color(0.02, 0.06, 0.08, 0.8)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 12
+text = "ENTER WITNESS MOMENT"
+horizontal_alignment = 1
+vertical_alignment = 1
+mouse_filter = 2
+
+[node name="CorneaLayer" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.38)
+layout_mode = 0
+position = Vector2(110, 384)
+size = Vector2(500, 500)
+pivot_offset = Vector2(250, 250)
+mouse_filter = 2
+texture = ExtResource("8_cornea")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MemoryFragmentsContainer" type="Node2D" parent="."]
+position = Vector2(360, 634)
 
 [node name="Particles" type="CPUParticles2D" parent="."]
 position = Vector2(360, 635)
