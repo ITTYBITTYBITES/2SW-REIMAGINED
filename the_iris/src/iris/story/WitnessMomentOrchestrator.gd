@@ -253,7 +253,7 @@ func _commit_to_archive() -> void:
             "id": definition.moment_id,
             "title": definition.archive_mapping.get("title", definition.title),
             "category": definition.archive_mapping.get("category", definition.chapter_id),
-            "completed_at": Time.get_unix_time_from_datetime(Time.get_datetime_now()),
+            "completed_at": Time.get_unix_time_from_system(),
             "carried_fragments": phase_data.get("reconstruction", {}).get("placed_fragments", {}),
             "attunements": phase_data.get("investigation", {}).get("completed_attunements", []),
             "iris_note": definition.archive_mapping.get("iris_note", "")
