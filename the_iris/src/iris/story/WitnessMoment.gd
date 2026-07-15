@@ -17,6 +17,11 @@ class_name WitnessMoment
 @export var discovery_mechanic := "Discovery Mechanic TBD"
 @export var evidence_mechanic := "Evidence Connection Mechanic TBD"
 @export var reflection_mechanic := "Reflection Mechanic TBD"
+@export var environment: Dictionary = {}
+@export var observation: Dictionary = {}
+@export var reconstruction: Dictionary = {}
+@export var investigation: Dictionary = {}
+@export var revelation: Dictionary = {}
 @export var rewards: Dictionary = {}
 @export var archive_mapping: Dictionary = {}
 
@@ -35,12 +40,17 @@ static func from_dictionary(data: Dictionary) -> WitnessMoment:
     moment.discovery_mechanic = str(mechanics.get("discovery", "Discovery Mechanic TBD"))
     moment.evidence_mechanic = str(mechanics.get("evidence", "Evidence Connection Mechanic TBD"))
     moment.reflection_mechanic = str(mechanics.get("reflection", "Reflection Mechanic TBD"))
+    moment.environment = (data.get("environment", {}) as Dictionary).duplicate(true)
+    moment.observation = (data.get("observation", {}) as Dictionary).duplicate(true)
+    moment.reconstruction = (data.get("reconstruction", {}) as Dictionary).duplicate(true)
+    moment.investigation = (data.get("investigation", {}) as Dictionary).duplicate(true)
+    moment.revelation = (data.get("revelation", {}) as Dictionary).duplicate(true)
     moment.rewards = (data.get("rewards", {}) as Dictionary).duplicate(true)
     moment.archive_mapping = (data.get("archive_mapping", {}) as Dictionary).duplicate(true)
     return moment
 
 func is_placeholder() -> bool:
-    return true
+    return false
 
 func to_blueprint() -> Dictionary:
     return {
@@ -58,6 +68,11 @@ func to_blueprint() -> Dictionary:
             "evidence": evidence_mechanic,
             "reflection": reflection_mechanic
         },
+        "environment": environment.duplicate(true),
+        "observation": observation.duplicate(true),
+        "reconstruction": reconstruction.duplicate(true),
+        "investigation": investigation.duplicate(true),
+        "revelation": revelation.duplicate(true),
         "rewards": rewards.duplicate(true),
         "archive_mapping": archive_mapping.duplicate(true)
     }

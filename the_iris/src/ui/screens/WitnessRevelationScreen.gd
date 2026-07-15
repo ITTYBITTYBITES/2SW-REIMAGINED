@@ -294,15 +294,9 @@ func _create_attunement_item(att_data: Dictionary) -> HBoxContainer:
     item.add_child(icon_label)
     
     var text_label = Label.new()
-    var type_names = {
-        "thermal": "Tea Cup (Thermal)",
-        "skeletal": "Hand (Skeletal)",
-        "text": "Notebook (Text)",
-        "forensic": "Second Cup (Forensic)",
-        "trajectory": "Dust Mote (Trajectory)",
-        "spectral": "Light Shaft (Spectral)"
-    }
-    text_label.text = type_names.get(att_data.type, att_data.object.capitalize())
+    var obj_name := str(att_data.get("object", "Artifact")).replace("_", " ").capitalize()
+    var type_name := str(att_data.get("type", "attunement")).capitalize()
+    text_label.text = "%s (%s)" % [obj_name, type_name]
     text_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
     text_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
     if ThemeService:

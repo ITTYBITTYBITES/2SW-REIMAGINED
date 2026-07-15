@@ -24,6 +24,7 @@ var captions_enabled: bool = false
 var orientation_lock: bool = false
 var parallax_enabled: bool = true
 var first_launch: bool = true
+var onboarding_tutorial_completed: bool = false
 
 const SAVE_PATH := "user://the_iris_state.cfg"
 
@@ -43,6 +44,12 @@ func complete_observation() -> void:
     progress_changed.emit()
     save_state()
 
+func complete_onboarding_tutorial() -> void:
+    onboarding_tutorial_completed = true
+    first_launch = false
+    save_state()
+    progress_changed.emit()
+
 func mark_first_launch_seen() -> void:
     if first_launch:
         first_launch = false
@@ -56,6 +63,7 @@ func reset_progress() -> void:
     completed_observations = 0
     attention_score = 0
     discovery_count = 0
+    onboarding_tutorial_completed = false
     progress_changed.emit()
     save_state()
 
@@ -64,6 +72,7 @@ func save_state() -> void:
     config.set_value("progress", "completed_observations", completed_observations)
     config.set_value("progress", "attention_score", attention_score)
     config.set_value("progress", "discovery_count", discovery_count)
+    config.set_value("progress", "onboarding_tutorial_completed", onboarding_tutorial_completed)
     config.set_value("preferences", "sound_enabled", sound_enabled)
     config.set_value("preferences", "animation_intensity", animation_intensity)
     config.set_value("preferences", "high_contrast", high_contrast)
@@ -82,6 +91,7 @@ func load_state() -> void:
     completed_observations = int(config.get_value("progress", "completed_observations", 0))
     attention_score = int(config.get_value("progress", "attention_score", 0))
     discovery_count = int(config.get_value("progress", "discovery_count", 0))
+    onboarding_tutorial_completed = bool(config.get_value("progress", "onboarding_tutorial_completed", false))
     sound_enabled = bool(config.get_value("preferences", "sound_enabled", true))
     animation_intensity = float(config.get_value("preferences", "animation_intensity", 1.0))
     high_contrast = bool(config.get_value("preferences", "high_contrast", false))

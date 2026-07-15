@@ -141,18 +141,37 @@ func _create_hotspots() -> void:
         child.queue_free()
     _hotspot_nodes.clear()
     
-    # Hotspot definitions matching the attunements
-    var hotspot_defs = [
-        {"id": "primary_cup", "pos": Vector2(0.65, 0.38), "size": Vector2(0.12, 0.15), "label": "Tea Cup"},
-        {"id": "hand", "pos": Vector2(0.55, 0.45), "size": Vector2(0.18, 0.20), "label": "Hand"},
-        {"id": "notebook", "pos": Vector2(0.25, 0.55), "size": Vector2(0.22, 0.18), "label": "Notebook"},
-        {"id": "second_cup", "pos": Vector2(0.75, 0.55), "size": Vector2(0.10, 0.12), "label": "Second Cup"},
-        {"id": "dust_mote", "pos": Vector2(0.35, 0.45), "size": Vector2(0.04, 0.04), "label": "Dust Mote"},
-        {"id": "light_shaft", "pos": Vector2(0.45, 0.30), "size": Vector2(0.15, 0.35), "label": "Light Shaft"},
-    ]
+    var hotspot_defs: Array[Dictionary] = []
+    for i in range(_attunements.size()):
+        var att := _attunements[i]
+        if att.has("pos") and att.has("size"):
+            hotspot_defs.append({
+                "id": str(att.get("object", "")),
+                "pos": att.get("pos", Vector2(0.5, 0.5)),
+                "size": att.get("size", Vector2(0.16, 0.16)),
+                "label": str(att.get("object", "")).replace("_", " ").capitalize()
+            })
+        else:
+            var col_idx := i % 2
+            var row_idx := int(i / 2)
+            var norm_pos := Vector2(0.22 + float(col_idx) * 0.44 + (float(i) * 0.03), 0.32 + float(row_idx) * 0.20)
+            hotspot_defs.append({
+                "id": str(att.get("object", "")),
+                "pos": norm_pos,
+                "size": Vector2(0.16, 0.16),
+                "label": str(att.get("object", "")).replace("_", " ").capitalize()
+            })
+            
+    # Fallback if no attunements provided
+    if hotspot_defs.is_empty():
+        hotspot_defs = [
+            {"id": "primary_cup", "pos": Vector2(0.65, 0.38), "size": Vector2(0.12, 0.15), "label": "Tea Cup"},
+            {"id": "hand", "pos": Vector2(0.55, 0.45), "size": Vector2(0.18, 0.20), "label": "Hand"}
+        ]
     
     var viewport_size = get_viewport_rect().size
-    for i, hs in hotspot_defs:
+    for i in range(hotspot_defs.size()):
+        var hs = hotspot_defs[i]
         var hotspot = _create_hotspot(hs, viewport_size, i)
         hotspots_container.add_child(hotspot)
         _hotspot_nodes.append(hotspot)
@@ -169,10 +188,10 @@ func _create_hotspot(hs: Dictionary, viewport_size: Vector2, index: int) -> Cont
     hotspot.position = pos - size * 0.5
     hotspot.custom_minimum_size = size
     
-    # Invisible but interactive
+    # Interactive
     hotspot.mouse_filter = Control.MOUSE_FILTER_PASS
     
-    # Subtle visual indicator - only visible on hover or when no attunement active
+    # Subtle optical anomaly indicator
     var indicator = Control.new()
     indicator.name = "Indicator"
     indicator.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -183,7 +202,8 @@ func _create_hotspot(hs: Dictionary, viewport_size: Vector2, index: int) -> Cont
 extends Control
 @export var pulse_speed := 1.5
 var time := 0.0
-var visible := false
+var visible := true
+var is_completed := false
 
 func _process(delta):
     time += delta
@@ -193,20 +213,24 @@ func _draw():
     if not visible:
         return
     var rect = Rect2(Vector2.ZERO, size)
-    var alpha = 0.15 + sin(time * pulse_speed) * 0.08
-    var color = Color(0.6, 0.8, 1.0, alpha)
-    draw_rect(rect, color, false, 1.0)
-    # Corner brackets
-    var bracket = 12.0
-    draw_line(Vector2(0, bracket), Vector2(0, 0), color, 1.0)
-    draw_line(Vector2(0, 0), Vector2(bracket, 0), color, 1.0)
-    draw_line(Vector2(size.x, size.y - bracket), Vector2(size.x, size.y), color, 1.0)
-    draw_line(Vector2(size.x, size.y), Vector2(size.x - bracket, size.y), color, 1.0)
+    if is_completed:
+        var col = Color(0.88, 0.78, 0.45, 0.5)
+        draw_rect(rect, col, false, 1.5)
+        draw_circle(size * 0.5, min(size.x, size.y) * 0.15, Color(0.88, 0.78, 0.45, 0.3))
+    else:
+        var alpha = 0.22 + sin(time * pulse_speed) * 0.12
+        var col = Color(0.35, 0.92, 0.82, alpha)
+        draw_rect(rect, col, false, 1.2)
+        # Corner optical brackets
+        var bracket = min(size.x, size.y) * 0.25
+        draw_line(Vector2(0, bracket), Vector2(0, 0), col, 1.5)
+        draw_line(Vector2(0, 0), Vector2(bracket, 0), col, 1.5)
+        draw_line(Vector2(size.x, size.y - bracket), Vector2(size.x, size.y), col, 1.5)
+        draw_line(Vector2(size.x, size.y), Vector2(size.x - bracket, size.y), col, 1.5)
 """
     indicator.set_script(draw_script)
     hotspot.add_child(indicator)
     
-    # Hover/press handling
     hotspot.gui_input.connect(_on_hotspot_gui_input.bind(hotspot))
     
     return hotspot
@@ -221,9 +245,6 @@ func _on_hotspot_gui_input(event: InputEvent, hotspot: Control) -> void:
 
 func _activate_attunement(attunement_id: String) -> void:
     if _current_attunement == attunement_id:
-        return
-    if _completed_attunements.has(attunement_id):
-        # Already completed - could show summary
         return
     
     # Find attunement data
@@ -240,7 +261,10 @@ func _activate_attunement(attunement_id: String) -> void:
     _show_attunement_panel(attunement_data)
     _apply_attunement_shader(attunement_data)
     _play_sfx("attunement_enter", 0.5)
-    _vibrate(40)
+    _vibrate(35)
+    var sound := get_tree().root.get_node_or_null("Main/ProceduralSound") if get_tree() and get_tree().root.has_node("Main/ProceduralSound") else null
+    if sound and sound.has_method("focus_notice_tone"):
+        sound.focus_notice_tone()
 
 func _show_attunement_panel(attunement_data: Dictionary) -> void:
     var type_names = {
@@ -303,6 +327,9 @@ func _close_attunement_panel() -> void:
     if not _completed_attunements.has(_current_attunement):
         _completed_attunements.append(_current_attunement)
         _update_attunement_count()
+        var hs := _find_hotspot_by_id(_current_attunement)
+        if hs and hs.has_node("Indicator"):
+            hs.get_node("Indicator").set("is_completed", true)
         _check_discovery_threshold()
     
     # Animate out
@@ -346,24 +373,35 @@ func _trigger_iris_intervention() -> void:
         var tween = create_tween()
         tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
         tween.tween_property(iris_intervention, "modulate:a", 1.0, 0.8).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
-        tween.tween_callback(_complete_investigation).set_delay(3.5)
     else:
         iris_intervention.modulate.a = 1.0
-        get_tree().create_timer(3.5).timeout.connect(_complete_investigation)
     
     _speak(intervention_text)
     _play_sfx("revelation", 0.6)
     _vibrate(60)
+    
+    # Show proceed prompt after Iris finishes observation
+    get_tree().create_timer(3.2).timeout.connect(_show_continue_prompt)
 
 func _show_continue_prompt() -> void:
+    continue_prompt.text = "TRUTH UNCOVERED · TAP TO PROCEED TO REVELATION"
     continue_prompt.visible = true
     continue_prompt.modulate.a = 0.0
     if _should_animate:
         var tween = create_tween()
         tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-        tween.tween_property(continue_prompt, "modulate:a", 0.7, 0.6).set_ease(Tween.EASE_OUT).set_delay(1.0)
+        tween.tween_property(continue_prompt, "modulate:a", 1.0, 0.6).set_ease(Tween.EASE_OUT)
     else:
-        continue_prompt.modulate.a = 0.7
+        continue_prompt.modulate.a = 1.0
+    # Enable background tap to complete once prompt appears
+    if not gui_input.is_connected(_on_screen_tap_complete):
+        gui_input.connect(_on_screen_tap_complete)
+
+func _on_screen_tap_complete(event: InputEvent) -> void:
+    if not _iris_intervened or _current_attunement != "":
+        return
+    if (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed) or (event is InputEventScreenTouch and event.pressed):
+        _complete_investigation()
 
 func _complete_investigation() -> void:
     set_process(false)

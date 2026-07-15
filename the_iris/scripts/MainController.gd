@@ -22,6 +22,7 @@ class_name IrisMainController
 @onready var weekly_investigation: FuturePlaceholder = $Interface/ScreenRoot/WeeklyInvestigation
 @onready var your_iris: FuturePlaceholder = $Interface/ScreenRoot/YourIris
 @onready var calibration: FuturePlaceholder = $Interface/ScreenRoot/Calibration
+@onready var tutorial_awakening: TutorialAwakeningScreen = $Interface/ScreenRoot/TutorialAwakening
 @onready var edge_glow: EdgeGlow = $Interface/HUD/EdgeGlow
 @onready var sound: ProceduralIrisSound = $ProceduralSound
 @onready var voice_guide: VoiceGuide = $Interface/VoiceGuide
@@ -35,6 +36,7 @@ var intro_elapsed := 0.0
 var intro_running := false
 var pending_after_return := Callable()
 var pending_return_from_witness := false
+var pending_return_from_tutorial := false
 
 func _notification(what: int) -> void:
     if what == NOTIFICATION_WM_GO_BACK_REQUEST:
@@ -80,6 +82,9 @@ func _ready() -> void:
     profile.request_witness.connect(show_witness)
     settings.request_home.connect(show_home)
     settings.request_witness.connect(show_witness)
+    if is_instance_valid(tutorial_awakening):
+        tutorial_awakening.set_sensory_services(sound, voice_guide)
+        tutorial_awakening.request_return_to_iris.connect(_on_tutorial_return)
     profile.set_state_manager(state_manager)
     settings.set_state_manager(state_manager)
     witness.set_production_bridge(production_bridge)
@@ -97,6 +102,7 @@ func _ready() -> void:
     iris.set_animation_intensity(0.18 if state_manager.reduced_motion else state_manager.animation_intensity)
     iris.set_desktop_mode(not device.has_touchscreen)
     iris.set_parallax_enabled(state_manager.parallax_enabled and not state_manager.reduced_motion)
+    iris.set_sensory_services(sound, voice_guide)
     transition.set_reduced_motion(state_manager.reduced_motion)
     sound.set_enabled(state_manager.sound_enabled and device.has_audio)
     voice_guide.set_enabled(state_manager.sound_enabled and device.has_audio)
@@ -155,6 +161,11 @@ func _show_screen(next_screen: String, animate := true) -> void:
         return
     if next_screen == "home":
         _return_to_iris()
+    elif next_screen == "tutorial_awakening" and active_screen == "home":
+        _enter_experience("tutorial_awakening")
+    elif next_screen == "witness" and (active_screen == "home" or active_screen == "story_mode"):
+        # Directly enter Witness Moment via The Threshold without returning to home first
+        _enter_experience("witness")
     elif active_screen == "home":
         _enter_experience(next_screen)
     else:
@@ -165,6 +176,8 @@ func _show_screen(next_screen: String, animate := true) -> void:
 func _enter_experience(next_screen: String) -> void:
     if next_screen == "home" or transition.busy:
         return
+    if is_instance_valid(sound):
+        sound.threshold_transition_tone(true)
     transition.play_enter(iris, func(): _switch_screen(next_screen))
 
 func _return_to_iris(after_return := Callable()) -> void:
@@ -174,6 +187,9 @@ func _return_to_iris(after_return := Callable()) -> void:
         return
     pending_after_return = after_return
     pending_return_from_witness = active_screen == "witness"
+    pending_return_from_tutorial = active_screen == "tutorial_awakening"
+    if is_instance_valid(sound):
+        sound.threshold_transition_tone(false)
     transition.play_return(iris, func(): _switch_screen("home"))
 
 func _switch_screen(next_screen: String) -> void:
@@ -181,6 +197,7 @@ func _switch_screen(next_screen: String) -> void:
     match next_screen:
         "home": target = iris
         "witness": target = witness
+        "tutorial_awakening": target = tutorial_awakening
         "archive": target = archive
         "discovery": target = discovery
         "profile": target = profile
@@ -206,6 +223,10 @@ func _switch_screen(next_screen: String) -> void:
         if witness_runtime.is_active():
             witness_runtime.notify_witness_surface_ready()
         voice_guide.on_witness_entered()
+    elif next_screen == "tutorial_awakening":
+        state_manager.set_living_state(IrisStateManager.FOCUS)
+        if is_instance_valid(tutorial_awakening):
+            tutorial_awakening.enter()
     elif next_screen == "archive":
         state_manager.set_living_state(IrisStateManager.MEMORY)
         archive.enter()
@@ -226,14 +247,36 @@ func show_home() -> void:
 func _on_transition_finished(kind: String) -> void:
     if kind != "return":
         return
+    if pending_return_from_tutorial:
+        pending_return_from_tutorial = false
+        state_manager.complete_onboarding_tutorial()
+        if is_instance_valid(iris):
+            iris._sync_progression()
+        if is_instance_valid(voice_guide):
+            voice_guide.trigger_iris_expression("NEW_PLAYER", "tutorial_accepted")
+        if is_instance_valid(sound):
+            sound.reflection_tone()
+        _show_rank_reveal("RANK 1 : OBSERVER", "Chapter 1: Learning to Notice unlocked.")
     if pending_return_from_witness:
         iris.remember_recent_activity()
-        voice_guide.on_return_from_witness()
+        if is_instance_valid(sound):
+            sound.reflection_tone()
+        if is_instance_valid(voice_guide):
+            voice_guide.trigger_iris_expression("RETURN")
         pending_return_from_witness = false
     if pending_after_return.is_valid():
         var next := pending_after_return
         pending_after_return = Callable()
         next.call()
+
+func _on_tutorial_return() -> void:
+    show_home()
+
+func _show_rank_reveal(title: String, subtitle: String) -> void:
+    if is_instance_valid(iris) and is_instance_valid(iris.destination_title) and is_instance_valid(iris.destination_prompt):
+        iris.destination_title.text = title
+        iris.destination_prompt.text = subtitle
+        iris.title_alpha_current = 1.0
 
 func _on_intent(intent: int, position: Vector2, _vector: Vector2, source: String) -> void:
     if production_startup and production_startup.is_active():
@@ -292,7 +335,7 @@ func _layout_hud(viewport_size: Vector2, _orientation: int) -> void:
         descriptor.size = Vector2(350, 22)
 
 func _on_cursor_moved(position: Vector2) -> void:
-    if active_screen == "home" and device.has_mouse and not transition.busy:
+    if active_screen == "home" and not transition.busy:
         iris.set_gaze_target(position, get_viewport_rect().size)
 
 func _on_pointer_started(position: Vector2) -> void:
@@ -325,16 +368,17 @@ func _on_tap(position: Vector2) -> void:
     if active_screen == "home":
         var view := get_viewport_rect().size
         var normalized := Vector2(position.x / maxf(view.x, 1.0), position.y / maxf(view.y, 1.0))
-        if normalized.distance_to(Vector2(0.5, 0.50)) < 0.235:
+        if normalized.distance_to(Vector2(0.5, 0.50)) < 0.25:
             voice_guide.on_first_touch()
-            _show_screen("story_mode")
-        elif normalized.x < 0.16:
+            # Directly enter Chapter One (WM_001) as primary experience
+            _on_moment_requested("WM_001")
+        elif normalized.x < 0.28:
             _show_screen("archive")
-        elif normalized.x > 0.84:
+        elif normalized.x > 0.72:
             _show_screen("discovery")
-        elif normalized.y < 0.16:
+        elif normalized.y < 0.28:
             _show_screen("profile")
-        elif normalized.y > 0.84:
+        elif normalized.y > 0.72:
             _show_screen("settings")
         else:
             iris.focus_pulse()
@@ -441,10 +485,14 @@ func _on_runtime_phase_completed(phase_name: String, _data: Dictionary) -> void:
 func _on_runtime_moment_completed(_moment_id: String, _result: Dictionary) -> void:
     # Moment completed successfully - archive updated, profile updated
     state_manager.complete_observation()
-    sound.discovery_tone()
-    voice_guide.on_witness_completed()
-    profile._refresh_copy()
-    # Return to home will be handled by the orchestrator
+    sound.reflection_tone()
+    voice_guide.trigger_iris_expression("WITNESS_COMPLETE")
+    if is_instance_valid(profile):
+        profile._refresh_copy()
+    if is_instance_valid(iris):
+        iris._sync_progression()
+    if state_manager.completed_observations >= 5:
+        _show_rank_reveal("RANK 2 : THE WITNESS UNLOCKED", "You learned how to see. Chapter 1 Complete.")
 
 func _on_runtime_moment_failed(_moment_id: String, _reason: String) -> void:
     if active_screen == "witness":
@@ -511,11 +559,12 @@ func _update_hud(screen_name: String) -> void:
     hud_labels["descriptor"].visible = home
 
 func _start_first_launch_intro() -> void:
-    # Phase 5 replaces the old text lesson with VoiceGuide. Keep the method
-    # as a compatibility hook for existing callers, but do not render a
-    # tutorial layer over the instrument.
-    intro_running = false
+    intro_running = true
     intro_elapsed = 0.0
+    if is_instance_valid(iris):
+        iris.start_awakening()
+    if is_instance_valid(voice_guide):
+        voice_guide.begin_session()
 
 func _set_intro_explore() -> void:
     hud_labels["intro_title"].text = "SWIPE  ·  EXPLORE"
