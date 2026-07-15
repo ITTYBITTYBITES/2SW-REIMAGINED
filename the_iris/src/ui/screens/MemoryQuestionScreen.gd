@@ -1,4 +1,7 @@
 extends Control
+## LEGACY_SUPPORT - Temporary compatibility layer for challenge recall phase.
+## NOT used by Witness Moment Story Mode (WM_001+).
+## Replaced by: WitnessReconstructionScreen
 ## Generic interaction host retained at the established Recall route.
 ## Family meaning and correctness remain in family ScoringPolicy code.
 

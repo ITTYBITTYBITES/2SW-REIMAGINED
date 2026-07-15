@@ -1,4 +1,7 @@
 extends Control
+## LEGACY_SUPPORT - Temporary compatibility layer for challenge observation phase.
+## NOT used by Witness Moment Story Mode (WM_001+).
+## Replaced by: WitnessObservationScreen
 ## ObservationChallengeScreen – shared scene-image presentation adapter
 ## Reads a resolved ChallengeInstance from the Challenge Runtime while retaining
 ## compatibility with deterministic fixture dictionaries.

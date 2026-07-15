@@ -2,28 +2,137 @@
   "moment_id": "WM_001",
   "chapter_id": "chapter_01_learning_to_notice",
   "title": "Learning to Notice",
-  "setting": "A first witness field",
-  "theme": "Attention begins with staying present",
+  "setting": "A writer's desk at 7:47 AM. Morning light. A cup of tea going cold.",
+  "theme": "Attention begins with staying present for the ordinary.",
   "rank_requirement": 1,
-  "narrative_introduction": "The instrument opens a small field and waits for you to stay with it.",
+  "narrative_introduction": "The instrument opens a small field and waits for you to stay with it. Two seconds. A desk. Morning light. A hand that does not lift the cup. Stay with it. Do not name what you see. Only notice.",
   "mechanics": {
-    "observation": "Observation Mechanic TBD",
-    "memory": "Memory Reconstruction Mechanic TBD",
-    "discovery": "Discovery Mechanic TBD",
-    "evidence": "Evidence Connection Mechanic TBD",
-    "reflection": "Reflection Mechanic TBD"
+    "observation": "Locked-off 2-second cinematic moment. No player input. No HUD. Hand reaches for tea cup, hovers, withdraws. Steam stops during hover. Dust mote drifts. Second cup in background.",
+    "memory": "Spatial fragment placement. Empty desk with ghost outlines. Palette of sensory fragments (warm ceramic, steam that stopped, gold band on finger, capped pen, half-written page, trailing leaves, leather fob, folded frames, two cups). Drag fragments to ghost positions. No validation. No correct answer.",
+    "discovery": "Frozen moment exploration. Tap objects to attune. Each attunement replays moment from object's perspective: thermal (cup), skeletal/pulse (hand), legible text (notebook), lipstick stain (second cup), particle trajectory (dust mote), spectral (light shaft). 3+ attunements triggers Iris synthesis.",
+    "evidence": "Archive entry builds from player's placed fragments + attunements. Reveals hidden truth: player's own hand, partner's cup, partner left, player remains. No explicit telling — assembled across attunements.",
+    "reflection": "Iris voice synthesizes what player noticed. Archive entry: 'First Attention Field'. No score. No stars. Only what was carried."
   },
-  "production_context": {
-    "family_id": "scene_investigation",
-    "template_id": "office_v1",
-    "source": "story_mode_runtime_skeleton"
+  "environment": {
+    "location": "writer's desk, personal space, morning",
+    "time": "7:47 AM",
+    "lighting": {
+      "primary": "cool morning window light, camera-left, 35 degrees",
+      "fill": "warm ambient bounce from cream walls",
+      "key_detail": "single dust mote illuminated in light shaft"
+    },
+    "camera": {
+      "style": "locked-off medium shot",
+      "aspect": "4:3",
+      "depth_of_field": "shallow, desk surface sharp",
+      "color_grade": "desaturated, cool shadows, warm highlights, specular on cup"
+    },
+    "animation": {
+      "hand": "reach (0.6s) -> hover (0.6s) -> withdraw (0.4s) = 1.6s of 2s",
+      "steam": "rises, stops during hover, resumes",
+      "dust_mote": "drifts lazily, unaffected",
+      "light": "imperceptible shift (sun moving)"
+    },
+    "ambient_details": [
+      "notebook half-open, pen resting in spine",
+      "fountain pen capped, ink visible in window",
+      "glasses folded beside notebook",
+      "keys on leather fob",
+      "pothos plant trailing from shelf",
+      "second cup empty, lipstick stain (hidden truth)"
+    ],
+    "audio": {
+      "base_layer": "room tone, HVAC hum, distant muffled traffic",
+      "focus_layer": "steam hiss (stops during hover), fabric whisper, finger-on-ceramic microsound, held breath",
+      "transition": "single piano note C3 felt long decay"
+    }
+  },
+  "observation": {
+    "duration_seconds": 2.0,
+    "input_accepted": false,
+    "transition": "hard cut to black 0.15s",
+    "noticeable_details": {
+      "surface": ["hand reaches for cup", "hand stops and hovers", "hand withdraws"],
+      "subtle": ["steam stops during hover", "specular highlight moves on cup", "second cup in background"],
+      "deep": ["notebook has writing", "pen is capped", "dust mote drifts through light shaft"],
+      "intentionally_missed_first_view": ["lipstick stain on second cup", "writing on notebook page", "wedding ring on hand (2 frames)", "tea level nearly full"]
+    }
+  },
+  "reconstruction": {
+    "ghost_outlines": ["notebook", "primary_cup", "pen", "glasses", "keys", "plant", "second_cup"],
+    "fragment_palette": [
+      { "id": "warm_ceramic", "icon": "☕", "label": "Warm ceramic" },
+      { "id": "steam_stopped", "icon": "💨", "label": "Steam that stopped" },
+      { "id": "gold_band", "icon": "💍", "label": "Gold band on finger" },
+      { "id": "capped_pen", "icon": "🖊️", "label": "Capped pen" },
+      { "id": "half_written", "icon": "📖", "label": "Half-written page" },
+      { "id": "trailing_leaves", "icon": "🌿", "label": "Trailing leaves" },
+      { "id": "leather_fob", "icon": "🔑", "label": "Leather fob" },
+      { "id": "folded_frames", "icon": "👓", "label": "Folded frames" },
+      { "id": "two_cups", "icon": "☕☕", "label": "Two cups" }
+    ],
+    "validation": "none",
+    "iris_prompt": "Place what stayed with you. Leave what didn't. There is no wrong answer — only what you carry."
+  },
+  "investigation": {
+    "attunements": [
+      {
+        "object": "primary_cup",
+        "type": "thermal",
+        "reveals": "heat map 68C, steam particles visualized, hand heat radiates into ceramic during hover"
+      },
+      {
+        "object": "hand",
+        "type": "skeletal",
+        "reveals": "micro-tremor in fingers during hover, pulse at wrist 72->88->64 bpm, wedding ring visible"
+      },
+      {
+        "object": "notebook",
+        "type": "text",
+        "reveals": "legible text: 'I don't know how to stay' (half-erased), pen pressure marks show hesitation"
+      },
+      {
+        "object": "second_cup",
+        "type": "forensic",
+        "reveals": "lipstick stain resolves to Rosewood 42, rim imprint matches hand's fingers"
+      },
+      {
+        "object": "dust_mote",
+        "type": "trajectory",
+        "reveals": "entered light shaft 3.2s before, exits 1.8s after, unaffected by hand"
+      },
+      {
+        "object": "light_shaft",
+        "type": "spectral",
+        "reveals": "5600K, sun azimuth 47°, calculates 7:47 AM ± 2 minutes"
+      }
+    ],
+    "discovery_threshold": 3,
+    "iris_intervention": "You have seen enough. Or you haven't. The moment does not require your completion. Only your presence."
+  },
+  "revelation": {
+    "iris_response": "You noticed the hand did not lift the cup. You noticed the steam stopped. You noticed the second cup. You noticed the ring. You noticed the words on the page. The moment did not change. You did. This is what it means to Witness. The archive receives what you carried.",
+    "archive_entry": {
+      "title": "First Attention Field",
+      "category": "chapter_01",
+      "fields": ["carried_fragments", "attunements_completed", "iris_note"]
+    }
   },
   "rewards": {
     "progress_points": 12,
-    "archive_entry": "first_attention_field"
+    "archive_entry": "first_attention_field",
+    "mastery": { "attention": 0.08 },
+    "achievements": ["first_witness"]
   },
   "archive_mapping": {
     "title": "First Attention Field",
-    "category": "chapter_01"
+    "category": "chapter_01",
+    "iris_note": "The cup was never meant to be drunk. It was meant to be witnessed cooling."
+  },
+  "production_context": {
+    "family_id": "witness_moment",
+    "template_id": "wm_001_learning_to_notice",
+    "source": "wm_001_vertical_slice",
+    "legacy_compatibility": false
   }
 }

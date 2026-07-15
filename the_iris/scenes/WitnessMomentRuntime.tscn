@@ -1,10 +1,6 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://witness_moment_runtime"]
 
-[ext_resource type="Script" path="res://src/iris/story/WitnessMomentRuntime.gd" id="1_runtime"]
-[ext_resource type="Script" path="res://src/iris/story/ProductionWitnessAdapter.gd" id="2_adapter"]
+[ext_resource type="Script" path="res://src/iris/story/WitnessMomentOrchestrator.gd" id="1_script"]
 
 [node name="WitnessMomentRuntime" type="Node"]
-script = ExtResource("1_runtime")
-
-[node name="ProductionWitnessAdapter" type="Node" parent="."]
-script = ExtResource("2_adapter")
+script = ExtResource("1_script")
