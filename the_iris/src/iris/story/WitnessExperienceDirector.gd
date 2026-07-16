@@ -14,23 +14,23 @@ func _ready() -> void:
 
 func _load_moments() -> void:
     moments.clear()
-    var files := [
+    var files: Array[String] = [
         "moment_001.json",
         "moment_002.json",
         "moment_003.json",
         "moment_004.json",
         "moment_005.json"
     ]
-    for file_name in files:
-        var path := CONTENT_DIR + file_name
+    for file_name: String in files:
+        var path: String = CONTENT_DIR + file_name
         if not FileAccess.file_exists(path):
             continue
-        var file := FileAccess.open(path, FileAccess.READ)
+        var file: FileAccess = FileAccess.open(path, FileAccess.READ)
         if not file:
             continue
         var parsed: Variant = JSON.parse_string(file.get_as_text())
         if parsed is Dictionary:
-            var definition := WitnessMoment.from_dictionary(parsed as Dictionary)
+            var definition: WitnessMoment = WitnessMoment.from_dictionary(parsed as Dictionary)
             if not definition.moment_id.is_empty():
                 moments[definition.moment_id] = definition
 
@@ -46,7 +46,7 @@ func select_first_moment() -> WitnessMoment:
 func get_current_chapter_moment(completed_obs: int) -> WitnessMoment:
     if moments.is_empty():
         _load_moments()
-    var idx := clampi(completed_obs, 0, CHAPTER_MOMENTS.size() - 1)
+    var idx: int = clampi(completed_obs, 0, CHAPTER_MOMENTS.size() - 1)
     var target_id: String = CHAPTER_MOMENTS[idx]
     if moments.has(target_id):
         return moments[target_id] as WitnessMoment
@@ -54,7 +54,7 @@ func get_current_chapter_moment(completed_obs: int) -> WitnessMoment:
 
 # Determines the next moment ID in the chapter sequence
 func get_next_moment_id(current_id: String) -> String:
-    var idx := CHAPTER_MOMENTS.find(current_id)
+    var idx: int = CHAPTER_MOMENTS.find(current_id)
     if idx >= 0 and idx + 1 < CHAPTER_MOMENTS.size():
         return CHAPTER_MOMENTS[idx + 1]
     return "" # End of chapter

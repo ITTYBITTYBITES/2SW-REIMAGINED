@@ -344,15 +344,15 @@ func _update_visual_layers(delta: float) -> void:
         cornea_layer.modulate.a = clampf(0.32 + glow_strength * 0.15 + awakening_level * 0.15, 0.2, 0.65)
     
     if is_instance_valid(portal_container):
-        var scale_val := 1.0 + pow(transition_open, 1.5) * 2.8 + pulse * 0.08
+        var scale_val: float = 1.0 + pow(transition_open, 1.5) * 2.8 + pulse * 0.08
         portal_container.scale = portal_container.scale.lerp(Vector2(scale_val, scale_val), minf(1.0, delta * 8.0 * intensity))
     
     if is_instance_valid(memory_fragments_container) and memory_fragments_container.get_child_count() > 0:
-        for i in range(memory_fragments_container.get_child_count()):
-            var frag := memory_fragments_container.get_child(i)
+        for i: int in range(memory_fragments_container.get_child_count()):
+            var frag: Node = memory_fragments_container.get_child(i)
             if frag is Node2D:
-                var ang := elapsed * 0.3 * fiber_speed + float(i) * (TAU / max(float(memory_fragments_container.get_child_count()), 1.0))
-                var radius := 162.0 + sin(elapsed * 0.5 + float(i)) * 12.0 + (pulse * 25.0)
+                var ang: float = elapsed * 0.3 * fiber_speed + float(i) * (TAU / max(float(memory_fragments_container.get_child_count()), 1.0))
+                var radius: float = 162.0 + sin(elapsed * 0.5 + float(i)) * 12.0 + (pulse * 25.0)
                 frag.position = Vector2(cos(ang), sin(ang)) * radius
                 frag.rotation = ang + PI * 0.5
 
@@ -367,20 +367,20 @@ const SHARD_TEXTURES := [
 func _update_memory_fragments() -> void:
     if not is_instance_valid(memory_fragments_container):
         return
-    var target_count := clampi(progression_level, 0, 5)
-    var current_count := memory_fragments_container.get_child_count()
+    var target_count: int = clampi(progression_level, 0, 5)
+    var current_count: int = memory_fragments_container.get_child_count()
     if current_count == target_count:
         return
     while memory_fragments_container.get_child_count() > target_count:
-        var child := memory_fragments_container.get_child(memory_fragments_container.get_child_count() - 1)
+        var child: Node = memory_fragments_container.get_child(memory_fragments_container.get_child_count() - 1)
         child.queue_free()
         memory_fragments_container.remove_child(child)
     while memory_fragments_container.get_child_count() < target_count:
-        var idx := memory_fragments_container.get_child_count()
-        var frag := Node2D.new()
+        var idx: int = memory_fragments_container.get_child_count()
+        var frag: Node2D = Node2D.new()
         frag.name = "MemoryFragment_%d" % idx
-        var sprite := Sprite2D.new()
-        var tex_idx := idx % SHARD_TEXTURES.size()
+        var sprite: Sprite2D = Sprite2D.new()
+        var tex_idx: int = idx % SHARD_TEXTURES.size()
         sprite.texture = SHARD_TEXTURES[tex_idx]
         sprite.scale = Vector2(0.08, 0.08)
         sprite.modulate = Color(0.88, 0.96, 0.92, 0.72)

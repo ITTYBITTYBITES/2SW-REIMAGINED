@@ -150,12 +150,13 @@ func _create_ghost_outlines() -> void:
     for child in ghost_container.get_children():
         child.queue_free()
     
-    var viewport_size = get_viewport_rect().size
-    for i, ghost in _ghost_outlines:
-        var outline = _create_ghost_outline(ghost, viewport_size)
+    var viewport_size: Vector2 = get_viewport_rect().size
+    for i: int in range(_ghost_outlines.size()):
+        var ghost: Dictionary = _ghost_outlines[i]
+        var outline: Control = _create_ghost_outline(ghost, viewport_size)
         ghost_container.add_child(outline)
         # Store reference
-        outline.set_meta("ghost_id", ghost.id)
+        outline.set_meta("ghost_id", ghost.get("id", ""))
         outline.set_meta("ghost_index", i)
 
 func _create_ghost_outline(ghost: Dictionary, viewport_size: Vector2) -> Control:
@@ -567,15 +568,16 @@ func _on_viewport_resized(size: Vector2) -> void:
     _create_ghost_outlines()
     
     # Reposition placed fragments
-    for ghost_id, fragments in _placed_fragments:
-        var ghost = _find_ghost_by_id(ghost_id)
+    for ghost_id: String in _placed_fragments:
+        var fragments: Array = _placed_fragments[ghost_id] if _placed_fragments[ghost_id] is Array else []
+        var ghost: Control = _find_ghost_by_id(ghost_id)
         if ghost:
             # Clear and recreate placed visuals
             for child in ghost.get_children():
                 if child.name.begins_with("Placed_"):
                     child.queue_free()
-            for frag_id in fragments:
-                var frag_def = _find_fragment_def(frag_id)
-                var placed = _create_placed_fragment(frag_def)
+            for frag_id: Variant in fragments:
+                var frag_def: Dictionary = _find_fragment_def(str(frag_id))
+                var placed: Control = _create_placed_fragment(frag_def)
                 ghost.add_child(placed)
                 placed.position = Vector2(ghost.size.x * 0.5, ghost.size.y * 0.5)

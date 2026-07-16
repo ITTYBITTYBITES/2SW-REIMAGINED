@@ -94,6 +94,23 @@ func set_enabled(enabled: bool) -> void:
         voice_player.stop()
         pending_lines.clear()
 
+static func speak(text: String, _language: String = "en") -> void:
+    var tree: SceneTree = Engine.get_main_loop() as SceneTree
+    if tree and tree.root:
+        var guide_node: Node = tree.root.get_node_or_null("Main/Interface/VoiceGuide")
+        if not guide_node:
+            var found: Array[Node] = tree.root.find_children("*", "VoiceGuide", true, false)
+            if not found.is_empty():
+                guide_node = found[0]
+        if guide_node and guide_node.has_method("_request_line"):
+            guide_node.call("_request_line", "narration_" + str(abs(text.hash())), text)
+            return
+    if DisplayServer.has_feature(DisplayServer.FEATURE_TEXT_TO_SPEECH):
+        DisplayServer.tts_speak(text, "", 50, 1.0, 1.0)
+
+func speak_text(text: String, _language: String = "en") -> void:
+    _request_line("narration_" + str(abs(text.hash())), text)
+
 # Centralized runtime trigger system for all Living Lens expression states
 func trigger_iris_expression(expression_state: String, context_key: String = "") -> void:
     if not voice_enabled and not captions_enabled:

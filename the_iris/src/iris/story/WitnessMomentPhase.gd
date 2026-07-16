@@ -22,7 +22,7 @@ func _setup_background() -> void:
     if background:
         background.color = Color("#07131A")
     else:
-        var bg = ColorRect.new()
+        var bg: ColorRect = ColorRect.new()
         bg.name = "Background"
         bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
         bg.color = Color("#07131A")
@@ -38,7 +38,7 @@ func configure(definition: WitnessMoment) -> void:
 
 func _apply_theme() -> void:
     if ThemeService:
-        var tokens = ThemeService.tokens
+        var tokens: Dictionary = ThemeService.tokens
         if background and not tokens.is_empty():
             background.color = tokens.get("background", Color("#07131A"))
 
@@ -59,16 +59,16 @@ func _animate_in(duration: float = 0.4) -> void:
         modulate.a = 1.0
         return
     modulate.a = 0.0
-    var tween = create_tween()
+    var tween: Tween = create_tween()
     tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
     tween.tween_property(self, "modulate:a", 1.0, duration).set_ease(Tween.EASE_OUT)
 
-func _animate_out(duration: float = 0.3, callback: Callable = null) -> void:
+func _animate_out(duration: float = 0.3, callback: Callable = Callable()) -> void:
     if not _should_animate or not AccessibilityService.should_animate():
         if callback and callback.is_valid():
             callback.call()
         return
-    var tween = create_tween()
+    var tween: Tween = create_tween()
     tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
     tween.tween_property(self, "modulate:a", 0.0, duration).set_ease(Tween.EASE_IN)
     if callback and callback.is_valid():
@@ -94,5 +94,11 @@ func _vibrate(duration_ms: int) -> void:
         AccessibilityService.vibrate(duration_ms)
 
 func _speak(text: String, language: String = "en") -> void:
+    var tree: SceneTree = get_tree()
+    if tree and tree.root:
+        var guide_node: Node = tree.root.get_node_or_null("Main/Interface/VoiceGuide")
+        if guide_node and guide_node.has_method("speak_text"):
+            guide_node.call("speak_text", text, language)
+            return
     if VoiceGuide:
         VoiceGuide.speak(text, language)
