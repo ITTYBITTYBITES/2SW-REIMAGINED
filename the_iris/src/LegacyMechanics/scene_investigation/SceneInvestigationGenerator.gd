@@ -331,7 +331,7 @@ func _question_adjacency(objects: Array[Dictionary], rng: RandomNumberGenerator)
 	var distractors: Array[String] = []
 	for object_data: Dictionary in objects:
 		var obj_name := str(object_data.get("name", "object"))
-		if name != correct and name != str(target.get("name", "")) and not distractors.has(name):
+		if obj_name != correct and obj_name != str(target.get("name", "")) and not distractors.has(obj_name):
 			distractors.append(obj_name)
 	_shuffle(distractors, rng)
 	if distractors.size() < 2:

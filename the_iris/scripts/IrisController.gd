@@ -232,21 +232,21 @@ func _update_destination_lens(delta: float) -> void:
     var dist_to_center := gaze_current.distance_to(neutral_gaze)
     if dist_to_center < 0.14:
         next_key = "story_mode"
-        memory_visibility_target = 0.88 if interaction_active else (0.78 if state_mode == 0.0 else 0.45)
+        memory_visibility_target = 0.92 if interaction_active else (0.85 if state_mode == 0.0 else 0.80)
     elif gaze_current.x < 0.38:
         next_key = "archive"
-        memory_visibility_target = 0.90
+        memory_visibility_target = 0.95
     elif gaze_current.x > 0.62:
         next_key = "daily_witness"
-        memory_visibility_target = 0.90
+        memory_visibility_target = 0.95
     elif gaze_current.y < 0.38:
         next_key = "profile"
-        memory_visibility_target = 0.90
+        memory_visibility_target = 0.95
     elif gaze_current.y > 0.62:
         next_key = "calibration"
-        memory_visibility_target = 0.90
+        memory_visibility_target = 0.95
     else:
-        memory_visibility_target = 0.35
+        memory_visibility_target = 0.65
 
     if transition_open > 0.05:
         memory_visibility_target = 1.0
@@ -326,10 +326,10 @@ func _update_portal_shader() -> void:
         return
     var effective_pupil := pupil_dilation if pupil_dilation != 0.105 else (0.105 if state_mode != 2.0 else 0.078)
     mat.set_shader_parameter("time", elapsed)
-    mat.set_shader_parameter("aperture", effective_pupil + transition_open * 0.4 + recent_alert * 0.02 + pulse * 0.03)
+    mat.set_shader_parameter("aperture", effective_pupil + recent_alert * 0.02 + pulse * 0.03 + (state_mode == 1.0 ? 0.014 : 0.0))
     mat.set_shader_parameter("memory_visibility", memory_visibility_current)
     mat.set_shader_parameter("gaze_offset", (gaze_current - neutral_gaze) * Vector2(1.5, 1.5))
-    mat.set_shader_parameter("aspect", get_viewport_rect().size.x / max(get_viewport_rect().size.y, 1.0))
+    mat.set_shader_parameter("aspect", 1.0)
 
 func _update_visual_layers(delta: float) -> void:
     if is_instance_valid(outer_energy_layer):
@@ -344,6 +344,14 @@ func _update_visual_layers(delta: float) -> void:
         cornea_layer.modulate.a = clampf(0.32 + glow_strength * 0.15 + awakening_level * 0.15, 0.2, 0.65)
     
     if is_instance_valid(portal_container):
+        var aspect_ratio := get_viewport_rect().size.x / max(get_viewport_rect().size.y, 1.0)
+        var gaze_delta := gaze_current - neutral_gaze
+        gaze_delta.x *= aspect_ratio
+        var optical_focus := gaze_delta + learning_focus * learning_amount * 0.045
+        var delta_q := optical_focus * 0.024 + micro_current + anticipation_current * 0.022 + sensor_offset
+        var pupil_screen_pos := Vector2(360, 634) + delta_q * -1280.0
+        portal_container.position = portal_container.position.lerp(pupil_screen_pos, minf(1.0, delta * 12.0 * intensity))
+        
         var scale_val: float = 1.0 + pow(transition_open, 1.5) * 2.8 + pulse * 0.08
         portal_container.scale = portal_container.scale.lerp(Vector2(scale_val, scale_val), minf(1.0, delta * 8.0 * intensity))
     

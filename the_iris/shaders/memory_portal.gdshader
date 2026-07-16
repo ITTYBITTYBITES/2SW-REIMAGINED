@@ -14,14 +14,13 @@ uniform float aspect = 0.5625;
 void fragment() {
     vec2 center = vec2(0.5, 0.5);
     vec2 p = UV - center;
-    p.x *= aspect;
     float d = length(p);
 
-    // Dynamic portal radius based on aperture and breathing
-    float portal_radius = max(aperture * 1.6, 0.05);
+    // Dynamic portal radius scaled from screen pupil aperture to fit the 280x280 TextureRect precisely
+    float portal_radius = clamp(aperture * 4.55, 0.06, 0.495);
 
     // Smooth circular portal clipping inside the pupil void
-    float mask = 1.0 - smoothstep(portal_radius - 0.015, portal_radius + 0.005, d);
+    float mask = 1.0 - smoothstep(portal_radius - 0.012, portal_radius + 0.004, d);
     if (mask <= 0.001) {
         discard;
     }
