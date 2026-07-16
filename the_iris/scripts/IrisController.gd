@@ -326,7 +326,7 @@ func _update_portal_shader() -> void:
         return
     var effective_pupil := pupil_dilation if pupil_dilation != 0.105 else (0.105 if state_mode != 2.0 else 0.078)
     mat.set_shader_parameter("time", elapsed)
-    mat.set_shader_parameter("aperture", effective_pupil + recent_alert * 0.02 + pulse * 0.03 + (state_mode == 1.0 ? 0.014 : 0.0))
+    mat.set_shader_parameter("aperture", effective_pupil + recent_alert * 0.02 + pulse * 0.03 + (0.014 if state_mode == 1.0 else 0.0))
     mat.set_shader_parameter("memory_visibility", memory_visibility_current)
     mat.set_shader_parameter("gaze_offset", (gaze_current - neutral_gaze) * Vector2(1.5, 1.5))
     mat.set_shader_parameter("aspect", 1.0)
