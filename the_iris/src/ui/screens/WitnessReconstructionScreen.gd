@@ -266,7 +266,7 @@ func _create_fragment_card(frag_def: Dictionary) -> Control:
     # Icon + Label vertical layout
     var vbox = VBoxContainer.new()
     vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-    vbox.alignment = BOX_ALIGNMENT_CENTER
+    vbox.alignment = BoxContainer.ALIGNMENT_CENTER
     vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
     panel.add_child(vbox)
     

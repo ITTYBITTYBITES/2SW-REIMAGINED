@@ -13,7 +13,7 @@ config_version=5
 config/name="Two Second Witness"
 config/description="A premium observation game built around short, fair, replayable challenges, navigated through the Living Iris."
 config/version="4.0.0"
-run/main_scene="res://scenes/MobileSimulator.tscn"
+run/main_scene="res://scenes/Main.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 boot_splash/bg_color=Color(0.012, 0.016, 0.025, 1)
 boot_splash/show_image=false
@@ -52,10 +52,10 @@ AppState="*res://src/core/app/AppState.gd"
 
 [display]
 
-window/size/viewport_width=720
-window/size/viewport_height=1280
-window/size/window_width_override=1280
-window/size/window_height_override=900
+window/size/viewport_width=540
+window/size/viewport_height=960
+window/size/window_width_override=540
+window/size/window_height_override=960
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation=6

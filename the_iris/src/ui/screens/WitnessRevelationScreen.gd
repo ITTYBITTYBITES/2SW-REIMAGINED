@@ -245,7 +245,7 @@ func _reveal_carried_fragments() -> void:
 
 func _create_carried_item(frag_def: Dictionary, carried: bool) -> HBoxContainer:
     var item = HBoxContainer.new()
-    item.alignment = BOX_ALIGNMENT_CENTER
+    item.alignment = BoxContainer.ALIGNMENT_CENTER
     
     var checkbox = TextureRect.new()
     checkbox.custom_minimum_size = Vector2(24, 24)
@@ -322,7 +322,7 @@ func _reveal_attunements() -> void:
 
 func _create_attunement_item(att_data: Dictionary) -> HBoxContainer:
     var item = HBoxContainer.new()
-    item.alignment = BOX_ALIGNMENT_CENTER
+    item.alignment = BoxContainer.ALIGNMENT_CENTER
     
     var type_icons = {
         "thermal": "🌡️",
