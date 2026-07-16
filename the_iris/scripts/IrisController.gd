@@ -344,7 +344,7 @@ func _update_visual_layers(delta: float) -> void:
         cornea_layer.modulate.a = clampf(0.32 + glow_strength * 0.15 + awakening_level * 0.15, 0.2, 0.65)
     
     if is_instance_valid(portal_container):
-        var aspect_ratio := get_viewport_rect().size.x / max(get_viewport_rect().size.y, 1.0)
+        var aspect_ratio: float = get_viewport_rect().size.x / max(get_viewport_rect().size.y, 1.0)
         var gaze_delta := gaze_current - neutral_gaze
         gaze_delta.x *= aspect_ratio
         var optical_focus := gaze_delta + learning_focus * learning_amount * 0.045
