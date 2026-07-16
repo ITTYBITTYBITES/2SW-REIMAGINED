@@ -446,8 +446,8 @@ func _update_invitation(delta: float) -> void:
 func _update_deep_focus(delta: float) -> void:
     if deep_focus_timer > 0.0:
         deep_focus_timer -= delta
-    var focus_target := 1.0 if deep_focus_timer > 0.0 else 0.0
-    deep_focus_level = lerpf(deep_focus_level, focus_target, minf(1.0, delta * 3.4 * intensity))
+    var focus_level := 1.0 if deep_focus_timer > 0.0 else 0.0
+    deep_focus_level = lerpf(deep_focus_level, focus_level, minf(1.0, delta * 3.4 * intensity))
 
 func _update_learning(delta: float) -> void:
     if learning_active:

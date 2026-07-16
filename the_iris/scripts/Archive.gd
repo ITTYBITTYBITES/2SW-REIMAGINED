@@ -38,10 +38,10 @@ func _on_production_home() -> void:
 func _on_production_witness() -> void:
     request_witness.emit()
 
-func _on_viewport_resized(size: Vector2) -> void:
+func _on_viewport_resized(new_size: Vector2) -> void:
     if not is_instance_valid(detail_label):
         return
-    detail_label.position = Vector2(34, maxf(620.0, size.y - 165.0))
+    detail_label.position = Vector2(34, maxf(620.0, new_size.y - 165.0))
 
 func enter() -> void:
     if production_bridge != null:
@@ -73,8 +73,7 @@ func _process(delta: float) -> void:
     queue_redraw()
 
 func _draw() -> void:
-    var vs := get_viewport_rect().size
-    draw_rect(Rect2(0, 0, vs.x, vs.y), Color("#0b1017"))
+    draw_rect(Rect2(0, 0, size.x, size.y), Color("#0b1017"))
     draw_circle(Vector2(size.x * 0.5, size.y * 0.52), size.y * 0.34, Color(0.07, 0.16, 0.16, 0.18))
     for i in memory_points.size():
         var p := Vector2(memory_points[i].x * size.x, memory_points[i].y * size.y)
@@ -93,18 +92,17 @@ func _draw() -> void:
             draw_circle(p, 4.0, Color("#ffe7aa"))
             draw_line(p, Vector2(size.x * 0.5, size.y * 0.93), Color(0.79, 0.63, 0.37, 0.32), 1.0)
 
-func handle_tap(position: Vector2) -> void:
+func handle_tap(tap_position: Vector2) -> void:
     if production_active:
-        if position.y < 96.0 and position.x < 320.0:
+        if tap_position.y < 96.0 and tap_position.x < 320.0:
             request_home.emit()
         return
-    if position.y < 88.0 and position.x < 300.0:
+    if tap_position.y < 88.0 and tap_position.x < 300.0:
         request_home.emit()
         return
-    var vs := get_viewport_rect().size
     for i in memory_points.size():
         var p := Vector2(memory_points[i].x * size.x, memory_points[i].y * size.y)
-        if position.distance_to(p) < 78.0:
+        if tap_position.distance_to(p) < 78.0:
             selected = i
             detail_label.text = "%s  ·  tap again to hold the scene" % memory_names[i]
             queue_redraw()

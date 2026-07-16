@@ -278,14 +278,14 @@ func _show_rank_reveal(title: String, subtitle: String) -> void:
         iris.destination_prompt.text = subtitle
         iris.title_alpha_current = 1.0
 
-func _on_intent(intent: int, position: Vector2, _vector: Vector2, source: String) -> void:
+func _on_intent(intent: int, event_pos: Vector2, _vector: Vector2, source: String) -> void:
     if production_startup and production_startup.is_active():
         return
     match intent:
         IrisInputIntent.ENTER:
-            _on_tap(position)
+            _on_tap(event_pos)
         IrisInputIntent.FOCUS:
-            var focus_position := position
+            var focus_position := event_pos
             if source == "keyboard" or source == "controller":
                 focus_position = get_viewport_rect().size * 0.5
             _on_hold(focus_position)
@@ -334,19 +334,19 @@ func _layout_hud(viewport_size: Vector2, _orientation: int) -> void:
         descriptor.position = Vector2(31, 57)
         descriptor.size = Vector2(350, 22)
 
-func _on_cursor_moved(position: Vector2) -> void:
+func _on_cursor_moved(event_pos: Vector2) -> void:
     if active_screen == "home" and not transition.busy:
-        iris.set_gaze_target(position, get_viewport_rect().size)
+        iris.set_gaze_target(event_pos, get_viewport_rect().size)
 
-func _on_pointer_started(position: Vector2) -> void:
+func _on_pointer_started(event_pos: Vector2) -> void:
     if active_screen == "home" and not transition.busy:
         iris.set_interaction(true)
         voice_guide.set_interaction_active(true)
-        iris.set_gaze_target(position, get_viewport_rect().size)
+        iris.set_gaze_target(event_pos, get_viewport_rect().size)
 
-func _on_pointer_moved(position: Vector2) -> void:
+func _on_pointer_moved(event_pos: Vector2) -> void:
     if active_screen == "home" and not transition.busy:
-        iris.set_gaze_target(position, get_viewport_rect().size)
+        iris.set_gaze_target(event_pos, get_viewport_rect().size)
 
 func _on_pointer_ended(_position: Vector2) -> void:
     if active_screen == "home":
@@ -357,7 +357,7 @@ func _on_dragged(_position: Vector2, delta: Vector2) -> void:
     if active_screen == "home" and not transition.busy:
         iris.update_directional_anticipation(delta, get_viewport_rect().size)
 
-func _on_tap(position: Vector2) -> void:
+func _on_tap(event_pos: Vector2) -> void:
     if production_startup and production_startup.is_active():
         return
     state_manager.mark_first_launch_seen()
@@ -367,7 +367,7 @@ func _on_tap(position: Vector2) -> void:
         return
     if active_screen == "home":
         var view := get_viewport_rect().size
-        var normalized := Vector2(position.x / maxf(view.x, 1.0), position.y / maxf(view.y, 1.0))
+        var normalized := Vector2(event_pos.x / maxf(view.x, 1.0), event_pos.y / maxf(view.y, 1.0))
         if normalized.distance_to(Vector2(0.5, 0.50)) < 0.25:
             voice_guide.on_first_touch()
             # Directly enter Chapter One (WM_001) as primary experience
@@ -383,28 +383,28 @@ func _on_tap(position: Vector2) -> void:
         else:
             iris.focus_pulse()
     elif active_screen == "witness":
-        witness.handle_tap(position)
+        witness.handle_tap(event_pos)
     elif active_screen == "archive":
-        archive.handle_tap(position)
+        archive.handle_tap(event_pos)
     elif active_screen == "discovery":
-        discovery.handle_tap(position)
+        discovery.handle_tap(event_pos)
     elif active_screen == "profile":
-        if position.y < 100.0:
+        if event_pos.y < 100.0:
             show_home()
     elif active_screen == "settings":
-        settings.handle_tap(position)
+        settings.handle_tap(event_pos)
     elif active_screen == "story_mode":
-        story_mode.handle_tap(position)
+        story_mode.handle_tap(event_pos)
     elif active_screen == "daily_witness":
-        daily_witness.handle_tap(position)
+        daily_witness.handle_tap(event_pos)
     elif active_screen == "weekly_investigation":
-        weekly_investigation.handle_tap(position)
+        weekly_investigation.handle_tap(event_pos)
     elif active_screen == "your_iris":
-        your_iris.handle_tap(position)
+        your_iris.handle_tap(event_pos)
     elif active_screen == "calibration":
-        calibration.handle_tap(position)
+        calibration.handle_tap(event_pos)
 
-func _on_hold(position: Vector2) -> void:
+func _on_hold(event_pos: Vector2) -> void:
     if production_startup and production_startup.is_active():
         return
     state_manager.mark_first_launch_seen()
@@ -412,7 +412,7 @@ func _on_hold(position: Vector2) -> void:
         return
     if active_screen == "home":
         var view := get_viewport_rect().size
-        var normalized := Vector2(position.x / maxf(view.x, 1.0), position.y / maxf(view.y, 1.0))
+        var normalized := Vector2(event_pos.x / maxf(view.x, 1.0), event_pos.y / maxf(view.y, 1.0))
         if normalized.distance_to(Vector2(0.5, 0.50)) < 0.26:
             # Hold is intentionally not a second way to enter Witness. It is
             # a quiet calibration state that can be felt before the next tap.

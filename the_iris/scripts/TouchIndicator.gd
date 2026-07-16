@@ -7,14 +7,14 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	set_process(true)
 
-func show_touch(position: Vector2) -> void:
-	touch_position = position
+func show_touch(touch_at: Vector2) -> void:
+	touch_position = touch_at
 	touch_visible = true
 	touch_age = 0.0
 	queue_redraw()
 
-func move_touch(position: Vector2) -> void:
-	touch_position = position
+func move_touch(touch_at: Vector2) -> void:
+	touch_position = touch_at
 	touch_visible = true
 	touch_age = 0.0
 	queue_redraw()

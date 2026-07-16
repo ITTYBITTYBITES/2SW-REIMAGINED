@@ -16,7 +16,6 @@ func _process(delta: float) -> void:
     queue_redraw()
 
 func _draw() -> void:
-    var vs := get_viewport_rect().size
     var breath := 0.5 + sin(time * 0.75) * 0.18
     if mode == "home":
         draw_rect(Rect2(0, size.y * 0.34, 5, size.y * 0.32), Color(0.25, 0.72, 0.64, 0.035 + breath * 0.025))

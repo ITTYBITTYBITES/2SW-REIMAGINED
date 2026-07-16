@@ -17,7 +17,6 @@ func set_reveal(value: float) -> void:
     queue_redraw()
 
 func _draw() -> void:
-    var vs := get_viewport_rect().size
     var landscape := size.x > size.y
     var s := minf(size.x / (1120.0 if landscape else 720.0), size.y / (720.0 if landscape else 1280.0))
     var center := Vector2(size.x * 0.5, size.y * 0.50)

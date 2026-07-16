@@ -419,7 +419,7 @@ func _complete_investigation() -> void:
     investigation_complete.emit()
     complete(data)
 
-func _on_viewport_resized(size: Vector2) -> void:
+func _on_viewport_resized(new_size: Vector2) -> void:
     if _shader_material:
-        _shader_material.set_shader_parameter("viewport_size", size)
+        _shader_material.set_shader_parameter("viewport_size", new_size)
     _create_hotspots()
