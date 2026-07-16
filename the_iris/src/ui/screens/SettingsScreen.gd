@@ -297,9 +297,9 @@ func _refresh() -> void:
 	call_deferred("_restore_scroll_position", previous_scroll_position)
 
 
-func _restore_scroll_position(position: int) -> void:
+func _restore_scroll_position(scroll_pos: int) -> void:
 	if scroll:
-		scroll.scroll_vertical = position
+		scroll.scroll_vertical = scroll_pos
 
 
 func _create_settings_section(

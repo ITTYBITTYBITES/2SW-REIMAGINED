@@ -37,12 +37,12 @@ func _on_production_home() -> void:
 func _on_production_witness() -> void:
     request_witness.emit()
 
-func _on_viewport_resized(size: Vector2) -> void:
+func _on_viewport_resized(new_size: Vector2) -> void:
     if not is_instance_valid(stat_label):
         return
-    stat_label.position = Vector2(34, maxf(500.0, size.y - 255.0))
-    score_label.position = Vector2(34, maxf(545.0, size.y - 200.0))
-    footer_label.position = Vector2(34, maxf(620.0, size.y - 68.0))
+    stat_label.position = Vector2(34, maxf(500.0, new_size.y - 255.0))
+    score_label.position = Vector2(34, maxf(545.0, new_size.y - 200.0))
+    footer_label.position = Vector2(34, maxf(620.0, new_size.y - 68.0))
 
 func set_state_manager(value: IrisStateManager) -> void:
     state_manager = value
@@ -86,7 +86,6 @@ func _process(delta: float) -> void:
 func _draw() -> void:
     if production_active:
         return
-    var vs := get_viewport_rect().size
     draw_rect(Rect2(0, 0, size.x, size.y), Color("#09131a"))
     var center := Vector2(size.x * 0.5, size.y * 0.52)
     var score := float(state_manager.attention_score if state_manager else 0) / 100.0

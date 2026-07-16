@@ -103,7 +103,6 @@ func _refresh_copy() -> void:
     parallax_label.add_theme_color_override("font_color", Color("#e1f5ed") if state_manager.parallax_enabled else DIM)
 
 func _draw() -> void:
-    var vs := get_viewport_rect().size
     draw_rect(Rect2(0, 0, size.x, size.y), Color("#0a1118"))
     for i in range(8):
         var y := 274.0 + i * 105.0
@@ -114,35 +113,35 @@ func _draw() -> void:
     draw_string(ThemeDB.fallback_font, Vector2(82, 1152), "RESET WITNESS RECORD", HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color("#d1a866"))
     draw_string(ThemeDB.fallback_font, Vector2(82, 1178), "clear discoveries and attention score", HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color("#7d7770"))
 
-func handle_tap(position: Vector2) -> void:
+func handle_tap(tap_position: Vector2) -> void:
     if production_active:
-        if position.y < 96.0 and position.x < 320.0:
+        if tap_position.y < 96.0 and tap_position.x < 320.0:
             request_home.emit()
         return
-    if position.y < 88.0 and position.x < 330.0:
+    if tap_position.y < 88.0 and tap_position.x < 330.0:
         request_home.emit()
-    elif position.y >= 215.0 and position.y < 315.0:
+    elif tap_position.y >= 215.0 and tap_position.y < 315.0:
         state_manager.sound_enabled = not state_manager.sound_enabled
         if SettingsService:
             SettingsService.set_value("mute_master", not state_manager.sound_enabled)
         state_manager.update_preferences()
         confirmation_label.text = "sound preference updated"
         _refresh_copy()
-    elif position.y >= 320.0 and position.y < 420.0:
+    elif tap_position.y >= 320.0 and tap_position.y < 420.0:
         state_manager.animation_intensity = 0.15 if state_manager.animation_intensity > 0.5 else 1.0
         if SettingsService:
             SettingsService.set_value("reduced_motion", state_manager.animation_intensity <= 0.5)
         state_manager.update_preferences()
         confirmation_label.text = "motion preference updated"
         _refresh_copy()
-    elif position.y >= 425.0 and position.y < 525.0:
+    elif tap_position.y >= 425.0 and tap_position.y < 525.0:
         state_manager.high_contrast = not state_manager.high_contrast
         if SettingsService:
             SettingsService.set_value("high_contrast", state_manager.high_contrast)
         state_manager.update_preferences()
         confirmation_label.text = "visibility preference updated"
         _refresh_copy()
-    elif position.y >= 530.0 and position.y < 630.0:
+    elif tap_position.y >= 530.0 and tap_position.y < 630.0:
         state_manager.reduced_motion = not state_manager.reduced_motion
         if SettingsService:
             SettingsService.set_value("reduced_motion", state_manager.reduced_motion)
@@ -150,27 +149,27 @@ func handle_tap(position: Vector2) -> void:
         state_manager.update_preferences()
         confirmation_label.text = "reduced motion updated"
         _refresh_copy()
-    elif position.y >= 635.0 and position.y < 735.0:
+    elif tap_position.y >= 635.0 and tap_position.y < 735.0:
         state_manager.accessible_navigation = not state_manager.accessible_navigation
         state_manager.update_preferences()
         confirmation_label.text = "explicit access path updated"
         _refresh_copy()
-    elif position.y >= 740.0 and position.y < 845.0:
+    elif tap_position.y >= 740.0 and tap_position.y < 845.0:
         state_manager.captions_enabled = not state_manager.captions_enabled
         state_manager.update_preferences()
         confirmation_label.text = "voice transcript updated"
         _refresh_copy()
-    elif position.y >= 845.0 and position.y < 950.0:
+    elif tap_position.y >= 845.0 and tap_position.y < 950.0:
         state_manager.orientation_lock = not state_manager.orientation_lock
         state_manager.update_preferences()
         confirmation_label.text = "orientation preference updated"
         _refresh_copy()
-    elif position.y >= 950.0 and position.y < 1055.0:
+    elif tap_position.y >= 950.0 and tap_position.y < 1055.0:
         state_manager.parallax_enabled = not state_manager.parallax_enabled
         state_manager.update_preferences()
         confirmation_label.text = "parallax preference updated"
         _refresh_copy()
-    elif position.y >= 1090.0 and position.y < 1220.0:
+    elif tap_position.y >= 1090.0 and tap_position.y < 1220.0:
         state_manager.reset_progress()
         confirmation_label.text = "witness record reset"
         _refresh_copy()

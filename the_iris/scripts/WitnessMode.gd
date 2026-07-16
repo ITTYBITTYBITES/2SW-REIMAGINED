@@ -49,15 +49,15 @@ func _on_production_home() -> void:
     visual.visible = true
     scene_canvas.visible = true
 
-func _on_viewport_resized(size: Vector2) -> void:
+func _on_viewport_resized(new_size: Vector2) -> void:
     if not is_instance_valid(title_label):
         return
-    var compact_top := 70.0 if size.x > size.y else 94.0
+    var compact_top := 70.0 if new_size.x > new_size.y else 94.0
     title_label.position = Vector2(32, compact_top)
     status_label.position = Vector2(32, compact_top + 38.0)
     timer_label.position = Vector2(32, compact_top + 86.0)
-    footer_label.position = Vector2(32, maxf(560.0, size.y - 118.0))
-    return_label.position = Vector2(32, maxf(600.0, size.y - 78.0))
+    footer_label.position = Vector2(32, maxf(560.0, new_size.y - 118.0))
+    return_label.position = Vector2(32, maxf(600.0, new_size.y - 78.0))
 
 func enter() -> void:
     if production_bridge != null:
@@ -123,14 +123,14 @@ func _complete() -> void:
         shader_material.set_shader_parameter("reveal", 1.0)
     request_action.emit("completed")
 
-func handle_tap(position: Vector2) -> void:
+func handle_tap(tap_position: Vector2) -> void:
     if production_active:
-        if position.y < 96.0 and position.x < 320.0:
+        if tap_position.y < 96.0 and tap_position.x < 320.0:
             request_home.emit()
         return
-    if position.y < 90.0 and position.x < 300.0:
+    if tap_position.y < 90.0 and tap_position.x < 300.0:
         request_home.emit()
-    elif completed and position.y > 1080.0:
+    elif completed and tap_position.y > 1080.0:
         request_home.emit()
     else:
         pulse_count += 1

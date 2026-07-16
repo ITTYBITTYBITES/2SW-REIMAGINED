@@ -564,7 +564,7 @@ func _on_continue_pressed() -> void:
     reconstruction_complete.emit()
     complete(data)
 
-func _on_viewport_resized(size: Vector2) -> void:
+func _on_viewport_resized(_new_size: Vector2) -> void:
     # Recreate ghost outlines at new positions
     _create_ghost_outlines()
     

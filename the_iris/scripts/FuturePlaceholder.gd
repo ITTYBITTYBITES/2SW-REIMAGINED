@@ -33,22 +33,21 @@ func _ready() -> void:
     add_back_label("←  THE IRIS")
     queue_redraw()
 
-func _on_viewport_resized(size: Vector2) -> void:
+func _on_viewport_resized(new_size: Vector2) -> void:
     if not is_instance_valid(title_label):
         return
-    var landscape := size.x > size.y
+    var landscape := new_size.x > new_size.y
     title_label.position = Vector2(34, 72 if landscape else 118)
     eyebrow_label.position = Vector2(34, 40 if landscape else 84)
-    description_label.position = Vector2(76, maxf(420.0, size.y - 360.0))
-    progress_label.position = Vector2(34, maxf(520.0, size.y - 225.0))
-    action_label.position = Vector2(34, maxf(620.0, size.y - 82.0))
+    description_label.position = Vector2(76, maxf(420.0, new_size.y - 360.0))
+    progress_label.position = Vector2(34, maxf(520.0, new_size.y - 225.0))
+    action_label.position = Vector2(34, maxf(620.0, new_size.y - 82.0))
 
 func _process(delta: float) -> void:
     time += delta
     queue_redraw()
 
 func _draw() -> void:
-    var vs := get_viewport_rect().size
     draw_rect(Rect2(Vector2.ZERO, size), Color("#07131a"), true)
     var center := Vector2(size.x * 0.5, size.y * 0.50)
     var breathe := sin(time * 0.7) * 4.0
@@ -119,13 +118,12 @@ func _draw_calibration_language(center: Vector2) -> void:
     draw_arc(center, 86.0, time * 0.10, time * 0.10 + PI * 0.65, 36, Color(accent_color, 0.72), 2.0)
 
 
-func handle_tap(position: Vector2) -> void:
-    if position.y < 100.0 and position.x < 330.0:
+func handle_tap(tap_position: Vector2) -> void:
+    if tap_position.y < 100.0 and tap_position.x < 330.0:
         request_home.emit()
         return
-    var vs := get_viewport_rect().size
     var center := Vector2(size.x * 0.5, size.y * 0.50)
-    if action_enabled and position.distance_to(center) < minf(size.x, size.y) * 0.20:
+    if action_enabled and tap_position.distance_to(center) < minf(size.x, size.y) * 0.20:
         if not moment_id.is_empty():
             request_moment.emit(moment_id)
         else:

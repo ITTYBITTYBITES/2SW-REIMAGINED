@@ -93,9 +93,9 @@ func fail(reason: String) -> void:
     phase_failed.emit(reason)
     queue_free()
 
-func _play_sfx(name: String, volume: float = 0.7) -> void:
+func _play_sfx(sfx_name: String, volume: float = 0.7) -> void:
     if AudioService:
-        AudioService.play_sfx(name, volume)
+        AudioService.play_sfx(sfx_name, volume)
 
 func _vibrate(duration_ms: int) -> void:
     if AccessibilityService and AccessibilityService.is_haptics_enabled():
