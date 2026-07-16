@@ -120,15 +120,22 @@ void fragment() {
         teal += vec3(0.10, 0.35, 0.45) * min(progression_level * 0.12, 0.35) * radial;
     }
 
-    // Blend with production fiber textures when available
-    if (has_textures > 0.5) {
-        vec2 tex_uv = q / (iris_r * 2.1) + vec2(0.5);
-        vec4 f_col = texture(fibers_tex, tex_uv);
-        teal = mix(teal, f_col.rgb * 1.3, f_col.a * 0.55);
-    }
-
     // Aperture: layered pupil and animated optical edge
     float aperture = pupil_open + transition_open * 0.205 + recent_alert * 0.018 + awakening * 0.012 - deep_focus * 0.022 + breathe * 0.5 + hippus + (state_mode == 1.0 ? 0.014 : 0.0);
+
+    // Blend with production fiber and base textures when available
+    if (has_textures > 0.5) {
+        vec2 stroma_uv = q / (iris_r * 2.05) + vec2(0.5);
+        if (stroma_uv.x > 0.01 && stroma_uv.x < 0.99 && stroma_uv.y > 0.01 && stroma_uv.y < 0.99) {
+            vec4 b_col = texture(base_tex, stroma_uv);
+            vec2 fibers_uv = (stroma_uv - vec2(0.5)) * vec2(1.0, 1.0) + vec2(0.5);
+            vec4 f_col = texture(fibers_tex, clamp(fibers_uv, vec2(0.01), vec2(0.99)));
+            float tex_blend = smoothstep(iris_r + 0.005, iris_r - 0.025, d) * smoothstep(aperture - 0.005, aperture + 0.015, d);
+            vec3 combined_tex = mix(b_col.rgb, f_col.rgb * 1.3, f_col.a * 0.65);
+            teal = mix(teal, combined_tex, max(b_col.a, f_col.a) * tex_blend * 0.85);
+        }
+    }
+
     float pupil = 1.0 - smoothstep(aperture, aperture + 0.009, d);
     float pupil_edge = 1.0 - smoothstep(aperture - 0.013, aperture + 0.004, d);
     vec3 pupil_col = vec3(0.001, 0.004, 0.007) + vec3(0.012, 0.035, 0.034) * (1.0 - d / max(aperture, 0.01));
