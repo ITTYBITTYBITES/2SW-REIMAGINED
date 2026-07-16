@@ -129,8 +129,8 @@ func _validate_adjacency(highlight_ids: Array, objects: Array) -> bool:
 			var object_data: Dictionary = raw_object
 			if object_data.get("instance_id") == target.get("instance_id"):
 				continue
-			var position := Vector2(float(object_data.get("x", 0.0)), float(object_data.get("y", 0.0)))
-			distances.append({"id": object_data.get("instance_id", ""), "distance": target_pos.distance_to(position)})
+			var obj_pos := Vector2(float(object_data.get("x", 0.0)), float(object_data.get("y", 0.0)))
+			distances.append({"id": object_data.get("instance_id", ""), "distance": target_pos.distance_to(obj_pos)})
 	distances.sort_custom(func(a: Dictionary, b: Dictionary): return float(a["distance"]) < float(b["distance"]))
 	if distances.size() < 2:
 		return false

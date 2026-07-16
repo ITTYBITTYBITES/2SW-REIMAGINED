@@ -48,7 +48,7 @@ func _process(delta: float) -> void:
     queue_redraw()
 
 func _draw() -> void:
-    var size := get_viewport_rect().size
+    var vs := get_viewport_rect().size
     draw_rect(Rect2(Vector2.ZERO, size), Color("#07131a"), true)
     var center := Vector2(size.x * 0.5, size.y * 0.50)
     var breathe := sin(time * 0.7) * 4.0
@@ -123,7 +123,7 @@ func handle_tap(position: Vector2) -> void:
     if position.y < 100.0 and position.x < 330.0:
         request_home.emit()
         return
-    var size := get_viewport_rect().size
+    var vs := get_viewport_rect().size
     var center := Vector2(size.x * 0.5, size.y * 0.50)
     if action_enabled and position.distance_to(center) < minf(size.x, size.y) * 0.20:
         if not moment_id.is_empty():

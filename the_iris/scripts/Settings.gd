@@ -103,7 +103,7 @@ func _refresh_copy() -> void:
     parallax_label.add_theme_color_override("font_color", Color("#e1f5ed") if state_manager.parallax_enabled else DIM)
 
 func _draw() -> void:
-    var size := get_viewport_rect().size
+    var vs := get_viewport_rect().size
     draw_rect(Rect2(0, 0, size.x, size.y), Color("#0a1118"))
     for i in range(8):
         var y := 274.0 + i * 105.0

@@ -165,7 +165,7 @@ func _build_instances(
 		var slot := slots[index]
 		var kind := str(archetype.get("visual_kind", "generic"))
 		var size := _size_for_kind(kind) * target_scale
-		var rotation := rng.randf_range(-7.0, 7.0) if _is_long_kind(kind) else rng.randf_range(-2.0, 2.0)
+		var rotation_deg := rng.randf_range(-7.0, 7.0) if _is_long_kind(kind) else rng.randf_range(-2.0, 2.0)
 		instances.append({
 			"instance_id": "obj_%02d" % index,
 			"archetype_id": archetype.get("id", "object"),
@@ -180,7 +180,7 @@ func _build_instances(
 			"y": slot.y,
 			"w": size.x,
 			"h": size.y,
-			"rotation_deg": rotation,
+			"rotation_deg": rotation_deg,
 			"question_eligible": true
 		})
 	return instances
@@ -330,9 +330,9 @@ func _question_adjacency(objects: Array[Dictionary], rng: RandomNumberGenerator)
 	var correct := str(nearest.get("name", "object"))
 	var distractors: Array[String] = []
 	for object_data: Dictionary in objects:
-		var name := str(object_data.get("name", "object"))
+		var obj_name := str(object_data.get("name", "object"))
 		if name != correct and name != str(target.get("name", "")) and not distractors.has(name):
-			distractors.append(name)
+			distractors.append(obj_name)
 	_shuffle(distractors, rng)
 	if distractors.size() < 2:
 		return {}

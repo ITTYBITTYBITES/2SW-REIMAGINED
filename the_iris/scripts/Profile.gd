@@ -86,7 +86,7 @@ func _process(delta: float) -> void:
 func _draw() -> void:
     if production_active:
         return
-    var size := get_viewport_rect().size
+    var vs := get_viewport_rect().size
     draw_rect(Rect2(0, 0, size.x, size.y), Color("#09131a"))
     var center := Vector2(size.x * 0.5, size.y * 0.52)
     var score := float(state_manager.attention_score if state_manager else 0) / 100.0

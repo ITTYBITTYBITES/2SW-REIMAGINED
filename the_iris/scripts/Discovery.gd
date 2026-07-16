@@ -39,7 +39,7 @@ func _process(delta: float) -> void:
     queue_redraw()
 
 func _draw() -> void:
-    var size := get_viewport_rect().size
+    var vs := get_viewport_rect().size
     draw_rect(Rect2(0, 0, size.x, size.y), Color("#07141a"))
     var center := Vector2(size.x * 0.50, size.y * 0.51)
     # Faint constellation connections.
@@ -68,7 +68,7 @@ func handle_tap(position: Vector2) -> void:
     if position.y < 88.0 and position.x < 330.0:
         request_home.emit()
         return
-    var size := get_viewport_rect().size
+    var vs := get_viewport_rect().size
     for i in nodes.size():
         var p := Vector2(nodes[i].x * size.x, nodes[i].y * size.y)
         if position.distance_to(p) < 58.0:

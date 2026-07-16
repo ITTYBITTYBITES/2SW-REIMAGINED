@@ -73,8 +73,8 @@ func _process(delta: float) -> void:
     queue_redraw()
 
 func _draw() -> void:
-    var size := get_viewport_rect().size
-    draw_rect(Rect2(0, 0, size.x, size.y), Color("#0b1017"))
+    var vs := get_viewport_rect().size
+    draw_rect(Rect2(0, 0, vs.x, vs.y), Color("#0b1017"))
     draw_circle(Vector2(size.x * 0.5, size.y * 0.52), size.y * 0.34, Color(0.07, 0.16, 0.16, 0.18))
     for i in memory_points.size():
         var p := Vector2(memory_points[i].x * size.x, memory_points[i].y * size.y)
@@ -101,7 +101,7 @@ func handle_tap(position: Vector2) -> void:
     if position.y < 88.0 and position.x < 300.0:
         request_home.emit()
         return
-    var size := get_viewport_rect().size
+    var vs := get_viewport_rect().size
     for i in memory_points.size():
         var p := Vector2(memory_points[i].x * size.x, memory_points[i].y * size.y)
         if position.distance_to(p) < 78.0:
