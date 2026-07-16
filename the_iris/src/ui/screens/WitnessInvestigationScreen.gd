@@ -204,7 +204,7 @@ func _create_hotspot(hs: Dictionary, viewport_size: Vector2, index: int) -> Cont
 extends Control
 @export var pulse_speed := 1.5
 var time := 0.0
-var visible := true
+var is_visible := true
 var is_completed := false
 
 func _process(delta):
@@ -212,7 +212,7 @@ func _process(delta):
     queue_redraw()
 
 func _draw():
-    if not visible:
+    if not is_visible:
         return
     var rect = Rect2(Vector2.ZERO, size)
     if is_completed:
@@ -416,6 +416,7 @@ func _complete_investigation() -> void:
         "moment_id": moment_definition.moment_id if moment_definition else ""
     }
     
+    investigation_complete.emit()
     complete(data)
 
 func _on_viewport_resized(size: Vector2) -> void:

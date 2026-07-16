@@ -429,4 +429,5 @@ func _on_continue_pressed() -> void:
         "rewards": moment_definition.rewards if moment_definition else {}
     }
     
+    revelation_complete.emit()
     complete(data)

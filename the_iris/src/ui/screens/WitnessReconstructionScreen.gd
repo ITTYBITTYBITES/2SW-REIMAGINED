@@ -233,9 +233,9 @@ func _create_fragment_card(frag_def: Dictionary) -> Control:
     card.name = "Fragment_%s" % frag_def.id
     card.set_meta("fragment_id", frag_def.id)
     card.set_meta("fragment_data", frag_def)
-    custom_minimum_size = Vector2(100, 80)
-    size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-    size_flags_vertical = Control.SIZE_SHRINK_CENTER
+    card.custom_minimum_size = Vector2(100, 80)
+    card.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+    card.size_flags_vertical = Control.SIZE_SHRINK_CENTER
     
     # Panel background
     var panel = PanelContainer.new()
@@ -561,6 +561,7 @@ func _on_continue_pressed() -> void:
         "moment_id": moment_definition.moment_id if moment_definition else ""
     }
     
+    reconstruction_complete.emit()
     complete(data)
 
 func _on_viewport_resized(size: Vector2) -> void:

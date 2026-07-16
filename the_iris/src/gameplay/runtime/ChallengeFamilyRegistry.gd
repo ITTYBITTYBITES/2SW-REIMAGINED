@@ -165,12 +165,12 @@ func get_default_family_id() -> String:
 	return _ordered_ids[0] if not _ordered_ids.is_empty() else ""
 
 func get_visible_family_ids() -> Array[String]:
-	var visible: Array[String] = []
+	var visible_ids: Array[String] = []
 	for family_id: String in _ordered_ids:
 		var family := get_family(family_id)
 		if family and bool(family.metadata.get("player_visible", true)):
-			visible.append(family_id)
-	return visible
+			visible_ids.append(family_id)
+	return visible_ids
 
 func has_family(family_id: String) -> bool:
 	return _modules.has(family_id)

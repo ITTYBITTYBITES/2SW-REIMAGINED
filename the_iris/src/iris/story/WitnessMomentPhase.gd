@@ -18,6 +18,14 @@ func _ready() -> void:
     mouse_filter = Control.MOUSE_FILTER_STOP
     _setup_background()
 
+func _notification(what: int) -> void:
+    if what == NOTIFICATION_RESIZED:
+        _on_viewport_resized(get_viewport_rect().size)
+
+func _on_viewport_resized(_size: Vector2) -> void:
+    ## Override in subclasses to handle resize
+    pass
+
 func _setup_background() -> void:
     if background:
         background.color = Color("#07131A")
