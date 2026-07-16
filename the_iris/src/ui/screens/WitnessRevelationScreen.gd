@@ -214,16 +214,17 @@ func _reveal_carried_fragments() -> void:
         fragment_lookup[f.id] = f
     
     # Show carried (placed) fragments
-    var has_any = false
-    for ghost_id, fragments in placed:
-        for frag_id in fragments:
+    var has_any: bool = false
+    for ghost_id: String in placed:
+        var fragments: Array = placed[ghost_id] if placed[ghost_id] is Array else []
+        for frag_id: Variant in fragments:
             has_any = true
-            var frag_def = fragment_lookup.get(frag_id, {})
-            var item = _create_carried_item(frag_def, true)
+            var frag_def: Dictionary = fragment_lookup.get(frag_id, {}) as Dictionary
+            var item: Control = _create_carried_item(frag_def, true)
             carried_list.add_child(item)
             item.modulate.a = 0.0
             if _should_animate:
-                var tween = create_tween()
+                var tween: Tween = create_tween()
                 tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
                 tween.tween_property(item, "modulate:a", 1.0, 0.4).set_ease(Tween.EASE_OUT).set_delay(carried_list.get_child_count() * 0.15)
             else:
@@ -375,25 +376,26 @@ func _reveal_progress() -> void:
     _play_sfx("progress_reveal", 0.5)
     
     if moment_definition:
-        var rewards = moment_definition.rewards
-        var progress_points = rewards.get("progress_points", 0)
-        var mastery = rewards.get("mastery", {})
-        var achievements = rewards.get("achievements", [])
+        var rewards: Dictionary = moment_definition.rewards
+        var progress_points: int = int(rewards.get("progress_points", 0))
+        var mastery: Dictionary = rewards.get("mastery", {}) as Dictionary
+        var achievements: Array = rewards.get("achievements", []) as Array
         
-        var lines = []
+        var lines: Array[String] = []
         if progress_points > 0:
             lines.append("+%d Insight" % progress_points)
-        for family, value in mastery:
-            lines.append("%s awareness deepened +%.0f%%" % [family.capitalize(), value * 100])
-        for ach in achievements:
-            lines.append("Memory preserved: %s" % ach.replace("_", " ").capitalize())
+        for family: String in mastery:
+            var value: float = float(mastery[family])
+            lines.append("%s awareness deepened +%.0f%%" % [family.capitalize(), value * 100.0])
+        for ach: Variant in achievements:
+            lines.append("Memory preserved: %s" % str(ach).replace("_", " ").capitalize())
         
         progress_label.text = "\n".join(lines)
         progress_label.visible = true
         progress_label.modulate.a = 0.0
         
         if _should_animate:
-            var tween = create_tween()
+            var tween: Tween = create_tween()
             tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
             tween.tween_property(progress_label, "modulate:a", 1.0, 0.6).set_ease(Tween.EASE_OUT)
         else:

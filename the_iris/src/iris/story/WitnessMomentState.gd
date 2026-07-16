@@ -18,15 +18,15 @@ enum Phase {
     FAILED
 }
 
-var moment_id := ""
-var moment_version := 1
+var moment_id: String = ""
+var moment_version: int = 1
 var phase: int = Phase.DORMANT
-var beat_index := 0
-var production_route := ""
-var production_session_id := ""
-var started_at_ms := 0
-var result_committed := false
-var resume_allowed := true
+var beat_index: int = 0
+var production_route: String = ""
+var production_session_id: String = ""
+var started_at_ms: int = 0
+var result_committed: bool = false
+var resume_allowed: bool = true
 
 func snapshot() -> Dictionary:
     return {

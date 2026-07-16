@@ -17,7 +17,7 @@ signal archive_update_requested(moment_id: String, data: Dictionary)
 
 var director: WitnessExperienceDirector
 var definition: WitnessMoment
-var state := WitnessMomentState.new()
+var state: WitnessMomentState = WitnessMomentState.new()
 var current_phase_screen: Control = null
 var phase_data: Dictionary = {}
 var accumulated_data: Dictionary = {}
@@ -50,7 +50,7 @@ func start_moment(moment_id: String = "WM_001") -> void:
     if director == null:
         _fail("Witness Experience Director is not connected")
         return
-    var selected := director.select_moment(moment_id)
+    var selected: WitnessMoment = director.select_moment(moment_id)
     if selected == null:
         _fail("Witness Moment is unavailable: %s" % moment_id)
         return
@@ -241,15 +241,15 @@ func _commit_to_archive() -> void:
         ProfileService.add_xp(points)
         
         # Preserve memory markers
-        for ach in rewards.get("achievements", []):
-            var achievements: Array = ProfileService.profile.get("achievements", [])
+        for ach: Variant in rewards.get("achievements", []):
+            var achievements: Array = ProfileService.profile.get("achievements", []) as Array
             if not achievements.has(ach):
                 achievements.append(ach)
                 ProfileService.profile["achievements"] = achievements
         
         # Add archive entry to a witness-specific field
-        var archive = ProfileService.profile.get("witness_archive", [])
-        var entry = {
+        var archive: Array = ProfileService.profile.get("witness_archive", []) as Array
+        var entry: Dictionary = {
             "id": definition.moment_id,
             "title": definition.archive_mapping.get("title", definition.title),
             "category": definition.archive_mapping.get("category", definition.chapter_id),
@@ -314,7 +314,7 @@ func _emit_phase() -> void:
     phase_changed.emit(state.phase, state.moment_id)
 
 func _fail(reason: String) -> void:
-    var failed_id := definition.moment_id if definition else ""
+    var failed_id: String = definition.moment_id if definition else ""
     state.phase = WitnessMomentState.Phase.FAILED
     moment_failed.emit(failed_id, reason)
     _emit_phase()

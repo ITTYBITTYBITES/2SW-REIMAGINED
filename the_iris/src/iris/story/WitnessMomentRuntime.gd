@@ -14,7 +14,7 @@ signal runtime_failed(moment_id: String, reason: String)
 
 var director: WitnessExperienceDirector
 var definition: WitnessMoment
-var state := WitnessMomentState.new()
+var state: WitnessMomentState = WitnessMomentState.new()
 var last_result: Dictionary = {}
 
 func _ready() -> void:
@@ -33,7 +33,7 @@ func start_moment(moment_id: String = "WM_001") -> void:
     if director == null:
         _fail("Witness Experience Director is not connected")
         return
-    var selected := director.select_moment(moment_id)
+    var selected: WitnessMoment = director.select_moment(moment_id)
     if selected == null:
         _fail("Witness Moment is unavailable: %s" % moment_id)
         return
@@ -106,7 +106,7 @@ func _emit_phase() -> void:
     phase_changed.emit(state.phase, state.moment_id)
 
 func _fail(reason: String) -> void:
-    var failed_id := definition.moment_id if definition else ""
+    var failed_id: String = definition.moment_id if definition else ""
     state.phase = WitnessMomentState.Phase.FAILED
     runtime_failed.emit(failed_id, reason)
     _emit_phase()

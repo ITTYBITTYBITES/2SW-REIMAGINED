@@ -55,20 +55,20 @@ func _ready() -> void:
 func _on_configure() -> void:
     if moment_definition:
         _moment_data = moment_definition.to_blueprint()
-        var env = _moment_data.get("environment", {})
-        var observation_data = _moment_data.get("observation", {})
+        var env: Dictionary = _moment_data.get("environment", {})
+        var observation_data: Dictionary = _moment_data.get("observation", {})
         _duration = float(observation_data.get("duration_seconds", 2.0))
         
         # Load moment-specific background if available
         # Prefer action_image (shows the character moment) for the observation phase
-        var action_path = env.get("action_image", "")
-        var bg_path = env.get("background_image", "")
-        var primary_path = action_path if (action_path and ResourceLoader.exists(action_path)) else bg_path
-        if primary_path and ResourceLoader.exists(primary_path):
+        var action_path: String = str(env.get("action_image", ""))
+        var bg_path: String = str(env.get("background_image", ""))
+        var primary_path: String = action_path if (not action_path.is_empty() and ResourceLoader.exists(action_path)) else bg_path
+        if not primary_path.is_empty() and ResourceLoader.exists(primary_path):
             moment_scene.texture = load(primary_path) as Texture2D
 
         if _shader_material:
-            var mode := 1.0
+            var mode: float = 1.0
             match moment_definition.moment_id:
                 "WM_001": mode = 1.0
                 "WM_002": mode = 2.0
@@ -134,7 +134,7 @@ func _begin_observation() -> void:
     _hide_attunement_prompt()
     _vibrate(35)
     _play_sfx("observation_start", 0.6)
-    var sound := get_tree().root.get_node_or_null("Main/ProceduralSound") if get_tree() and get_tree().root.has_node("Main/ProceduralSound") else null
+    var sound: Node = get_tree().root.get_node_or_null("Main/ProceduralSound") if get_tree() and get_tree().root.has_node("Main/ProceduralSound") else null
     if sound and sound.has_method("focus_notice_tone"):
         sound.focus_notice_tone()
 
