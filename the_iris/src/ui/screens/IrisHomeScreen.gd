@@ -124,13 +124,11 @@ func _update_from_state() -> void:
 				welcome_title.modulate.a = 0.5
 				welcome_subtitle.modulate.a = 0.4
 				welcome_text.modulate.a = 0.3
-			WitnessChapters
 			IrisCore.State.AWARE:
 				_set_iris_visual_state(0.35, 0.4, 1.0)
 				welcome_title.modulate.a = 0.8
 				welcome_subtitle.modulate.a = 0.7
 				welcome_text.modulate.a = 0.6
-			IrisCore
 			IrisCore.State.FOCUSED:
 				_set_iris_visual_state(0.62, 0.8, 1.0)
 				welcome_title.modulate.a = 1.0
