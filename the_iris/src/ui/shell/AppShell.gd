@@ -38,7 +38,8 @@ const SCREEN_SCENES := {
 	"home":            "res://src/ui/screens/HomeV2Screen.tscn",
 	"experiences":     "res://src/ui/screens/ExperiencesScreen.tscn",
 	"profile":         "res://src/ui/screens/ProfileScreen.tscn",
-	"settings":        "res://src/ui/screens/SettingsScreen.tscn"
+	"settings":        "res://src/ui/screens/SettingsScreen.tscn",
+	"experience_readiness": "res://src/ui/screens/ExperienceReadinessScreen.tscn"
 }
 
 func _ready() -> void:

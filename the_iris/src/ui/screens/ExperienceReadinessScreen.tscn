@@ -1,0 +1,84 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/ui/screens/ExperienceReadinessScreen.gd" id="1_readiness"]
+
+[node name="ExperienceReadinessScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_readiness")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0588235, 0.0588235, 0.0705882, 1)
+
+[node name="MainMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 32
+
+[node name="Scroll" type="ScrollContainer" parent="MainMargin"]
+layout_mode = 2
+
+[node name="Content" type="VBoxContainer" parent="MainMargin/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 24
+
+[node name="Hero" type="VBoxContainer" parent="MainMargin/Scroll/Content"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="MainMargin/Scroll/Content/Hero"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Prepare Your Witness"
+
+[node name="SubtitleLabel" type="Label" parent="MainMargin/Scroll/Content/Hero"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "For the best experience:
+🔊 Turn your volume up
+📳 Enable vibration
+👁 Find a quiet place
+
+The Iris communicates through sight, sound, and touch."
+autowrap_mode = 2
+
+[node name="ChecklistContainer" type="VBoxContainer" parent="MainMargin/Scroll/Content"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Actions" type="HBoxContainer" parent="MainMargin/Scroll/Content"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TestSoundButton" type="Button" parent="MainMargin/Scroll/Content/Actions"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Test Sound"
+
+[node name="TestVibeButton" type="Button" parent="MainMargin/Scroll/Content/Actions"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Test Vibration"
+
+[node name="ContinueButton" type="Button" parent="MainMargin/Scroll/Content"]
+layout_mode = 2
+text = "CONTINUE"

@@ -509,6 +509,14 @@ func _on_runtime_moment_completed(_moment_id: String, _result: Dictionary) -> vo
         profile._refresh_copy()
     if is_instance_valid(iris):
         iris.remember_recent_activity()
+    # MISSION 013: Return the player to Iris after completion.
+    # The reflection tone plays during the 2.8-second grace window, then
+    # the player transitions home through the standard Iris return sequence.
+    get_tree().create_timer(2.8).timeout.connect(_return_to_iris_after_completion)
+
+func _return_to_iris_after_completion() -> void:
+    if active_screen == "witness" and not witness_runtime.is_active():
+        show_home()
 
 func _on_runtime_moment_failed(_moment_id: String, _reason: String) -> void:
     var registry := _incident_registry()

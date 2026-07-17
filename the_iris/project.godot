@@ -50,6 +50,7 @@ ResultService="*res://src/gameplay/runtime/ResultService.gd"
 ChallengeSessionService="*res://src/gameplay/runtime/ChallengeSessionService.gd"
 NavigationService="*res://src/core/navigation/NavigationService.gd"
 AppState="*res://src/core/app/AppState.gd"
+ExperienceReadinessService="*res://src/services/ExperienceReadinessService.gd"
 
 [display]
 

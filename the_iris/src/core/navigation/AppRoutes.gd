@@ -90,6 +90,11 @@ const ROUTES := {
 		"is_tab": false,
 		"requires_auth": false
 	},
+	"experience_readiness": {
+		"screen": "ExperienceReadinessScreen",
+		"is_tab": false,
+		"requires_auth": false
+	},
 
 }
 

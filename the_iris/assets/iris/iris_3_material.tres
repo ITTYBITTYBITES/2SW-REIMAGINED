@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://shaders/iris_3_flagship.gdshader" id="1_flagship_shader"]
+
+[resource]
+shader = ExtResource("1_flagship_shader")
+shader_parameter/stroma_color = Color(0.06, 0.62, 0.55, 0.94)
+shader_parameter/limbal_glow = Color(0.18, 0.95, 0.82, 1)
+shader_parameter/time = 0.0
+shader_parameter/energy = 0.35
+shader_parameter/pupil_open = 0.105
+shader_parameter/transition_open = 0.0
+shader_parameter/progression_level = 0.0
