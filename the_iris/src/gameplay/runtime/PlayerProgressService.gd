@@ -224,6 +224,14 @@ func record_witness_runtime_result(result: Dictionary) -> Dictionary:
 	witness["last_played_moment_id"] = moment_id
 	witness["last_played_incident_id"] = incident_id
 	witness["last_played_at"] = Time.get_datetime_string_from_system()
+	
+	if AnalyticsService:
+		AnalyticsService.log_event("chapter_completed", {
+			"moment_id": moment_id,
+			"incident_id": incident_id,
+			"insight_score": progress_points
+		})
+	
 	var mastery: Dictionary = witness.get("mastery", {})
 	var mastery_delta_value: Variant = result.get("mastery_delta", {})
 	if mastery_delta_value is Dictionary:

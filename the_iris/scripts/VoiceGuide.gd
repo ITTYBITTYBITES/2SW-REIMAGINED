@@ -184,6 +184,8 @@ func on_first_touch() -> void:
     current_state = GuideState.FIRST_TOUCH
     spoken_lines["touch_center"] = true
     save_progress()
+    if AnalyticsService:
+        AnalyticsService.log_event("iris_first_contact", {})
     _request_line("first_touch", "Your first memory is ready.")
 
 func on_witness_entered() -> void:

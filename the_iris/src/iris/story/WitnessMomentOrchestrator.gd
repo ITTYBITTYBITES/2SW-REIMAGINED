@@ -57,6 +57,16 @@ func start_incident(selection: Dictionary) -> void:
     for key: String in ["mode", "incident_id", "memory_case_id", "moment_id", "reason"]:
         if selection.has(key) and not context.has(key):
             context[key] = selection[key]
+            
+    if AnalyticsService:
+        var inc_id = str(selection.get("incident_id", ""))
+        var ch_id = str(selection.get("selected_incident", {}).get("chapter_arc_association", ""))
+        AnalyticsService.log_event("chapter_started", {
+            "incident_id": inc_id,
+            "chapter_id": ch_id,
+            "moment_id": str(selection.get("moment_id", ""))
+        })
+        
     start_moment(str(selection.get("moment_id", context.get("moment_id", ""))), context)
 
 func start_moment(moment_id: String = "WM_001", context: Dictionary = {}) -> void:
@@ -99,6 +109,12 @@ func start_moment(moment_id: String = "WM_001", context: Dictionary = {}) -> voi
 
     _emit_phase()
     enter_requested.emit(definition)
+    if AnalyticsService:
+        AnalyticsService.log_event("witness_moment_started", {
+            "moment_id": definition.moment_id,
+            "chapter_id": definition.chapter_id,
+            "incident_id": runtime_context.get("incident_id", "")
+        })
 
 func notify_witness_surface_ready() -> void:
     if definition == null:
@@ -185,6 +201,11 @@ func _enter_observing() -> void:
 func _on_observation_complete(data: Dictionary) -> void:
     phase_data["observation"] = data.duplicate(true)
     phase_completed.emit("observing", data)
+    if AnalyticsService:
+        AnalyticsService.log_event("observation_completed", {
+            "moment_id": state.moment_id,
+            "duration": data.get("observation_duration", 0)
+        })
     _advance_to_phase("reconstructing")
 
 func _enter_reconstructing() -> void:
@@ -207,6 +228,12 @@ func _enter_reconstructing() -> void:
 func _on_reconstruction_complete(data: Dictionary) -> void:
     phase_data["reconstruction"] = data.duplicate(true)
     phase_completed.emit("reconstructing", data)
+    if AnalyticsService:
+        AnalyticsService.log_event("recall_answer_submitted", {
+            "moment_id": state.moment_id,
+            "phase": "reconstruction",
+            "placed_fragments_count": data.get("placed_fragments", {}).size()
+        })
     _advance_to_phase("investigating")
 
 func _enter_investigating() -> void:
@@ -229,6 +256,11 @@ func _enter_investigating() -> void:
 func _on_investigation_complete(data: Dictionary) -> void:
     phase_data["investigation"] = data.duplicate(true)
     phase_completed.emit("investigating", data)
+    if AnalyticsService:
+        AnalyticsService.log_event("incident_identified", {
+            "moment_id": state.moment_id,
+            "completed_attunements": data.get("completed_attunements", []).size()
+        })
     _advance_to_phase("revealing")
 
 func _enter_revealing() -> void:

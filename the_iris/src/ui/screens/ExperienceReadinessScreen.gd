@@ -101,6 +101,6 @@ func _on_continue() -> void:
 	var vibes_ok := ExperienceReadinessService.check_vibration_available() if ExperienceReadinessService else true
 	if ExperienceReadinessService:
 		ExperienceReadinessService.mark_readiness_completed(audio_ok, vibes_ok)
+	if AnalyticsService:
+		AnalyticsService.log_event("readiness_completed", {"audio": audio_ok, "haptics": vibes_ok})
 	readiness_finished.emit()
-	if NavigationService:
-		NavigationService.navigate_to("home")

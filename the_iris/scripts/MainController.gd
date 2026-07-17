@@ -40,6 +40,9 @@ var pending_return_from_tutorial := false
 func _notification(what: int) -> void:
     if what == NOTIFICATION_WM_GO_BACK_REQUEST:
         _handle_back()
+    elif what == NOTIFICATION_WM_CLOSE_REQUEST or what == NOTIFICATION_WM_WINDOW_FOCUS_OUT:
+        if AnalyticsService and AppState and AppState.is_initialized:
+            AnalyticsService.log_event("session_end", {})
 
 func _ready() -> void:
     input_intents.intent_requested.connect(_on_intent)
