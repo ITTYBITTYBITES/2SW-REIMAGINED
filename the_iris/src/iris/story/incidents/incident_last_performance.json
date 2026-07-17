@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "incident_id": "INC_LAST_PERFORMANCE",
+  "title": "The Last Performance",
+  "subtitle": "Learning to Notice \u2014 Record 03",
+  "description": "A dressing room after the final applause. A violin bow laid to rest. Witness what the last note carried.",
+  "status": "active",
+  "mode_eligibility": [
+    "story",
+    "archive_replay"
+  ],
+  "memory_cases": [
+    {
+      "memory_case_id": "MC_LAST_PERFORMANCE",
+      "source_memory_id": "memory_last_performance",
+      "incident_id": "INC_LAST_PERFORMANCE",
+      "case_title": "The Last Performance \u2014 Primary Recollection",
+      "case_context": "Primary memory case migrated from the authored Chapter 1 witness moment.",
+      "reliability_profile": "reliable",
+      "timeline_position": 3,
+      "witness_moment_ids": [
+        "WM_003"
+      ],
+      "observation_profile": {
+        "data_ref": "res://src/iris/story/content/moment_003.json#observation",
+        "duration_seconds": 2.0
+      },
+      "reconstruction_profile": {
+        "data_ref": "res://src/iris/story/content/moment_003.json#reconstruction"
+      },
+      "reasoning_profile": {
+        "data_ref": "res://src/iris/story/content/moment_003.json#investigation"
+      },
+      "resolution_profile": {
+        "data_ref": "res://src/iris/story/content/moment_003.json#revelation"
+      },
+      "variant_rules": {},
+      "asset_refs": {
+        "background_image": "res://assets/gameplay/wm_003_dressing_room.png",
+        "action_image": "res://assets/gameplay/wm_003_violinist_action.png",
+        "reveal_image": "res://assets/gameplay/wm_003_telegram_reveal.png"
+      },
+      "archive_refs": {
+        "entry_id": "last_performance",
+        "category": "chapter_01"
+      },
+      "version": "4.0.0"
+    }
+  ],
+  "primary_memory_case_id": "MC_LAST_PERFORMANCE",
+  "chapter_arc_association": "chapter_01_learning_to_notice",
+  "narrative_thread_ids": [
+    "learning_to_notice"
+  ],
+  "difficulty": {
+    "baseline": 1,
+    "label": "introductory"
+  },
+  "required_rank": 1,
+  "mechanics_used": [
+    "observation",
+    "reconstruction",
+    "investigation",
+    "revelation"
+  ],
+  "observation_data_ref": "res://src/iris/story/content/moment_003.json#observation",
+  "reconstruction_data_ref": "res://src/iris/story/content/moment_003.json#reconstruction",
+  "reasoning_challenge_data_ref": "res://src/iris/story/content/moment_003.json#investigation",
+  "audio_refs": {
+    "base_layer": "distant concert hall applause fading, wooden floorboard resonance",
+    "focus_layer": "horsehair brushing velvet, paper rustle of telegram, brass case latch click",
+    "transition": "pure violin E-string harmonic fading into silence"
+  },
+  "visual_refs": {
+    "background_image": "res://assets/gameplay/wm_003_dressing_room.png",
+    "action_image": "res://assets/gameplay/wm_003_violinist_action.png",
+    "reveal_image": "res://assets/gameplay/wm_003_telegram_reveal.png"
+  },
+  "scoring_rules_ref": "res://src/iris/story/content/moment_003.json#rewards",
+  "mastery_tags": [
+    "attention"
+  ],
+  "archive_metadata": {
+    "title": "The Last Performance",
+    "category": "chapter_01",
+    "iris_note": "When the bow settled into the velvet, the final note was already safely across the sea."
+  },
+  "iris_evolution_hooks": [
+    "witness_complete",
+    "mastery_delta"
+  ],
+  "availability_rules": {},
+  "replay_rules": {
+    "allow_replay": true,
+    "altered_context": false
+  },
+  "training_slices": [],
+  "version": "4.0.0",
+  "authoring_metadata": {
+    "owner": "narrative",
+    "status": "migrated_seed",
+    "source_content": "res://src/iris/story/content/moment_003.json",
+    "migration_mission": "MISSION_012"
+  },
+  "selection_priority": 3,
+  "validation": {
+    "requires_source_content": true,
+    "mechanic_contracts": [
+      "observation",
+      "reconstruction",
+      "investigation",
+      "revelation"
+    ]
+  }
+}

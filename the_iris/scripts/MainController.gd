@@ -480,9 +480,15 @@ func _start_director_selected_witness(mode: String = "story") -> void:
         return
     witness_runtime.start_incident(selection)
 
+func _incident_registry() -> Node:
+    return get_tree().root.get_node_or_null("IncidentRegistry")
+
 func _on_runtime_enter_requested(_moment: WitnessMoment) -> void:
     witness.set_runtime_active(true)
     _show_screen("witness")
+    var registry := _incident_registry()
+    if registry:
+        registry.notify_incident_active()
 
 func _on_runtime_phase_started(phase_name: String, _moment_id: String) -> void:
     # Debug instrumentation for phase transitions
@@ -494,6 +500,9 @@ func _on_runtime_phase_completed(phase_name: String, _data: Dictionary) -> void:
 
 func _on_runtime_moment_completed(_moment_id: String, _result: Dictionary) -> void:
     # Progression is recorded by PlayerProgressService through WitnessRuntimeResult.
+    var registry := _incident_registry()
+    if registry:
+        registry.notify_incident_completed(_result)
     sound.reflection_tone()
     voice_guide.trigger_iris_expression("WITNESS_COMPLETE")
     if is_instance_valid(profile):
@@ -502,11 +511,17 @@ func _on_runtime_moment_completed(_moment_id: String, _result: Dictionary) -> vo
         iris.remember_recent_activity()
 
 func _on_runtime_moment_failed(_moment_id: String, _reason: String) -> void:
+    var registry := _incident_registry()
+    if registry:
+        registry.notify_incident_failed(_reason)
     if active_screen == "witness":
         show_home()
 
 func _on_runtime_return_requested(_moment_id: String) -> void:
     # Orchestrator requests return to iris
+    var registry := _incident_registry()
+    if registry:
+        registry.notify_incident_abandoned()
     show_home()
 
 func _on_future_destination(destination: String) -> void:

@@ -1,0 +1,11 @@
+{
+  "manifest_version": "1.0",
+  "registry_schema_version": 1,
+  "incidents": [
+    "res://src/iris/story/incidents/incident_unfinished_canvas.json",
+    "res://src/iris/story/incidents/incident_forgotten_museum.json",
+    "res://src/iris/story/incidents/incident_last_performance.json",
+    "res://src/iris/story/incidents/incident_faulty_reactor.json",
+    "res://src/iris/story/incidents/incident_the_witness.json"
+  ]
+}

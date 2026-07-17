@@ -59,12 +59,88 @@ func get_next_moment_id(current_id: String) -> String:
         return CHAPTER_MOMENTS[idx + 1]
     return "" # End of chapter
 
+## Director selection entry point (MISSION 008 contract target).
+## The Director is the mode/context-facing authority; incident availability,
+## lifecycle, and eligibility are owned by the Incident Registry. The Director
+## queries the registry, resolves the selected memory case to an authored
+## Witness Moment, and returns the runtime launch contract consumed by
+## WitnessMomentOrchestrator.start_incident().
 func get_next_incident(context: Dictionary = {}) -> Dictionary:
     if moments.is_empty():
         _load_moments()
+    var registry := _incident_registry()
+    if registry != null:
+        return _select_incident_via_registry(registry, context)
+    # Registry singleton unavailable: only possible outside the configured
+    # autoload graph (isolated tooling/tests). Legacy adapter remains so the
+    # runtime never hard-fails when the registry cannot exist at all.
+    return _select_incident_legacy(context)
+
+func _incident_registry() -> Node:
+    return get_node_or_null("/root/IncidentRegistry")
+
+func _select_incident_via_registry(registry: Node, context: Dictionary) -> Dictionary:
+    if not registry.is_ready():
+        push_error("WitnessExperienceDirector: Incident Registry is not ready")
+        return {}
+    var query := context.duplicate(true)
+    if str(query.get("mode", "")).is_empty():
+        query["mode"] = "story"
+    var provided: Variant = query.get("player_progress_snapshot", {})
+    if (not (provided is Dictionary) or (provided as Dictionary).is_empty()) and get_node_or_null("/root/PlayerProgressService") != null:
+        query["player_progress_snapshot"] = PlayerProgressService.get_player_state()
+    var picked: Dictionary = registry.select_incident(query)
+    if picked.is_empty():
+        # RED path: no eligible incident. Surface emptiness; never bypass the
+        # registry with hardcoded content.
+        return {}
+    var incident: IncidentDefinition = picked.get("incident")
+    var memory_case: MemoryCaseDefinition = picked.get("memory_case")
+    if incident == null or memory_case == null:
+        push_error("WitnessExperienceDirector: registry selection missing incident/memory case")
+        return {}
+    var moment_id := memory_case.primary_moment_id()
+    var selected: WitnessMoment = select_moment(moment_id)
+    if selected == null:
+        push_error("WitnessExperienceDirector: authored witness moment unresolved: %s" % moment_id)
+        return {}
+    var mode := str(query.get("mode", "story"))
+    var reason := str(picked.get("reason", "registry_selection"))
+    var difficulty := int(picked.get("difficulty", incident.get_baseline_difficulty()))
+    var registry_version := str(picked.get("registry_version", registry.get_registry_version()))
+    return {
+        "selected_incident": incident.to_blueprint(),
+        "selected_memory_case": memory_case.to_blueprint(),
+        "moment_id": selected.moment_id,
+        "incident_id": incident.incident_id,
+        "memory_case_id": memory_case.memory_case_id,
+        "reason": reason,
+        "mode": mode,
+        "difficulty": difficulty,
+        "expected_skill": selected.observation_mechanic,
+        "registry_version": registry_version,
+        "selection_source": "incident_registry",
+        "runtime_context": {
+            "mode": mode,
+            "incident_id": incident.incident_id,
+            "memory_case_id": memory_case.memory_case_id,
+            "moment_id": selected.moment_id,
+            "selection_reason": reason,
+            "selection_source": "incident_registry",
+            "registry_version": registry_version,
+            "schema_version": incident.schema_version,
+            "content_version": incident.version,
+            "required_rank": incident.required_rank
+        }
+    }
+
+# Legacy selection adapter used only when the Incident Registry singleton does
+# not exist (pre-registry tooling context). Wraps current authored moments with
+# incident-like identifiers; identical to the MISSION 009 behavior.
+func _select_incident_legacy(context: Dictionary = {}) -> Dictionary:
     var mode := str(context.get("mode", "story"))
     var player_state: Dictionary = context.get("player_progress_snapshot", {})
-    if player_state.is_empty() and PlayerProgressService:
+    if player_state.is_empty() and get_node_or_null("/root/PlayerProgressService") != null:
         player_state = PlayerProgressService.get_player_state()
     var witness: Dictionary = player_state.get("witness_progress", {})
     var completed_ids_value: Variant = witness.get("completed_moment_ids", [])
@@ -98,11 +174,13 @@ func get_next_incident(context: Dictionary = {}) -> Dictionary:
         "mode": mode,
         "difficulty": selected.rank_requirement,
         "expected_skill": selected.observation_mechanic,
+        "selection_source": "legacy_adapter",
         "runtime_context": {
             "mode": mode,
             "incident_id": incident_id,
             "memory_case_id": memory_case_id,
             "moment_id": selected.moment_id,
-            "selection_reason": reason
+            "selection_reason": reason,
+            "selection_source": "legacy_adapter"
         }
     }
