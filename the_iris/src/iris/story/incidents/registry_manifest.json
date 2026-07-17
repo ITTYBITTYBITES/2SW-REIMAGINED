@@ -6,6 +6,11 @@
     "res://src/iris/story/incidents/incident_forgotten_museum.json",
     "res://src/iris/story/incidents/incident_last_performance.json",
     "res://src/iris/story/incidents/incident_faulty_reactor.json",
-    "res://src/iris/story/incidents/incident_the_witness.json"
+    "res://src/iris/story/incidents/incident_the_witness.json",
+    "res://src/iris/story/incidents/incident_the_stopped_pendulum.json",
+    "res://src/iris/story/incidents/incident_the_overgrown_conservatory.json",
+    "res://src/iris/story/incidents/incident_the_empty_drafting_table.json",
+    "res://src/iris/story/incidents/incident_the_silent_typewriter.json",
+    "res://src/iris/story/incidents/incident_the_locked_vault.json"
   ]
 }

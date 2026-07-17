@@ -1,0 +1,180 @@
+{
+  "moment_id": "WM_009",
+  "chapter_id": "chapter_02_the_silent_watchmaker",
+  "title": "The Silent Typewriter",
+  "setting": "A heavy iron typewriter on a mahogany desk. The final key is depressed, striking the ribbon.",
+  "theme": "Time and stillness.",
+  "rank_requirement": 1,
+  "narrative_introduction": "The instrument opens on a heavy iron typewriter on a mahogany desk. the final key is depressed, striking the ribbon. Look closely.",
+  "mechanics": {
+    "observation": "Locked-off 2-second cinematic moment. Painter's hand lifts the brush, pauses midway, and turns toward the window before lowering the brush untouched.",
+    "memory": "Spatial fragment placement across the easel desk. Drag sensory fragments (wet linseed oil, paused sable brush, golden window shaft, half-mixed cerulean blue, color swatch note, prism crystal, linen texture) to their exact coordinates.",
+    "discovery": "Frozen moment exploration. Tap objects on the easel and window sill to attune. Attunements reveal the exact optical angle of the sun and the reflection inside the crystal prism.",
+    "evidence": "Archive entry builds from placed fragments + attunements. Reveals hidden truth: the painter paused not from block, but because the window prism refracted a rainbow across the canvas.",
+    "reflection": "Iris voice synthesizes what player noticed. Archive entry: 'The Unfinished Canvas'. No score or stars\u2014only what was carried."
+  },
+  "environment": {
+    "background_image": "res://assets/gameplay/wm_001_studio_background.png",
+    "action_image": "res://assets/gameplay/wm_001_hand_action.png",
+    "reveal_image": "res://assets/gameplay/wm_001_prism_reveal.png",
+    "location": "artist studio loft, window ledge, afternoon",
+    "time": "5:14 PM",
+    "lighting": {
+      "primary": "warm golden hour direct sun, camera-right, 25 degrees",
+      "fill": "soft ambient bounce from white plaster walls",
+      "key_detail": "crystal prism on sill refracting a spectrum onto the blank canvas"
+    },
+    "camera": {
+      "style": "locked-off medium close-up",
+      "aspect": "4:3",
+      "depth_of_field": "shallow, canvas surface and brush sharp",
+      "color_grade": "rich warm golden, deep amber shadows, vibrant cyan/orange spectrum"
+    },
+    "animation": {
+      "hand": "lifts (0.7s) -> pauses looking right (0.8s) -> lowers brush (0.5s) = 2.0s",
+      "steam": "faint mineral spirits vapor rising slowly",
+      "dust_mote": "golden dust motes swirling in the window beam",
+      "light": "sun beam shifts imperceptibly across the sill"
+    },
+    "ambient_details": [
+      "sable hair brush resting on glass palette",
+      "crystal glass prism sitting on wooden sill",
+      "half-squeezed tube of cerulean blue oil paint",
+      "sketched color notes pinned to easel edge",
+      "linen canvas with faint charcoal underdrawing",
+      "glass jar of clear linseed oil"
+    ],
+    "audio": {
+      "base_layer": "quiet courtyard birdsong, distant breeze, wooden floor creak",
+      "focus_layer": "brush bristle whisper, glass jar clink, gentle inhalation",
+      "transition": "warm bowed cello harmonic sustaining"
+    }
+  },
+  "observation": {
+    "duration_seconds": 2.0,
+    "input_accepted": false,
+    "transition": "soft optical dissolve 0.25s",
+    "noticeable_details": {
+      "surface": [
+        "hand lifts brush",
+        "hand pauses over canvas",
+        "hand lowers brush"
+      ],
+      "subtle": [
+        "sun shaft hits prism on sill",
+        "spectrum beam strikes canvas",
+        "linseed oil vapor drifts"
+      ],
+      "deep": [
+        "color notes on easel match the prism spectrum",
+        "painter's wrist turns toward the light"
+      ],
+      "intentionally_missed_first_view": [
+        "refracted rainbow exactly aligns with charcoal sketch",
+        "blue paint tube is uncapped and wet"
+      ]
+    }
+  },
+  "reconstruction": {
+    "ghost_outlines": [
+      "brush",
+      "prism",
+      "paint_tube",
+      "color_notes",
+      "linseed_jar",
+      "canvas_edge"
+    ],
+    "fragment_palette": [
+      {
+        "id": "frag_1",
+        "icon": "\u2328\ufe0f",
+        "label": "Depressed iron key"
+      },
+      {
+        "id": "frag_2",
+        "icon": "\ud83d\udd24",
+        "label": "Struck ink ribbon"
+      },
+      {
+        "id": "cerulean_tube",
+        "icon": "\ud83c\udfa8",
+        "label": "Cerulean blue oil paint"
+      },
+      {
+        "id": "spectrum_beam",
+        "icon": "\ud83c\udf08",
+        "label": "Refracted spectrum beam"
+      },
+      {
+        "id": "color_notes",
+        "icon": "\ud83d\udcdd",
+        "label": "Sketched color notes"
+      },
+      {
+        "id": "linseed_jar",
+        "icon": "\ud83e\uded9",
+        "label": "Jar of linseed oil"
+      },
+      {
+        "id": "linen_underdrawing",
+        "icon": "\ud83d\uddbc\ufe0f",
+        "label": "Linen underdrawing"
+      }
+    ],
+    "validation": "none",
+    "iris_prompt": "Reconstruct the painter's desk. Place what caught your attention."
+  },
+  "investigation": {
+    "attunements": [
+      {
+        "object": "crystal_prism",
+        "type": "spectral",
+        "reveals": "refraction angle 42 degrees, splitting 514nm golden light into pure cyan and amber spectrum"
+      },
+      {
+        "object": "canvas_edge",
+        "type": "forensic",
+        "reveals": "charcoal underdrawing traces the exact path of the prism rainbow across the linen"
+      },
+      {
+        "object": "paused_brush",
+        "type": "trajectory",
+        "reveals": "sable tip contains wet cerulean paint ready to trace the refracted light"
+      },
+      {
+        "object": "color_notes",
+        "type": "text",
+        "reveals": "handwritten margin note: 'Wait for the 5:14 light to split the room'"
+      }
+    ],
+    "discovery_threshold": 3,
+    "iris_intervention": "You have seen what inspired the pause. The canvas was not abandoned; it was waiting for the light."
+  },
+  "revelation": {
+    "iris_response": "You noticed the paused brush. You noticed the crystal prism on the sill. You noticed the spectrum beam striking the blank linen. The painter did not stop from doubt. They stopped because the light completed the composition. This is what it means to Witness.",
+    "archive_entry": {
+      "title": "The Unfinished Canvas",
+      "category": "chapter_01",
+      "fields": [
+        "carried_fragments",
+        "attunements_completed",
+        "iris_note"
+      ]
+    }
+  },
+  "rewards": {
+    "progress_points": 20,
+    "archive_entry": "unfinished_canvas",
+    "mastery": {
+      "attention": 0.15
+    },
+    "achievements": [
+      "witness_canvas"
+    ]
+  },
+  "archive_mapping": {
+    "title": "The Unfinished Canvas",
+    "category": "chapter_02",
+    "iris_note": "The brush paused not in hesitation, but in reverence for the light across the linen."
+  }
+}

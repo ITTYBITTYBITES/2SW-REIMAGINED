@@ -75,3 +75,16 @@ Before a release candidate:
 - a signed artifact must be installed over the existing app;
 - saves, Back, safe areas, audio, haptics, orientation, and accessibility must be tested on physical Android hardware;
 - a human stranger test must be recorded for the Iris entry/navigation language.
+
+## Architecture Freeze v1.0
+The following systems are considered stable and should not be modified unless a production bug requires it:
+- Startup flow
+- MainController boot lifecycle
+- Experience Readiness Gate
+- Living Iris initialization
+- Witness Runtime core
+- Save/Profile architecture
+- Routing framework
+- Audio/Haptic services
+
+Future work should consume these systems rather than redesign them.

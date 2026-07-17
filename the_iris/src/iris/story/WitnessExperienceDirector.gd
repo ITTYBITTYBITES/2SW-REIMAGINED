@@ -2,11 +2,14 @@ extends Node
 class_name WitnessExperienceDirector
 
 # Production Witness Moment Director for Two Second Witness 4.0
-# Dynamically loads all Chapter 1 definitions (WM_001 through WM_005) from content JSONs
+# Dynamically loads all definitions from content JSONs
 # without hardcoding individual moments into runtime controllers.
 
 const CONTENT_DIR := "res://src/iris/story/content/"
-const CHAPTER_MOMENTS := ["WM_001", "WM_002", "WM_003", "WM_004", "WM_005"]
+const CHAPTER_MOMENTS := [
+    "WM_001", "WM_002", "WM_003", "WM_004", "WM_005",
+    "WM_006", "WM_007", "WM_008", "WM_009", "WM_010"
+]
 var moments: Dictionary = {}
 
 func _ready() -> void:
@@ -15,11 +18,8 @@ func _ready() -> void:
 func _load_moments() -> void:
     moments.clear()
     var files: Array[String] = [
-        "moment_001.json",
-        "moment_002.json",
-        "moment_003.json",
-        "moment_004.json",
-        "moment_005.json"
+        "moment_001.json", "moment_002.json", "moment_003.json", "moment_004.json", "moment_005.json",
+        "moment_006.json", "moment_007.json", "moment_008.json", "moment_009.json", "moment_010.json"
     ]
     for file_name: String in files:
         var path: String = CONTENT_DIR + file_name
