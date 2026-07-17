@@ -31,6 +31,9 @@ var is_chord_mode := false
 
 const SAMPLE_RATE := 22050.0
 
+var ambient_freq_target := 48.0
+var ambient_amp_target := 0.012
+
 func _ready() -> void:
     set_process(true)
     if DisplayServer.get_name() == "headless":
@@ -58,7 +61,8 @@ func _process(delta: float) -> void:
         breath_freq = lerpf(breath_freq, 48.0, minf(1.0, delta * 1.5))
         breath_amp = lerpf(breath_amp, 0.015, minf(1.0, delta * 1.5))
     else:
-        breath_amp = lerpf(breath_amp, 0.012, minf(1.0, delta * 2.0))
+        breath_freq = lerpf(breath_freq, ambient_freq_target, minf(1.0, delta * 1.2))
+        breath_amp = lerpf(breath_amp, ambient_amp_target, minf(1.0, delta * 2.0))
 
     bell_amp = lerpf(bell_amp, 0.0, minf(1.0, delta * bell_decay_rate))
     sweep_freq = lerpf(sweep_freq, sweep_target_freq, minf(1.0, delta * 4.5))
@@ -120,6 +124,30 @@ func focus_notice_tone() -> void:
     bell_freq = 256.0
     bell_amp = 0.06
     bell_decay_rate = 5.0
+
+func settling_tone() -> void:
+    if not enabled:
+        return
+    is_chord_mode = true
+    sweep_freq = 300.0
+    sweep_target_freq = 80.0
+    sweep_amp = 0.08
+    sweep_decay_rate = 1.8
+
+func set_ambient_state(state: int) -> void:
+    match state:
+        0: # DORMANT
+            ambient_freq_target = 40.0
+            ambient_amp_target = 0.008
+        1: # AWARE
+            ambient_freq_target = 48.0
+            ambient_amp_target = 0.015
+        2: # FOCUSED
+            ambient_freq_target = 64.0
+            ambient_amp_target = 0.025
+        3: # SETTLED
+            ambient_freq_target = 44.0
+            ambient_amp_target = 0.010
 
 func emit_destination_recognition(destination_key: String) -> void:
     if not enabled:

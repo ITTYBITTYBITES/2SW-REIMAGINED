@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3]
-
-[ext_resource type="PackedScene" path="res://scenes/LivingIris.tscn" id="1_iris"]
-
-[node name="IrisHubPlaceholder" instance=ExtResource("1_iris")]

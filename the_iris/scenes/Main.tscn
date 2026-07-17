@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://scripts/NavigationManager.gd" id="3_nav"]
 [ext_resource type="Script" path="res://scripts/BackNavigationController.gd" id="4_back"]
 [ext_resource type="Script" path="res://scripts/ProceduralSound.gd" id="5_sound"]
-[ext_resource type="PackedScene" path="res://scenes/LivingIris.tscn" id="6_iris"]
+[ext_resource type="PackedScene" path="res://scenes/Iris.tscn" id="6_iris"]
 [ext_resource type="PackedScene" path="res://scenes/WitnessExperience.tscn" id="7_witness"]
 [ext_resource type="PackedScene" path="res://scenes/ArchivePlaceholder.tscn" id="8_archive"]
 [ext_resource type="PackedScene" path="res://scenes/DiscoverPlaceholder.tscn" id="9_discovery"]
@@ -24,7 +24,6 @@
 [ext_resource type="PackedScene" path="res://scenes/StoryModePlaceholder.tscn" id="22_story"]
 [ext_resource type="PackedScene" path="res://scenes/DailyWitnessPlaceholder.tscn" id="23_daily"]
 [ext_resource type="PackedScene" path="res://scenes/WeeklyInvestigationPlaceholder.tscn" id="24_weekly"]
-[ext_resource type="PackedScene" path="res://scenes/YourIrisPlaceholder.tscn" id="25_your_iris"]
 [ext_resource type="PackedScene" path="res://scenes/CalibrationPlaceholder.tscn" id="26_calibration"]
 [ext_resource type="Script" path="res://src/iris/story/WitnessExperienceDirector.gd" id="27_director"]
 [ext_resource type="PackedScene" path="res://scenes/WitnessMomentRuntime.tscn" id="28_runtime"]
@@ -99,7 +98,6 @@ visible = false
 [node name="WeeklyInvestigation" parent="Interface/ScreenRoot" instance=ExtResource("24_weekly")]
 visible = false
 
-[node name="YourIris" parent="Interface/ScreenRoot" instance=ExtResource("25_your_iris")]
 visible = false
 
 [node name="Calibration" parent="Interface/ScreenRoot" instance=ExtResource("26_calibration")]

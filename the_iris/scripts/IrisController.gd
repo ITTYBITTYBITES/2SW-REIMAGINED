@@ -116,12 +116,20 @@ var random := RandomNumberGenerator.new()
 var sound_service: ProceduralIrisSound = null
 var voice_guide_ref: VoiceGuide = null
 
+var iris_core: IrisCore
+var haptic_controller: IrisHapticController
+
 func set_sensory_services(s: ProceduralIrisSound, v: VoiceGuide) -> void:
     sound_service = s
     voice_guide_ref = v
 
 func _ready() -> void:
     mouse_filter = Control.MOUSE_FILTER_IGNORE
+    iris_core = IrisCore.new()
+    iris_core.state_changed.connect(_on_iris_state_changed)
+    add_child(iris_core)
+    haptic_controller = IrisHapticController.new()
+    add_child(haptic_controller)
     random.randomize()
     next_saccade_at = random.randf_range(2.2, 4.3)
     next_blink_at = random.randf_range(9.0, 15.0)
@@ -169,8 +177,20 @@ func _sync_progression() -> void:
     _apply_shader_params()
     _update_memory_fragments()
 
+func _on_iris_state_changed(new_state: int) -> void:
+    if is_instance_valid(sound_service) and sound_service.has_method("set_ambient_state"):
+        sound_service.set_ambient_state(new_state)
+
 func _process(delta: float) -> void:
     elapsed += delta * intensity
+    
+    var behavior := iris_core.update_behavior(delta * intensity) if is_instance_valid(iris_core) else {}
+    if not behavior.is_empty():
+        pupil_dilation = behavior.get("pupil_dilation", pupil_dilation)
+        var core_target_energy: float = behavior.get("focus_energy", target_energy)
+        target_energy = lerpf(target_energy, core_target_energy, minf(1.0, delta * 3.0))
+        fiber_speed = behavior.get("breathing_rate", fiber_speed)
+        
     _update_gaze(delta)
     _update_micro_saccades(delta)
     _update_blink(delta)
@@ -200,7 +220,7 @@ func _apply_shader_params() -> void:
     if not shader_material:
         return
     var viewport_size := get_viewport_rect().size
-    var effective_pupil := pupil_dilation if pupil_dilation != 0.105 else (0.105 if state_mode != 2.0 else 0.078)
+    var effective_pupil := pupil_dilation
     shader_material.set_shader_parameter("aspect", viewport_size.x / max(viewport_size.y, 1.0))
     shader_material.set_shader_parameter("time", elapsed)
     shader_material.set_shader_parameter("energy", current_energy + pulse)
@@ -231,7 +251,8 @@ func _apply_shader_params() -> void:
             "pupil_open": effective_pupil,
             "transition_open": transition_open,
             "blink_amount": blink_amount,
-            "gaze_target": gaze_current
+            "gaze_target": gaze_current + micro_current * 1.5,
+            "breathing_rate": fiber_speed
         })
 
 func _update_gaze(delta: float) -> void:
@@ -252,11 +273,15 @@ func _update_gaze(delta: float) -> void:
     anticipation_current = anticipation_current.lerp(anticipation_target, minf(1.0, delta * 5.0 * intensity))
 
 func _update_micro_saccades(delta: float) -> void:
+    var idle_scale := 1.0
+    if is_instance_valid(iris_core):
+        idle_scale = iris_core.update_behavior(0.0).get("idle_movement", 1.0)
+        
     if interaction_active:
         micro_target = Vector2.ZERO
     elif elapsed >= next_saccade_at:
-        micro_target = Vector2(random.randf_range(-0.012, 0.012), random.randf_range(-0.009, 0.009))
-        next_saccade_at = elapsed + random.randf_range(2.6, 5.2)
+        micro_target = Vector2(random.randf_range(-0.012, 0.012) * idle_scale, random.randf_range(-0.009, 0.009) * idle_scale)
+        next_saccade_at = elapsed + random.randf_range(2.6, 5.2) / maxf(idle_scale, 0.1)
     micro_current = micro_current.lerp(micro_target, minf(1.0, delta * 5.0 * intensity))
     if not interaction_active and micro_current.length() < 0.0015:
         micro_target = Vector2.ZERO
@@ -291,6 +316,8 @@ func _update_destination_lens(delta: float) -> void:
         _apply_destination_preview(active_destination_key)
         if is_instance_valid(sound_service):
             sound_service.emit_destination_recognition(active_destination_key)
+        if is_instance_valid(haptic_controller):
+            haptic_controller.play_destination_haptic(active_destination_key)
         if is_instance_valid(voice_guide_ref) and active_destination_key != "story_mode":
             voice_guide_ref.trigger_iris_expression("FOCUS", active_destination_key)
 
@@ -325,44 +352,44 @@ func _apply_destination_preview(key: String) -> void:
         "story_mode":
             if not tutorial_done and obs == 0:
                 destination_preview.texture = PREVIEW_STORY
-                if is_instance_valid(destination_title): destination_title.text = "THE AWAKENING"
-                if is_instance_valid(destination_prompt): destination_prompt.text = "TOUCH TO ENTER FIRST OBSERVATION"
+                if is_instance_valid(destination_title): destination_title.text = "WHAT IS THIS?"
+                if is_instance_valid(destination_prompt): destination_prompt.text = "RELEASE TO OPEN THE COGNITIVE PORTAL"
             elif obs == 0 or obs == 1:
                 destination_preview.texture = SHARD_TEXTURES[0]
                 if is_instance_valid(destination_title): destination_title.text = "CHAPTER 1 : THE UNFINISHED CANVAS"
-                if is_instance_valid(destination_prompt): destination_prompt.text = "TOUCH TO ENTER WITNESS MOMENT 001"
+                if is_instance_valid(destination_prompt): destination_prompt.text = "RELEASE TO WITNESS"
             elif obs == 2:
                 destination_preview.texture = SHARD_TEXTURES[1]
                 if is_instance_valid(destination_title): destination_title.text = "CHAPTER 1 : THE FORGOTTEN MUSEUM"
-                if is_instance_valid(destination_prompt): destination_prompt.text = "TOUCH TO ENTER WITNESS MOMENT 002"
+                if is_instance_valid(destination_prompt): destination_prompt.text = "RELEASE TO WITNESS"
             elif obs == 3:
                 destination_preview.texture = SHARD_TEXTURES[2]
                 if is_instance_valid(destination_title): destination_title.text = "CHAPTER 1 : THE LAST PERFORMANCE"
-                if is_instance_valid(destination_prompt): destination_prompt.text = "TOUCH TO ENTER WITNESS MOMENT 003"
+                if is_instance_valid(destination_prompt): destination_prompt.text = "RELEASE TO WITNESS"
             elif obs == 4:
                 destination_preview.texture = SHARD_TEXTURES[3]
                 if is_instance_valid(destination_title): destination_title.text = "CHAPTER 1 : THE FAULTY REACTOR"
-                if is_instance_valid(destination_prompt): destination_prompt.text = "TOUCH TO ENTER WITNESS MOMENT 004"
+                if is_instance_valid(destination_prompt): destination_prompt.text = "RELEASE TO WITNESS"
             else:
                 destination_preview.texture = SHARD_TEXTURES[4]
                 if is_instance_valid(destination_title): destination_title.text = "RANK 2 : THE WITNESS UNLOCKED"
-                if is_instance_valid(destination_prompt): destination_prompt.text = "PRESERVED MOMENTS & DAILY ATTUNEMENT"
+                if is_instance_valid(destination_prompt): destination_prompt.text = "RELEASE TO WITNESS"
         "archive":
             destination_preview.texture = PREVIEW_ARCHIVE
             if is_instance_valid(destination_title): destination_title.text = "MEMORY ARCHIVE"
-            if is_instance_valid(destination_prompt): destination_prompt.text = "PAST WITNESSED MOMENTS"
+            if is_instance_valid(destination_prompt): destination_prompt.text = "RELEASE TO EXPLORE"
         "profile":
             destination_preview.texture = PREVIEW_PROFILE
-            if is_instance_valid(destination_title): destination_title.text = "YOUR IRIS & PROFILE"
-            if is_instance_valid(destination_prompt): destination_prompt.text = "EVOLUTION & RANK"
+            if is_instance_valid(destination_title): destination_title.text = "YOUR IRIS"
+            if is_instance_valid(destination_prompt): destination_prompt.text = "RELEASE TO EXPLORE"
         "daily_witness":
             destination_preview.texture = PREVIEW_DAILY
             if is_instance_valid(destination_title): destination_title.text = "DAILY WITNESS"
-            if is_instance_valid(destination_prompt): destination_prompt.text = "TODAY'S UNKNOWN MOMENT"
+            if is_instance_valid(destination_prompt): destination_prompt.text = "RELEASE TO EXPLORE"
         "calibration":
             destination_preview.texture = PREVIEW_CALIBRATION
-            if is_instance_valid(destination_title): destination_title.text = "INSTRUMENT CALIBRATION"
-            if is_instance_valid(destination_prompt): destination_prompt.text = "DIAGNOSTICS & SETTINGS"
+            if is_instance_valid(destination_title): destination_title.text = "CALIBRATION"
+            if is_instance_valid(destination_prompt): destination_prompt.text = "RELEASE TO EXPLORE"
 
 func _update_portal_shader() -> void:
     if not is_instance_valid(destination_preview):
@@ -370,7 +397,7 @@ func _update_portal_shader() -> void:
     var mat := destination_preview.material as ShaderMaterial
     if not mat:
         return
-    var effective_pupil := pupil_dilation if pupil_dilation != 0.105 else (0.105 if state_mode != 2.0 else 0.078)
+    var effective_pupil := pupil_dilation
     mat.set_shader_parameter("time", elapsed)
     mat.set_shader_parameter("aperture", effective_pupil + recent_alert * 0.02 + pulse * 0.03 + (0.014 if state_mode == 1.0 else 0.0))
     mat.set_shader_parameter("memory_visibility", memory_visibility_current)
@@ -521,8 +548,12 @@ func start_awakening() -> void:
     awakening_timer = 3.2
     invitation_target = 0.0
     pulse = 0.35
+    if is_instance_valid(iris_core):
+        iris_core.transition_to(IrisCore.State.AWARE)
     if is_instance_valid(sound_service):
         sound_service.awakening_tone()
+    if is_instance_valid(haptic_controller):
+        haptic_controller.play_awaken_haptic()
 
 func set_living_state(state: int) -> void:
     state_mode = float(state)
@@ -530,6 +561,11 @@ func set_living_state(state: int) -> void:
     if state == 2:
         target_energy = 0.62
         pulse = 0.85
+    if is_instance_valid(iris_core):
+        if state == 0: iris_core.transition_to(IrisCore.State.DORMANT)
+        elif state == 1: iris_core.transition_to(IrisCore.State.AWARE)
+        elif state == 2: iris_core.transition_to(IrisCore.State.FOCUSED)
+        elif state == 3: iris_core.transition_to(IrisCore.State.SETTLED)
     particles.color = Color("#bfede0") if state != 3 else Color("#d4b77b")
 
 func set_gaze_target(screen_position: Vector2, viewport_size: Vector2) -> void:
@@ -569,10 +605,12 @@ func start_deep_focus() -> void:
     deep_focus_timer = 1.75
     invitation_target = 0.0
     pulse = 0.08
+    if is_instance_valid(iris_core):
+        iris_core.transition_to(IrisCore.State.FOCUSED)
     if is_instance_valid(sound_service):
         sound_service.focus_notice_tone()
-    if Input.has_method("vibrate_handheld"):
-        Input.vibrate_handheld(12, 0.08)
+    if is_instance_valid(haptic_controller):
+        haptic_controller.play_focus_haptic()
 
 func remember_recent_activity() -> void:
     recent_alert_timer = 5.5
@@ -582,6 +620,12 @@ func remember_recent_activity() -> void:
     learning_elapsed = 0.0
     learning_focus_target = Vector2.ZERO
     learning_amount_target = 0.0
+    if is_instance_valid(iris_core):
+        iris_core.transition_to(IrisCore.State.SETTLED)
+    if is_instance_valid(sound_service) and sound_service.has_method("settling_tone"):
+        sound_service.settling_tone()
+    if is_instance_valid(haptic_controller):
+        haptic_controller.play_settling_haptic()
     _sync_progression()
 
 func set_transition_open(value: float) -> void:

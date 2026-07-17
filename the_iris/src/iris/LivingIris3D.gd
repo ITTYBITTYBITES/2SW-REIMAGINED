@@ -257,6 +257,9 @@ func update_visual_state(state: Dictionary) -> void:
 	energy = float(state.get("energy", energy))
 	pupil_open = float(state.get("pupil_open", pupil_open))
 	blink_amount = float(state.get("blink_amount", blink_amount))
+	var breathing_rate = float(state.get("breathing_rate", 1.0))
+	if "breathing_rate" in state:
+		Engine.set_meta("iris_breathing_rate", breathing_rate)
 	var gaze_value: Variant = state.get("gaze_target", gaze_target)
 	if gaze_value is Vector2:
 		gaze_target = gaze_value
@@ -296,7 +299,8 @@ func _update_eye_animation(_delta: float) -> void:
 	if eye_model == null:
 		return
 	var gaze_delta := (current_gaze - Vector2(0.5, 0.5))
-	var breathe := sin(elapsed * 0.85) * 0.018
+	var rate := float(Engine.get_meta("iris_breathing_rate", 1.0))
+	var breathe := sin(elapsed * 0.85 * rate) * 0.018 * rate
 	var transition_push := transition_open * 1.35
 	eye_model.rotation_degrees = Vector3(gaze_delta.y * -9.0, gaze_delta.x * 12.0, sin(elapsed * 0.28) * 1.2)
 	eye_model.scale = Vector3.ONE * (1.0 + breathe + transition_open * 0.06)

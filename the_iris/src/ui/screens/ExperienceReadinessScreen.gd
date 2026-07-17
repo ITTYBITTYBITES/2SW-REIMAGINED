@@ -17,6 +17,20 @@ func _ready() -> void:
 	_apply_theme()
 	_wire_buttons()
 	_apply_responsive_layout()
+	_check_readiness()
+
+func _check_readiness() -> void:
+	var audio_ok := ExperienceReadinessService.check_audio_available() if ExperienceReadinessService else true
+	var vibes_ok := ExperienceReadinessService.check_vibration_available() if ExperienceReadinessService else true
+	
+	if audio_ok and vibes_ok:
+		subtitle_label.text = "Audio        ✓\nHaptics      ✓\n\nThe Iris communicates through sight, sound, and touch."
+		continue_btn.text = "CONTINUE"
+	else:
+		var audio_mark = "✓" if audio_ok else "✕"
+		var vibes_mark = "✓" if vibes_ok else "✕"
+		subtitle_label.text = "Audio        " + audio_mark + "\nHaptics      " + vibes_mark + "\n\nThe experience will continue, but some signals may be unavailable."
+		continue_btn.text = "CONTINUE ANYWAY"
 
 func _apply_responsive_layout() -> void:
 	ResponsiveLayout.apply_centered_margin($MainMargin, 24.0)
@@ -73,12 +87,14 @@ func _wire_buttons() -> void:
 func _on_test_sound() -> void:
 	if AudioService:
 		AudioService.play_ui("ui_click")
+	_check_readiness()
 
 func _on_test_vibe() -> void:
 	if AccessibilityService and AccessibilityService.has_method("vibrate"):
 		AccessibilityService.vibrate(30)
 	elif Input.has_method("vibrate_handheld"):
 		Input.vibrate_handheld(30, 0.2)
+	_check_readiness()
 
 func _on_continue() -> void:
 	var audio_ok := ExperienceReadinessService.check_audio_available() if ExperienceReadinessService else true

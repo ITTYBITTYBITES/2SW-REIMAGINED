@@ -124,17 +124,17 @@ func trigger_iris_expression(expression_state: String, context_key: String = "")
         "NEW_PLAYER":
             match context_key:
                 "awakening":
-                    _request_line("initializing", "Attention is the beginning of memory.")
+                    _request_line("initializing", "Hello. I am Iris.")
                 "looking_through":
-                    _request_line("touch_center", "Something was missed.")
+                    _request_line("touch_center", "Touch the light.")
                 "tutorial_lesson":
-                    _request_line("hidden_detail", "The smallest detail can change the whole story.")
+                    _request_line("hidden_detail", "Your first memory is ready.")
                 "tutorial_accepted":
                     _request_line("remember", "The Archive has accepted your first observation.")
                 "curiosity":
-                    _request_line("touch_center", "Your attention holds the moment.")
+                    _request_line("touch_center", "Touch the light.")
                 _:
-                    _request_line("first_touch", "The pupil is a portal.")
+                    _request_line("first_touch", "Your first memory is ready.")
         "IDLE":
             # Rare observations during extended idle periods (>45s cooldown)
             if random.randf() < 0.5:
@@ -184,7 +184,7 @@ func on_first_touch() -> void:
     current_state = GuideState.FIRST_TOUCH
     spoken_lines["touch_center"] = true
     save_progress()
-    _request_line("first_touch", "Good. You found the focus point.")
+    _request_line("first_touch", "Your first memory is ready.")
 
 func on_witness_entered() -> void:
     if first_witness:
@@ -288,7 +288,7 @@ func _on_voice_finished() -> void:
 func _on_touch_prompt_timer() -> void:
     if first_touch:
         return
-    _request_line("touch_center", "Touch the center.")
+    _request_line("touch_center", "Touch the light.")
 
 func _finish_line() -> void:
     if current_key == "":

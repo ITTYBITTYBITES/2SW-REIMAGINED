@@ -20,7 +20,6 @@ class_name IrisMainController
 @onready var story_mode: FuturePlaceholder = $Interface/ScreenRoot/StoryMode
 @onready var daily_witness: FuturePlaceholder = $Interface/ScreenRoot/DailyWitness
 @onready var weekly_investigation: FuturePlaceholder = $Interface/ScreenRoot/WeeklyInvestigation
-@onready var your_iris: FuturePlaceholder = $Interface/ScreenRoot/YourIris
 @onready var calibration: FuturePlaceholder = $Interface/ScreenRoot/Calibration
 @onready var tutorial_awakening: TutorialAwakeningScreen = $Interface/ScreenRoot/TutorialAwakening
 @onready var edge_glow: EdgeGlow = $Interface/HUD/EdgeGlow
@@ -77,7 +76,6 @@ func _ready() -> void:
     daily_witness.request_witness.connect(show_witness)
     weekly_investigation.request_home.connect(show_home)
     weekly_investigation.request_witness.connect(show_witness)
-    your_iris.request_home.connect(show_home)
     calibration.request_home.connect(show_home)
     profile.request_witness.connect(show_witness)
     settings.request_home.connect(show_home)
@@ -205,7 +203,6 @@ func _switch_screen(next_screen: String) -> void:
         "story_mode": target = story_mode
         "daily_witness": target = daily_witness
         "weekly_investigation": target = weekly_investigation
-        "your_iris": target = your_iris
         "calibration": target = calibration
         _: target = iris
     for child in $Interface/ScreenRoot.get_children():
@@ -350,8 +347,35 @@ func _on_pointer_moved(event_pos: Vector2) -> void:
 
 func _on_pointer_ended(_position: Vector2) -> void:
     if active_screen == "home":
+        var target := iris.active_destination_key
         iris.set_interaction(false)
         voice_guide.set_interaction_active(false)
+        if not transition.busy:
+            var view := get_viewport_rect().size
+            var normalized := Vector2(_position.x / maxf(view.x, 1.0), _position.y / maxf(view.y, 1.0))
+            if target == "story_mode" and normalized.distance_to(Vector2(0.5, 0.5)) > 0.30:
+                # Ignore edge taps that haven't given the Iris time to look there
+                return
+            _navigate_iris_destination(target)
+
+func _navigate_iris_destination(target: String) -> void:
+    state_manager.mark_first_launch_seen()
+    if intro_running:
+        _finish_first_launch_intro()
+    match target:
+        "story_mode":
+            voice_guide.on_first_touch()
+            _start_director_selected_witness("story")
+        "archive":
+            _show_screen("archive")
+        "profile":
+            _show_screen("profile")
+        "daily_witness":
+            _show_screen("discovery")
+        "calibration":
+            _show_screen("settings")
+        _:
+            iris.focus_pulse()
 
 func _on_dragged(_position: Vector2, delta: Vector2) -> void:
     if active_screen == "home" and not transition.busy:
@@ -366,21 +390,7 @@ func _on_tap(event_pos: Vector2) -> void:
     if transition.busy:
         return
     if active_screen == "home":
-        var view := get_viewport_rect().size
-        var normalized := Vector2(event_pos.x / maxf(view.x, 1.0), event_pos.y / maxf(view.y, 1.0))
-        if normalized.distance_to(Vector2(0.5, 0.50)) < 0.25:
-            voice_guide.on_first_touch()
-            _start_director_selected_witness("story")
-        elif normalized.x < 0.28:
-            _show_screen("archive")
-        elif normalized.x > 0.72:
-            _show_screen("discovery")
-        elif normalized.y < 0.28:
-            _show_screen("profile")
-        elif normalized.y > 0.72:
-            _show_screen("settings")
-        else:
-            iris.focus_pulse()
+        pass # Navigation is now managed purely by Iris-guided focus in _on_pointer_ended
     elif active_screen == "witness":
         witness.handle_tap(event_pos)
     elif active_screen == "archive":
@@ -398,8 +408,6 @@ func _on_tap(event_pos: Vector2) -> void:
         daily_witness.handle_tap(event_pos)
     elif active_screen == "weekly_investigation":
         weekly_investigation.handle_tap(event_pos)
-    elif active_screen == "your_iris":
-        your_iris.handle_tap(event_pos)
     elif active_screen == "calibration":
         calibration.handle_tap(event_pos)
 
@@ -425,6 +433,9 @@ func _on_swipe(direction: String) -> void:
         return
     state_manager.mark_first_launch_seen()
     if transition.busy:
+        return
+    if active_screen == "home":
+        # Swipe navigation on the main screen is deprecated in favor of Iris focus.
         return
     match direction:
         "left": _show_screen("archive")
@@ -538,7 +549,6 @@ func _on_future_destination(destination: String) -> void:
         "daily_witness": _show_screen("daily_witness")
         "weekly_investigation": _show_screen("weekly_investigation")
         "archive": _show_screen("archive")
-        "your_iris": _show_screen("your_iris")
         "calibration": _show_screen("calibration")
 
 func _on_state_changed(new_state: int) -> void:
