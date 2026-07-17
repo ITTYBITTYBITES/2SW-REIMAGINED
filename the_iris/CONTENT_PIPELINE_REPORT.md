@@ -5,9 +5,9 @@
 **Runtime Compatibility:** PASS
 
 ## Content Metrics
-* **Total Chapters:** 2
-* **Total Witness Moments:** 10
-* **Total Incidents:** 10
+* **Total Chapters:** 3
+* **Total Witness Moments:** 15
+* **Total Incidents:** 15
 
 ## Validation Findings
 

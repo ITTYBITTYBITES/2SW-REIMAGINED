@@ -6,10 +6,15 @@
     "res://src/iris/story/incidents/incident_forgotten_museum.json",
     "res://src/iris/story/incidents/incident_last_performance.json",
     "res://src/iris/story/incidents/incident_the_empty_drafting_table.json",
+    "res://src/iris/story/incidents/incident_the_impossible_staircase.json",
+    "res://src/iris/story/incidents/incident_the_inverted_spire.json",
     "res://src/iris/story/incidents/incident_the_locked_vault.json",
+    "res://src/iris/story/incidents/incident_the_mirrored_foyer.json",
     "res://src/iris/story/incidents/incident_the_overgrown_conservatory.json",
+    "res://src/iris/story/incidents/incident_the_paradoxical_atrium.json",
     "res://src/iris/story/incidents/incident_the_silent_typewriter.json",
     "res://src/iris/story/incidents/incident_the_stopped_pendulum.json",
+    "res://src/iris/story/incidents/incident_the_suspended_bridge.json",
     "res://src/iris/story/incidents/incident_the_witness.json",
     "res://src/iris/story/incidents/incident_unfinished_canvas.json"
   ]
