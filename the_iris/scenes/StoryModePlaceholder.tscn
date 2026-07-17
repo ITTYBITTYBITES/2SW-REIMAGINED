@@ -11,7 +11,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_future")
 destination_key = "story_mode"
-moment_id = "WM_001"
 title_text = "STORY MODE"
 eyebrow_text = "RANK CHAPTER  ·  OBSERVER"
 description_text = "A guided chain of Witness Moments. Your next chapter is beginning to take shape."

@@ -94,7 +94,7 @@ func enter() -> void:
         shader_material.set_shader_parameter("reveal", 0.0)
 
 func _process(delta: float) -> void:
-    if production_active:
+    if not visible or production_active or runtime_active:
         return
     elapsed += delta
     var shader_material := visual.material as ShaderMaterial

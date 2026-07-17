@@ -4,7 +4,7 @@ class_name WitnessReconstructionScreen
 ## Witness Reconstruction Phase - Spatial fragment placement
 ## No validation, no correct answers. Only what the player carries.
 
-signal reconstruction_complete
+signal reconstruction_complete(data: Dictionary)
 
 @onready var viewport: SubViewport = $DeskViewport
 @onready var desk_bg: Sprite2D = $DeskViewport/DeskContainer/DeskBackground
@@ -17,8 +17,8 @@ signal reconstruction_complete
 @onready var instruction_hint: Label = $InstructionHint
 
 var _moment_data: Dictionary = {}
-var _ghost_outlines: Array[Dictionary] = []
-var _fragment_definitions: Array[Dictionary] = []
+var _ghost_outlines: Array = []
+var _fragment_definitions: Array = []
 var _fragment_cards: Array[Control] = []
 var _placed_fragments: Dictionary = {}  # ghost_id -> Array[fragment_ids]
 var _palette_fragments: Dictionary = {}  # fragment_id -> Control (card in palette)
@@ -136,7 +136,7 @@ func _build_ghost_outlines(ghost_list: Array) -> void:
     # Fallback if no ghost outlines supplied at all
     if _ghost_outlines.is_empty():
         for i in range(_fragment_definitions.size()):
-            var frag := _fragment_definitions[i]
+            var frag: Dictionary = (_fragment_definitions[i] as Dictionary) if _fragment_definitions[i] is Dictionary else {}
             var col_idx := i % 3
             var row_idx := int(i / 3)
             _ghost_outlines.append({
@@ -299,7 +299,7 @@ func _create_fragment_card(frag_def: Dictionary) -> Control:
     if _should_animate:
         var tween = create_tween()
         tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-        tween.tween_property(card, "position:y", card.position.y + 4.0, 2.0).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE).set_loops()
+        tween.tween_property(card, "position:y", card.position.y + 4.0, 2.0).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
     
     return card
 
@@ -561,11 +561,13 @@ func _on_continue_pressed() -> void:
         "moment_id": moment_definition.moment_id if moment_definition else ""
     }
     
-    reconstruction_complete.emit()
+    reconstruction_complete.emit(data)
     complete(data)
 
 func _on_viewport_resized(_new_size: Vector2) -> void:
-    # Recreate ghost outlines at new positions
+    # Recreate ghost outlines at new positions after the scene is ready.
+    if not is_instance_valid(ghost_container):
+        return
     _create_ghost_outlines()
     
     # Reposition placed fragments

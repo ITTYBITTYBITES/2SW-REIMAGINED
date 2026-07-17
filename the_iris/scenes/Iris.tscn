@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://scripts/IrisController.gd" id="1_iris"]
 [ext_resource type="Shader" path="res://shaders/iris.gdshader" id="2_shader"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" path="res://assets/iris/cornea_reflection.png" id="8_cornea"]
 [ext_resource type="Texture2D" path="res://assets/iris/base.png" id="9_base_tex"]
 [ext_resource type="Texture2D" path="res://assets/iris/fibers.png" id="10_fibers_tex"]
+[ext_resource type="Script" path="res://src/iris/LivingIris3D.gd" id="11_iris3d"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iris"]
 shader = ExtResource("2_shader")
@@ -68,6 +69,16 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 1)
 material = SubResource("ShaderMaterial_iris")
+
+[node name="LivingIris3D" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("11_iris3d")
 
 [node name="PupilPortalLayer" type="Control" parent="."]
 layout_mode = 1

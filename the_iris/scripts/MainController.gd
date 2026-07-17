@@ -71,7 +71,7 @@ func _ready() -> void:
     discovery.request_future_destination.connect(_on_future_destination)
     profile.request_home.connect(show_home)
     story_mode.request_home.connect(show_home)
-    story_mode.request_witness.connect(show_witness)
+    story_mode.request_witness.connect(_on_story_requested)
     story_mode.request_moment.connect(_on_moment_requested)
     daily_witness.request_home.connect(show_home)
     daily_witness.request_witness.connect(show_witness)
@@ -370,8 +370,7 @@ func _on_tap(event_pos: Vector2) -> void:
         var normalized := Vector2(event_pos.x / maxf(view.x, 1.0), event_pos.y / maxf(view.y, 1.0))
         if normalized.distance_to(Vector2(0.5, 0.50)) < 0.25:
             voice_guide.on_first_touch()
-            # Directly enter Chapter One (WM_001) as primary experience
-            _on_moment_requested("WM_001")
+            _start_director_selected_witness("story")
         elif normalized.x < 0.28:
             _show_screen("archive")
         elif normalized.x > 0.72:
@@ -467,8 +466,19 @@ func _handle_back() -> void:
                 production_bridge.return_to_iris()
         show_home()
 
-func _on_moment_requested(moment_id: String) -> void:
-    witness_runtime.start_moment(moment_id)
+func _on_story_requested() -> void:
+    _start_director_selected_witness("story")
+
+func _on_moment_requested(_moment_id: String) -> void:
+    _start_director_selected_witness("story")
+
+func _start_director_selected_witness(mode: String = "story") -> void:
+    if witness_director == null or witness_runtime == null:
+        return
+    var selection := witness_director.get_next_incident({"mode": mode})
+    if selection.is_empty():
+        return
+    witness_runtime.start_incident(selection)
 
 func _on_runtime_enter_requested(_moment: WitnessMoment) -> void:
     witness.set_runtime_active(true)
@@ -483,16 +493,13 @@ func _on_runtime_phase_completed(phase_name: String, _data: Dictionary) -> void:
     print("Witness Moment phase completed: %s" % phase_name)
 
 func _on_runtime_moment_completed(_moment_id: String, _result: Dictionary) -> void:
-    # Moment completed successfully - archive updated, profile updated
-    state_manager.complete_observation()
+    # Progression is recorded by PlayerProgressService through WitnessRuntimeResult.
     sound.reflection_tone()
     voice_guide.trigger_iris_expression("WITNESS_COMPLETE")
     if is_instance_valid(profile):
         profile._refresh_copy()
     if is_instance_valid(iris):
-        iris._sync_progression()
-    if state_manager.completed_observations >= 5:
-        _show_rank_reveal("RANK 2 : THE WITNESS UNLOCKED", "You learned how to see. Chapter 1 Complete.")
+        iris.remember_recent_activity()
 
 func _on_runtime_moment_failed(_moment_id: String, _reason: String) -> void:
     if active_screen == "witness":
@@ -539,7 +546,8 @@ func _on_preferences_changed() -> void:
 
 func _on_screen_action(action: String) -> void:
     if action == "completed":
-        state_manager.complete_observation()
+        # Legacy fallback screens may still emit completion, but gameplay
+        # progression must only be recorded by PlayerProgressService.
         sound.discovery_tone()
         voice_guide.on_witness_completed()
         profile._refresh_copy()

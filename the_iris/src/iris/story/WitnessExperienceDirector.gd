@@ -58,3 +58,51 @@ func get_next_moment_id(current_id: String) -> String:
     if idx >= 0 and idx + 1 < CHAPTER_MOMENTS.size():
         return CHAPTER_MOMENTS[idx + 1]
     return "" # End of chapter
+
+func get_next_incident(context: Dictionary = {}) -> Dictionary:
+    if moments.is_empty():
+        _load_moments()
+    var mode := str(context.get("mode", "story"))
+    var player_state: Dictionary = context.get("player_progress_snapshot", {})
+    if player_state.is_empty() and PlayerProgressService:
+        player_state = PlayerProgressService.get_player_state()
+    var witness: Dictionary = player_state.get("witness_progress", {})
+    var completed_ids_value: Variant = witness.get("completed_moment_ids", [])
+    var completed_ids: Array = completed_ids_value if completed_ids_value is Array else []
+    var selected_id := ""
+    for candidate_id: String in CHAPTER_MOMENTS:
+        if not completed_ids.has(candidate_id):
+            selected_id = candidate_id
+            break
+    if selected_id.is_empty():
+        selected_id = CHAPTER_MOMENTS[0] if not CHAPTER_MOMENTS.is_empty() else ""
+    var selected: WitnessMoment = select_moment(selected_id)
+    if selected == null:
+        return {}
+    var incident_id := "incident_%s" % selected.moment_id.to_lower()
+    var memory_case_id := "memory_%s" % selected.moment_id.to_lower()
+    var reason := "next_uncompleted_moment"
+    if completed_ids.has(selected_id):
+        reason = "replay_cycle"
+    return {
+        "selected_incident": selected.to_blueprint(),
+        "selected_memory_case": {
+            "memory_case_id": memory_case_id,
+            "moment_id": selected.moment_id,
+            "source_memory_id": selected.moment_id.to_lower()
+        },
+        "moment_id": selected.moment_id,
+        "incident_id": incident_id,
+        "memory_case_id": memory_case_id,
+        "reason": reason,
+        "mode": mode,
+        "difficulty": selected.rank_requirement,
+        "expected_skill": selected.observation_mechanic,
+        "runtime_context": {
+            "mode": mode,
+            "incident_id": incident_id,
+            "memory_case_id": memory_case_id,
+            "moment_id": selected.moment_id,
+            "selection_reason": reason
+        }
+    }

@@ -4,7 +4,7 @@ class_name WitnessInvestigationScreen
 ## Witness Investigation Phase - Frozen moment with attunement perspectives
 ## Tap objects to attune. Each reveals a different layer of truth.
 
-signal investigation_complete
+signal investigation_complete(data: Dictionary)
 
 @onready var viewport: SubViewport = $MomentViewport
 @onready var frozen_moment: Sprite2D = $MomentViewport/MomentContainer/FrozenMoment
@@ -22,7 +22,7 @@ signal investigation_complete
 @onready var continue_prompt: Label = $ContinuePrompt
 
 var _moment_data: Dictionary = {}
-var _attunements: Array[Dictionary] = []
+var _attunements: Array = []
 var _hotspot_nodes: Array[Control] = []
 var _completed_attunements: Array[String] = []
 var _shader_material: ShaderMaterial
@@ -145,7 +145,7 @@ func _create_hotspots() -> void:
     
     var hotspot_defs: Array[Dictionary] = []
     for i in range(_attunements.size()):
-        var att := _attunements[i]
+        var att: Dictionary = (_attunements[i] as Dictionary) if _attunements[i] is Dictionary else {}
         if att.has("pos") and att.has("size"):
             hotspot_defs.append({
                 "id": str(att.get("object", "")),
@@ -416,10 +416,11 @@ func _complete_investigation() -> void:
         "moment_id": moment_definition.moment_id if moment_definition else ""
     }
     
-    investigation_complete.emit()
+    investigation_complete.emit(data)
     complete(data)
 
 func _on_viewport_resized(new_size: Vector2) -> void:
     if _shader_material:
         _shader_material.set_shader_parameter("viewport_size", new_size)
-    _create_hotspots()
+    if is_instance_valid(hotspots_container) and not _attunements.is_empty():
+        _create_hotspots()

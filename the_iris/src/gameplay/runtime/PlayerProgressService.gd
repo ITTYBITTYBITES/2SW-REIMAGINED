@@ -3,6 +3,7 @@ extends Node
 ## It does not replace save/profile infrastructure.
 
 signal progress_recorded(family_id: String, progress: Dictionary)
+signal witness_result_recorded(result: Dictionary, progress: Dictionary)
 
 const WITNESS_PROGRESS_VERSION: int = 1
 const MAX_HISTORY: int = 50
@@ -38,6 +39,15 @@ func get_observation_record() -> Dictionary:
 	var stats: Dictionary = player_state.get("stats", {})
 	var total: int = int(stats.get("observations_made", 0))
 	var correct: int = int(stats.get("correct_observations", 0))
+	var witness_history_value: Variant = witness.get("history", [])
+	if witness_history_value is Array:
+		var witness_history: Array = witness_history_value
+		total = maxi(total, witness_history.size())
+		var completed_count := 0
+		for history_item: Variant in witness_history:
+			if history_item is Dictionary and str((history_item as Dictionary).get("completion_status", "")) == "completed":
+				completed_count += 1
+		correct = maxi(correct, completed_count)
 	var fastest: int = int(stats.get("fastest_reaction_ms", 9999))
 	var level: int = int(witness.get("witness_level", 1))
 	var next_rank: Dictionary = _next_rank_for_level(level)
@@ -77,6 +87,15 @@ func get_recent_history(limit: int = 20) -> Array[Dictionary]:
 				var entry: Dictionary = (history_item as Dictionary).duplicate(true)
 				entry["family_id"] = family_id
 				entry["family_title"] = family_title
+				output.append(entry)
+	var witness_history_value: Variant = witness.get("history", [])
+	if witness_history_value is Array:
+		for history_item: Variant in witness_history_value:
+			if history_item is Dictionary:
+				var entry: Dictionary = (history_item as Dictionary).duplicate(true)
+				entry["family_id"] = "witness_runtime"
+				entry["family_title"] = str(entry.get("title", entry.get("moment_id", "Witness Moment")))
+				entry["outcome"] = str(entry.get("completion_status", "completed"))
 				output.append(entry)
 	output.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
 		return str(a.get("timestamp", "")) > str(b.get("timestamp", ""))
@@ -173,6 +192,86 @@ func record_result(result: ChallengeResult) -> Dictionary:
 	progress_recorded.emit(result.family_id, earned)
 	return earned
 
+func record_witness_runtime_result(result: Dictionary) -> Dictionary:
+	if result.is_empty():
+		return {}
+	_ensure_witness_progress()
+	if not ProfileService or not (ProfileService.profile is Dictionary):
+		return {}
+	var witness: Dictionary = ProfileService.profile.get("witness_progress", {})
+	var history: Array = witness.get("history", [])
+	var archive_entries: Array = witness.get("archive_entries", [])
+	var completed_moment_ids: Array = witness.get("completed_moment_ids", [])
+	var completed_incident_ids: Array = witness.get("completed_incident_ids", [])
+	var moment_id := str(result.get("moment_id", ""))
+	var incident_id := str(result.get("incident_id", ""))
+	var completion_status := str(result.get("completion_status", "completed"))
+	var progress_points := int(result.get("insight_score", result.get("progress_points", 0)))
+	if completion_status == "completed":
+		if not moment_id.is_empty() and not completed_moment_ids.has(moment_id):
+			completed_moment_ids.append(moment_id)
+		if not incident_id.is_empty() and not completed_incident_ids.has(incident_id):
+			completed_incident_ids.append(incident_id)
+		witness["current_streak"] = int(witness.get("current_streak", 0)) + 1
+		witness["best_streak"] = maxi(int(witness.get("best_streak", 0)), int(witness.get("current_streak", 0)))
+	else:
+		witness["current_streak"] = 0
+	witness["completed_moment_ids"] = completed_moment_ids
+	witness["completed_incident_ids"] = completed_incident_ids
+	witness["total_progress"] = int(witness.get("total_progress", 0)) + maxi(progress_points, 0)
+	witness["witness_level"] = 1 + int(float(witness["total_progress"]) / 100.0)
+	witness["witness_rank"] = _rank_for_level(int(witness["witness_level"]))
+	witness["last_played_moment_id"] = moment_id
+	witness["last_played_incident_id"] = incident_id
+	witness["last_played_at"] = Time.get_datetime_string_from_system()
+	var mastery: Dictionary = witness.get("mastery", {})
+	var mastery_delta_value: Variant = result.get("mastery_delta", {})
+	if mastery_delta_value is Dictionary:
+		for key: Variant in (mastery_delta_value as Dictionary).keys():
+			var name := str(key)
+			mastery[name] = clampf(float(mastery.get(name, 0.0)) + float((mastery_delta_value as Dictionary).get(key, 0.0)), 0.0, 100.0)
+	witness["mastery"] = mastery
+	var history_entry := result.duplicate(true)
+	history_entry["timestamp"] = Time.get_datetime_string_from_system()
+	history_entry["score"] = int(result.get("accuracy_score", 0))
+	history.append(history_entry)
+	while history.size() > MAX_HISTORY:
+		history.pop_front()
+	witness["history"] = history
+	var archive_payload_value: Variant = result.get("archive_payload", {})
+	if archive_payload_value is Dictionary and not (archive_payload_value as Dictionary).is_empty():
+		var archive_entry: Dictionary = (archive_payload_value as Dictionary).duplicate(true)
+		archive_entry["incident_id"] = incident_id
+		archive_entry["moment_id"] = moment_id
+		archive_entry["completed_at"] = history_entry["timestamp"]
+		archive_entries.append(archive_entry)
+		while archive_entries.size() > MAX_HISTORY:
+			archive_entries.pop_front()
+	witness["archive_entries"] = archive_entries
+	witness["iris_evolution_state"] = {
+		"witness_level": int(witness.get("witness_level", 1)),
+		"witness_rank": str(witness.get("witness_rank", "Observer")),
+		"total_progress": int(witness.get("total_progress", 0)),
+		"completed_incident_count": completed_incident_ids.size(),
+		"completed_moment_count": completed_moment_ids.size(),
+		"mastery": mastery.duplicate(true)
+	}
+	var achievement_ids_value: Variant = result.get("achievement_ids", result.get("achievements", []))
+	if achievement_ids_value is Array:
+		var achievements: Array = ProfileService.profile.get("achievements", [])
+		for achievement_id: Variant in achievement_ids_value:
+			if not achievements.has(achievement_id):
+				achievements.append(achievement_id)
+		ProfileService.profile["achievements"] = achievements
+	ProfileService.profile["witness_progress"] = witness
+	# Compatibility projection for existing archive/profile readers. PlayerProgressService remains the writer.
+	ProfileService.profile["witness_archive"] = archive_entries.duplicate(true)
+	ProfileService.profile["witness_moments_completed"] = completed_moment_ids.size()
+	ProfileService.save()
+	witness_result_recorded.emit(result.duplicate(true), witness.duplicate(true))
+	progress_recorded.emit("witness_runtime", witness.duplicate(true))
+	return witness.duplicate(true)
+
 func _ensure_witness_progress() -> void:
 	if not ProfileService or not (ProfileService.profile is Dictionary):
 		return
@@ -184,6 +283,22 @@ func _ensure_witness_progress() -> void:
 			"witness_rank": "Observer",
 			"families": {}
 		}
+	var witness: Dictionary = ProfileService.profile.get("witness_progress", {})
+	if not witness.has("families") or not (witness["families"] is Dictionary):
+		witness["families"] = {}
+	if not witness.has("history") or not (witness["history"] is Array):
+		witness["history"] = []
+	if not witness.has("archive_entries") or not (witness["archive_entries"] is Array):
+		witness["archive_entries"] = []
+	if not witness.has("completed_moment_ids") or not (witness["completed_moment_ids"] is Array):
+		witness["completed_moment_ids"] = []
+	if not witness.has("completed_incident_ids") or not (witness["completed_incident_ids"] is Array):
+		witness["completed_incident_ids"] = []
+	if not witness.has("mastery") or not (witness["mastery"] is Dictionary):
+		witness["mastery"] = {}
+	if not witness.has("iris_evolution_state") or not (witness["iris_evolution_state"] is Dictionary):
+		witness["iris_evolution_state"] = {}
+	ProfileService.profile["witness_progress"] = witness
 
 func _update_witness_progress(result: ChallengeResult, declared: Dictionary) -> Dictionary:
 	if not ProfileService:

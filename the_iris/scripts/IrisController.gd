@@ -34,6 +34,7 @@ class_name IrisController
         _update_memory_fragments()
 
 @onready var visual: ColorRect = $Visual
+@onready var living_iris_3d: LivingIris3D = $LivingIris3D if has_node("LivingIris3D") else null
 @onready var particles: CPUParticles2D = $Particles
 @onready var outer_energy_layer: TextureRect = $OuterEnergyLayer
 @onready var pupil_portal_layer: Control = $PupilPortalLayer
@@ -133,15 +134,38 @@ func _ready() -> void:
     _sync_progression()
 
 func _sync_progression() -> void:
-    if get_tree() and get_tree().root.has_node("StateManager"):
-        var sm = get_tree().root.get_node("StateManager")
-        var obs: int = sm.get("completed_observations")
-        var tutorial_done := bool(sm.get("onboarding_tutorial_completed"))
-        if not tutorial_done and obs == 0:
-            progression_level = 0
-        else:
-            progression_level = clampi(obs, 1, 5)
-        glow_strength = clampf(0.40 + float(progression_level) * 0.12, 0.40, 1.0)
+    var authority_applied := false
+    if PlayerProgressService:
+        var player_state: Dictionary = PlayerProgressService.get_player_state()
+        var witness: Dictionary = player_state.get("witness_progress", {})
+        var evolution: Dictionary = witness.get("iris_evolution_state", {})
+        var completed_ids_value: Variant = witness.get("completed_moment_ids", [])
+        var completed_count := 0
+        if completed_ids_value is Array:
+            completed_count = (completed_ids_value as Array).size()
+        completed_count = int(evolution.get("completed_moment_count", completed_count))
+        progression_level = clampi(completed_count, 0, 8)
+        glow_strength = clampf(0.40 + float(evolution.get("total_progress", witness.get("total_progress", 0))) / 250.0, 0.40, 1.35)
+        authority_applied = true
+        if is_instance_valid(living_iris_3d):
+            living_iris_3d.set_iris_evolution_state(evolution if not evolution.is_empty() else {
+                "completed_moment_count": completed_count,
+                "total_progress": int(witness.get("total_progress", 0)),
+                "witness_rank": str(witness.get("witness_rank", "Observer")),
+                "witness_level": int(witness.get("witness_level", 1))
+            })
+    if not authority_applied:
+        var sm = get_tree().root.get_node_or_null("Main/StateManager") if get_tree() else null
+        if sm == null and get_tree() and get_tree().root.has_node("StateManager"):
+            sm = get_tree().root.get_node("StateManager")
+        if sm:
+            var obs: int = sm.get("completed_observations")
+            var tutorial_done := bool(sm.get("onboarding_tutorial_completed"))
+            if not tutorial_done and obs == 0:
+                progression_level = 0
+            else:
+                progression_level = clampi(obs, 1, 5)
+            glow_strength = clampf(0.40 + float(progression_level) * 0.12, 0.40, 1.0)
     _apply_shader_params()
     _update_memory_fragments()
 
@@ -199,6 +223,16 @@ func _apply_shader_params() -> void:
     shader_material.set_shader_parameter("progression_level", float(progression_level))
     shader_material.set_shader_parameter("fiber_speed", fiber_speed)
     shader_material.set_shader_parameter("glow_strength", glow_strength)
+    if is_instance_valid(living_iris_3d):
+        living_iris_3d.update_visual_state({
+            "progression_level": progression_level,
+            "glow_strength": glow_strength,
+            "energy": current_energy + pulse,
+            "pupil_open": effective_pupil,
+            "transition_open": transition_open,
+            "blink_amount": blink_amount,
+            "gaze_target": gaze_current
+        })
 
 func _update_gaze(delta: float) -> void:
     if not interaction_active and elapsed >= gaze_release_at:
@@ -272,9 +306,21 @@ func _update_destination_lens(delta: float) -> void:
 func _apply_destination_preview(key: String) -> void:
     if not is_instance_valid(destination_preview):
         return
-    var sm = get_tree().root.get_node_or_null("StateManager") if get_tree() and get_tree().root.has_node("StateManager") else null
-    var tutorial_done := bool(sm.get("onboarding_tutorial_completed")) if sm else (progression_level > 0)
-    var obs := int(sm.get("completed_observations")) if sm else clampi(progression_level, 0, 5)
+    var sm = get_tree().root.get_node_or_null("Main/StateManager") if get_tree() else null
+    if sm == null and get_tree() and get_tree().root.has_node("StateManager"):
+        sm = get_tree().root.get_node("StateManager")
+    var obs := clampi(progression_level, 0, 8)
+    var tutorial_done := progression_level > 0
+    if PlayerProgressService:
+        var player_state: Dictionary = PlayerProgressService.get_player_state()
+        var witness: Dictionary = player_state.get("witness_progress", {})
+        var completed_ids_value: Variant = witness.get("completed_moment_ids", [])
+        if completed_ids_value is Array:
+            obs = (completed_ids_value as Array).size()
+            tutorial_done = obs > 0
+    elif sm:
+        tutorial_done = bool(sm.get("onboarding_tutorial_completed"))
+        obs = int(sm.get("completed_observations"))
     match key:
         "story_mode":
             if not tutorial_done and obs == 0:
@@ -540,6 +586,8 @@ func remember_recent_activity() -> void:
 
 func set_transition_open(value: float) -> void:
     transition_open = clampf(value, 0.0, 1.0)
+    if is_instance_valid(living_iris_3d):
+        living_iris_3d.set_transition_open(transition_open)
     _apply_shader_params()
     _update_portal_shader()
 

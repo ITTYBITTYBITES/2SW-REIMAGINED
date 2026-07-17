@@ -4,15 +4,15 @@ class_name WitnessRevelationScreen
 ## Witness Revelation Phase — Dynamic archive entry builds from player's choices.
 ## Only what was carried. The moment preserved.
 
-signal revelation_complete
+signal revelation_complete(data: Dictionary)
 
 const ARCHIVE_FRAME_PATH := "res://assets/gameplay/wm_archive_frame.png"
 
 @onready var scroll: ScrollContainer = $ScrollContainer
 @onready var content: VBoxContainer = $ScrollContainer/Content
 @onready var archive_entry: PanelContainer = $ScrollContainer/Content/ArchiveEntry
-@onready var entry_title: Label = $ScrollContainer/Content/ArchiveEntry/EntryMargin/EntryVBox/EntryTitle
-@onready var entry_meta: Label = $ScrollContainer/Content/ArchiveEntry/EntryMargin/EntryVBox/EntryMeta
+@onready var entry_title: Label = $ScrollContainer/Content/ArchiveEntry/EntryMargin/EntryVBox/EntryHeader/EntryTitle
+@onready var entry_meta: Label = $ScrollContainer/Content/ArchiveEntry/EntryMargin/EntryVBox/EntryHeader/EntryMeta
 @onready var carried_list: VBoxContainer = $ScrollContainer/Content/ArchiveEntry/EntryMargin/EntryVBox/CarriedSection/CarriedList
 @onready var attunements_list: VBoxContainer = $ScrollContainer/Content/ArchiveEntry/EntryMargin/EntryVBox/AttunementsSection/AttunementsList
 @onready var iris_note_text: Label = $ScrollContainer/Content/ArchiveEntry/EntryMargin/EntryVBox/IrisNoteSection/IrisNoteText
@@ -429,5 +429,5 @@ func _on_continue_pressed() -> void:
         "rewards": moment_definition.rewards if moment_definition else {}
     }
     
-    revelation_complete.emit()
+    revelation_complete.emit(data)
     complete(data)

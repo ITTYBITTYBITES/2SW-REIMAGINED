@@ -38,13 +38,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DeskBackground" type="Sprite2D" parent="DeskContainer"]
+[node name="DeskBackground" type="Sprite2D" parent="DeskViewport/DeskContainer"]
 position = Vector2(360, 640)
 texture = ExtResource("2_texture")
 modulate = Color(1, 1, 1, 0.15)
 scale = Vector2(1.0, 1.0)
 
-[node name="GhostOutlinesContainer" type="Control" parent="DeskContainer"]
+[node name="GhostOutlinesContainer" type="Control" parent="DeskViewport/DeskContainer"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

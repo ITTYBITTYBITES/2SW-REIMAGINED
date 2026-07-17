@@ -4,7 +4,7 @@ class_name WitnessObservationScreen
 ## Witness Observation Phase - The 2-second cinematic moment
 ## No HUD, no countdown, no player input. Pure observation.
 
-signal observation_complete
+signal observation_complete(data: Dictionary)
 
 @onready var viewport: SubViewport = $MomentViewport
 @onready var moment_scene: Sprite2D = $MomentViewport/MomentContainer/MomentScene
@@ -146,8 +146,13 @@ func _begin_transition() -> void:
 
 func _complete_observation() -> void:
     set_process(false)
-    observation_complete.emit()
-    complete({"observation_duration": _duration, "moment_id": moment_definition.moment_id if moment_definition else ""})
+    var data := {
+        "observation_duration": _duration,
+        "moment_id": moment_definition.moment_id if moment_definition else "",
+        "completed": true
+    }
+    observation_complete.emit(data)
+    complete(data)
 
 func _show_attunement_prompt(text: String, hold_duration: float) -> void:
     attunement_prompt.text = text
