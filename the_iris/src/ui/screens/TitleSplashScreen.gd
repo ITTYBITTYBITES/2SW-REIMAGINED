@@ -222,9 +222,7 @@ func _on_ready_to_proceed() -> void:
 	if _needs_privacy_acknowledgment():
 		_show_privacy_dialog()
 		return
-	if _needs_intro_tutorial():
-		_navigate_intro_tutorial()
-		return
+	# Skip legacy tutorial check — Living Iris 4.0 orchestrates its own onboarding natively.
 	_navigate_home()
 
 func _needs_privacy_acknowledgment() -> bool:

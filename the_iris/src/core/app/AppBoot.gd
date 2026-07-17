@@ -35,6 +35,10 @@ func start_boot() -> void:
 	_run_step("settings", BootStep.INIT_SETTINGS, _boot_settings)
 	_run_step("theme", BootStep.INIT_THEME, _boot_theme)
 	_run_step("content", BootStep.INIT_CONTENT, _boot_content)
+	
+	if AnalyticsService:
+		AnalyticsService.initialize()
+
 	_run_step("audio", BootStep.INIT_AUDIO, _boot_audio)
 	_run_step("navigation", BootStep.INIT_NAV, _boot_nav)
 	_run_step("finalize", BootStep.FINALIZE, _boot_finalize)
