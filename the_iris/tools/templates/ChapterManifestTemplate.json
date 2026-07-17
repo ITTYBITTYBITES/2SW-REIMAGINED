@@ -1,0 +1,8 @@
+{
+  "chapter_id": "chapter_xx_name",
+  "title": "Chapter Title",
+  "description": "Chapter thematic description.",
+  "expected_moments": [
+    "WM_TEMPLATE"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "incident_id": "INC_TEMPLATE",
+  "title": "Template Title",
+  "subtitle": "Chapter Name \u2014 Record XX",
+  "description": "Short description of the incident context.",
+  "status": "active",
+  "mode_eligibility": [
+    "story",
+    "archive_replay"
+  ],
+  "memory_cases": [
+    {
+      "memory_case_id": "MC_TEMPLATE",
+      "source_memory_id": "memory_template",
+      "incident_id": "INC_TEMPLATE",
+      "case_title": "Template Title \u2014 Primary Recollection",
+      "case_context": "Primary memory case.",
+      "reliability_profile": "reliable",
+      "timeline_position": 1,
+      "witness_moment_ids": [
+        "WM_TEMPLATE"
+      ],
+      "observation_profile": {
+        "data_ref": "res://src/iris/story/content/moment_template.json#observation",
+        "duration_seconds": 2.0
+      },
+      "reconstruction_profile": {
+        "data_ref": "res://src/iris/story/content/moment_template.json#reconstruction"
+      },
+      "reasoning_profile": {
+        "data_ref": "res://src/iris/story/content/moment_template.json#investigation"
+      },
+      "resolution_profile": {
+        "data_ref": "res://src/iris/story/content/moment_template.json#revelation"
+      },
+      "variant_rules": {},
+      "asset_refs": {
+        "background_image": "res://assets/gameplay/template_bg.png"
+      },
+      "archive_refs": {
+        "entry_id": "template_entry",
+        "category": "chapter_xx"
+      },
+      "version": "4.0.0"
+    }
+  ],
+  "primary_memory_case_id": "MC_TEMPLATE",
+  "chapter_arc_association": "chapter_xx_name",
+  "selection_priority": 100,
+  "availability_rules": {
+    "requires_completed_incident_ids": [],
+    "min_completed_incidents": 0,
+    "enabled_from_date": "",
+    "enabled_until_date": ""
+  },
+  "required_rank": 1
+}

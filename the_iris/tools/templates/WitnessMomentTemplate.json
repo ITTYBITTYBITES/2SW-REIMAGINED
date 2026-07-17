@@ -1,0 +1,81 @@
+{
+  "moment_id": "WM_TEMPLATE",
+  "chapter_id": "chapter_xx_name",
+  "title": "Template Title",
+  "setting": "Short description of the physical space.",
+  "theme": "Core theme of the moment.",
+  "rank_requirement": 1,
+  "narrative_introduction": "The instrument opens on...",
+  "mechanics": {
+    "observation": "Locked-off 2-second cinematic moment.",
+    "memory": "Spatial fragment placement across the environment.",
+    "discovery": "Frozen moment exploration.",
+    "evidence": "Archive entry builds from placed fragments.",
+    "reflection": "Iris voice synthesizes what player noticed."
+  },
+  "environment": {
+    "background_image": "res://assets/gameplay/template_bg.png",
+    "action_image": "res://assets/gameplay/template_action.png",
+    "reveal_image": "res://assets/gameplay/template_reveal.png",
+    "location": "location string",
+    "time": "12:00 PM",
+    "lighting": {
+      "primary": "main light source",
+      "fill": "secondary light",
+      "key_detail": "the focal point of the lighting"
+    },
+    "camera": {
+      "style": "locked-off medium close-up",
+      "aspect": "4:3",
+      "depth_of_field": "shallow"
+    }
+  },
+  "observation": {
+    "duration_seconds": 2.0,
+    "focus_point": {"x": 0.5, "y": 0.5},
+    "dynamic_elements": []
+  },
+  "reconstruction": {
+    "ghost_outlines": [
+      {
+        "id": "item_1",
+        "label": "First Item",
+        "pos": {"x": 0.5, "y": 0.5},
+        "size": {"x": 0.15, "y": 0.15}
+      }
+    ],
+    "fragment_palette": [
+      { "id": "item_1", "icon": "❓", "label": "First Item" }
+    ],
+    "validation": "none",
+    "iris_prompt": "Reconstruct the scene. Place what caught your attention."
+  },
+  "investigation": {
+    "attunements": [
+      {
+        "object": "item_1",
+        "pos": {"x": 0.5, "y": 0.5},
+        "size": {"x": 0.15, "y": 0.15},
+        "type": "spectral",
+        "narrative": "A hidden detail about this item."
+      }
+    ],
+    "discovery_threshold": 1,
+    "iris_intervention": "You have seen enough."
+  },
+  "revelation": {
+    "truth_unlocked": "The true meaning behind the moment.",
+    "iris_synthesis": "An observation from the Iris."
+  },
+  "rewards": {
+    "progress_points": 10,
+    "mastery": {},
+    "achievements": []
+  },
+  "archive_mapping": {
+    "entry_id": "template_entry",
+    "category": "chapter_xx",
+    "title": "Template Title",
+    "iris_note": "A note stored in the archive."
+  }
+}
