@@ -17,7 +17,6 @@ class_name IrisMainController
 @onready var discovery: DiscoveryScreen = $Interface/ScreenRoot/Discovery
 @onready var profile: ProfileScreen = $Interface/ScreenRoot/Profile
 @onready var settings: SettingsScreen = $Interface/ScreenRoot/Settings
-@onready var story_mode: FuturePlaceholder = $Interface/ScreenRoot/StoryMode
 @onready var daily_witness: FuturePlaceholder = $Interface/ScreenRoot/DailyWitness
 @onready var weekly_investigation: FuturePlaceholder = $Interface/ScreenRoot/WeeklyInvestigation
 @onready var calibration: FuturePlaceholder = $Interface/ScreenRoot/Calibration
@@ -28,6 +27,7 @@ class_name IrisMainController
 @onready var caption_overlay: IrisCaptionOverlay = $Interface/CaptionOverlay
 @onready var accessibility_panel: IrisAccessibilityPanel = $Interface/AccessibilityPanel
 @onready var production_startup: ProductionStartup = $Interface/ProductionStartup
+@onready var readiness_screen: ExperienceReadinessScreen = $Interface/ExperienceReadiness
 
 var active_screen := "home"
 var hud_labels: Dictionary = {}
@@ -69,9 +69,6 @@ func _ready() -> void:
     discovery.request_home.connect(show_home)
     discovery.request_future_destination.connect(_on_future_destination)
     profile.request_home.connect(show_home)
-    story_mode.request_home.connect(show_home)
-    story_mode.request_witness.connect(_on_story_requested)
-    story_mode.request_moment.connect(_on_moment_requested)
     daily_witness.request_home.connect(show_home)
     daily_witness.request_witness.connect(show_witness)
     weekly_investigation.request_home.connect(show_home)
@@ -88,6 +85,7 @@ func _ready() -> void:
     witness.set_production_bridge(production_bridge)
     witness.set_runtime_active(false)
     witness_runtime.set_director(witness_director)
+    witness_runtime.set_sensory_services(sound)
     witness_runtime.enter_requested.connect(_on_runtime_enter_requested)
     witness_runtime.phase_started.connect(_on_runtime_phase_started)
     witness_runtime.phase_completed.connect(_on_runtime_phase_completed)
@@ -107,8 +105,25 @@ func _ready() -> void:
     voice_guide.set_captions_enabled(state_manager.captions_enabled)
     accessibility_panel.visible = state_manager.accessible_navigation
     _build_hud()
-    voice_guide.begin_session()
     _switch_screen("home")
+    
+    if production_startup and production_startup.is_active():
+        production_startup.finished.connect(_on_startup_finished)
+    else:
+        _on_startup_finished()
+
+func _on_startup_finished() -> void:
+    if ExperienceReadinessService and not ExperienceReadinessService.is_readiness_completed():
+        readiness_screen.visible = true
+        readiness_screen.readiness_finished.connect(_on_readiness_finished)
+    else:
+        _on_readiness_finished()
+
+func _on_readiness_finished() -> void:
+    if is_instance_valid(readiness_screen):
+        readiness_screen.visible = false
+    
+    voice_guide.begin_session()
     if state_manager.first_launch:
         _start_first_launch_intro()
 
@@ -161,7 +176,7 @@ func _show_screen(next_screen: String, animate := true) -> void:
         _return_to_iris()
     elif next_screen == "tutorial_awakening" and active_screen == "home":
         _enter_experience("tutorial_awakening")
-    elif next_screen == "witness" and (active_screen == "home" or active_screen == "story_mode"):
+    elif next_screen == "witness" and active_screen == "home":
         # Directly enter Witness Moment via The Threshold without returning to home first
         _enter_experience("witness")
     elif active_screen == "home":
@@ -200,7 +215,6 @@ func _switch_screen(next_screen: String) -> void:
         "discovery": target = discovery
         "profile": target = profile
         "settings": target = settings
-        "story_mode": target = story_mode
         "daily_witness": target = daily_witness
         "weekly_investigation": target = weekly_investigation
         "calibration": target = calibration
@@ -402,8 +416,6 @@ func _on_tap(event_pos: Vector2) -> void:
             show_home()
     elif active_screen == "settings":
         settings.handle_tap(event_pos)
-    elif active_screen == "story_mode":
-        story_mode.handle_tap(event_pos)
     elif active_screen == "daily_witness":
         daily_witness.handle_tap(event_pos)
     elif active_screen == "weekly_investigation":
@@ -545,7 +557,6 @@ func _on_runtime_return_requested(_moment_id: String) -> void:
 
 func _on_future_destination(destination: String) -> void:
     match destination:
-        "story_mode": _show_screen("story_mode")
         "daily_witness": _show_screen("daily_witness")
         "weekly_investigation": _show_screen("weekly_investigation")
         "archive": _show_screen("archive")

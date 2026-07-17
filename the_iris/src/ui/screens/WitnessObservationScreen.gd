@@ -134,7 +134,7 @@ func _begin_observation() -> void:
     _hide_attunement_prompt()
     _vibrate(35)
     _play_sfx("observation_start", 0.6)
-    var sound: Node = get_tree().root.get_node_or_null("Main/ProceduralSound") if get_tree() and get_tree().root.has_node("Main/ProceduralSound") else null
+    var sound: Node = get_meta("sound_service") if has_meta("sound_service") else null
     if sound and sound.has_method("focus_notice_tone"):
         sound.focus_notice_tone()
 

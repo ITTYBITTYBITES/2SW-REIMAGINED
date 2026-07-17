@@ -358,11 +358,6 @@ func _on_view_terms_of_service() -> void:
 func _navigate_home() -> void:
 	if _is_navigating:
 		return
-	if ExperienceReadinessService and not ExperienceReadinessService.is_readiness_completed():
-		_is_navigating = true
-		if NavigationService:
-			NavigationService.navigate_to("experience_readiness")
-		return
 	_is_navigating = true
 	# Eye wake-up: slow the pulse, then settle – "instrument waking up"
 	if _should_animate() and eye_rect:

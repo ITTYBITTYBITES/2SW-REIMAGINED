@@ -362,7 +362,7 @@ func _update_drag(screen_pos: Vector2) -> void:
             _hovered_ghost.modulate = Color(0.35, 0.98, 0.88, 1.0)
             _hovered_ghost.scale = Vector2(1.06, 1.06)
             _vibrate(15)
-            var sound := get_tree().root.get_node_or_null("Main/ProceduralSound") if get_tree() and get_tree().root.has_node("Main/ProceduralSound") else null
+            var sound: Node = get_meta("sound_service") if has_meta("sound_service") else null
             if sound and sound.has_method("focus_notice_tone"):
                 sound.focus_notice_tone()
 
@@ -436,7 +436,7 @@ func _place_fragment_on_ghost(fragment_id: String, ghost_id: String) -> void:
         desk_bg.scale = Vector2(1.0, 1.0).lerp(Vector2(1.02, 1.02), progress_ratio)
     
     _vibrate(35)
-    var sound := get_tree().root.get_node_or_null("Main/ProceduralSound") if get_tree() and get_tree().root.has_node("Main/ProceduralSound") else null
+    var sound: Node = get_meta("sound_service") if has_meta("sound_service") else null
     if sound and sound.has_method("emit_destination_recognition"):
         sound.emit_destination_recognition("story_mode")
     

@@ -43,6 +43,11 @@ func _ready() -> void:
 func set_director(value: WitnessExperienceDirector) -> void:
     director = value
 
+var sound_service: Node = null
+
+func set_sensory_services(sound: Node) -> void:
+    sound_service = sound
+
 func start_incident(selection: Dictionary) -> void:
     if selection.is_empty():
         _fail("Witness Director returned no incident selection")
@@ -346,6 +351,8 @@ func _instantiate_screen(scene_path: String) -> Control:
 func _mount_phase_screen(screen: Control) -> void:
     _clear_current_screen()
     current_phase_screen = screen
+    if sound_service:
+        screen.set_meta("sound_service", sound_service)
     _resolve_screen_root()
     if _screen_root_ref:
         _screen_root_ref.add_child(screen)

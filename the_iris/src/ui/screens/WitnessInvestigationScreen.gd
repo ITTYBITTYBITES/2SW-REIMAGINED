@@ -264,7 +264,7 @@ func _activate_attunement(attunement_id: String) -> void:
     _apply_attunement_shader(attunement_data)
     _play_sfx("attunement_enter", 0.5)
     _vibrate(35)
-    var sound := get_tree().root.get_node_or_null("Main/ProceduralSound") if get_tree() and get_tree().root.has_node("Main/ProceduralSound") else null
+    var sound: Node = get_meta("sound_service") if has_meta("sound_service") else null
     if sound and sound.has_method("focus_notice_tone"):
         sound.focus_notice_tone()
 
