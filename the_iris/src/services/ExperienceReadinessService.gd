@@ -1,5 +1,4 @@
 extends Node
-class_name ExperienceReadinessService
 
 ## ExperienceReadinessService.gd — Manages audio/haptic readiness checks and first-launch persistence.
 
