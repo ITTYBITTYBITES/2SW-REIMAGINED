@@ -15,6 +15,7 @@ var title_label: Label
 var subtitle_label: Label
 var body_label: Label
 var actions: Control
+var scroll_container: ScrollContainer
 var chapter_list: VBoxContainer
 var back_button: Button
 var attuned: Dictionary = {}
@@ -60,11 +61,15 @@ func _ready() -> void:
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(panel)
 
+	scroll_container = ScrollContainer.new()
+	scroll_container.position = Vector2(38, 407)
+	scroll_container.size = Vector2(464, 310)
+	add_child(scroll_container)
+
 	chapter_list = VBoxContainer.new()
-	chapter_list.position = Vector2(38, 407)
-	chapter_list.size = Vector2(464, 470)
+	chapter_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	chapter_list.add_theme_constant_override("separation", 11)
-	add_child(chapter_list)
+	scroll_container.add_child(chapter_list)
 
 	actions = Control.new()
 	actions.position = Vector2(38, 736)
@@ -82,8 +87,9 @@ func show_chapters() -> void:
 	body_label.text = "Choose any completed Witness Moment. Each can be revisited from its first arrival to its final revelation."
 	panel.position = Vector2(20, 338)
 	panel.size = Vector2(500, 572)
-	chapter_list.visible = true
-	chapter_list.position = Vector2(38, 362)
+	scroll_container.visible = true
+	scroll_container.position = Vector2(38, 362)
+	scroll_container.size = Vector2(464, 520)
 	_clear_actions()
 	for child in chapter_list.get_children():
 		child.queue_free()
@@ -106,7 +112,7 @@ func open_moment(moment_id: String) -> void:
 		return
 	in_chapters = false
 	attuned.clear()
-	chapter_list.visible = false
+	scroll_container.visible = false
 	orchestrator.start(launch)
 
 func _on_phase_changed(_phase: WitnessMomentOrchestrator.Phase, moment: Dictionary) -> void:

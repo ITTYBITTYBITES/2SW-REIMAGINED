@@ -43,6 +43,48 @@ func load_catalogue() -> void:
 			continue
 		moments.append(moment_data)
 		by_id[moment_data["id"]] = moment_data
+	print_developer_diagnostics()
+
+func print_developer_diagnostics() -> void:
+	print("=====================================================================")
+	print("🔍 [IncidentRegistry Developer Diagnostics] Content Discovery Report")
+	print("=====================================================================")
+	
+	var loaded_ids: Array[String] = []
+	for m in moments:
+		loaded_ids.append(str(m.get("id", "")))
+	print("Loaded Witness Moments (%d total):" % loaded_ids.size())
+	for id in loaded_ids:
+		print("  - %s" % id)
+		
+	var failed_paths: Array[String] = []
+	for path in MOMENT_PATHS:
+		var file := FileAccess.open(path, FileAccess.READ)
+		if file == null:
+			failed_paths.append(path + " (Missing File)")
+			continue
+		var parsed = JSON.parse_string(file.get_as_text())
+		if not parsed is Dictionary:
+			failed_paths.append(path + " (Invalid JSON)")
+			continue
+		if not _is_valid(parsed):
+			failed_paths.append(path + " (Incomplete Fields)")
+			continue
+			
+	print("\nFailed/Missing Moments (%d total):" % failed_paths.size())
+	if failed_paths.is_empty():
+		print("  - None (All files verified and compiled successfully)")
+	else:
+		for f_path in failed_paths:
+			print("  - %s" % f_path)
+			
+	print("\nVisible in Chapter Selection:")
+	for id in loaded_ids:
+		if id in ["WM_001", "WM_002", "WM_003", "WM_004", "WM_005", "WM_006", "WM_007", "WM_008", "WM_009", "WM_010", "WM_011", "WM_012"]:
+			print("  - %s (Exposed to player)" % id)
+		else:
+			print("  - %s (Dev / Sandbox only)" % id)
+	print("=====================================================================")
 
 func chapter_moments() -> Array[Dictionary]:
 	return moments.duplicate(true)
