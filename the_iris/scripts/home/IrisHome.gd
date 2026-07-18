@@ -7,6 +7,7 @@ signal iris_requested
 signal memory_intent_focused(normalized_target: Vector2)
 signal memory_intent_released
 signal memory_selected
+signal archive_requested
 
 var elapsed := 0.0
 var atmosphere_redraw_in := 0.0
@@ -32,6 +33,10 @@ func _ready() -> void:
 	var rest_button := _text_button("REST WITH IRIS", Vector2(377, 30), Vector2(135, 28))
 	rest_button.name = "RestWithIris"
 	rest_button.pressed.connect(iris_requested.emit)
+
+	var archive_button := _text_button("OPEN ARCHIVE", Vector2(377, 65), Vector2(135, 28))
+	archive_button.name = "OpenArchive"
+	archive_button.pressed.connect(archive_requested.emit)
 
 	_label("MEMORY FIELD", 10, Color("#7fbcae"), Vector2(28, 648), Vector2(240, 20))
 	_label("One living thread is close enough to follow.", 14, Color("#d7eee7"), Vector2(28, 668), Vector2(430, 24))

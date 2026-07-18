@@ -16,6 +16,8 @@ var witness: WitnessChapters
 var wm001_gameplay: WM001GameplayLoop
 var flagship_gameplay: FlagshipWitnessMoment
 var generic_gameplay: GenericWitnessGameplay
+var archive_ui: WitnessArchiveUI
+var replayed_from_archive := false
 var startup: StartupFlow
 var pending_witness_results: Dictionary = {}
 var boot_introduction_pending := false
@@ -63,6 +65,7 @@ func _ready() -> void:
 	home.memory_intent_focused.connect(_on_home_memory_intent_focused)
 	home.memory_intent_released.connect(_on_home_memory_intent_released)
 	home.memory_selected.connect(_on_home_memory_selected)
+	home.archive_requested.connect(show_archive)
 	add_child(home)
 
 	witness = WitnessChapters.new()
@@ -77,6 +80,13 @@ func _ready() -> void:
 	generic_gameplay.completion_requested.connect(_on_generic_completion_requested)
 	generic_gameplay.return_requested.connect(_on_generic_return_requested)
 	add_child(generic_gameplay)
+
+	archive_ui = WitnessArchiveUI.new()
+	archive_ui.name = "WitnessArchiveUI"
+	archive_ui.configure(witness_profile, registry)
+	archive_ui.back_to_hub_requested.connect(show_home)
+	archive_ui.replay_requested.connect(replay_from_archive)
+	add_child(archive_ui)
 
 	wm001_gameplay = WM001GameplayLoop.new()
 	wm001_gameplay.name = "WM001GameplayLoop"
@@ -109,6 +119,7 @@ func prepare_iris() -> void:
 	wm001_gameplay.visible = false
 	flagship_gameplay.visible = false
 	generic_gameplay.visible = false
+	archive_ui.visible = false
 	iris.dormant()
 
 func show_iris(from_boot := false) -> void:
@@ -119,6 +130,7 @@ func show_iris(from_boot := false) -> void:
 	wm001_gameplay.visible = false
 	flagship_gameplay.visible = false
 	generic_gameplay.visible = false
+	archive_ui.visible = false
 	if from_boot:
 		iris.calibrate()
 	else:
@@ -140,6 +152,7 @@ func show_home() -> void:
 	wm001_gameplay.visible = false
 	flagship_gameplay.visible = false
 	generic_gameplay.visible = false
+	archive_ui.visible = false
 
 func _on_home_memory_intent_focused(normalized_target: Vector2) -> void:
 	if home.visible and iris.visible:
@@ -198,6 +211,7 @@ func start_flagship_moment() -> void:
 	witness.visible = false
 	wm001_gameplay.visible = false
 	generic_gameplay.visible = false
+	archive_ui.visible = false
 	iris.observe()
 	_emit_personality_response("witness_entered")
 	flagship_gameplay.start()
@@ -226,6 +240,7 @@ func show_witness() -> void:
 	wm001_gameplay.visible = false
 	flagship_gameplay.visible = false
 	generic_gameplay.visible = false
+	archive_ui.visible = false
 	iris.observe()
 	_emit_personality_response("witness_entered")
 	witness.show_chapters()
@@ -247,6 +262,23 @@ func _on_iris_evolution_changed(data: IrisEvolutionData) -> void:
 	latest_iris_evolution = data
 	iris_evolution_updated.emit(data)
 
+func show_archive() -> void:
+	reflective_return_pending = false
+	reflective_return_in = -1.0
+	iris.set_home_environment(false)
+	iris.visible = false
+	home.visible = false
+	witness.visible = false
+	wm001_gameplay.visible = false
+	flagship_gameplay.visible = false
+	generic_gameplay.visible = false
+	archive_ui.configure(witness_profile, registry)
+	archive_ui.open()
+
+func replay_from_archive(moment_id: String) -> void:
+	replayed_from_archive = true
+	start_generic_gameplay(moment_id)
+
 func start_generic_gameplay(moment_id: String) -> void:
 	reflective_return_pending = false
 	reflective_return_in = -1.0
@@ -256,20 +288,26 @@ func start_generic_gameplay(moment_id: String) -> void:
 	witness.visible = false
 	wm001_gameplay.visible = false
 	flagship_gameplay.visible = false
+	archive_ui.visible = false
 	iris.observe()
 	_emit_personality_response("witness_entered")
 	
-	var path := "res://content/witness/wm_test.json"
+	var path := "res://content/witness/" + moment_id.to_lower() + ".json"
 	var def := WitnessContentLoader.load_moment_definition(path)
 	if def != null:
 		generic_gameplay.start(def)
 	else:
-		show_witness()
+		if replayed_from_archive:
+			show_archive()
+		else:
+			show_witness()
 
 func _on_generic_completion_requested(result: WitnessMomentResult) -> void:
 	var award := {"total": 0, "components": {}}
 	if witness_profile != null:
-		award = witness_profile.record_completion(result.moment_id, result.to_dictionary())
+		var result_dict := result.to_dictionary()
+		result_dict["discovered_clues"] = generic_gameplay.evidence_found.keys()
+		award = witness_profile.record_completion(result.moment_id, result_dict)
 		profile_store.save_profile(witness_profile)
 	reflective_return_pending = true
 	iris.reflect()
@@ -278,7 +316,11 @@ func _on_generic_completion_requested(result: WitnessMomentResult) -> void:
 
 func _on_generic_return_requested() -> void:
 	generic_gameplay.close()
-	show_home()
+	if replayed_from_archive:
+		replayed_from_archive = false
+		show_archive()
+	else:
+		show_home()
 
 func _process(delta: float) -> void:
 	if reflective_return_in < 0.0:
