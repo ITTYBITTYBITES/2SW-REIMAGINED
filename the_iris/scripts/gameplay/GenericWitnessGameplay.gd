@@ -157,6 +157,14 @@ func start(value_definition: WitnessMomentDefinition) -> bool:
 	review_unlocked = false
 	evidence_found.clear()
 	
+	# Automated title logging diagnostics for release-quality trace
+	print("=====================================================================")
+	print("🎮 [GenericWitnessGameplay] Launching Witness Moment: %s" % definition.moment_id)
+	print("   Title: %s" % definition.title)
+	print("   Subtitle: %s" % definition.subtitle)
+	print("   Incident ID: %s" % definition.incident_id)
+	print("=====================================================================")
+	
 	# Load environment lighting profile color modulation dynamically from manifest
 	var color_hex: String = definition.asset_manifest.lighting_profile.get("modulate_color", "#ffffff")
 	scene_image.self_modulate = WitnessAssetResolver.resolve_color(color_hex, Color.WHITE)

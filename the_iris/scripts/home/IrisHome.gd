@@ -8,6 +8,7 @@ signal memory_intent_focused(normalized_target: Vector2)
 signal memory_intent_released
 signal memory_selected
 signal archive_requested
+signal witness_chapters_requested
 
 var elapsed := 0.0
 var atmosphere_redraw_in := 0.0
@@ -39,6 +40,10 @@ func _ready() -> void:
 	var archive_button := _text_button("OPEN ARCHIVE", Vector2(377, 65), Vector2(135, 28))
 	archive_button.name = "OpenArchive"
 	archive_button.pressed.connect(archive_requested.emit)
+
+	var chapter_button := _text_button("CHAPTER PORTAL", Vector2(377, 100), Vector2(135, 28))
+	chapter_button.name = "ChapterPortal"
+	chapter_button.pressed.connect(witness_chapters_requested.emit)
 
 	_label("MEMORY FIELD", 10, Color("#7fbcae"), Vector2(28, 648), Vector2(240, 20))
 	_label("One living thread is close enough to follow.", 14, Color("#d7eee7"), Vector2(28, 668), Vector2(430, 24))

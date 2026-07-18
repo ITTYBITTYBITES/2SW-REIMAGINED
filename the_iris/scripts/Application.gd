@@ -67,6 +67,7 @@ func _ready() -> void:
 	home.memory_intent_released.connect(_on_home_memory_intent_released)
 	home.memory_selected.connect(_on_home_memory_selected)
 	home.archive_requested.connect(show_archive)
+	home.witness_chapters_requested.connect(show_witness)
 	add_child(home)
 	home.update_profile_presentation(witness_profile)
 
