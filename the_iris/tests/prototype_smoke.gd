@@ -13,6 +13,8 @@ func _run() -> void:
 	var app: PrototypeApplication = scene.instantiate()
 	root.add_child(app)
 	await process_frame
+	var response_intents: Array = []
+	app.iris_personality.response_intent_emitted.connect(func(intent): response_intents.append(intent))
 
 	if app.registry.chapter_moments().size() != 5:
 		_fail("Expected exactly five retained Witness Moments")
@@ -40,6 +42,10 @@ func _run() -> void:
 	app.iris.iris_core.tick(2.3)
 	if app.iris.iris_core.state != IrisCore.State.AWARE:
 		_fail("Welcoming did not advance to aware")
+		return
+	var introducing_intent := _find_intent(response_intents, "boot_complete", "INTRODUCING")
+	if introducing_intent == null or introducing_intent.audio_key.is_empty() or introducing_intent.voice_key.is_empty():
+		_fail("Boot did not emit an introducing response intent contract")
 		return
 
 	var tap := InputEventMouseButton.new()
@@ -81,6 +87,9 @@ func _run() -> void:
 	if app.iris.iris_core.state != IrisCore.State.ATTENDING:
 		_fail("Continue Witness shard did not acquire Iris attention")
 		return
+	if _find_intent(response_intents, "memory_focus", "CURIOUS") == null:
+		_fail("Memory focus did not emit a curious response intent")
+		return
 	var intent_exit := InputEventMouseMotion.new()
 	intent_exit.position = Vector2(20, 620)
 	memory_field._gui_input(intent_exit)
@@ -98,6 +107,12 @@ func _run() -> void:
 	if not app.witness.visible or app.iris.iris_core.state != IrisCore.State.OBSERVING:
 		_fail("Continue Witness shard did not enter the protected Witness flow")
 		return
+	if _find_intent(response_intents, "memory_focus", "ATTENTIVE") == null:
+		_fail("Focused memory did not emit an attentive response intent")
+		return
+	if _find_intent(response_intents, "memory_selected", "GUIDING") == null or _find_intent(response_intents, "witness_entered", "GUIDING") == null:
+		_fail("Memory selection did not emit guiding response intents")
+		return
 
 	for moment in app.director.chapter_moments():
 		var id := str(moment["id"])
@@ -111,14 +126,26 @@ func _run() -> void:
 	if app.iris.iris_core.state != IrisCore.State.REFLECTIVE:
 		_fail("Witness completion did not make the Iris reflective")
 		return
+	if _find_intent(response_intents, "witness_completed", "REFLECTIVE") == null:
+		_fail("Witness completion did not emit a reflective response intent")
+		return
 
 	app.show_home()
+	if _find_intent(response_intents, "hub_return", "IDLE") == null:
+		_fail("Hub return did not emit an idle response intent")
+		return
 	app.show_iris()
 	if app.iris.iris_core.state != IrisCore.State.WELCOMING:
 		_fail("Return path did not restore the welcoming Iris")
 		return
 	print("LIVING_IRIS_PRESENCE_PASS: boot, emergence, attention, home, witness, return, and WM_001–WM_005 loaded.")
 	quit(0)
+
+func _find_intent(intents: Array, event_key: String, mode: String) -> IrisResponseIntent:
+	for intent: IrisResponseIntent in intents:
+		if intent.source_event == event_key and intent.expression_mode == mode:
+			return intent
+	return null
 
 func _fail(message: String) -> void:
 	push_error(message)

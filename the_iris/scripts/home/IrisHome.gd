@@ -6,6 +6,7 @@ signal witness_requested
 signal iris_requested
 signal memory_intent_focused(normalized_target: Vector2)
 signal memory_intent_released
+signal memory_selected
 
 var elapsed := 0.0
 var atmosphere_redraw_in := 0.0
@@ -20,7 +21,7 @@ func _ready() -> void:
 	memory_field.name = "MemoryField"
 	memory_field.intent_focused.connect(memory_intent_focused.emit)
 	memory_field.intent_released.connect(memory_intent_released.emit)
-	memory_field.continue_selected.connect(witness_requested.emit)
+	memory_field.continue_selected.connect(_on_continue_witness_selected)
 	add_child(memory_field)
 
 	_label("THE WITNESS ARCHIVE", 11, Color("#86b9ad"), Vector2(28, 28), Vector2(270, 22))
@@ -41,6 +42,10 @@ func _ready() -> void:
 	_label("A shared record forms with the Iris.", 12, Color("#a9c9be"), Vector2(290, 760), Vector2(220, 34))
 
 	_label("The archive keeps only what attention carried.", 11, Color("#668e85"), Vector2(24, 889), Vector2(492, 22), HORIZONTAL_ALIGNMENT_CENTER)
+
+func _on_continue_witness_selected() -> void:
+	memory_selected.emit()
+	witness_requested.emit()
 
 func _process(delta: float) -> void:
 	if not is_visible_in_tree():

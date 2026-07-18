@@ -6,9 +6,12 @@ var registry: IncidentRegistry
 var director: WitnessExperienceDirector
 var orchestrator: WitnessMomentOrchestrator
 var iris: IrisController
+var iris_personality: IrisPersonalityResolver
 var home: IrisHome
 var witness: WitnessChapters
 var startup: StartupFlow
+var boot_introduction_pending := false
+var memory_focus_active := false
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -30,6 +33,11 @@ func _ready() -> void:
 	iris.name = "IrisController"
 	iris.home_requested.connect(show_home)
 	add_child(iris)
+	iris.iris_core.state_changed.connect(_on_iris_core_state_changed)
+
+	iris_personality = IrisPersonalityResolver.new()
+	iris_personality.name = "IrisPersonalityResolver"
+	add_child(iris_personality)
 
 	home = IrisHome.new()
 	home.name = "IrisHome"
@@ -37,6 +45,7 @@ func _ready() -> void:
 	home.iris_requested.connect(show_iris)
 	home.memory_intent_focused.connect(_on_home_memory_intent_focused)
 	home.memory_intent_released.connect(_on_home_memory_intent_released)
+	home.memory_selected.connect(_on_home_memory_selected)
 	add_child(home)
 
 	witness = WitnessChapters.new()
@@ -52,6 +61,7 @@ func _ready() -> void:
 	prepare_iris()
 
 func _on_startup_finished() -> void:
+	boot_introduction_pending = true
 	show_iris(true)
 
 func prepare_iris() -> void:
@@ -78,14 +88,33 @@ func show_home() -> void:
 	iris.set_home_environment(true)
 	home.visible = true
 	witness.visible = false
+	_emit_personality_response("hub_return")
 
 func _on_home_memory_intent_focused(normalized_target: Vector2) -> void:
 	if home.visible and iris.visible:
+		memory_focus_active = true
 		iris.iris_core.acquire_attention(normalized_target)
+		_emit_personality_response("memory_focus")
 
 func _on_home_memory_intent_released() -> void:
 	if home.visible and iris.visible:
+		memory_focus_active = false
 		iris.settle()
+
+func _on_home_memory_selected() -> void:
+	memory_focus_active = false
+	_emit_personality_response("memory_selected")
+
+func _on_iris_core_state_changed(next_state: IrisCore.State) -> void:
+	if boot_introduction_pending and next_state == IrisCore.State.WELCOMING:
+		boot_introduction_pending = false
+		_emit_personality_response("boot_complete")
+	if memory_focus_active and next_state == IrisCore.State.FOCUSED:
+		_emit_personality_response("memory_focus")
+
+func _emit_personality_response(experience_event: String) -> void:
+	if iris_personality != null:
+		iris_personality.resolve(int(iris.iris_core.state), experience_event)
 
 func show_witness() -> void:
 	iris.set_home_environment(false)
@@ -93,10 +122,12 @@ func show_witness() -> void:
 	home.visible = false
 	witness.visible = true
 	iris.observe()
+	_emit_personality_response("witness_entered")
 	witness.show_chapters()
 
 func _on_witness_moment_completed(_moment_id: String) -> void:
 	iris.reflect()
+	_emit_personality_response("witness_completed")
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
