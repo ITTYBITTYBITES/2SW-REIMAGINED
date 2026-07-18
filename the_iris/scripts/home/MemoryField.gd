@@ -138,10 +138,18 @@ func _draw() -> void:
 
 	var points := PackedVector2Array()
 	for index in range(6):
-		var angle := TAU * float(index) / 6.0 + elapsed * 0.10
-		var variation := 0.86 + 0.14 * sin(elapsed * 0.43 + float(index) * 1.91)
+		var angle := TAU * float(index) / 6.0 + elapsed * 0.22
+		var variation := 0.88 + 0.12 * sin(elapsed * 0.53 + float(index) * 1.91)
 		points.append(shard_position + Vector2(cos(angle), sin(angle)) * shard_radius * variation)
 	draw_colored_polygon(points, Color(0.08, 0.34 + focus_amount * 0.16, 0.30 + focus_amount * 0.14, 0.94))
+	
+	# Drawing inner, counter-rotating bright refraction facet for high-end crystal look
+	var inner_points := PackedVector2Array()
+	for index in range(6):
+		var angle := TAU * float(index) / 6.0 - elapsed * 0.35
+		var variation := 0.76 + 0.10 * sin(elapsed * 0.64 + float(index) * 2.37)
+		inner_points.append(shard_position + Vector2(cos(angle), sin(angle)) * shard_radius * 0.65 * variation)
+	draw_colored_polygon(inner_points, Color(0.25, 0.85, 0.72, 0.45 * (1.0 + focus_amount * 0.5)))
 
 	var core_radius := shard_radius * (0.36 + float_wave * 0.05)
 	draw_circle(shard_position, core_radius, Color(0.69, 1.0, 0.88, 0.62 + focus_amount * 0.28))

@@ -91,6 +91,12 @@ func _draw_aura(center: Vector2, radius: float, presence: float, glow: float, fo
 		var alpha := (0.003 + glow * 0.023 + pulse * 0.012) * (1.0 - amount * 0.48) * presence
 		var tint := Color(0.07 + focus * 0.06, 0.38 + glow * 0.30 + drift * 0.03, 0.33 + glow * 0.24, alpha)
 		draw_circle(center, radius * spread, tint)
+		
+	# Dynamic Evolution Flare Layer for high-end procedural glow visuals
+	if depth_offset > 0.05:
+		var flare_alpha := (0.015 + glow * 0.08) * depth_offset * presence
+		var flare_tint := Color(0.42, 0.95, 0.82, flare_alpha)
+		draw_circle(center, radius * (0.85 + depth_offset * 0.15), flare_tint)
 
 func _draw_iris_body(center: Vector2, radius: float, presence: float, glow: float, breath_wave: float, drift: float, asymmetry: float) -> void:
 	var geometry_scale: float = float(behavior.get("geometry_scale", 1.0))
