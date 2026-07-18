@@ -53,3 +53,24 @@ static func _play_reflective_tone(key: String) -> void:
 static func _play_fallback_tone(key: String) -> void:
 	if not key.is_empty():
 		print("🔊 [IrisAudioConsumer] Play Fallback Tone (Key: %s) — Soft neutral feedback click." % key)
+
+## Dynamically play a sound from an asset manifest path safely.
+static func play_manifest_sound(path: String) -> void:
+	var clean_path := path.strip_edges()
+	if clean_path.is_empty():
+		return
+		
+	if not FileAccess.file_exists(clean_path):
+		print("🔊 [IrisAudioConsumer] Manifest audio asset is missing: '%s'. Framework is configured and ready." % clean_path)
+		return
+		
+	var stream = load(clean_path)
+	if stream is AudioStream:
+		var player := AudioStreamPlayer.new()
+		player.stream = stream
+		player.name = "DynamicManifestSound"
+		var main_loop := Engine.get_main_loop()
+		if main_loop is SceneTree:
+			main_loop.root.add_child(player)
+			player.play()
+			player.finished.connect(func(): player.queue_free())

@@ -151,6 +151,10 @@ func start(value_definition: WitnessMomentDefinition) -> bool:
 	var color_hex: String = definition.asset_manifest.lighting_profile.get("modulate_color", "#ffffff")
 	scene_image.self_modulate = WitnessAssetResolver.resolve_color(color_hex, Color.WHITE)
 	
+	# Play ambient audio dynamically from manifest
+	var ambient_path: String = definition.asset_manifest.audio_assets.get("ambient", "")
+	IrisAudioConsumer.play_manifest_sound(ambient_path)
+	
 	# Initialize cinematic opening sequence
 	in_intro_cinematic = true
 	intro_timer = 3.0
@@ -362,6 +366,10 @@ func _set_phase(next_phase: Phase) -> void:
 			guidance_label.text = "THE LOOP HAS CLOSED. WHAT WAS BROKEN IS NOW WHOLE."
 			action_button.text = "RESTORE THE TRUTH"
 			action_button.visible = true
+			
+			# Play resolution success audio dynamically from manifest
+			var resolution_path: String = definition.asset_manifest.audio_assets.get("resolution", "")
+			IrisAudioConsumer.play_manifest_sound(resolution_path)
 		Phase.REWARD:
 			phase_label.text = "RESONANCE RECORDED"
 			title_label.text = "The moment holds"
@@ -377,6 +385,10 @@ func _find_anomaly() -> void:
 	action_button.visible = true
 	# Success flash feedback
 	scene_image.modulate = Color(2.5, 2.5, 2.5, 1.0)
+	
+	# Play anomaly resolved audio dynamically from manifest
+	var anomaly_path: String = definition.asset_manifest.audio_assets.get("anomaly", "")
+	IrisAudioConsumer.play_manifest_sound(anomaly_path)
 
 func _begin_capture_hold() -> void:
 	if phase == Phase.CAPTURE:
