@@ -23,6 +23,7 @@ func _ready() -> void:
 	add_child(director)
 	orchestrator = WitnessMomentOrchestrator.new()
 	orchestrator.name = "WitnessMomentOrchestrator"
+	orchestrator.moment_completed.connect(_on_witness_moment_completed)
 	add_child(orchestrator)
 
 	iris = IrisController.new()
@@ -44,26 +45,43 @@ func _ready() -> void:
 
 	startup = StartupFlow.new()
 	startup.name = "StartupFlow"
-	startup.finished.connect(show_iris)
+	startup.finished.connect(_on_startup_finished)
 	add_child(startup)
-	show_iris()
+	prepare_iris()
 
-func show_iris() -> void:
+func _on_startup_finished() -> void:
+	show_iris(true)
+
+func prepare_iris() -> void:
+	iris.visible = false
+	home.visible = false
+	witness.visible = false
+	iris.dormant()
+
+func show_iris(from_boot := false) -> void:
 	iris.visible = true
 	home.visible = false
 	witness.visible = false
-	iris.appear()
+	if from_boot:
+		iris.calibrate()
+	else:
+		iris.welcome()
 
 func show_home() -> void:
 	iris.visible = false
 	home.visible = true
 	witness.visible = false
+	iris.settle()
 
 func show_witness() -> void:
 	iris.visible = false
 	home.visible = false
 	witness.visible = true
+	iris.observe()
 	witness.show_chapters()
+
+func _on_witness_moment_completed(_moment_id: String) -> void:
+	iris.reflect()
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
