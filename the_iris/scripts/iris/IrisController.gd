@@ -107,6 +107,9 @@ func set_gameplay_environment(active: bool) -> void:
 
 func present_response_intent(intent: IrisResponseIntent) -> void:
 	expression_overlay.present(intent)
+	IrisAudioConsumer.consume(intent)
+	IrisHapticConsumer.consume(intent)
+	IrisAccessibilityConsumer.consume(intent)
 
 func observe() -> void:
 	_cancel_attention()

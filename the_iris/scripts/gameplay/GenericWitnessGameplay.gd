@@ -206,17 +206,19 @@ func _gui_input(event: InputEvent) -> void:
 		anomaly_missteps += 1
 		var misstep_text: String = definition.anomaly_definition.get("misstep_text", "Not there. Watch closely.")
 		body_label.text = misstep_text
-		# Add dramatic screenshake and red flash feedback
-		shake_time = 0.4
-		shake_intensity = 15.0
+		# Add dramatic screenshake and red flash feedback (with reduced motion check)
+		if not IrisAccessibilityConsumer.is_reduced_motion():
+			shake_time = 0.4
+			shake_intensity = 15.0
 		scene_image.modulate = Color(1.8, 0.4, 0.4, 0.8)
 	elif event is InputEventScreenTouch and event.pressed and not anomaly_button.get_global_rect().has_point(event.position):
 		anomaly_missteps += 1
 		var misstep_text: String = definition.anomaly_definition.get("misstep_text", "Not there. Watch closely.")
 		body_label.text = misstep_text
-		# Add dramatic screenshake and red flash feedback
-		shake_time = 0.4
-		shake_intensity = 15.0
+		# Add dramatic screenshake and red flash feedback (with reduced motion check)
+		if not IrisAccessibilityConsumer.is_reduced_motion():
+			shake_time = 0.4
+			shake_intensity = 15.0
 		scene_image.modulate = Color(1.8, 0.4, 0.4, 0.8)
 
 func _set_phase(next_phase: Phase) -> void:
