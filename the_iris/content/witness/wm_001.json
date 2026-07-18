@@ -1,14 +1,62 @@
 {
   "id": "WM_001",
+  "moment_id": "WM_001",
   "incident_id": "INC_UNFINISHED_CANVAS",
   "title": "The Unfinished Canvas",
-  "subtitle": "Chapter 01 · Learning to Notice",
-  "introduction": "A painter pauses before a sunlit canvas. Do not look for mistakes. Look for what inspired the stroke.",
+  "subtitle": "Chapter 01 · The First Fractures",
+  "introduction": "A painter pauses before a sunlit canvas. Watch carefully. Something does not belong.",
+  "description": "A painter pauses before a sunlit canvas. Watch carefully. Something does not belong.",
   "observation": "The hand lifts the brush, turns toward the window, and lowers it untouched. A prism catches the late-afternoon light.",
   "reconstruction": "Carry the paused brush, the crystal prism, and the color notes from the easel desk.",
-  "attunements": ["The prism splits the light across the linen.", "The charcoal underdrawing follows the spectrum.", "A note reads: wait for the 5:14 light."],
+  "attunements": [
+    "The prism splits the light across the linen.",
+    "The charcoal underdrawing follows the spectrum.",
+    "A note reads: wait for the 5:14 light."
+  ],
   "revelation": "The canvas was not abandoned; it was waiting for the light.",
   "background": "res://assets/witness/wm_001_studio_background.png",
   "action": "res://assets/witness/wm_001_hand_action.png",
-  "reveal": "res://assets/witness/wm_001_prism_reveal.png"
+  "reveal": "res://assets/witness/wm_001_prism_reveal.png",
+  "observation_duration": 2.0,
+  "anomaly_definition": {
+    "location": {"x": 350.0, "y": 366.0},
+    "size": {"x": 94.0, "y": 94.0},
+    "misstep_text": "Not there. Watch the light, not the painter.",
+    "success_text": "You found it. The prism is breaking light across the canvas."
+  },
+  "capture_window": {
+    "start_time": 0.92,
+    "end_time": 1.26,
+    "hold_duration": 0.26,
+    "guidance_text": "HOLD WHEN YOU SEE THE FRACTURE.",
+    "success_text": "There. The canvas receives color before the prism is lit."
+  },
+  "evidence_nodes": [
+    {
+      "identifier": "paused_brush",
+      "location": {"x": 100.0, "y": 200.0},
+      "description": "The paused brush",
+      "relevance": "The brush paused before the color could be true.",
+      "truth_connection": "Reconstruction aligns brush stroke."
+    },
+    {
+      "identifier": "crystal_prism",
+      "location": {"x": 100.0, "y": 250.0},
+      "description": "The crystal prism",
+      "relevance": "The prism had not yet received the sun.",
+      "truth_connection": "Light vector matches anomaly."
+    },
+    {
+      "identifier": "color_notes",
+      "location": {"x": 100.0, "y": 300.0},
+      "description": "The color notes",
+      "relevance": "The note was waiting for the 5:14 light.",
+      "truth_connection": "A note confirms temporal waiting."
+    }
+  ],
+  "reward_definition": {
+    "base_resonance": 20,
+    "accuracy_multiplier": 15.0,
+    "unassisted_bonus": 6
+  }
 }

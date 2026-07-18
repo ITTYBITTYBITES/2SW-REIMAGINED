@@ -1,14 +1,62 @@
 {
   "id": "WM_005",
+  "moment_id": "WM_005",
   "incident_id": "INC_THE_WITNESS",
   "title": "The Witness",
-  "subtitle": "Chapter 01 · Learning to Notice",
+  "subtitle": "Chapter 01 · The First Fractures",
   "introduction": "Inside the instrument itself, light moves through the stroma and returns the observer's gaze.",
+  "description": "Inside the instrument itself, light moves through the stroma and returns the observer's gaze.",
   "observation": "The field breathes. Fine strands of color gather around an aperture that is both lens and reflection.",
   "reconstruction": "Carry the stroma, the returning light, and the aperture at the center of the field.",
-  "attunements": ["The stroma carries the light rather than containing it.", "The reflection answers the observer's movement.", "The aperture is an instrument of attention."],
+  "attunements": [
+    "The stroma carries the light rather than containing it.",
+    "The reflection answers the observer's movement.",
+    "The aperture is an instrument of attention."
+  ],
   "revelation": "The instrument and the observer looked into each other and discovered they were holding the same light.",
   "background": "res://assets/witness/wm_005_internal_stroma.png",
   "action": "res://assets/witness/wm_005_internal_stroma.png",
-  "reveal": "res://assets/witness/wm_005_reflection_reveal.png"
+  "reveal": "res://assets/witness/wm_005_reflection_reveal.png",
+  "observation_duration": 2.0,
+  "anomaly_definition": {
+    "location": {"x": 250.0, "y": 450.0},
+    "size": {"x": 130.0, "y": 130.0},
+    "misstep_text": "Not there. Watch the center lens, not the borders.",
+    "success_text": "Attention loop identified. The reflection moves before the observer."
+  },
+  "capture_window": {
+    "start_time": 0.90,
+    "end_time": 1.35,
+    "hold_duration": 0.32,
+    "guidance_text": "HOLD WHEN THE REFLECTION SEPARATES.",
+    "success_text": "Reflection and observer have desynchronized."
+  },
+  "evidence_nodes": [
+    {
+      "identifier": "internal_stroma",
+      "location": {"x": 160.0, "y": 200.0},
+      "description": "The stroma strands",
+      "relevance": "The strands glow with returning light.",
+      "truth_connection": "Pattern matches iris attention core."
+    },
+    {
+      "identifier": "returning_light",
+      "location": {"x": 160.0, "y": 250.0},
+      "description": "The returning light",
+      "relevance": "The light is blue-shifted, carrying future focus.",
+      "truth_connection": "Attention feedback loop complete."
+    },
+    {
+      "identifier": "central_lens",
+      "location": {"x": 160.0, "y": 300.0},
+      "description": "The central aperture",
+      "relevance": "The lens centers around an empty point of origin.",
+      "truth_connection": "Universal witness core aligned."
+    }
+  ],
+  "reward_definition": {
+    "base_resonance": 20,
+    "accuracy_multiplier": 15.0,
+    "unassisted_bonus": 6
+  }
 }

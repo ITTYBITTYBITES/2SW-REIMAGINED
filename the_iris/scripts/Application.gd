@@ -318,6 +318,8 @@ func start_generic_gameplay(moment_id: String) -> void:
 
 func _on_generic_completion_requested(result: WitnessMomentResult) -> void:
 	var award := {"total": 0, "components": {}}
+	if registry != null:
+		registry.mark_completed(result.moment_id)
 	if witness_profile != null:
 		var result_dict := result.to_dictionary()
 		result_dict["discovered_clues"] = generic_gameplay.evidence_found.keys()

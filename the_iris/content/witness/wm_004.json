@@ -1,14 +1,62 @@
 {
   "id": "WM_004",
+  "moment_id": "WM_004",
   "incident_id": "INC_FAULTY_REACTOR",
   "title": "The Faulty Reactor",
-  "subtitle": "Chapter 01 · Learning to Notice",
+  "subtitle": "Chapter 01 · The First Fractures",
   "introduction": "A cleanroom console waits under diagnostic light. Witness the fraction of a millimeter that must not be missed.",
+  "description": "A cleanroom console waits under diagnostic light. Witness the fraction of a millimeter that must not be missed.",
   "observation": "A physicist steadies the console, follows the quartz grid, and pauses before a thin laser line.",
   "reconstruction": "Carry the calibration key, the quartz grid, and the thin diagnostic laser.",
-  "attunements": ["The laser is offset from its intended grid line.", "The calibration key has one fresh mark.", "The smallest shift would become structural loss."],
+  "attunements": [
+    "The laser is offset from its intended grid line.",
+    "The calibration key has one fresh mark.",
+    "The smallest shift would become structural loss."
+  ],
   "revelation": "A fraction of a millimeter stood between routine calibration and structural loss.",
   "background": "res://assets/witness/wm_004_cleanroom_console.png",
   "action": "res://assets/witness/wm_004_physicist_action.png",
-  "reveal": "res://assets/witness/wm_004_laser_reveal.png"
+  "reveal": "res://assets/witness/wm_004_laser_reveal.png",
+  "observation_duration": 2.0,
+  "anomaly_definition": {
+    "location": {"x": 190.0, "y": 320.0},
+    "size": {"x": 120.0, "y": 120.0},
+    "misstep_text": "Not there. Focus on the central quartz grid display.",
+    "success_text": "Grid offset found. The diagnostic line bends before key rotation."
+  },
+  "capture_window": {
+    "start_time": 0.60,
+    "end_time": 1.05,
+    "hold_duration": 0.28,
+    "guidance_text": "HOLD WHEN THE LASER GRID IS DISTORTED.",
+    "success_text": "Isolated the pressure distortion before key alignment."
+  },
+  "evidence_nodes": [
+    {
+      "identifier": "calibration_key",
+      "location": {"x": 150.0, "y": 200.0},
+      "description": "The calibration key",
+      "relevance": "The key shows a fresh microscopic indentation.",
+      "truth_connection": "Structural stress matches anomalous curve."
+    },
+    {
+      "identifier": "quartz_grid",
+      "location": {"x": 150.0, "y": 250.0},
+      "description": "The quartz grid",
+      "relevance": "The grid registers a spatial anomaly index.",
+      "truth_connection": "Causal breakdown on console."
+    },
+    {
+      "identifier": "laser_sensor",
+      "location": {"x": 150.0, "y": 300.0},
+      "description": "The diagnostic laser",
+      "relevance": "The laser wavelength is shifted toward blue.",
+      "truth_connection": "Temporal blueshift detected."
+    }
+  ],
+  "reward_definition": {
+    "base_resonance": 20,
+    "accuracy_multiplier": 15.0,
+    "unassisted_bonus": 6
+  }
 }
