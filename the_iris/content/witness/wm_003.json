@@ -5,15 +5,15 @@
   "title": "The Last Performance",
   "subtitle": "Chapter 01 · The First Fractures",
   "introduction": "Backstage after the final applause, a violinist rests a bow in velvet and notices a telegram on the dressing table.",
-  "description": "Backstage after the final applause, a violinist rests a bow in velvet and notices a telegram on the dressing table.",
-  "observation": "The bow settles. The telegram waits. The musician's attention moves from the stage door to a message already opened.",
-  "reconstruction": "Carry the horsehair bow, the telegram, and the brass travel case.",
+  "description": "The violinist Elena is preparing to emigrate to escape a war. The telegram waiting on her table is from her brother, confirming his safe arrival across the ocean.",
+  "observation": "The bow settles. The telegram waits. Elena's attention moves from the stage door to a message already opened.",
+  "reconstruction": "Carry Elena's horsehair bow, the transatlantic telegram, and her travel case.",
   "attunements": [
     "The telegram confirms a safe arrival across the sea.",
-    "The case latch has just been opened.",
-    "The final note is preserved in the bow's quiet vibration."
+    "The case latch carries Elena's brother's postmarks.",
+    "The final note is preserved in her bow's quiet vibration."
   ],
-  "revelation": "When the bow settled into velvet, the final note was already safely across the sea.",
+  "revelation": "What was wrong: the case unlatched and the telegram arrived before her final applause concluded.\n\nWhy it mattered: Elena was not leaving her homeland in fear. The notes of her final performance had already traveled across the ocean, pulling her safely forward into her brother's safe harbor.",
   "background": "res://assets/witness/wm_003_dressing_room.png",
   "action": "res://assets/witness/wm_003_violinist_action.png",
   "reveal": "res://assets/witness/wm_003_telegram_reveal.png",
@@ -22,7 +22,7 @@
     "location": {"x": 280.0, "y": 390.0},
     "size": {"x": 110.0, "y": 110.0},
     "misstep_text": "Not there. Watch the velvet case on the dressing table.",
-    "success_text": "You found the break. The travel case latch is unclicked before the performer reaches it."
+    "success_text": "You found the break. Elena's travel case latch is unclicked before she can reach it."
   },
   "capture_window": {
     "start_time": 0.85,
@@ -35,8 +35,8 @@
     {
       "identifier": "violin_bow",
       "location": {"x": 140.0, "y": 200.0},
-      "description": "The horsehair bow",
-      "relevance": "The bow retains the final note's vibration.",
+      "description": "Elena's Horsehair Bow",
+      "relevance": "THE BOW RETAINS THE FINAL NOTE'S VIBRATION. A silver-wound bow vibrating backstage with Elena's final musical performance notes.",
       "truth_connection": "Resonance matches transatlantic timeline.",
       "asset_reference": "res://assets/witness/wm_003_telegram_reveal.png",
       "color_modulation": "#a98ec5",
@@ -45,8 +45,8 @@
     {
       "identifier": "telegram_desk",
       "location": {"x": 140.0, "y": 250.0},
-      "description": "The telegram message",
-      "relevance": "The ink is dry, but the text changes.",
+      "description": "The Transatlantic Telegram",
+      "relevance": "Elena's brother's message: 'Safe arrival. The sea is calm.' Ink is dry, but timestamp precedes Elena's final chord.",
       "truth_connection": "Message is registered before final string release.",
       "asset_reference": "res://assets/witness/wm_003_telegram_reveal.png",
       "color_modulation": "#9476ab",
@@ -55,8 +55,8 @@
     {
       "identifier": "travel_case",
       "location": {"x": 140.0, "y": 300.0},
-      "description": "The brass case",
-      "relevance": "The latch carries safe transatlantic postmarks.",
+      "description": "Elena's Travel Case",
+      "relevance": " Elena's tickets and passport are held inside. The latch carrying safe postmarks pops open early.",
       "truth_connection": "Transatlantic sequence verified.",
       "asset_reference": "res://assets/witness/wm_003_telegram_reveal.png",
       "color_modulation": "#825d94",
