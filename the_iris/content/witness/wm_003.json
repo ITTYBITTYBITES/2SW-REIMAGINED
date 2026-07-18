@@ -37,26 +37,70 @@
       "location": {"x": 140.0, "y": 200.0},
       "description": "The horsehair bow",
       "relevance": "The bow retains the final note's vibration.",
-      "truth_connection": "Resonance matches transatlantic timeline."
+      "truth_connection": "Resonance matches transatlantic timeline.",
+      "asset_reference": "res://assets/witness/wm_003_telegram_reveal.png",
+      "color_modulation": "#a98ec5",
+      "visual_effect": "glow"
     },
     {
       "identifier": "telegram_desk",
       "location": {"x": 140.0, "y": 250.0},
       "description": "The telegram message",
       "relevance": "The ink is dry, but the text changes.",
-      "truth_connection": "Message is registered before final string release."
+      "truth_connection": "Message is registered before final string release.",
+      "asset_reference": "res://assets/witness/wm_003_telegram_reveal.png",
+      "color_modulation": "#9476ab",
+      "visual_effect": "glow"
     },
     {
       "identifier": "travel_case",
       "location": {"x": 140.0, "y": 300.0},
       "description": "The brass case",
       "relevance": "The latch carries safe transatlantic postmarks.",
-      "truth_connection": "Transatlantic sequence verified."
+      "truth_connection": "Transatlantic sequence verified.",
+      "asset_reference": "res://assets/witness/wm_003_telegram_reveal.png",
+      "color_modulation": "#825d94",
+      "visual_effect": "glow"
     }
   ],
   "reward_definition": {
     "base_resonance": 20,
     "accuracy_multiplier": 15.0,
     "unassisted_bonus": 6
+  },
+  "asset_manifest": {
+    "environment_asset": "res://assets/witness/wm_003_dressing_room.png",
+    "background_layers": [
+      "res://assets/witness/wm_003_dressing_room.png"
+    ],
+    "evidence_assets": {
+      "violin_bow": {
+        "texture_path": "res://assets/witness/wm_003_telegram_reveal.png",
+        "color_modulation": "#a98ec5",
+        "visual_effect": "glow"
+      },
+      "telegram_desk": {
+        "texture_path": "res://assets/witness/wm_003_telegram_reveal.png",
+        "color_modulation": "#9476ab",
+        "visual_effect": "glow"
+      },
+      "travel_case": {
+        "texture_path": "res://assets/witness/wm_003_telegram_reveal.png",
+        "color_modulation": "#825d94",
+        "visual_effect": "glow"
+      }
+    },
+    "audio_assets": {
+      "ambient": "res://assets/audio/wm003_ambient.ogg",
+      "anomaly": "res://assets/audio/wm003_anomaly.ogg",
+      "resolution": "res://assets/audio/wm003_resolution.ogg"
+    },
+    "visual_effects": {
+      "pulse_speed": 0.85
+    },
+    "lighting_profile": {
+      "modulate_color": "#c3b1e3",
+      "vignette_intensity": 0.55
+    }
   }
 }

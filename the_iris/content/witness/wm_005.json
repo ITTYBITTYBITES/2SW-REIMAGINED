@@ -21,7 +21,7 @@
   "anomaly_definition": {
     "location": {"x": 250.0, "y": 450.0},
     "size": {"x": 140.0, "y": 140.0},
-    "misstep_text": "Not there. Watch the center lens, not the borders.",
+    "misstep_text": "Watch the center lens, not the borders.",
     "success_text": "Attention loop identified. The reflection moves before the observer."
   },
   "capture_window": {
@@ -37,26 +37,70 @@
       "location": {"x": 160.0, "y": 200.0},
       "description": "The stroma strands",
       "relevance": "The strands glow with returning light.",
-      "truth_connection": "Pattern matches iris attention core."
+      "truth_connection": "Pattern matches iris attention core.",
+      "asset_reference": "res://assets/witness/wm_005_reflection_reveal.png",
+      "color_modulation": "#8e9cc5",
+      "visual_effect": "glow"
     },
     {
       "identifier": "returning_light",
       "location": {"x": 160.0, "y": 250.0},
       "description": "The returning light",
       "relevance": "The light is blue-shifted, carrying future focus.",
-      "truth_connection": "Attention feedback loop complete."
+      "truth_connection": "Attention feedback loop complete.",
+      "asset_reference": "res://assets/witness/wm_005_reflection_reveal.png",
+      "color_modulation": "#7283ab",
+      "visual_effect": "glow"
     },
     {
       "identifier": "central_lens",
       "location": {"x": 160.0, "y": 300.0},
       "description": "The central aperture",
       "relevance": "The lens centers around an empty point of origin.",
-      "truth_connection": "Universal witness core aligned."
+      "truth_connection": "Universal witness core aligned.",
+      "asset_reference": "res://assets/witness/wm_005_reflection_reveal.png",
+      "color_modulation": "#5d6d94",
+      "visual_effect": "glow"
     }
   ],
   "reward_definition": {
     "base_resonance": 20,
     "accuracy_multiplier": 15.0,
     "unassisted_bonus": 6
+  },
+  "asset_manifest": {
+    "environment_asset": "res://assets/witness/wm_005_internal_stroma.png",
+    "background_layers": [
+      "res://assets/witness/wm_005_internal_stroma.png"
+    ],
+    "evidence_assets": {
+      "internal_stroma": {
+        "texture_path": "res://assets/witness/wm_005_reflection_reveal.png",
+        "color_modulation": "#8e9cc5",
+        "visual_effect": "glow"
+      },
+      "returning_light": {
+        "texture_path": "res://assets/witness/wm_005_reflection_reveal.png",
+        "color_modulation": "#7283ab",
+        "visual_effect": "glow"
+      },
+      "central_lens": {
+        "texture_path": "res://assets/witness/wm_005_reflection_reveal.png",
+        "color_modulation": "#5d6d94",
+        "visual_effect": "glow"
+      }
+    },
+    "audio_assets": {
+      "ambient": "res://assets/audio/wm005_ambient.ogg",
+      "anomaly": "res://assets/audio/wm005_anomaly.ogg",
+      "resolution": "res://assets/audio/wm005_resolution.ogg"
+    },
+    "visual_effects": {
+      "pulse_speed": 1.6
+    },
+    "lighting_profile": {
+      "modulate_color": "#a7b8eb",
+      "vignette_intensity": 0.60
+    }
   }
 }

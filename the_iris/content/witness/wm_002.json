@@ -37,26 +37,70 @@
       "location": {"x": 120.0, "y": 200.0},
       "description": "The pocket watch",
       "relevance": "The watch is ticking exactly one second ahead.",
-      "truth_connection": "Chronology of touch is fractured."
+      "truth_connection": "Chronology of touch is fractured.",
+      "asset_reference": "res://assets/witness/wm_002_palm_reveal.png",
+      "color_modulation": "#caa48e",
+      "visual_effect": "glow"
     },
     {
       "identifier": "case_frame",
       "location": {"x": 120.0, "y": 250.0},
       "description": "The case frame",
       "relevance": "The mahogany wood shows fresh friction heat.",
-      "truth_connection": "Heat transfer matches tactile memory."
+      "truth_connection": "Heat transfer matches tactile memory.",
+      "asset_reference": "res://assets/witness/wm_002_palm_reveal.png",
+      "color_modulation": "#b68e71",
+      "visual_effect": "glow"
     },
     {
       "identifier": "ticket",
       "location": {"x": 120.0, "y": 300.0},
       "description": "The exhibition ticket",
       "relevance": "The ticket date shows daily attendance for forty years.",
-      "truth_connection": "A pattern of memory is recorded."
+      "truth_connection": "A pattern of memory is recorded.",
+      "asset_reference": "res://assets/witness/wm_002_palm_reveal.png",
+      "color_modulation": "#a37e5c",
+      "visual_effect": "glow"
     }
   ],
   "reward_definition": {
     "base_resonance": 20,
     "accuracy_multiplier": 15.0,
     "unassisted_bonus": 6
+  },
+  "asset_manifest": {
+    "environment_asset": "res://assets/witness/wm_002_museum_corridor.png",
+    "background_layers": [
+      "res://assets/witness/wm_002_museum_corridor.png"
+    ],
+    "evidence_assets": {
+      "pocket_watch": {
+        "texture_path": "res://assets/witness/wm_002_palm_reveal.png",
+        "color_modulation": "#caa48e",
+        "visual_effect": "glow"
+      },
+      "case_frame": {
+        "texture_path": "res://assets/witness/wm_002_palm_reveal.png",
+        "color_modulation": "#b68e71",
+        "visual_effect": "glow"
+      },
+      "ticket": {
+        "texture_path": "res://assets/witness/wm_002_palm_reveal.png",
+        "color_modulation": "#a37e5c",
+        "visual_effect": "glow"
+      }
+    },
+    "audio_assets": {
+      "ambient": "res://assets/audio/wm002_ambient.ogg",
+      "anomaly": "res://assets/audio/wm002_anomaly.ogg",
+      "resolution": "res://assets/audio/wm002_resolution.ogg"
+    },
+    "visual_effects": {
+      "pulse_speed": 1.0
+    },
+    "lighting_profile": {
+      "modulate_color": "#dccbb7",
+      "vignette_intensity": 0.50
+    }
   }
 }

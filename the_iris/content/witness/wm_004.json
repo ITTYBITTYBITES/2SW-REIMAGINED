@@ -37,26 +37,70 @@
       "location": {"x": 150.0, "y": 200.0},
       "description": "The calibration key",
       "relevance": "The key shows a fresh microscopic indentation.",
-      "truth_connection": "Structural stress matches anomalous curve."
+      "truth_connection": "Structural stress matches anomalous curve.",
+      "asset_reference": "res://assets/witness/wm_004_laser_reveal.png",
+      "color_modulation": "#8ee9c8",
+      "visual_effect": "glow"
     },
     {
       "identifier": "quartz_grid",
       "location": {"x": 150.0, "y": 250.0},
       "description": "The quartz grid",
       "relevance": "The grid registers a spatial anomaly index.",
-      "truth_connection": "Causal breakdown on console."
+      "truth_connection": "Causal breakdown on console.",
+      "asset_reference": "res://assets/witness/wm_004_laser_reveal.png",
+      "color_modulation": "#78d4ab",
+      "visual_effect": "glow"
     },
     {
       "identifier": "laser_sensor",
       "location": {"x": 150.0, "y": 300.0},
       "description": "The diagnostic laser",
       "relevance": "The laser wavelength is shifted toward blue.",
-      "truth_connection": "Temporal blueshift detected."
+      "truth_connection": "Temporal blueshift detected.",
+      "asset_reference": "res://assets/witness/wm_004_laser_reveal.png",
+      "color_modulation": "#5ebf91",
+      "visual_effect": "glow"
     }
   ],
   "reward_definition": {
     "base_resonance": 20,
     "accuracy_multiplier": 15.0,
     "unassisted_bonus": 6
+  },
+  "asset_manifest": {
+    "environment_asset": "res://assets/witness/wm_004_cleanroom_console.png",
+    "background_layers": [
+      "res://assets/witness/wm_004_cleanroom_console.png"
+    ],
+    "evidence_assets": {
+      "calibration_key": {
+        "texture_path": "res://assets/witness/wm_004_laser_reveal.png",
+        "color_modulation": "#8ee9c8",
+        "visual_effect": "glow"
+      },
+      "quartz_grid": {
+        "texture_path": "res://assets/witness/wm_004_laser_reveal.png",
+        "color_modulation": "#78d4ab",
+        "visual_effect": "glow"
+      },
+      "laser_sensor": {
+        "texture_path": "res://assets/witness/wm_004_laser_reveal.png",
+        "color_modulation": "#5ebf91",
+        "visual_effect": "glow"
+      }
+    },
+    "audio_assets": {
+      "ambient": "res://assets/audio/wm004_ambient.ogg",
+      "anomaly": "res://assets/audio/wm004_anomaly.ogg",
+      "resolution": "res://assets/audio/wm004_resolution.ogg"
+    },
+    "visual_effects": {
+      "pulse_speed": 1.4
+    },
+    "lighting_profile": {
+      "modulate_color": "#a2ebd6",
+      "vignette_intensity": 0.45
+    }
   }
 }

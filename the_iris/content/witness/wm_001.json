@@ -37,26 +37,70 @@
       "location": {"x": 100.0, "y": 200.0},
       "description": "The paused brush",
       "relevance": "The brush paused before the color could be true.",
-      "truth_connection": "Reconstruction aligns brush stroke."
+      "truth_connection": "Reconstruction aligns brush stroke.",
+      "asset_reference": "res://assets/witness/wm_001_prism_reveal.png",
+      "color_modulation": "#8de8c7",
+      "visual_effect": "glow"
     },
     {
       "identifier": "crystal_prism",
       "location": {"x": 100.0, "y": 250.0},
       "description": "The crystal prism",
       "relevance": "The prism had not yet received the sun.",
-      "truth_connection": "Light vector matches anomaly."
+      "truth_connection": "Light vector matches anomaly.",
+      "asset_reference": "res://assets/witness/wm_001_prism_reveal.png",
+      "color_modulation": "#8ee9c8",
+      "visual_effect": "glow"
     },
     {
       "identifier": "color_notes",
       "location": {"x": 100.0, "y": 300.0},
       "description": "The color notes",
       "relevance": "The note was waiting for the 5:14 light.",
-      "truth_connection": "A note confirms temporal waiting."
+      "truth_connection": "A note confirms temporal waiting.",
+      "asset_reference": "res://assets/witness/wm_001_prism_reveal.png",
+      "color_modulation": "#8fc8b8",
+      "visual_effect": "glow"
     }
   ],
   "reward_definition": {
     "base_resonance": 20,
     "accuracy_multiplier": 15.0,
     "unassisted_bonus": 6
+  },
+  "asset_manifest": {
+    "environment_asset": "res://assets/witness/wm_001_studio_background.png",
+    "background_layers": [
+      "res://assets/witness/wm_001_studio_background.png"
+    ],
+    "evidence_assets": {
+      "paused_brush": {
+        "texture_path": "res://assets/witness/wm_001_prism_reveal.png",
+        "color_modulation": "#8de8c7",
+        "visual_effect": "glow"
+      },
+      "crystal_prism": {
+        "texture_path": "res://assets/witness/wm_001_prism_reveal.png",
+        "color_modulation": "#8ee9c8",
+        "visual_effect": "glow"
+      },
+      "color_notes": {
+        "texture_path": "res://assets/witness/wm_001_prism_reveal.png",
+        "color_modulation": "#8fc8b8",
+        "visual_effect": "glow"
+      }
+    },
+    "audio_assets": {
+      "ambient": "res://assets/audio/wm001_ambient.ogg",
+      "anomaly": "res://assets/audio/wm001_anomaly.ogg",
+      "resolution": "res://assets/audio/wm001_resolution.ogg"
+    },
+    "visual_effects": {
+      "pulse_speed": 1.2
+    },
+    "lighting_profile": {
+      "modulate_color": "#f2ebd5",
+      "vignette_intensity": 0.48
+    }
   }
 }
