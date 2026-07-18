@@ -11,7 +11,10 @@ const MOMENT_PATHS := [
 	"res://content/witness/wm_005.json",
 	"res://content/witness/wm_test.json",
 	"res://content/witness/wm_asset_test.json",
-	"res://content/witness/fm_001.json"
+	"res://content/witness/fm_001.json",
+	"res://content/witness/wm_006.json",
+	"res://content/witness/wm_007.json",
+	"res://content/witness/wm_008.json"
 ]
 
 var moments: Array[Dictionary] = []

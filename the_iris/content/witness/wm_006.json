@@ -1,0 +1,106 @@
+{
+  "id": "WM_006",
+  "moment_id": "WM_006",
+  "incident_id": "INC_SILENT_BELL",
+  "title": "The Silent Bell",
+  "subtitle": "Chapter 02 · The Wider Fractures",
+  "introduction": "An old, stone mountain bell tower overlooks a misty, silent valley. Focus on the hammer.",
+  "description": "An old, stone mountain bell tower overlooks a misty, silent valley. Focus on the hammer.",
+  "observation": "The bell-ringer pulls the heavy rope, but the booming tone of the massive bell echoes across the valley early.",
+  "reconstruction": "Carry the hemp rope, the iron hammer, and the misty valley wind.",
+  "attunements": [
+    "The hemp fibers show sudden, immense friction stress.",
+    "The iron head is cold, carrying no residual impact vibration.",
+    "The valley echo returns before the bell hammer makes contact."
+  ],
+  "revelation": "What was wrong: the valley echoed with a toll that the bell had not yet rung.\n\nWhy it mattered: the warning of the coming storm was carried by the wind before the metal could strike.",
+  "background": "res://assets/witness/wm_001_studio_background.png",
+  "action": "res://assets/witness/wm_001_hand_action.png",
+  "reveal": "res://assets/witness/wm_001_prism_reveal.png",
+  "observation_duration": 2.0,
+  "anomaly_definition": {
+    "location": {"x": 200.0, "y": 300.0},
+    "size": {"x": 110.0, "y": 110.0},
+    "misstep_text": "Not there. Focus on the bell hammer's contact point.",
+    "success_text": "Causality shift located. The copper sound waves disperse before impact."
+  },
+  "capture_window": {
+    "start_time": 0.50,
+    "end_time": 0.95,
+    "hold_duration": 0.25,
+    "guidance_text": "HOLD WHEN THE ACOUSTIC SWEEP BEGINS.",
+    "success_text": "Timeline isolated: sound wave precedes strike."
+  },
+  "evidence_nodes": [
+    {
+      "identifier": "bell_rope",
+      "location": {"x": 100.0, "y": 200.0},
+      "description": "The Hemp Rope",
+      "relevance": "THE HEMP FIBERS SHOW SUDDEN FRICTION STRESS. The rope stands taut, vibrating with the ghost energy of a pull.",
+      "truth_connection": "Friction trace aligned.",
+      "asset_reference": "res://assets/witness/wm_001_prism_reveal.png",
+      "color_modulation": "#b5caa0",
+      "visual_effect": "glow"
+    },
+    {
+      "identifier": "bell_hammer",
+      "location": {"x": 100.0, "y": 250.0},
+      "description": "The Iron Hammer",
+      "relevance": "THE IRON HEAD IS COLD. The metal contains no residual warmth or kinetic impact vibration.",
+      "truth_connection": "Acoustic vector verified.",
+      "asset_reference": "res://assets/witness/wm_001_prism_reveal.png",
+      "color_modulation": "#9fb5a0",
+      "visual_effect": "glow"
+    },
+    {
+      "identifier": "misty_valley",
+      "location": {"x": 100.0, "y": 300.0},
+      "description": "The Misty Valley",
+      "relevance": "THE MIST CARRIES THE SOUND BACK TOWARD THE TOWER. The echo originates from the valley before reaching the bell.",
+      "truth_connection": "Chronology confirmed.",
+      "asset_reference": "res://assets/witness/wm_001_prism_reveal.png",
+      "color_modulation": "#8fa390",
+      "visual_effect": "glow"
+    }
+  ],
+  "reward_definition": {
+    "base_resonance": 20,
+    "accuracy_multiplier": 15.0,
+    "unassisted_bonus": 6
+  },
+  "asset_manifest": {
+    "environment_asset": "res://assets/witness/wm_001_studio_background.png",
+    "background_layers": [
+      "res://assets/witness/wm_001_studio_background.png"
+    ],
+    "evidence_assets": {
+      "bell_rope": {
+        "texture_path": "res://assets/witness/wm_001_prism_reveal.png",
+        "color_modulation": "#b5caa0",
+        "visual_effect": "glow"
+      },
+      "bell_hammer": {
+        "texture_path": "res://assets/witness/wm_001_prism_reveal.png",
+        "color_modulation": "#9fb5a0",
+        "visual_effect": "glow"
+      },
+      "misty_valley": {
+        "texture_path": "res://assets/witness/wm_001_prism_reveal.png",
+        "color_modulation": "#8fa390",
+        "visual_effect": "glow"
+      }
+    },
+    "audio_assets": {
+      "ambient": "res://assets/audio/wm006_ambient.ogg",
+      "anomaly": "res://assets/audio/wm006_anomaly.ogg",
+      "resolution": "res://assets/audio/wm006_resolution.ogg"
+    },
+    "visual_effects": {
+      "pulse_speed": 1.1
+    },
+    "lighting_profile": {
+      "modulate_color": "#cbd9c5",
+      "vignette_intensity": 0.52
+    }
+  }
+}
