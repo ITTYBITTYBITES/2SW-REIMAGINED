@@ -1,30 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://iris_home_screen"]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://src/ui/screens/IrisHomeScreen.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/iris/base.png" id="2_iris_base"]
-[ext_resource type="Texture2D" path="res://assets/iris/fibers.png" id="3_iris_fibers"]
-[ext_resource type="Texture2D" path="res://assets/iris/outer_glow.png" id="4_outer_glow"]
-[ext_resource type="Texture2D" path="res://assets/iris/cornea_reflection.png" id="5_cornea"]
-[ext_resource type="Texture2D" path="res://assets/iris/pupil_portal.png" id="6_pupil_portal"]
-[ext_resource type="Shader" path="res://shaders/iris.gdshader" id="7_iris_shader"]
-[ext_resource type="Texture2D" path="res://assets/iris_particle.svg" id="8_particle"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_iris"]
-shader = ExtResource("7_iris_shader")
-shader_parameter/base_tex = ExtResource("2_iris_base")
-shader_parameter/fibers_tex = ExtResource("3_iris_fibers")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dust"]
-emission_shape = 1
-emission_sphere_radius = 250.0
-direction = Vector3(0, -1, 0)
-spread = 180.0
-gravity = Vector3(0, 0, 0)
-initial_velocity_min = 2.0
-initial_velocity_max = 7.0
-scale_min = 0.18
-scale_max = 0.55
-color = Color(0.75, 0.95, 0.88, 0.18)
+[ext_resource type="Texture2D" path="res://assets/iris/outer_glow.png" id="2_outer_glow"]
 
 [node name="IrisHomeScreen" type="Control"]
 layout_mode = 3
@@ -71,7 +48,7 @@ position = Vector2(360, 634)
 size = Vector2(720, 720)
 pivot_offset = Vector2(360, 360)
 mouse_filter = 2
-texture = ExtResource("4_outer_glow")
+texture = ExtResource("2_outer_glow")
 expand_mode = 1
 stretch_mode = 5
 
@@ -108,94 +85,6 @@ text = "A LIVING PERCEPTION INSTRUMENT"
 horizontal_alignment = 0
 vertical_alignment = 1
 mouse_filter = 2
-
-[node name="IrisDisplay" type="Control" parent="."]
-layout_mode = 0
-position = Vector2(240, 200)
-size = Vector2(240, 240)
-mouse_filter = 2
-
-[node name="IrisContainer" type="Control" parent="IrisDisplay"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="IrisVisual" type="ColorRect" parent="IrisDisplay/IrisContainer"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(1, 1, 1, 1)
-material = SubResource("ShaderMaterial_iris")
-
-[node name="GlowLayer" type="TextureRect" parent="IrisDisplay"]
-modulate = Color(1, 1, 1, 0.35)
-layout_mode = 0
-position = Vector2(120, 120)
-size = Vector2(480, 480)
-pivot_offset = Vector2(240, 240)
-mouse_filter = 2
-texture = ExtResource("4_outer_glow")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="CalibrationRings" type="Control" parent="IrisDisplay"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Ring1" type="TextureRect" parent="IrisDisplay/CalibrationRings"]
-modulate = Color(0.25, 0.72, 0.64, 0.18)
-layout_mode = 0
-position = Vector2(120, 120)
-size = Vector2(440, 440)
-pivot_offset = Vector2(220, 220)
-mouse_filter = 2
-texture = ExtResource("4_outer_glow")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Ring2" type="TextureRect" parent="IrisDisplay/CalibrationRings"]
-modulate = Color(0.25, 0.72, 0.64, 0.12)
-layout_mode = 0
-position = Vector2(120, 120)
-size = Vector2(520, 520)
-pivot_offset = Vector2(260, 260)
-mouse_filter = 2
-texture = ExtResource("4_outer_glow")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="AwakeningAnimation" type="Control" parent="IrisDisplay"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="PupilPortal" type="TextureRect" parent="IrisDisplay/AwakeningAnimation"]
-modulate = Color(1, 1, 1, 0.85)
-layout_mode = 0
-position = Vector2(120, 120)
-size = Vector2(160, 160)
-pivot_offset = Vector2(80, 80)
-mouse_filter = 2
-texture = ExtResource("6_pupil_portal")
-expand_mode = 1
-stretch_mode = 5
 
 [node name="WelcomePanel" type="Control" parent="."]
 layout_mode = 0
@@ -255,15 +144,18 @@ mouse_filter = 2
 [node name="CardsContainer" type="HBoxContainer" parent="NavigationCards"]
 layout_mode = 2
 size = Vector2(624, 180)
+mouse_filter = 2
 theme_override_constants/separation = 16
 
 [node name="ContinueJourney" type="PanelContainer" parent="NavigationCards/CardsContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 custom_minimum_size = Vector2(140, 160)
+mouse_filter = 2
 
 [node name="ContinueMargin" type="MarginContainer" parent="NavigationCards/CardsContainer/ContinueJourney"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_top = 12
@@ -271,16 +163,19 @@ theme_override_constants/margin_bottom = 12
 
 [node name="ContinueVBox" type="VBoxContainer" parent="NavigationCards/CardsContainer/ContinueJourney/ContinueMargin"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 8
 
 [node name="ContinueIcon" type="Label" parent="NavigationCards/CardsContainer/ContinueJourney/ContinueMargin/ContinueVBox"]
 layout_mode = 2
+mouse_filter = 2
 text = "▶"
 theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
 
 [node name="ContinueLabel" type="Label" parent="NavigationCards/CardsContainer/ContinueJourney/ContinueMargin/ContinueVBox"]
 layout_mode = 2
+mouse_filter = 2
 text = "CONTINUE JOURNEY"
 theme_override_colors/font_color = Color(0.87, 0.96, 0.93, 1)
 theme_override_font_sizes/font_size = 12
@@ -290,9 +185,11 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 custom_minimum_size = Vector2(140, 160)
+mouse_filter = 2
 
 [node name="WitnessMargin" type="MarginContainer" parent="NavigationCards/CardsContainer/WitnessChapters"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_top = 12
@@ -300,16 +197,19 @@ theme_override_constants/margin_bottom = 12
 
 [node name="WitnessVBox" type="VBoxContainer" parent="NavigationCards/CardsContainer/WitnessChapters/WitnessMargin"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 8
 
 [node name="WitnessIcon" type="Label" parent="NavigationCards/CardsContainer/WitnessChapters/WitnessMargin/WitnessVBox"]
 layout_mode = 2
+mouse_filter = 2
 text = "👁"
 theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
 
 [node name="WitnessLabel" type="Label" parent="NavigationCards/CardsContainer/WitnessChapters/WitnessMargin/WitnessVBox"]
 layout_mode = 2
+mouse_filter = 2
 text = "WITNESS CHAPTERS"
 theme_override_colors/font_color = Color(0.87, 0.96, 0.93, 1)
 theme_override_font_sizes/font_size = 12
@@ -319,9 +219,11 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 custom_minimum_size = Vector2(140, 160)
+mouse_filter = 2
 
 [node name="ProgressMargin" type="MarginContainer" parent="NavigationCards/CardsContainer/ProgressCard"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_top = 12
@@ -329,16 +231,19 @@ theme_override_constants/margin_bottom = 12
 
 [node name="ProgressVBox" type="VBoxContainer" parent="NavigationCards/CardsContainer/ProgressCard/ProgressMargin"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 8
 
 [node name="ProgressIcon" type="Label" parent="NavigationCards/CardsContainer/ProgressCard/ProgressMargin/ProgressVBox"]
 layout_mode = 2
+mouse_filter = 2
 text = "📊"
 theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
 
 [node name="ProgressLabel" type="Label" parent="NavigationCards/CardsContainer/ProgressCard/ProgressMargin/ProgressVBox"]
 layout_mode = 2
+mouse_filter = 2
 text = "PROGRESS"
 theme_override_colors/font_color = Color(0.87, 0.96, 0.93, 1)
 theme_override_font_sizes/font_size = 12
@@ -348,9 +253,11 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 custom_minimum_size = Vector2(140, 160)
+mouse_filter = 2
 
 [node name="ProfileMargin" type="MarginContainer" parent="NavigationCards/CardsContainer/ProfileCard"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_top = 12
@@ -358,16 +265,19 @@ theme_override_constants/margin_bottom = 12
 
 [node name="ProfileVBox" type="VBoxContainer" parent="NavigationCards/CardsContainer/ProfileCard/ProfileMargin"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 8
 
 [node name="ProfileIcon" type="Label" parent="NavigationCards/CardsContainer/ProfileCard/ProfileMargin/ProfileVBox"]
 layout_mode = 2
+mouse_filter = 2
 text = "👤"
 theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
 
 [node name="ProfileLabel" type="Label" parent="NavigationCards/CardsContainer/ProfileCard/ProfileMargin/ProfileVBox"]
 layout_mode = 2
+mouse_filter = 2
 text = "PROFILE"
 theme_override_colors/font_color = Color(0.87, 0.96, 0.93, 1)
 theme_override_font_sizes/font_size = 12
@@ -386,12 +296,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/separation = 24
 
 [node name="AudioButton" type="Button" parent="UtilityBar/UtilityHBox"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 size_flags_horizontal = 0
+mouse_filter = 2
 text = "🔊"
 flat = true
 
@@ -399,6 +311,7 @@ flat = true
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 size_flags_horizontal = 0
+mouse_filter = 2
 text = "🎮"
 flat = true
 
@@ -406,6 +319,7 @@ flat = true
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 size_flags_horizontal = 0
+mouse_filter = 2
 text = "?"
 flat = true
 
@@ -413,15 +327,6 @@ flat = true
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 size_flags_horizontal = 0
+mouse_filter = 2
 text = "ℹ"
 flat = true
-
-[node name="Particles" type="CPUParticles2D" parent="."]
-position = Vector2(360, 635)
-emitting = true
-amount = 18
-lifetime = 5.5
-randomness = 0.85
-local_coords = false
-texture = ExtResource("8_particle")
-process_material = SubResource("ParticleProcessMaterial_dust")
