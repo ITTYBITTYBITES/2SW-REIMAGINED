@@ -1,0 +1,14 @@
+{
+  "id": "WM_001",
+  "incident_id": "INC_UNFINISHED_CANVAS",
+  "title": "The Unfinished Canvas",
+  "subtitle": "Chapter 01 · Learning to Notice",
+  "introduction": "A painter pauses before a sunlit canvas. Do not look for mistakes. Look for what inspired the stroke.",
+  "observation": "The hand lifts the brush, turns toward the window, and lowers it untouched. A prism catches the late-afternoon light.",
+  "reconstruction": "Carry the paused brush, the crystal prism, and the color notes from the easel desk.",
+  "attunements": ["The prism splits the light across the linen.", "The charcoal underdrawing follows the spectrum.", "A note reads: wait for the 5:14 light."],
+  "revelation": "The canvas was not abandoned; it was waiting for the light.",
+  "background": "res://assets/witness/wm_001_studio_background.png",
+  "action": "res://assets/witness/wm_001_hand_action.png",
+  "reveal": "res://assets/witness/wm_001_prism_reveal.png"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "WM_003",
+  "incident_id": "INC_LAST_PERFORMANCE",
+  "title": "The Last Performance",
+  "subtitle": "Chapter 01 · Learning to Notice",
+  "introduction": "Backstage after the final applause, a violinist rests a bow in velvet and notices a telegram on the dressing table.",
+  "observation": "The bow settles. The telegram waits. The musician's attention moves from the stage door to a message already opened.",
+  "reconstruction": "Carry the horsehair bow, the telegram, and the brass travel case.",
+  "attunements": ["The telegram confirms a safe arrival across the sea.", "The case latch has just been opened.", "The final note is preserved in the bow's quiet vibration."],
+  "revelation": "When the bow settled into velvet, the final note was already safely across the sea.",
+  "background": "res://assets/witness/wm_003_dressing_room.png",
+  "action": "res://assets/witness/wm_003_violinist_action.png",
+  "reveal": "res://assets/witness/wm_003_telegram_reveal.png"
+}

@@ -1,0 +1,14 @@
+{
+  "id": "WM_002",
+  "incident_id": "INC_FORGOTTEN_MUSEUM",
+  "title": "The Forgotten Museum",
+  "subtitle": "Chapter 01 · Learning to Notice",
+  "introduction": "A night guard crosses a quiet museum corridor and rests his palm on a display case for one deliberate second.",
+  "observation": "The guard touches mahogany, checks a brass watch, and leaves a familiar handprint on the glass.",
+  "reconstruction": "Carry the pocket watch, the wooden case frame, and the worn exhibition ticket.",
+  "attunements": ["The watch engraving matches the fossil plaque.", "The ticket carries a family name.", "The handprint marks a daily act of remembrance."],
+  "revelation": "The guard was not checking on an artifact. He was keeping watch over his grandfather's gift.",
+  "background": "res://assets/witness/wm_002_museum_corridor.png",
+  "action": "res://assets/witness/wm_002_guard_action.png",
+  "reveal": "res://assets/witness/wm_002_palm_reveal.png"
+}

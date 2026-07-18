@@ -1,4 +1,4 @@
 .godot/
+.import/
 *.import
-*.tmp
-build/
+*.uid

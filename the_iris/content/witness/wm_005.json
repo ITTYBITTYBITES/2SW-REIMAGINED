@@ -1,0 +1,14 @@
+{
+  "id": "WM_005",
+  "incident_id": "INC_THE_WITNESS",
+  "title": "The Witness",
+  "subtitle": "Chapter 01 · Learning to Notice",
+  "introduction": "Inside the instrument itself, light moves through the stroma and returns the observer's gaze.",
+  "observation": "The field breathes. Fine strands of color gather around an aperture that is both lens and reflection.",
+  "reconstruction": "Carry the stroma, the returning light, and the aperture at the center of the field.",
+  "attunements": ["The stroma carries the light rather than containing it.", "The reflection answers the observer's movement.", "The aperture is an instrument of attention."],
+  "revelation": "The instrument and the observer looked into each other and discovered they were holding the same light.",
+  "background": "res://assets/witness/wm_005_internal_stroma.png",
+  "action": "res://assets/witness/wm_005_internal_stroma.png",
+  "reveal": "res://assets/witness/wm_005_reflection_reveal.png"
+}

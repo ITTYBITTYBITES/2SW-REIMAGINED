@@ -1,0 +1,14 @@
+{
+  "id": "WM_004",
+  "incident_id": "INC_FAULTY_REACTOR",
+  "title": "The Faulty Reactor",
+  "subtitle": "Chapter 01 · Learning to Notice",
+  "introduction": "A cleanroom console waits under diagnostic light. Witness the fraction of a millimeter that must not be missed.",
+  "observation": "A physicist steadies the console, follows the quartz grid, and pauses before a thin laser line.",
+  "reconstruction": "Carry the calibration key, the quartz grid, and the thin diagnostic laser.",
+  "attunements": ["The laser is offset from its intended grid line.", "The calibration key has one fresh mark.", "The smallest shift would become structural loss."],
+  "revelation": "A fraction of a millimeter stood between routine calibration and structural loss.",
+  "background": "res://assets/witness/wm_004_cleanroom_console.png",
+  "action": "res://assets/witness/wm_004_physicist_action.png",
+  "reveal": "res://assets/witness/wm_004_laser_reveal.png"
+}

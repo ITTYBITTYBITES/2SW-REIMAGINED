@@ -1,0 +1,13 @@
+# Godot editor, import, and generated script metadata
+.godot/
+.import/
+*.import
+*.uid
+# Local operating-system and editor state
+.local/
+.config/
+# Exported builds
+*.apk
+*.aab
+*.exe
+*.pck

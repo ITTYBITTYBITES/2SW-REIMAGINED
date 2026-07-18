@@ -1,78 +1,27 @@
-; Engine configuration file.
-; It's best edited using the editor UI and not directly,
-; since the parameters that go here are not all obvious.
-;
-; Format:
-;   [section] ; section goes between []
-;   param=value ; assign values to parameters
-
+; Two Second Witness clean-room prototype
+; Godot 4.6.3
 config_version=5
 
 [application]
-
 config/name="Two Second Witness"
-config/description="A premium observation game built around short, fair, replayable challenges, navigated through the Living Iris."
-config/version="4.0.0"
-run/main_scene="res://scenes/Main.tscn"
+config/description="The Living Iris and five completed Witness Moments."
+config/version="1.0.0-prototype"
+run/main_scene="res://scenes/Application.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-boot_splash/bg_color=Color(0.012, 0.016, 0.025, 1)
+boot_splash/bg_color=Color(0.008, 0.012, 0.021, 1)
 boot_splash/show_image=false
 config/icon="res://assets/brand/app_icon_1024.png"
 
-[audio]
-
-general/text_to_speech=true
-default_bus_layout="res://audio/default_bus_layout.tres"
-
-[autoload]
-
-EventBus="*res://src/core/events/EventBus.gd"
-ConfigService="*res://src/systems/config/ConfigService.gd"
-ErrorHandler="*res://src/core/app/ErrorHandler.gd"
-AnalyticsService="*res://src/systems/analytics/AnalyticsService.gd"
-SettingsService="*res://src/systems/settings/SettingsService.gd"
-SaveService="*res://src/systems/save/SaveService.gd"
-ProfileService="*res://src/systems/save/ProfileService.gd"
-AchievementService="*res://src/gameplay/progression/AchievementService.gd"
-ThemeService="*res://src/systems/theme/ThemeService.gd"
-AudioService="*res://src/systems/audio/AudioService.gd"
-AccessibilityService="*res://src/systems/accessibility/AccessibilityService.gd"
-ContentService="*res://src/systems/content/ContentService.gd"
-ExperienceRegistry="*res://src/systems/content/ExperienceRegistry.gd"
-IncidentRegistry="*res://src/iris/story/registry/IncidentRegistry.gd"
-ChallengeRegistry="*res://src/gameplay/ChallengeRegistry.gd"
-ChallengeFamilyRegistry="*res://src/gameplay/runtime/ChallengeFamilyRegistry.gd"
-InteractionAdapterRegistry="*res://src/gameplay/interactions/InteractionAdapterRegistry.gd"
-PlayerProgressService="*res://src/gameplay/runtime/PlayerProgressService.gd"
-RecommendationService="*res://src/gameplay/runtime/RecommendationService.gd"
-ProgramService="*res://src/gameplay/programs/ProgramService.gd"
-ResultService="*res://src/gameplay/runtime/ResultService.gd"
-ChallengeSessionService="*res://src/gameplay/runtime/ChallengeSessionService.gd"
-NavigationService="*res://src/core/navigation/NavigationService.gd"
-AppState="*res://src/core/app/AppState.gd"
-ExperienceReadinessService="*res://src/services/ExperienceReadinessService.gd"
-
 [display]
-
 window/size/viewport_width=540
 window/size/viewport_height=960
 window/size/window_width_override=540
 window/size/window_height_override=960
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
-window/handheld/orientation=6
-
-[input]
-
-ui_accept={
-"deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":32,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
-]
-}
+window/handheld/orientation=1
 
 [rendering]
-
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-textures/vram_compression/import_etc2_astc=true
 environment/defaults/default_clear_color=Color(0.008, 0.012, 0.021, 1)
