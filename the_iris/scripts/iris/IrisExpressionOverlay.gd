@@ -94,6 +94,15 @@ func _color_for(mode: String) -> Color:
 		_: return Color("#78bfb0")
 
 func _message_for(text_key: String) -> String:
+	if active_intent != null:
+		match active_intent.source_event:
+			"evolution_detected":
+				return "The Iris pattern has evolved."
+			"new_aperture_reached":
+				return "New Aperture tier reached."
+			"iris_pattern_changed":
+				return "Aperture alignment adjusted."
+	
 	match text_key:
 		"iris_introducing_text": return "I am here."
 		"iris_idle_text": return "The field is quiet."

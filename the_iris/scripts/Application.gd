@@ -51,6 +51,7 @@ func _ready() -> void:
 	iris.name = "IrisController"
 	iris.home_requested.connect(show_home)
 	add_child(iris)
+	iris.living_iris.evolution_profile = IrisEvolutionProfile.new(witness_profile.aperture_rank, witness_profile.resonance)
 	iris.iris_core.state_changed.connect(_on_iris_core_state_changed)
 
 	iris_personality = IrisPersonalityResolver.new()
@@ -259,8 +260,21 @@ func _on_witness_moment_completed(moment_id: String) -> void:
 		wm001_gameplay.present_reward(award, witness_profile)
 
 func _on_iris_evolution_changed(data: IrisEvolutionData) -> void:
+	var old_data := latest_iris_evolution
 	latest_iris_evolution = data
 	iris_evolution_updated.emit(data)
+	
+	var new_evo := IrisEvolutionProfile.new(data.aperture_rank, data.resonance)
+	if iris != null and iris.living_iris != null:
+		iris.living_iris.evolution_profile = new_evo
+		
+	# Check for progression feedback triggers
+	if old_data != null and old_data.aperture_rank > 0:
+		var old_evo := IrisEvolutionProfile.new(old_data.aperture_rank, old_data.resonance)
+		if old_evo.evolution_stage != new_evo.evolution_stage:
+			_emit_personality_response("evolution_detected")
+		elif old_data.aperture_rank != data.aperture_rank:
+			_emit_personality_response("new_aperture_reached")
 
 func show_archive() -> void:
 	reflective_return_pending = false
