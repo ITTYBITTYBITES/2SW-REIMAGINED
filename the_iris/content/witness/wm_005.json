@@ -20,7 +20,7 @@
   "observation_duration": 2.0,
   "anomaly_definition": {
     "location": {"x": 250.0, "y": 450.0},
-    "size": {"x": 130.0, "y": 130.0},
+    "size": {"x": 140.0, "y": 140.0},
     "misstep_text": "Not there. Watch the center lens, not the borders.",
     "success_text": "Attention loop identified. The reflection moves before the observer."
   },

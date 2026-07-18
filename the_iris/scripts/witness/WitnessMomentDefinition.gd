@@ -83,7 +83,7 @@ func from_dictionary(dict: Dictionary) -> void:
 	if raw_nodes is Array:
 		for node in raw_nodes:
 			if node is Dictionary:
-				var clean_node := node.duplicate(true)
+				var clean_node: Dictionary = node.duplicate(true)
 				# Extend evidence node definitions with custom visual assets/effects
 				clean_node["asset_reference"] = str(clean_node.get("asset_reference", ""))
 				clean_node["visual_effect"] = str(clean_node.get("visual_effect", "default"))

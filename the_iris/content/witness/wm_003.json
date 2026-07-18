@@ -27,7 +27,7 @@
   "capture_window": {
     "start_time": 0.85,
     "end_time": 1.30,
-    "hold_duration": 0.35,
+    "hold_duration": 0.30,
     "guidance_text": "HOLD WHEN THE CASE LATCH ENCOUNTERS PRESSURE.",
     "success_text": "Timeline isolated: case opened before performer arrives."
   },

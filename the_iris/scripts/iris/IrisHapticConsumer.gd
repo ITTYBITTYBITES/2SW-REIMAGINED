@@ -58,6 +58,5 @@ static func trigger_pattern(pattern: Pattern, debug_label: String) -> void:
 			_os_vibrate(80)
 
 static func _os_vibrate(duration_ms: int) -> void:
-	# Platform-safe conditional call: uses Godot's Input haptic triggers on supported devices
-	if Input.has_use_accumulator(): # Check for hardware or standard input layer
-		Input.vibrate_handheld(duration_ms)
+	# Platform-safe call: vibrates handheld if supported (e.g. mobile), ignored on desktop
+	Input.vibrate_handheld(duration_ms)

@@ -33,7 +33,7 @@ static func resolve_color(hex_str: String, fallback := Color.WHITE) -> Color:
 	if not clean_hex.begins_with("#"):
 		clean_hex = "#" + clean_hex
 		
-	if Color.html_isValid(clean_hex):
+	if clean_hex.is_valid_html_color():
 		return Color.from_string(clean_hex, fallback)
 		
 	return fallback
