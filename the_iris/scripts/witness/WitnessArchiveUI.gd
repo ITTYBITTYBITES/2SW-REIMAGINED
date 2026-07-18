@@ -149,6 +149,7 @@ func show_collection() -> void:
 		status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 		card.add_child(status_label)
 		
+		card.pressed.connect(func(): IrisAudioConsumer.play_manifest_sound("res://assets/audio/ui_click.wav"))
 		card.pressed.connect(show_details.bind(id))
 		list_container.add_child(card)
 
@@ -251,6 +252,7 @@ func show_details(moment_id: String) -> void:
 	details_view.add_child(play_button)
 
 func _on_back_pressed() -> void:
+	IrisAudioConsumer.play_manifest_sound("res://assets/audio/ui_back.wav")
 	if not selected_moment_id.is_empty():
 		show_collection()
 	else:

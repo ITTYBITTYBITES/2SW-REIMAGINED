@@ -89,6 +89,7 @@ func _select_if_near(pointer_value: Vector2) -> void:
 func _focus_memory() -> void:
 	if target_focus < 1.0:
 		target_focus = 1.0
+		IrisAudioConsumer.play_manifest_sound("res://assets/audio/ui_shard_hover.ogg")
 		intent_focused.emit(_normalized_shard_target())
 
 func _reset_field() -> void:

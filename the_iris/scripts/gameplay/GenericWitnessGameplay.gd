@@ -275,6 +275,8 @@ func _gui_input(event: InputEvent) -> void:
 			shake_time = 0.4
 			shake_intensity = 15.0
 		scene_image.modulate = Color(1.8, 0.4, 0.4, 0.8)
+		# Play misstep warning sound
+		IrisAudioConsumer.play_manifest_sound("res://assets/audio/ui_misstep_error.wav")
 	elif event is InputEventScreenTouch and event.pressed and not anomaly_button.get_global_rect().has_point(event.position):
 		anomaly_missteps += 1
 		var misstep_text: String = definition.anomaly_definition.get("misstep_text", "Not there. Watch closely.")
@@ -284,6 +286,8 @@ func _gui_input(event: InputEvent) -> void:
 			shake_time = 0.4
 			shake_intensity = 15.0
 		scene_image.modulate = Color(1.8, 0.4, 0.4, 0.8)
+		# Play misstep warning sound
+		IrisAudioConsumer.play_manifest_sound("res://assets/audio/ui_misstep_error.wav")
 
 func _set_phase(next_phase: Phase) -> void:
 	phase = next_phase
@@ -505,6 +509,9 @@ func _toggle_evidence(node: Dictionary, button: Button) -> void:
 	button.text = "✓  %s" % str(node.get("description", ""))
 	button.disabled = true
 	guidance_label.text = str(node.get("relevance", ""))
+	
+	# Play clue attuned feedback audio
+	IrisAudioConsumer.play_manifest_sound("res://assets/audio/ui_clue_attuned.wav")
 	
 	if evidence_found.size() == definition.evidence_nodes.size():
 		guidance_label.text = "ALL ELEMENTS VERIFIED."

@@ -54,6 +54,16 @@ static func _play_fallback_tone(key: String) -> void:
 	if not key.is_empty():
 		print("🔊 [IrisAudioConsumer] Play Fallback Tone (Key: %s) — Soft neutral feedback click." % key)
 
+## Play a subtle, tactile feedback click or sound based on system-wide progression events.
+static func play_presence_sound(event_name: String) -> void:
+	match event_name:
+		"hub_return", "idle":
+			print("🔊 [IrisAudioConsumer] Subtle presence background loop triggered: %s" % event_name)
+		"evolution_detected":
+			print("🔊 [IrisAudioConsumer] Evolution feedback tone sweep triggered!")
+		"new_aperture_reached":
+			print("🔊 [IrisAudioConsumer] Progression rank acknowledgment cue triggered!")
+
 ## Dynamically play a sound from an asset manifest path safely.
 static func play_manifest_sound(path: String) -> void:
 	var clean_path := path.strip_edges()

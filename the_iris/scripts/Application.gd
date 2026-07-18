@@ -149,6 +149,7 @@ func show_home() -> void:
 	else:
 		iris.settle()
 		_emit_personality_response("hub_return")
+		IrisAudioConsumer.play_presence_sound("hub_return")
 	iris.set_home_environment(true)
 	home.visible = true
 	witness.visible = false
@@ -268,8 +269,10 @@ func _on_iris_evolution_changed(data: IrisEvolutionData) -> void:
 		var old_evo := IrisEvolutionProfile.new(old_data.aperture_rank, old_data.resonance)
 		if old_evo.evolution_stage != new_evo.evolution_stage:
 			_emit_personality_response("evolution_detected")
+			IrisAudioConsumer.play_presence_sound("evolution_detected")
 		elif old_data.aperture_rank != data.aperture_rank:
 			_emit_personality_response("new_aperture_reached")
+			IrisAudioConsumer.play_presence_sound("new_aperture_reached")
 
 func show_archive() -> void:
 	reflective_return_pending = false
