@@ -11,7 +11,7 @@ var profile: WitnessProfile
 var registry: IncidentRegistry
 
 var background: TextureRect
-var panel: ColorRect
+var panel: Panel
 var phase_label: Label
 var title_label: Label
 var subtitle_label: Label
@@ -59,10 +59,20 @@ func _ready() -> void:
 	body_label = _label("Align attention to reconstruct past timeline anomalies and achieve full mastery over restored patterns.", 15, Color("#d7eee7"), Vector2(33, 207), Vector2(470, 100))
 	body_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 
-	panel = ColorRect.new()
+	panel = Panel.new()
 	panel.position = Vector2(20, 320)
 	panel.size = Vector2(500, 590)
-	panel.color = Color(0.025, 0.105, 0.11, 0.92)
+	var panel_style := StyleBoxFlat.new()
+	panel_style.bg_color = Color(0.015, 0.065, 0.07, 0.76)
+	panel_style.border_color = Color(0.25, 0.85, 0.70, 0.35)
+	panel_style.set_border_width_all(1)
+	panel_style.corner_radius_top_left = 12
+	panel_style.corner_radius_top_right = 12
+	panel_style.corner_radius_bottom_left = 12
+	panel_style.corner_radius_bottom_right = 12
+	panel_style.shadow_color = Color(0.0, 0.0, 0.0, 0.35)
+	panel_style.shadow_size = 15
+	panel.add_theme_stylebox_override("panel", panel_style)
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(panel)
 

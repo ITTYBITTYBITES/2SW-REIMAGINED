@@ -74,10 +74,20 @@ func _ready() -> void:
 	timer_label = _label("", 12, Color("#b7ded1"), Vector2(28, 202), Vector2(470, 24), HORIZONTAL_ALIGNMENT_CENTER)
 	guidance_label = _label("", 11, Color("#91c8b9"), Vector2(42, 654), Vector2(456, 22), HORIZONTAL_ALIGNMENT_CENTER)
 
-	var panel := ColorRect.new()
+	var panel := Panel.new()
 	panel.position = Vector2(20, 630)
 	panel.size = Vector2(500, 286)
-	panel.color = Color(0.016, 0.084, 0.087, 0.94)
+	var panel_style := StyleBoxFlat.new()
+	panel_style.bg_color = Color(0.01, 0.05, 0.06, 0.72)
+	panel_style.border_color = Color(0.25, 0.85, 0.70, 0.35)
+	panel_style.set_border_width_all(1)
+	panel_style.corner_radius_top_left = 12
+	panel_style.corner_radius_top_right = 12
+	panel_style.corner_radius_bottom_left = 12
+	panel_style.corner_radius_bottom_right = 12
+	panel_style.shadow_color = Color(0.0, 0.0, 0.0, 0.35)
+	panel_style.shadow_size = 15
+	panel.add_theme_stylebox_override("panel", panel_style)
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(panel)
 
