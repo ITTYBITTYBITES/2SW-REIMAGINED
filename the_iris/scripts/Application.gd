@@ -13,7 +13,9 @@ var iris: IrisController
 var iris_personality: IrisPersonalityResolver
 var home: IrisHome
 var witness: WitnessChapters
+var wm001_gameplay: WM001GameplayLoop
 var startup: StartupFlow
+var pending_witness_results: Dictionary = {}
 var boot_introduction_pending := false
 var memory_focus_active := false
 var reflective_return_pending := false
@@ -55,6 +57,7 @@ func _ready() -> void:
 	home = IrisHome.new()
 	home.name = "IrisHome"
 	home.witness_requested.connect(show_witness)
+	home.continue_witness_requested.connect(start_wm001_gameplay)
 	home.iris_requested.connect(show_iris)
 	home.memory_intent_focused.connect(_on_home_memory_intent_focused)
 	home.memory_intent_released.connect(_on_home_memory_intent_released)
@@ -66,6 +69,13 @@ func _ready() -> void:
 	witness.configure(registry, director, orchestrator)
 	witness.home_requested.connect(show_home)
 	add_child(witness)
+
+	wm001_gameplay = WM001GameplayLoop.new()
+	wm001_gameplay.name = "WM001GameplayLoop"
+	wm001_gameplay.configure(director, orchestrator)
+	wm001_gameplay.completion_requested.connect(_on_wm001_completion_requested)
+	wm001_gameplay.return_requested.connect(_on_wm001_return_requested)
+	add_child(wm001_gameplay)
 
 	startup = StartupFlow.new()
 	startup.name = "StartupFlow"
@@ -82,6 +92,7 @@ func prepare_iris() -> void:
 	iris.visible = false
 	home.visible = false
 	witness.visible = false
+	wm001_gameplay.visible = false
 	iris.dormant()
 
 func show_iris(from_boot := false) -> void:
@@ -89,6 +100,7 @@ func show_iris(from_boot := false) -> void:
 	iris.visible = true
 	home.visible = false
 	witness.visible = false
+	wm001_gameplay.visible = false
 	if from_boot:
 		iris.calibrate()
 	else:
@@ -107,6 +119,7 @@ func show_home() -> void:
 	iris.set_home_environment(true)
 	home.visible = true
 	witness.visible = false
+	wm001_gameplay.visible = false
 
 func _on_home_memory_intent_focused(normalized_target: Vector2) -> void:
 	if home.visible and iris.visible:
@@ -134,6 +147,28 @@ func _emit_personality_response(experience_event: String) -> void:
 	if iris_personality != null:
 		iris_personality.resolve(int(iris.iris_core.state), experience_event)
 
+func start_wm001_gameplay() -> void:
+	reflective_return_pending = false
+	reflective_return_in = -1.0
+	iris.set_home_environment(false)
+	iris.visible = false
+	home.visible = false
+	witness.visible = false
+	iris.observe()
+	_emit_personality_response("witness_entered")
+	if not wm001_gameplay.start():
+		show_witness()
+
+func _on_wm001_completion_requested(result: WitnessMomentResult) -> void:
+	pending_witness_results[result.moment_id] = result.to_dictionary()
+	while orchestrator.phase != WitnessMomentOrchestrator.Phase.REVEALING:
+		orchestrator.advance()
+	orchestrator.advance()
+
+func _on_wm001_return_requested() -> void:
+	wm001_gameplay.close()
+	show_home()
+
 func show_witness() -> void:
 	reflective_return_pending = false
 	reflective_return_in = -1.0
@@ -141,17 +176,23 @@ func show_witness() -> void:
 	iris.visible = false
 	home.visible = false
 	witness.visible = true
+	wm001_gameplay.visible = false
 	iris.observe()
 	_emit_personality_response("witness_entered")
 	witness.show_chapters()
 
 func _on_witness_moment_completed(moment_id: String) -> void:
+	var result: Dictionary = pending_witness_results.get(moment_id, {})
+	pending_witness_results.erase(moment_id)
+	var award := {"total": 0, "components": {}}
 	if witness_profile != null:
-		witness_profile.record_completion(moment_id)
+		award = witness_profile.record_completion(moment_id, result)
 		profile_store.save_profile(witness_profile)
 	reflective_return_pending = true
 	iris.reflect()
 	_emit_personality_response("witness_completed")
+	if wm001_gameplay.visible and moment_id == "WM_001":
+		wm001_gameplay.present_reward(award, witness_profile)
 
 func _on_iris_evolution_changed(data: IrisEvolutionData) -> void:
 	latest_iris_evolution = data

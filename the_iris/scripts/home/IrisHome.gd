@@ -3,6 +3,7 @@ class_name IrisHome
 
 ## The Iris-centered archive overlay. The one real destination lives in MemoryField.
 signal witness_requested
+signal continue_witness_requested
 signal iris_requested
 signal memory_intent_focused(normalized_target: Vector2)
 signal memory_intent_released
@@ -45,7 +46,7 @@ func _ready() -> void:
 
 func _on_continue_witness_selected() -> void:
 	memory_selected.emit()
-	witness_requested.emit()
+	continue_witness_requested.emit()
 
 func _process(delta: float) -> void:
 	if not is_visible_in_tree():
