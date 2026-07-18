@@ -140,27 +140,27 @@ func _profile() -> Dictionary:
 			profile.merge({"presence": 0.0, "glow": 0.0, "pupil": 0.42, "fiber_motion": 0.0, "fiber_density": 0, "pulse_enabled": false}, true)
 		State.CALIBRATING:
 			var calibration_rise := _ease_out(clampf(state_time / 0.62, 0.0, 1.0))
-			profile.merge({"presence": 0.08 + calibration_rise * 0.13, "glow": 0.10 + calibration_rise * 0.10, "pupil": 0.40, "fiber_motion": 0.14, "fiber_density": 26, "calibration": 0.8, "blink_enabled": false}, true)
+			profile.merge({"presence": 0.08 + calibration_rise * 0.13, "glow": 0.10 + calibration_rise * 0.10, "pupil": 0.40, "fiber_motion": 0.14, "fiber_density": 22, "calibration": 0.8, "blink_enabled": false}, true)
 		State.STIRRING:
 			var stirring_rise := _ease_out(clampf(state_time / 1.05, 0.0, 1.0))
-			profile.merge({"presence": 0.22 + stirring_rise * 0.25, "glow": 0.16 + stirring_rise * 0.17, "pupil": 0.38 - stirring_rise * 0.04, "fiber_motion": 0.25 + stirring_rise * 0.18, "fiber_density": 38, "calibration": 0.18}, true)
+			profile.merge({"presence": 0.22 + stirring_rise * 0.25, "glow": 0.16 + stirring_rise * 0.17, "pupil": 0.38 - stirring_rise * 0.04, "fiber_motion": 0.25 + stirring_rise * 0.18, "fiber_density": 32, "calibration": 0.18}, true)
 		State.AWAKENING:
 			var opening := _ease_out(clampf(state_time / 1.72, 0.0, 1.0))
-			profile.merge({"presence": 0.50 + opening * 0.42, "glow": 0.34 + opening * 0.48, "pupil": 0.35 - opening * 0.08, "pupil_breath": 0.020, "pupil_response": 5.2, "fiber_motion": 0.40 + opening * 0.45, "fiber_density": 56, "focus": opening * 0.42, "calibration": 0.0}, true)
+			profile.merge({"presence": 0.50 + opening * 0.42, "glow": 0.34 + opening * 0.48, "pupil": 0.35 - opening * 0.08, "pupil_breath": 0.020, "pupil_response": 5.2, "fiber_motion": 0.40 + opening * 0.45, "fiber_density": 46, "focus": opening * 0.42, "calibration": 0.0}, true)
 		State.WELCOMING:
-			profile.merge({"presence": 1.0, "glow": 0.76, "pupil": 0.268, "fiber_motion": 0.74, "fiber_density": 64, "focus": 0.34}, true)
+			profile.merge({"presence": 1.0, "glow": 0.76, "pupil": 0.268, "fiber_motion": 0.74, "fiber_density": 54, "focus": 0.34}, true)
 		State.AWARE:
-			profile.merge({"presence": 1.0, "glow": 0.60, "pupil": 0.286, "fiber_motion": 0.55, "fiber_density": 58, "focus": 0.16}, true)
+			profile.merge({"presence": 1.0, "glow": 0.60, "pupil": 0.286, "fiber_motion": 0.55, "fiber_density": 48, "focus": 0.16}, true)
 		State.ATTENDING:
-			profile.merge({"presence": 1.0, "glow": 0.80, "pupil": 0.245, "pupil_response": 9.0, "fiber_motion": 0.78, "fiber_density": 64, "focus": 0.72}, true)
+			profile.merge({"presence": 1.0, "glow": 0.80, "pupil": 0.245, "pupil_response": 9.0, "fiber_motion": 0.78, "fiber_density": 54, "focus": 0.72}, true)
 		State.FOCUSED:
-			profile.merge({"presence": 1.0, "glow": 0.98, "pupil": 0.205, "pupil_response": 8.0, "fiber_motion": 0.90, "fiber_density": 68, "focus": 1.0}, true)
+			profile.merge({"presence": 1.0, "glow": 0.98, "pupil": 0.205, "pupil_response": 8.0, "fiber_motion": 0.90, "fiber_density": 56, "focus": 1.0}, true)
 		State.OBSERVING:
-			profile.merge({"presence": 1.0, "glow": 0.80, "pupil": 0.226, "pupil_breath": 0.008, "pupil_response": 6.4, "fiber_motion": 0.74, "fiber_density": 62, "focus": 0.82}, true)
+			profile.merge({"presence": 1.0, "glow": 0.80, "pupil": 0.226, "pupil_breath": 0.008, "pupil_response": 6.4, "fiber_motion": 0.74, "fiber_density": 52, "focus": 0.82}, true)
 		State.SETTLED:
-			profile.merge({"presence": 1.0, "glow": 0.40, "pupil": 0.307, "fiber_motion": 0.38, "fiber_density": 50, "focus": 0.06, "reflective": 0.24}, true)
+			profile.merge({"presence": 1.0, "glow": 0.40, "pupil": 0.307, "fiber_motion": 0.38, "fiber_density": 40, "focus": 0.06, "reflective": 0.24}, true)
 		State.REFLECTIVE:
-			profile.merge({"presence": 1.0, "glow": 0.50, "pupil": 0.314, "fiber_motion": 0.32, "fiber_density": 48, "reflective": 1.0, "pulse_enabled": true}, true)
+			profile.merge({"presence": 1.0, "glow": 0.50, "pupil": 0.314, "fiber_motion": 0.32, "fiber_density": 42, "reflective": 1.0, "pulse_enabled": true}, true)
 	return profile
 
 func _base_profile() -> Dictionary:

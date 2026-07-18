@@ -78,7 +78,7 @@ func _draw() -> void:
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 func _draw_aura(center: Vector2, radius: float, presence: float, glow: float, focus: float, pulse: float, drift: float) -> void:
-	var rings := 8
+	var rings := 6
 	for index in range(rings, 0, -1):
 		var amount := float(index) / float(rings)
 		var spread := 1.08 + amount * (0.54 + focus * 0.15 + pulse * 0.12)
@@ -88,8 +88,8 @@ func _draw_aura(center: Vector2, radius: float, presence: float, glow: float, fo
 
 func _draw_iris_body(center: Vector2, radius: float, presence: float, glow: float, breath_wave: float, drift: float, asymmetry: float) -> void:
 	var silhouette := PackedVector2Array()
-	for index in range(64):
-		var angle := TAU * float(index) / 64.0
+	for index in range(48):
+		var angle := TAU * float(index) / 48.0
 		var ripple := sin(angle * 5.0 + elapsed * 0.47 + asymmetry) * 0.013
 		ripple += sin(angle * 11.0 - elapsed * 0.19 + asymmetry * 1.7) * 0.006
 		ripple += sin(angle * 3.0 + elapsed * 0.071) * 0.004
@@ -102,7 +102,7 @@ func _draw_iris_body(center: Vector2, radius: float, presence: float, glow: floa
 	var rim_alpha := (0.055 + glow * 0.18) * presence
 	for ring in range(2):
 		var ring_radius := radius * (0.912 + float(ring) * 0.048)
-		draw_arc(center, ring_radius, 0.0, TAU, 56, Color(0.14, 0.70 + drift * 0.08, 0.56 + drift * 0.10, rim_alpha / float(ring + 1)), 0.85, true)
+		draw_arc(center, ring_radius, 0.0, TAU, 40, Color(0.14, 0.70 + drift * 0.08, 0.56 + drift * 0.10, rim_alpha / float(ring + 1)), 0.85, true)
 
 func _draw_fibers(center: Vector2, radius: float, pupil_ratio: float, motion: float, density: int, presence: float, glow: float, focus: float, drift: float, asymmetry: float) -> void:
 	if density <= 0:
@@ -130,7 +130,8 @@ func _draw_fibers(center: Vector2, radius: float, pupil_ratio: float, motion: fl
 		var width := 0.42 + bright * 0.54 + focus * 0.14
 		draw_line(first, second, fiber_color, width, true)
 		draw_line(second, third, fiber_color, width * 0.74, true)
-		draw_line(third, fourth, fiber_color, width * 0.52, true)
+		if index % 3 == 0:
+			draw_line(third, fourth, fiber_color, width * 0.52, true)
 
 func _draw_pupil(center: Vector2, radius: float, pupil_ratio: float, presence: float, glow: float, focus: float, breath_wave: float, pulse: float) -> void:
 	var pupil_radius := radius * pupil_ratio
