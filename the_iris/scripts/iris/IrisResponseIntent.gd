@@ -38,14 +38,14 @@ func to_dictionary() -> Dictionary:
 ## =====================================================================
 ## Native audio, haptics, and accessibility systems subscribe to these contracts.
 
-static func consume_audio(intent: IrisResponseIntent) -> void:
+static func consume_audio(_intent: IrisResponseIntent) -> void:
 	# Virtual Hook: Audio triggers based on intent.audio_key or intent.voice_key
 	pass
 
-static func consume_haptics(intent: IrisResponseIntent) -> void:
+static func consume_haptics(_intent: IrisResponseIntent) -> void:
 	# Virtual Hook: Haptic triggers based on intent.haptic_key or core_state
 	pass
 
-static func consume_accessibility(intent: IrisResponseIntent) -> void:
+static func consume_accessibility(_intent: IrisResponseIntent) -> void:
 	# Virtual Hook: Narration engine announces description text mapped to intent.text_key
 	pass

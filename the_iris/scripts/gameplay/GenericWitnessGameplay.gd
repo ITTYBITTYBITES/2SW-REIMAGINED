@@ -515,7 +515,7 @@ func _advance() -> void:
 				_set_phase(Phase.RESOLUTION)
 		Phase.RESOLUTION:
 			var accuracy := clampf(1.0 - float(anomaly_missteps) * 0.15 - float(capture_misses) * 0.10, 0.40, 1.0)
-			var base_reward: Dictionary = definition.reward_definition
+			var _base_reward: Dictionary = definition.reward_definition
 			completion_requested.emit(WitnessMomentResult.new(
 				definition.moment_id, 
 				accuracy, 
