@@ -2,11 +2,11 @@
 
 ## Runtime path
 
-`StartupFlow` finishes, then `Application` presents `IrisController` through calibration, stirring, awakening, welcoming, and aware behavior. A touch first acquires attention, then focuses before requesting Iris Home. Iris Home opens Witness Chapters. The application sets the Iris to observing while a Witness Moment is active, settled on Home, and reflective after moment completion.
+`StartupFlow` finishes, then `Application` presents `IrisController` through calibration, stirring, awakening, welcoming, and aware behavior. A touch first acquires attention, then focuses before requesting Iris Home. Iris Home keeps that same Iris visible as a non-interactive settled presence while the archive opens Witness Chapters. The application sets the Iris to observing while a Witness Moment is active and reflective after moment completion.
 
 ## Iris
 
-- `scripts/iris/IrisController.gd` owns the Iris screen, state labels, touch interaction, and the Home navigation request.
+- `scripts/iris/IrisController.gd` owns the Iris screen, state labels, touch interaction, the Home navigation request, and the non-interactive Home-environment presentation mode.
 - `scripts/iris/IrisCore.gd` is the behavior-only state model: dormant, calibrating, stirring, awakening, welcoming, aware, attending, focused, observing, settled, and reflective.
 - `scripts/iris/LivingIris.gd` is the sole renderer. One `Control` draws the complete Iris procedurally with 2D primitives: aura, organic body contour, irregular fibers, pupil, micro-saccades, rare aperture blinks, glints, calibration ring, and reflective threads.
 

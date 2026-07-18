@@ -9,8 +9,10 @@ const ATTENTION_HOLD_SECONDS := 0.56
 
 var iris_core: IrisCore
 var living_iris: LivingIris
+var brand_label: Label
 var invitation: Label
 var state_label: Label
+var navigation_label: Label
 var home_request_in := -1.0
 var attention_locked := false
 
@@ -32,10 +34,10 @@ func _ready() -> void:
 	living_iris.set_core(iris_core)
 	add_child(living_iris)
 
-	_label("THE IRIS", 16, Color("#e2faf1"), Vector2(30, 31), Vector2(400, 30))
+	brand_label = _label("THE IRIS", 16, Color("#e2faf1"), Vector2(30, 31), Vector2(400, 30))
 	state_label = _label("A LIVING PERCEPTION INSTRUMENT", 10, Color("#6f9e92"), Vector2(31, 58), Vector2(420, 22))
 	invitation = _label("the iris is listening", 15, Color("#bde8d9"), Vector2(30, 736), Vector2(480, 34), HORIZONTAL_ALIGNMENT_CENTER)
-	_label("HOME  ·  WITNESS CHAPTERS", 11, Color("#668d84"), Vector2(30, 774), Vector2(480, 24), HORIZONTAL_ALIGNMENT_CENTER)
+	navigation_label = _label("HOME  ·  WITNESS CHAPTERS", 11, Color("#668d84"), Vector2(30, 774), Vector2(480, 24), HORIZONTAL_ALIGNMENT_CENTER)
 	iris_core.state_changed.connect(_on_state_changed)
 
 func _process(delta: float) -> void:
@@ -63,6 +65,15 @@ func welcome() -> void:
 	visible = true
 	iris_core.transition_to(IrisCore.State.WELCOMING)
 	invitation.text = "touch the iris to enter"
+
+## Direct Iris Home integration: the existing Iris becomes a non-interactive
+## settled presence behind the archive environment. No second renderer exists.
+func set_home_environment(active: bool) -> void:
+	mouse_filter = Control.MOUSE_FILTER_IGNORE if active else Control.MOUSE_FILTER_STOP
+	brand_label.visible = not active
+	state_label.visible = not active
+	invitation.visible = not active
+	navigation_label.visible = not active
 
 func observe() -> void:
 	_cancel_attention()

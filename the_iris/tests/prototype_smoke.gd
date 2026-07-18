@@ -57,9 +57,27 @@ func _run() -> void:
 	if not app.home.visible or app.iris.iris_core.state != IrisCore.State.SETTLED:
 		_fail("Focused Iris interaction did not arrive at settled Home")
 		return
-	app.show_witness()
-	if app.iris.iris_core.state != IrisCore.State.OBSERVING:
-		_fail("Witness transition did not focus the Iris on observation")
+	if not app.iris.visible or app.iris.mouse_filter != Control.MOUSE_FILTER_IGNORE:
+		_fail("Home did not retain the Living Iris as a non-interactive presence")
+		return
+	var rest_action := app.home.get_node_or_null("RestWithIris") as Button
+	if rest_action == null:
+		_fail("Home rest action is unavailable")
+		return
+	rest_action.pressed.emit()
+	await process_frame
+	if app.home.visible or not app.iris.visible or app.iris.mouse_filter != Control.MOUSE_FILTER_STOP:
+		_fail("Home rest action did not restore direct Iris presence")
+		return
+	app.show_home()
+	var archive_action := app.home.get_node_or_null("ContinueWitnessCard/ArchiveAction") as Button
+	if archive_action == null:
+		_fail("Home Witness Archive action is unavailable")
+		return
+	archive_action.pressed.emit()
+	await process_frame
+	if not app.witness.visible or app.iris.iris_core.state != IrisCore.State.OBSERVING:
+		_fail("Witness Archive action did not enter the protected Witness flow")
 		return
 
 	for moment in app.director.chapter_moments():

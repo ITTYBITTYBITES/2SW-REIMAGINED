@@ -53,12 +53,14 @@ func _on_startup_finished() -> void:
 	show_iris(true)
 
 func prepare_iris() -> void:
+	iris.set_home_environment(false)
 	iris.visible = false
 	home.visible = false
 	witness.visible = false
 	iris.dormant()
 
 func show_iris(from_boot := false) -> void:
+	iris.set_home_environment(false)
 	iris.visible = true
 	home.visible = false
 	witness.visible = false
@@ -68,12 +70,15 @@ func show_iris(from_boot := false) -> void:
 		iris.welcome()
 
 func show_home() -> void:
-	iris.visible = false
+	# The single Living Iris remains visible as the settled center of Home.
+	iris.visible = true
+	iris.settle()
+	iris.set_home_environment(true)
 	home.visible = true
 	witness.visible = false
-	iris.settle()
 
 func show_witness() -> void:
+	iris.set_home_environment(false)
 	iris.visible = false
 	home.visible = false
 	witness.visible = true
