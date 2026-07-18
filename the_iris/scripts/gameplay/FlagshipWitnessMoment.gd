@@ -28,10 +28,13 @@ var phase_label: Label
 var title_label: Label
 var body_label: Label
 var timer_label: Label
+var guidance_label: Label
 var action_button: Button
 var anomaly_button: Button
 var capture_button: Button
+var capture_progress: ProgressBar
 var review_slider: HSlider
+var review_legend: Label
 var evidence_container: VBoxContainer
 
 func _ready() -> void:
@@ -64,6 +67,7 @@ func _ready() -> void:
 	body_label = _label("", 16, Color("#d3eee5"), Vector2(28, 108), Vector2(470, 90))
 	body_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	timer_label = _label("", 12, Color("#b7ded1"), Vector2(28, 202), Vector2(470, 24), HORIZONTAL_ALIGNMENT_CENTER)
+	guidance_label = _label("", 11, Color("#91c8b9"), Vector2(42, 654), Vector2(456, 22), HORIZONTAL_ALIGNMENT_CENTER)
 
 	var panel := ColorRect.new()
 	panel.position = Vector2(20, 630)
@@ -76,8 +80,8 @@ func _ready() -> void:
 	action_button.pressed.connect(_advance)
 
 	evidence_container = VBoxContainer.new()
-	evidence_container.position = Vector2(42, 660)
-	evidence_container.size = Vector2(456, 140)
+	evidence_container.position = Vector2(42, 684)
+	evidence_container.size = Vector2(456, 132)
 	evidence_container.add_theme_constant_override("separation", 8)
 	add_child(evidence_container)
 
@@ -93,6 +97,27 @@ func _ready() -> void:
 	capture_button.button_up.connect(_end_capture_hold)
 	add_child(capture_button)
 
+	capture_progress = ProgressBar.new()
+	capture_progress.position = Vector2(42, 798)
+	capture_progress.size = Vector2(456, 18)
+	capture_progress.show_percentage = false
+	capture_progress.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var progress_background := StyleBoxFlat.new()
+	progress_background.bg_color = Color("#0d2929")
+	progress_background.corner_radius_top_left = 7
+	progress_background.corner_radius_top_right = 7
+	progress_background.corner_radius_bottom_left = 7
+	progress_background.corner_radius_bottom_right = 7
+	var progress_fill := StyleBoxFlat.new()
+	progress_fill.bg_color = Color("#8ee9c8")
+	progress_fill.corner_radius_top_left = 7
+	progress_fill.corner_radius_top_right = 7
+	progress_fill.corner_radius_bottom_left = 7
+	progress_fill.corner_radius_bottom_right = 7
+	capture_progress.add_theme_stylebox_override("background", progress_background)
+	capture_progress.add_theme_stylebox_override("fill", progress_fill)
+	add_child(capture_progress)
+
 	review_slider = HSlider.new()
 	review_slider.name = "TruthTimeline"
 	review_slider.position = Vector2(42, 744)
@@ -102,6 +127,7 @@ func _ready() -> void:
 	review_slider.step = 0.01
 	review_slider.value_changed.connect(_review_changed)
 	add_child(review_slider)
+	review_legend = _label("BEFORE                 FRACTURE                 AFTER", 10, Color("#8cbcae"), Vector2(42, 778), Vector2(456, 18), HORIZONTAL_ALIGNMENT_CENTER)
 
 func start() -> void:
 	visible = true
@@ -116,7 +142,8 @@ func start() -> void:
 
 func present_reward(award: Dictionary, profile: WitnessProfile) -> void:
 	_set_phase(Phase.REWARD)
-	body_label.text = "Truth restored.\n\n+%d Resonance\nAperture %d · %s" % [int(award.get("total", 0)), profile.aperture_rank, profile.aperture_title]
+	body_label.text = "Truth restored.\n\n+%d Resonance\nAperture %d · %s\n\nYour Iris carried this pattern forward." % [int(award.get("total", 0)), profile.aperture_rank, profile.aperture_title]
+	guidance_label.text = "THE MOMENT HOLDS."
 	action_button.text = "RETURN TO IRIS HUB"
 	action_button.visible = true
 
@@ -149,10 +176,14 @@ func _set_phase(next_phase: Phase) -> void:
 	phase = next_phase
 	anomaly_button.visible = false
 	capture_button.visible = false
+	capture_button.modulate = Color.WHITE
+	capture_progress.visible = false
 	review_slider.visible = false
+	review_legend.visible = false
 	evidence_container.visible = false
 	action_button.visible = false
 	timer_label.text = ""
+	guidance_label.text = ""
 	for child in evidence_container.get_children():
 		child.queue_free()
 
@@ -162,6 +193,7 @@ func _set_phase(next_phase: Phase) -> void:
 			phase_label.text = "IRIS BRIEFING  ·  FM_001"
 			title_label.text = "The Borrowed Light"
 			body_label.text = "The Iris has held a moment that cannot keep its order. Watch for what arrives too soon."
+			guidance_label.text = "WATCH CAREFULLY."
 			action_button.text = "BEGIN OBSERVATION"
 			action_button.visible = true
 		Phase.OBSERVATION:
@@ -169,34 +201,42 @@ func _set_phase(next_phase: Phase) -> void:
 			phase_label.text = "OBSERVE"
 			title_label.text = "Let the moment happen"
 			body_label.text = "Watch without touching. The truth only stays for two seconds."
+			guidance_label.text = "LET THE MOMENT ARRIVE."
 			observation_remaining = 2.0
 		Phase.ANOMALY:
 			scene_image.texture = load("res://assets/witness/wm_001_studio_background.png")
 			phase_label.text = "NOTICE"
 			title_label.text = "What arrives too soon?"
 			body_label.text = "Find the impossible order in the light."
+			guidance_label.text = "SOMETHING ARRIVED TOO SOON."
 			anomaly_button.visible = true
 		Phase.CAPTURE:
 			scene_image.texture = load("res://assets/witness/wm_001_hand_action.png")
 			phase_label.text = "CAPTURE"
 			title_label.text = "Catch the exact truth"
 			body_label.text = "Hold when the spectrum reaches the canvas before the prism can cast it."
+			guidance_label.text = "HOLD WHEN YOU SEE THE FRACTURE."
 			capture_elapsed = 0.0
 			capture_hold = 0.0
 			capture_holding = false
+			capture_progress.value = 0.0
 			capture_button.visible = true
+			capture_progress.visible = true
 		Phase.REVIEW:
 			scene_image.texture = load("res://assets/witness/wm_001_hand_action.png")
 			phase_label.text = "REVIEW"
 			title_label.text = "Move through the two seconds"
 			body_label.text = "Scrub to the impossible instant: the light appears before its source."
+			guidance_label.text = "FIND THE FRACTURE."
 			review_slider.value = 0.0
 			review_slider.visible = true
+			review_legend.visible = true
 		Phase.CONTEXT:
 			scene_image.texture = load("res://assets/witness/wm_001_prism_reveal.png")
 			phase_label.text = "UNDERSTAND"
 			title_label.text = "Gather the context"
 			body_label.text = "The truth needs its surroundings. Carry each piece that explains the break."
+			guidance_label.text = "THE CLUES EXPLAIN EACH OTHER."
 			evidence_container.visible = true
 			_add_evidence("paused_brush", "The paused brush")
 			_add_evidence("crystal_prism", "The crystal prism")
@@ -205,7 +245,8 @@ func _set_phase(next_phase: Phase) -> void:
 			scene_image.texture = load("res://assets/witness/wm_001_prism_reveal.png")
 			phase_label.text = "REVEAL"
 			title_label.text = "The borrowed light"
-			body_label.text = "The rainbow reached the canvas before the prism received the sun. The memory was not recalling inspiration. It was showing the instant cause and effect came apart."
+			body_label.text = "What was wrong: the rainbow reached the canvas before the prism received the sun.\n\nWhy it mattered: the memory was showing the instant cause and effect came apart."
+			guidance_label.text = "YOU RESTORED THE ORDER OF THE MOMENT."
 			action_button.text = "RESTORE THE TRUTH"
 			action_button.visible = true
 		Phase.REWARD:
@@ -217,6 +258,7 @@ func _find_anomaly() -> void:
 		return
 	anomaly_button.visible = false
 	body_label.text = "You saw it. The spectrum arrives before the prism receives light."
+	guidance_label.text = "THE EFFECT ARRIVED BEFORE ITS CAUSE."
 	action_button.text = "REPEAT THE MOMENT"
 	action_button.visible = true
 
@@ -228,21 +270,34 @@ func _end_capture_hold() -> void:
 	if phase == Phase.CAPTURE:
 		capture_holding = false
 		capture_hold = 0.0
+		capture_progress.value = 0.0
 
 func _update_capture(delta: float) -> void:
 	capture_elapsed += delta
-	if capture_holding and capture_elapsed >= CAPTURE_WINDOW_START and capture_elapsed <= CAPTURE_WINDOW_END:
+	var fracture_open := capture_elapsed >= CAPTURE_WINDOW_START and capture_elapsed <= CAPTURE_WINDOW_END
+	if fracture_open:
+		capture_button.text = "HOLD NOW · CATCH THE FRACTURE" if not capture_holding else "HOLDING THE TRUTH"
+		capture_button.modulate = Color(1.18, 1.18, 1.10, 1.0)
+		guidance_label.text = "THE FRACTURE IS HERE."
+	else:
+		capture_button.text = "WAIT FOR THE LIGHT" if not capture_holding else "HOLDING TOO EARLY"
+		capture_button.modulate = Color.WHITE
+	if capture_holding and fracture_open:
 		capture_hold += delta
+		capture_progress.value = clampf(capture_hold / CAPTURE_HOLD_REQUIRED, 0.0, 1.0) * 100.0
 		if capture_hold >= CAPTURE_HOLD_REQUIRED:
 			capture_holding = false
+			capture_button.modulate = Color.WHITE
 			_set_phase(Phase.REVIEW)
 			return
 	if capture_elapsed >= 2.0:
 		capture_elapsed = 0.0
 		capture_hold = 0.0
+		capture_progress.value = 0.0
 		capture_holding = false
 		capture_misses += 1
 		body_label.text = "The moment repeats. Hold only when the light reaches the canvas too soon."
+		guidance_label.text = "WAIT FOR THE FRACTURE."
 	timer_label.text = "CATCH  ·  %.1f" % capture_elapsed
 
 func _review_changed(value: float) -> void:
@@ -257,6 +312,7 @@ func _review_changed(value: float) -> void:
 	if absf(value - 1.08) <= 0.12:
 		review_unlocked = true
 		body_label.text = "There. The canvas receives color before the prism is lit."
+		guidance_label.text = "YOU STOPPED THE MOMENT AT THE BREAK."
 		action_button.text = "GATHER CONTEXT"
 		action_button.visible = true
 
@@ -284,7 +340,12 @@ func _toggle_evidence(key: String, label: String, button: Button) -> void:
 	evidence_found[key] = true
 	button.text = "✓  %s" % label
 	button.disabled = true
+	match key:
+		"paused_brush": guidance_label.text = "THE BRUSH PAUSED BEFORE THE COLOR COULD BE TRUE."
+		"crystal_prism": guidance_label.text = "THE PRISM HAD NOT YET RECEIVED THE SUN."
+		"color_note": guidance_label.text = "THE NOTE WAS WAITING FOR THE REAL LIGHT."
 	if evidence_found.size() == 3:
+		guidance_label.text = "CAUSE AND EFFECT HAVE BEEN REVERSED."
 		action_button.text = "REVEAL THE TRUTH"
 		action_button.visible = true
 
