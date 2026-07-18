@@ -16,6 +16,9 @@ var shake_time := 0.0
 var shake_intensity := 0.0
 var target_opacity := 0.48
 
+var intro_timer := 0.0
+var in_intro_cinematic := false
+
 var observation_remaining := 0.0
 var anomaly_missteps := 0
 var capture_elapsed := 0.0
@@ -148,6 +151,10 @@ func start(value_definition: WitnessMomentDefinition) -> bool:
 	var color_hex: String = definition.asset_manifest.lighting_profile.get("modulate_color", "#ffffff")
 	scene_image.self_modulate = WitnessAssetResolver.resolve_color(color_hex, Color.WHITE)
 	
+	# Initialize cinematic opening sequence
+	in_intro_cinematic = true
+	intro_timer = 3.0
+	
 	_set_phase(Phase.BRIEFING)
 	return true
 
@@ -166,6 +173,44 @@ func close() -> void:
 func _process(delta: float) -> void:
 	if not visible:
 		return
+		
+	if in_intro_cinematic:
+		intro_timer -= delta
+		if intro_timer > 2.0:
+			# State 1: Darkness (0.0 to 1.0s elapsed)
+			scene_image.modulate.a = 0.0
+			phase_label.modulate.a = 0.0
+			title_label.modulate.a = 0.0
+			body_label.modulate.a = 0.0
+			guidance_label.modulate.a = 0.0
+			action_button.visible = false
+		elif intro_timer > 1.0:
+			# State 2: Iris Awakens & Message Appears (1.0 to 2.0s elapsed)
+			scene_image.modulate.a = lerpf(scene_image.modulate.a, target_opacity * 0.25, minf(1.0, delta * 3.0))
+			phase_label.text = "THE FIELD AWAKENS  ·  " + definition.moment_id
+			phase_label.modulate.a = lerpf(phase_label.modulate.a, 0.72, minf(1.0, delta * 4.0))
+			guidance_label.text = "THE IRIS SENSES A FRACTURED PATTERN..."
+			guidance_label.modulate.a = lerpf(guidance_label.modulate.a, 0.88, minf(1.0, delta * 4.0))
+			action_button.visible = false
+		elif intro_timer > 0.0:
+			# State 3: Memory Forms & Environment Materializes (2.0 to 3.0s elapsed)
+			scene_image.modulate.a = lerpf(scene_image.modulate.a, target_opacity, minf(1.0, delta * 4.0))
+			title_label.text = definition.title
+			title_label.modulate.a = lerpf(title_label.modulate.a, 1.0, minf(1.0, delta * 4.0))
+			guidance_label.text = "FORMING ENVIRONMENT LAYERS..."
+			guidance_label.modulate.a = lerpf(guidance_label.modulate.a, 1.0, minf(1.0, delta * 4.0))
+			action_button.visible = false
+		else:
+			# State 4: Player enters moment (3.0s complete)
+			in_intro_cinematic = false
+			_set_phase(Phase.BRIEFING)
+		return
+		
+	# Low-frequency biological breathing pulsation on the backdrop
+	var pulse_speed := float(definition.asset_manifest.visual_effects.get("pulse_speed", 1.2))
+	var breath := sin(Time.get_ticks_msec() * 0.001 * pulse_speed) * 0.015
+	scene_image.scale = Vector2.ONE * (1.0 + breath)
+	scene_image.pivot_offset = scene_image.size * 0.5
 		
 	# Smoothly fade in background texture
 	scene_image.modulate.a = lerpf(scene_image.modulate.a, target_opacity, minf(1.0, delta * 3.5))
@@ -314,7 +359,7 @@ func _set_phase(next_phase: Phase) -> void:
 			phase_label.text = "REVEAL"
 			title_label.text = definition.title
 			body_label.text = definition.resolution_text
-			guidance_label.text = "YOU RESTORED THE ORDER OF THE MOMENT."
+			guidance_label.text = "THE LOOP HAS CLOSED. WHAT WAS BROKEN IS NOW WHOLE."
 			action_button.text = "RESTORE THE TRUTH"
 			action_button.visible = true
 		Phase.REWARD:
