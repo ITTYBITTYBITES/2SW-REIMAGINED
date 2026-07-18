@@ -1,19 +1,17 @@
-[gd_scene load_steps=30 format=3]
-
 [ext_resource type="Script" path="res://scripts/MainController.gd" id="1_main"]
 [ext_resource type="Script" path="res://scripts/StateManager.gd" id="2_state"]
 [ext_resource type="Script" path="res://scripts/NavigationManager.gd" id="3_nav"]
 [ext_resource type="Script" path="res://scripts/BackNavigationController.gd" id="4_back"]
 [ext_resource type="Script" path="res://scripts/ProceduralSound.gd" id="5_sound"]
-[ext_resource type="PackedScene" path="res://src/ui/screens/IrisHomeScreen.tscn" id="6_iris"]
-[ext_resource type="PackedScene" path="res://scenes/WitnessExperience.tscn" id="7_witness"]
-[ext_resource type="PackedScene" path="res://scenes/ArchivePlaceholder.tscn" id="8_archive"]
-[ext_resource type="PackedScene" path="res://scenes/DiscoverPlaceholder.tscn" id="9_discovery"]
-[ext_resource type="PackedScene" path="res://scenes/ProfilePlaceholder.tscn" id="10_profile"]
-[ext_resource type="PackedScene" path="res://scenes/SettingsPlaceholder.tscn" id="11_settings"]
-[ext_resource type="Script" path="res://scripts/EdgeGlow.gd" id="12_edge"]
-[ext_resource type="PackedScene" path="res://scenes/TransitionController.tscn" id="13_transition"]
-[ext_resource type="PackedScene" path="res://scenes/AccessibilityPanel.tscn" id="14_accessibility"]
+[ext_resource type="PackedScene" path="res://scenes/Iris.tscn" id="6_iris"]
+[ext_resource type="PackedScene" path="res://src/ui/screens/IrisHomeScreen.tscn" id="7_iris_home"]
+[ext_resource type="PackedScene" path="res://scenes/WitnessExperience.tscn" id="8_witness"]
+[ext_resource type="PackedScene" path="res://scenes/ArchivePlaceholder.tscn" id="9_archive"]
+[ext_resource type="PackedScene" path="res://scenes/DiscoverPlaceholder.tscn" id="10_discovery"]
+[ext_resource type="PackedScene" path="res://scenes/ProfilePlaceholder.tscn" id="11_profile"]
+[ext_resource type="PackedScene" path="res://scenes/SettingsPlaceholder.tscn" id="12_settings"]
+[ext_resource type="Script" path="res://scripts/EdgeGlow.gd" id="13_edge"]
+[ext_resource type="PackedScene" path="res://scenes/TransitionController.tscn" id="14_transition"]
 [ext_resource type="PackedScene" path="res://scenes/VoiceGuide.tscn" id="15_voice"]
 [ext_resource type="Script" path="res://scripts/DeviceCapabilityManager.gd" id="16_device"]
 [ext_resource type="Script" path="res://scripts/InputIntentController.gd" id="17_intents"]
@@ -24,10 +22,10 @@
 [ext_resource type="PackedScene" path="res://src/ui/screens/ExperienceReadinessScreen.tscn" id="22_readiness"]
 [ext_resource type="PackedScene" path="res://scenes/DailyWitnessPlaceholder.tscn" id="23_daily"]
 [ext_resource type="PackedScene" path="res://scenes/WeeklyInvestigationPlaceholder.tscn" id="24_weekly"]
-[ext_resource type="PackedScene" path="res://scenes/CalibrationPlaceholder.tscn" id="26_calibration"]
-[ext_resource type="Script" path="res://src/iris/story/WitnessExperienceDirector.gd" id="27_director"]
-[ext_resource type="PackedScene" path="res://scenes/WitnessMomentRuntime.tscn" id="28_runtime"]
-[ext_resource type="PackedScene" path="res://scenes/TutorialAwakeningScreen.tscn" id="29_tutorial"]
+[ext_resource type="PackedScene" path="res://scenes/CalibrationPlaceholder.tscn" id="25_calibration"]
+[ext_resource type="Script" path="res://src/iris/story/WitnessExperienceDirector.gd" id="26_director"]
+[ext_resource type="PackedScene" path="res://scenes/WitnessMomentRuntime.tscn" id="27_runtime"]
+[ext_resource type="PackedScene" path="res://scenes/TutorialAwakeningScreen.tscn" id="28_tutorial"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
@@ -72,21 +70,24 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="IrisHomeScreen" parent="Interface/ScreenRoot" instance=ExtResource("6_iris")]
+[node name="IrisScreen" parent="Interface/ScreenRoot" instance=ExtResource("6_iris")]
 
-[node name="WitnessMode" parent="Interface/ScreenRoot" instance=ExtResource("7_witness")]
+[node name="IrisHomeScreen" parent="Interface/ScreenRoot" instance=ExtResource("7_iris_home")]
 visible = false
 
-[node name="Archive" parent="Interface/ScreenRoot" instance=ExtResource("8_archive")]
+[node name="WitnessMode" parent="Interface/ScreenRoot" instance=ExtResource("8_witness")]
 visible = false
 
-[node name="Discovery" parent="Interface/ScreenRoot" instance=ExtResource("9_discovery")]
+[node name="Archive" parent="Interface/ScreenRoot" instance=ExtResource("9_archive")]
 visible = false
 
-[node name="Profile" parent="Interface/ScreenRoot" instance=ExtResource("10_profile")]
+[node name="Discovery" parent="Interface/ScreenRoot" instance=ExtResource("10_discovery")]
 visible = false
 
-[node name="Settings" parent="Interface/ScreenRoot" instance=ExtResource("11_settings")]
+[node name="Profile" parent="Interface/ScreenRoot" instance=ExtResource("11_profile")]
+visible = false
+
+[node name="Settings" parent="Interface/ScreenRoot" instance=ExtResource("12_settings")]
 visible = false
 
 visible = false
@@ -99,10 +100,10 @@ visible = false
 
 visible = false
 
-[node name="Calibration" parent="Interface/ScreenRoot" instance=ExtResource("26_calibration")]
+[node name="Calibration" parent="Interface/ScreenRoot" instance=ExtResource("25_calibration")]
 visible = false
 
-[node name="TutorialAwakening" parent="Interface/ScreenRoot" instance=ExtResource("29_tutorial")]
+[node name="TutorialAwakening" parent="Interface/ScreenRoot" instance=ExtResource("28_tutorial")]
 visible = false
 
 [node name="HUD" type="Control" parent="Interface"]
@@ -122,15 +123,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("12_edge")
+script = ExtResource("13_edge")
 
-[node name="TransitionController" parent="Interface" instance=ExtResource("13_transition")]
+[node name="TransitionController" parent="Interface" instance=ExtResource("14_transition")]
 
 [node name="VoiceGuide" parent="Interface" instance=ExtResource("15_voice")]
 
 [node name="CaptionOverlay" parent="Interface" instance=ExtResource("18_captions")]
 
-[node name="AccessibilityPanel" parent="Interface" instance=ExtResource("14_accessibility")]
+[node name="AccessibilityPanel" parent="Interface" instance=ExtResource("16_accessibility")]
 
 [node name="ExperienceReadiness" parent="Interface" instance=ExtResource("22_readiness")]
 visible = false

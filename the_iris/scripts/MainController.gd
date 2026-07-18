@@ -11,7 +11,8 @@ class_name IrisMainController
 @onready var device: DeviceCapabilityManager = $DeviceCapabilityManager
 @onready var orientation: OrientationManager = $OrientationManager
 @onready var transition: IrisTransitionController = $Interface/TransitionController
-@onready var iris: IrisController = $Interface/ScreenRoot/IrisHomeScreen
+@onready var iris: IrisController = $Interface/ScreenRoot/IrisScreen
+@onready var iris_home: Control = $Interface/ScreenRoot/IrisHomeScreen
 @onready var witness: WitnessModeScreen = $Interface/ScreenRoot/WitnessMode
 @onready var archive: ArchiveScreen = $Interface/ScreenRoot/Archive
 @onready var discovery: DiscoveryScreen = $Interface/ScreenRoot/Discovery
@@ -223,7 +224,15 @@ func _switch_screen(next_screen: String) -> void:
 		"calibration": target = calibration
 		_: target = iris
 	for child in $Interface/ScreenRoot.get_children():
-		child.visible = child == target
+		# IrisScreen stays visible for ALL screens (it's the living instrument, always present)
+		if child == iris:
+			child.visible = true
+		# IrisHomeScreen is only visible when home is active
+		elif child == iris_home:
+			child.visible = (next_screen == "home")
+		# All other screens follow normal visibility
+		else:
+			child.visible = (child == target)
 	active_screen = next_screen
 	edge_glow.set_mode(next_screen)
 	_update_hud(next_screen)
