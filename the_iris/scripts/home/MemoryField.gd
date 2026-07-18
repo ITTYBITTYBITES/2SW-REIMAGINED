@@ -68,9 +68,9 @@ func _gui_input(event: InputEvent) -> void:
 	elif event is InputEventScreenTouch and event.pressed:
 		_select_if_near(event.position)
 
-func _update_pointer(position: Vector2) -> void:
-	pointer_position = position
-	var near := position.distance_to(_shard_position()) <= _proximity_radius()
+func _update_pointer(pointer_value: Vector2) -> void:
+	pointer_position = pointer_value
+	var near := pointer_value.distance_to(_shard_position()) <= _proximity_radius()
 	if near and not pointer_near:
 		_focus_memory()
 	elif not near and pointer_near and selection_remaining < 0.0:
@@ -78,9 +78,9 @@ func _update_pointer(position: Vector2) -> void:
 		intent_released.emit()
 	pointer_near = near
 
-func _select_if_near(position: Vector2) -> void:
-	pointer_position = position
-	if position.distance_to(_shard_position()) > _proximity_radius():
+func _select_if_near(pointer_value: Vector2) -> void:
+	pointer_position = pointer_value
+	if pointer_value.distance_to(_shard_position()) > _proximity_radius():
 		return
 	_focus_memory()
 	selection_locked = true
@@ -106,13 +106,13 @@ func _shard_position() -> Vector2:
 	var orbit_radius := minf(size.x * 0.33, size.y * 0.18) + 52.0
 	var orbit_angle := 0.66 + sin(elapsed * 0.11) * 0.07 + sin(elapsed * 0.037 + 1.8) * 0.035
 	var orbit := Vector2(cos(orbit_angle), sin(orbit_angle)) * orbit_radius
-	var position := iris_center + orbit
+	var shard_position := iris_center + orbit
 	if focus_amount > 0.0:
-		var pull := (pointer_position - position).limit_length(46.0)
-		position += pull * focus_amount * 0.34
+		var pull := (pointer_position - shard_position).limit_length(46.0)
+		shard_position += pull * focus_amount * 0.34
 	if selection_amount > 0.0:
-		position = position.lerp(iris_center, selection_amount * 0.42)
-	return position
+		shard_position = shard_position.lerp(iris_center, selection_amount * 0.42)
+	return shard_position
 
 func _normalized_shard_target() -> Vector2:
 	var safe_size := Vector2(maxf(size.x, 1.0), maxf(size.y, 1.0))
@@ -124,31 +124,31 @@ func _proximity_radius() -> float:
 func _draw() -> void:
 	if size.x <= 0.0 or size.y <= 0.0:
 		return
-	var position := _shard_position()
+	var shard_position := _shard_position()
 	var iris_center := Vector2(size.x * 0.5, size.y * 0.458)
 	var float_wave := sin(elapsed * 0.78) * 0.5 + 0.5
 	var shard_radius := 17.0 + focus_amount * 5.0 - selection_amount * 3.0
 	var glow_alpha := 0.055 + focus_amount * 0.15 + selection_amount * 0.12
 
 	if focus_amount > 0.02:
-		draw_line(iris_center, position, Color(0.38, 0.90, 0.76, focus_amount * 0.18), 1.0, true)
+		draw_line(iris_center, shard_position, Color(0.38, 0.90, 0.76, focus_amount * 0.18), 1.0, true)
 	for ring in range(3, 0, -1):
 		var amount := float(ring) / 3.0
-		draw_circle(position, shard_radius * (1.0 + amount * 0.62), Color(0.15, 0.72, 0.61, glow_alpha * (1.0 - amount * 0.45)))
+		draw_circle(shard_position, shard_radius * (1.0 + amount * 0.62), Color(0.15, 0.72, 0.61, glow_alpha * (1.0 - amount * 0.45)))
 
 	var points := PackedVector2Array()
 	for index in range(6):
 		var angle := TAU * float(index) / 6.0 + elapsed * 0.10
 		var variation := 0.86 + 0.14 * sin(elapsed * 0.43 + float(index) * 1.91)
-		points.append(position + Vector2(cos(angle), sin(angle)) * shard_radius * variation)
+		points.append(shard_position + Vector2(cos(angle), sin(angle)) * shard_radius * variation)
 	draw_colored_polygon(points, Color(0.08, 0.34 + focus_amount * 0.16, 0.30 + focus_amount * 0.14, 0.94))
 
 	var core_radius := shard_radius * (0.36 + float_wave * 0.05)
-	draw_circle(position, core_radius, Color(0.69, 1.0, 0.88, 0.62 + focus_amount * 0.28))
-	draw_circle(position + Vector2(-core_radius * 0.24, -core_radius * 0.24), core_radius * 0.24, Color(1, 1, 1, 0.80))
+	draw_circle(shard_position, core_radius, Color(0.69, 1.0, 0.88, 0.62 + focus_amount * 0.28))
+	draw_circle(shard_position + Vector2(-core_radius * 0.24, -core_radius * 0.24), core_radius * 0.24, Color(1, 1, 1, 0.80))
 
-func _layout_labels(position: Vector2) -> void:
-	var label_origin := position + Vector2(-82, 27)
+func _layout_labels(shard_position: Vector2) -> void:
+	var label_origin := shard_position + Vector2(-82, 27)
 	title_label.position = label_origin
 	title_label.size = Vector2(164, 18)
 	title_label.modulate.a = 0.72 + focus_amount * 0.28

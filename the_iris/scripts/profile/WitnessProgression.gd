@@ -32,7 +32,8 @@ static func calculate_resonance_award(result: Dictionary, is_replay: bool) -> Di
 	return {"total": total, "components": components}
 
 static func aperture_rank_for(resonance: int) -> int:
-	return clampi(1 + maxi(resonance, 0) / RESONANCE_PER_RANK, 1, MAX_APERTURE_RANK)
+	var earned_ranks := floori(float(maxi(resonance, 0)) / float(RESONANCE_PER_RANK))
+	return clampi(1 + earned_ranks, 1, MAX_APERTURE_RANK)
 
 static func aperture_title_for(rank: int) -> String:
 	if rank >= 100:

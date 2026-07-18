@@ -27,12 +27,12 @@ func load_catalogue() -> void:
 		if not parsed is Dictionary:
 			push_error("Witness content is invalid JSON: %s" % path)
 			continue
-		var moment: Dictionary = parsed
-		if not _is_valid(moment):
+		var moment_data: Dictionary = parsed
+		if not _is_valid(moment_data):
 			push_error("Witness content is incomplete: %s" % path)
 			continue
-		moments.append(moment)
-		by_id[moment["id"]] = moment
+		moments.append(moment_data)
+		by_id[moment_data["id"]] = moment_data
 
 func chapter_moments() -> Array[Dictionary]:
 	return moments.duplicate(true)

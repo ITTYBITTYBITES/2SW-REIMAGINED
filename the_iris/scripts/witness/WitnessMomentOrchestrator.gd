@@ -26,7 +26,7 @@ func advance() -> void:
 		var id := str(active.get("moment_id", ""))
 		moment_completed.emit(id)
 		return
-	phase = int(phase) + 1
+	phase = (int(phase) + 1) as Phase
 	phase_changed.emit(phase, current_moment())
 
 func cancel() -> void:

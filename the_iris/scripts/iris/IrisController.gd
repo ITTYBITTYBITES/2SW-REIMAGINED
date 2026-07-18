@@ -104,10 +104,10 @@ func _gui_input(event: InputEvent) -> void:
 	elif event is InputEventScreenTouch and event.pressed:
 		_begin_attention(event.position)
 
-func _begin_attention(position: Vector2) -> void:
+func _begin_attention(tap_position: Vector2) -> void:
 	attention_locked = true
 	var safe_size := Vector2(maxf(size.x, 1.0), maxf(size.y, 1.0))
-	var normalized_target := (position - safe_size * 0.5) / safe_size
+	var normalized_target := (tap_position - safe_size * 0.5) / safe_size
 	iris_core.acquire_attention(normalized_target)
 	invitation.text = "attention acquired"
 	home_request_in = ATTENTION_HOLD_SECONDS
