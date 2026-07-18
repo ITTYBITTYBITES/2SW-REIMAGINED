@@ -143,6 +143,11 @@ func start(value_definition: WitnessMomentDefinition) -> bool:
 	capture_holding = false
 	review_unlocked = false
 	evidence_found.clear()
+	
+	# Load environment lighting profile color modulation dynamically from manifest
+	var color_hex: String = definition.asset_manifest.lighting_profile.get("modulate_color", "#ffffff")
+	scene_image.self_modulate = WitnessAssetResolver.resolve_color(color_hex, Color.WHITE)
+	
 	_set_phase(Phase.BRIEFING)
 	return true
 
@@ -245,7 +250,7 @@ func _set_phase(next_phase: Phase) -> void:
 
 	match phase:
 		Phase.BRIEFING:
-			scene_image.texture = load(definition.background_path)
+			scene_image.texture = WitnessAssetResolver.resolve_texture(definition.asset_manifest.environment_asset, definition.background_path)
 			phase_label.text = "IRIS BRIEFING  ·  " + definition.moment_id
 			title_label.text = definition.title
 			body_label.text = definition.description
@@ -253,14 +258,14 @@ func _set_phase(next_phase: Phase) -> void:
 			action_button.text = "BEGIN OBSERVATION"
 			action_button.visible = true
 		Phase.OBSERVATION:
-			scene_image.texture = load(definition.action_path)
+			scene_image.texture = WitnessAssetResolver.resolve_texture(definition.action_path, definition.action_path)
 			phase_label.text = "OBSERVE"
 			title_label.text = "Let the moment happen"
 			body_label.text = "Watch without touching. The truth only stays for a short time."
 			guidance_label.text = "LET THE MOMENT ARRIVE."
 			observation_remaining = definition.observation_duration
 		Phase.ANOMALY:
-			scene_image.texture = load(definition.background_path)
+			scene_image.texture = WitnessAssetResolver.resolve_texture(definition.asset_manifest.environment_asset, definition.background_path)
 			phase_label.text = "NOTICE"
 			title_label.text = "What is different?"
 			body_label.text = "Find the impossible detail."
@@ -273,7 +278,7 @@ func _set_phase(next_phase: Phase) -> void:
 			anomaly_button.size = Vector2(float(sz.get("x", 94.0)), float(sz.get("y", 94.0)))
 			anomaly_button.visible = true
 		Phase.CAPTURE:
-			scene_image.texture = load(definition.action_path)
+			scene_image.texture = WitnessAssetResolver.resolve_texture(definition.action_path, definition.action_path)
 			phase_label.text = "CAPTURE"
 			title_label.text = "Catch the exact truth"
 			body_label.text = "Hold when the timeline fracture is active."
@@ -294,7 +299,7 @@ func _set_phase(next_phase: Phase) -> void:
 			review_slider.visible = true
 			review_legend.visible = true
 		Phase.CONTEXT:
-			scene_image.texture = load(definition.reveal_path)
+			scene_image.texture = WitnessAssetResolver.resolve_texture(definition.reveal_path, definition.reveal_path)
 			phase_label.text = "UNDERSTAND"
 			title_label.text = "Gather the context"
 			body_label.text = "Carry each piece of the truth to complete the memory."
@@ -305,7 +310,7 @@ func _set_phase(next_phase: Phase) -> void:
 			for node in definition.evidence_nodes:
 				_add_evidence(node)
 		Phase.RESOLUTION:
-			scene_image.texture = load(definition.reveal_path)
+			scene_image.texture = WitnessAssetResolver.resolve_texture(definition.reveal_path, definition.reveal_path)
 			phase_label.text = "REVEAL"
 			title_label.text = definition.title
 			body_label.text = definition.resolution_text
@@ -378,11 +383,11 @@ func _review_changed(value: float) -> void:
 	var center_time := (start_time + end_time) * 0.5
 	
 	if value < start_time - 0.15:
-		scene_image.texture = load(definition.background_path)
+		scene_image.texture = WitnessAssetResolver.resolve_texture(definition.asset_manifest.environment_asset, definition.background_path)
 	elif value < end_time + 0.15:
-		scene_image.texture = load(definition.action_path)
+		scene_image.texture = WitnessAssetResolver.resolve_texture(definition.action_path, definition.action_path)
 	else:
-		scene_image.texture = load(definition.reveal_path)
+		scene_image.texture = WitnessAssetResolver.resolve_texture(definition.reveal_path, definition.reveal_path)
 		
 	if absf(value - center_time) <= 0.12:
 		review_unlocked = true
@@ -397,11 +402,24 @@ func _add_evidence(node: Dictionary) -> void:
 	var label: String = node.get("description", "Detail")
 	
 	button.name = "Evidence_%s" % key
-	button.text = "○  %s" % label
+	button.text = "  %s" % label
 	button.custom_minimum_size = Vector2(456, 36)
 	button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 	button.add_theme_font_size_override("font_size", 13)
-	button.add_theme_color_override("font_color", Color("#dff8ef"))
+	
+	# Dynamically resolve custom modulation color
+	var mod_color_str: String = node.get("color_modulation", "#dff8ef")
+	var resolved_color := WitnessAssetResolver.resolve_color(mod_color_str, Color("#dff8ef"))
+	button.add_theme_color_override("font_color", resolved_color)
+	
+	# Dynamically resolve and apply custom icon assets
+	var icon_path: String = node.get("asset_reference", "")
+	if not icon_path.is_empty():
+		var resolved_icon := WitnessAssetResolver.resolve_texture(icon_path, "")
+		if resolved_icon != null:
+			button.icon = resolved_icon
+			button.expand_icon = true
+			
 	var normal := StyleBoxFlat.new()
 	normal.bg_color = Color("#123934")
 	normal.corner_radius_top_left = 7

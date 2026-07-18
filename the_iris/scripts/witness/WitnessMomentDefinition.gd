@@ -14,6 +14,9 @@ var background_path := ""
 var action_path := ""
 var reveal_path := ""
 
+## Active asset manifest layer
+var asset_manifest: WitnessAssetManifest
+
 ## Anomaly configuration containing:
 ## - "location": Dictionary with "x" and "y" floats/ints
 ## - "size": Dictionary with "x" and "y" floats/ints
@@ -35,6 +38,9 @@ var capture_window := {}
 ## - "description": String
 ## - "relevance": String
 ## - "truth_connection": String
+## - "asset_reference": String (custom icon path)
+## - "visual_effect": String (pulsing or highlight key)
+## - "color_modulation": String (hex color code)
 var evidence_nodes: Array[Dictionary] = []
 
 var resolution_text := ""
@@ -77,7 +83,12 @@ func from_dictionary(dict: Dictionary) -> void:
 	if raw_nodes is Array:
 		for node in raw_nodes:
 			if node is Dictionary:
-				evidence_nodes.append(node.duplicate(true))
+				var clean_node := node.duplicate(true)
+				# Extend evidence node definitions with custom visual assets/effects
+				clean_node["asset_reference"] = str(clean_node.get("asset_reference", ""))
+				clean_node["visual_effect"] = str(clean_node.get("visual_effect", "default"))
+				clean_node["color_modulation"] = str(clean_node.get("color_modulation", "#dff8ef"))
+				evidence_nodes.append(clean_node)
 	else:
 		# Compatibility fallback: build default nodes if evidence_nodes is missing
 		var attunements = dict.get("attunements", [])
@@ -88,7 +99,10 @@ func from_dictionary(dict: Dictionary) -> void:
 					"location": {"x": 100.0, "y": 100.0 + i * 50.0},
 					"description": str(attunements[i]),
 					"relevance": "Detail attunement %d" % i,
-					"truth_connection": "Underlying connection restored."
+					"truth_connection": "Underlying connection restored.",
+					"asset_reference": "",
+					"visual_effect": "default",
+					"color_modulation": "#dff8ef"
 				})
 
 	resolution_text = str(dict.get("resolution_text", dict.get("revelation", "")))
@@ -98,3 +112,10 @@ func from_dictionary(dict: Dictionary) -> void:
 		"accuracy_multiplier": 15.0,
 		"unassisted_bonus": 6
 	}).duplicate(true)
+	
+	# Load or construct the asset manifest layer dynamically
+	asset_manifest = WitnessAssetManifest.new()
+	if dict.has("asset_manifest") and dict["asset_manifest"] is Dictionary:
+		asset_manifest.from_dictionary(dict, moment_id)
+	else:
+		asset_manifest.build_fallback_manifest(self)
