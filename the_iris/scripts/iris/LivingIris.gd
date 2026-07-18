@@ -4,6 +4,7 @@ class_name LivingIris
 ## The sole Iris renderer. It uses lightweight procedural 2D primitives and
 ## suspends all animation work while the Iris screen is hidden.
 var core: IrisCore
+var evolution_profile: IrisEvolutionProfile
 var elapsed := 0.0
 var behavior := {
 	"breath_primary": 0.46,
@@ -36,7 +37,11 @@ func _process(delta: float) -> void:
 		return
 	elapsed += delta
 	if core != null:
-		behavior = core.tick(delta)
+		var base_behavior := core.tick(delta)
+		if evolution_profile != null:
+			behavior = IrisEvolutionVisualConsumer.apply_evolution(evolution_profile, base_behavior)
+		else:
+			behavior = base_behavior
 	queue_redraw()
 
 func _draw() -> void:
@@ -78,23 +83,33 @@ func _draw() -> void:
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 func _draw_aura(center: Vector2, radius: float, presence: float, glow: float, focus: float, pulse: float, drift: float) -> void:
+	var depth_offset: float = float(behavior.get("depth_offset", 0.0))
 	var rings := 6
 	for index in range(rings, 0, -1):
 		var amount := float(index) / float(rings)
-		var spread := 1.08 + amount * (0.54 + focus * 0.15 + pulse * 0.12)
+		var spread := 1.08 + amount * (0.54 + focus * 0.15 + pulse * 0.12 + depth_offset * 0.25)
 		var alpha := (0.003 + glow * 0.023 + pulse * 0.012) * (1.0 - amount * 0.48) * presence
 		var tint := Color(0.07 + focus * 0.06, 0.38 + glow * 0.30 + drift * 0.03, 0.33 + glow * 0.24, alpha)
 		draw_circle(center, radius * spread, tint)
 
 func _draw_iris_body(center: Vector2, radius: float, presence: float, glow: float, breath_wave: float, drift: float, asymmetry: float) -> void:
+	var geometry_scale: float = float(behavior.get("geometry_scale", 1.0))
+	var depth_offset: float = float(behavior.get("depth_offset", 0.0))
+	
+	var segments := roundi(48.0 * geometry_scale)
 	var silhouette := PackedVector2Array()
-	for index in range(48):
-		var angle := TAU * float(index) / 48.0
-		var ripple := sin(angle * 5.0 + elapsed * 0.47 + asymmetry) * 0.013
-		ripple += sin(angle * 11.0 - elapsed * 0.19 + asymmetry * 1.7) * 0.006
+	for index in range(segments):
+		var angle := TAU * float(index) / float(segments)
+		var ripple := sin(angle * 5.0 + elapsed * 0.47 + asymmetry) * 0.013 * geometry_scale
+		ripple += sin(angle * 11.0 - elapsed * 0.19 + asymmetry * 1.7) * 0.006 * geometry_scale
 		ripple += sin(angle * 3.0 + elapsed * 0.071) * 0.004
 		silhouette.append(center + Vector2(cos(angle), sin(angle)) * radius * (1.07 + ripple))
 	draw_colored_polygon(silhouette, Color(0.018, 0.105 + glow * 0.06, 0.105 + glow * 0.045, presence))
+	
+	if depth_offset > 0.05:
+		draw_circle(center, radius * (1.02 + depth_offset * 0.05), Color(0.012, 0.08, 0.07, presence * 0.42))
+		draw_arc(center, radius * (0.98 + depth_offset * 0.06), 0.0, TAU, 50, Color(0.25, 0.92, 0.78, presence * 0.35 * depth_offset), 0.75, true)
+		
 	draw_circle(center, radius * 1.015, Color(0.05, 0.31 + glow * 0.15, 0.28 + glow * 0.12, presence))
 	draw_circle(center, radius * 0.965, Color(0.017, 0.145 + breath_wave * 0.065 + drift * 0.02, 0.145 + breath_wave * 0.050, presence))
 	draw_circle(center, radius * 0.908, Color(0.007, 0.052, 0.066, presence))
@@ -134,6 +149,7 @@ func _draw_fibers(center: Vector2, radius: float, pupil_ratio: float, motion: fl
 			draw_line(third, fourth, fiber_color, width * 0.52, true)
 
 func _draw_pupil(center: Vector2, radius: float, pupil_ratio: float, presence: float, glow: float, focus: float, breath_wave: float, pulse: float) -> void:
+	var biological_pulse: float = float(behavior.get("biological_pulse", 1.0))
 	var pupil_radius := radius * pupil_ratio
 	var corona_alpha := (0.06 + glow * 0.18 + pulse * 0.08) * presence
 	draw_circle(center, pupil_radius * (1.28 + pulse * 0.06), Color(0.13, 0.72, 0.57, corona_alpha))
@@ -141,10 +157,13 @@ func _draw_pupil(center: Vector2, radius: float, pupil_ratio: float, presence: f
 	draw_circle(center, pupil_radius, Color(0.001, 0.004, 0.009, presence))
 
 	var glint_position := center + Vector2(-radius * (0.24 - focus * 0.045), -radius * 0.255)
-	var glint_radius := radius * (0.062 + breath_wave * 0.016 + pulse * 0.012)
+	var glint_radius := radius * (0.062 + breath_wave * 0.016 + pulse * 0.012) * biological_pulse
 	draw_circle(glint_position, glint_radius, Color(0.63, 1.0, 0.86, (0.12 + glow * 0.38) * presence))
 	draw_circle(glint_position + Vector2(-radius * 0.017, -radius * 0.017), glint_radius * 0.32, Color(0.95, 1.0, 0.98, 0.72 * presence))
 	draw_circle(center + Vector2(radius * 0.14, radius * 0.18), radius * 0.017, Color(0.25, 0.86, 0.70, (0.08 + glow * 0.24) * presence))
+	
+	if behavior.has("full_evolution_flare"):
+		draw_arc(center, radius * 0.42, 0.0, TAU, 60, Color(0.82, 1.0, 0.94, presence * 0.5), 1.2, true)
 
 func _draw_reflections(center: Vector2, radius: float, amount: float, drift: float) -> void:
 	for index in range(3):

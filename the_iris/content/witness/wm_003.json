@@ -1,14 +1,62 @@
 {
   "id": "WM_003",
+  "moment_id": "WM_003",
   "incident_id": "INC_LAST_PERFORMANCE",
   "title": "The Last Performance",
-  "subtitle": "Chapter 01 · Learning to Notice",
+  "subtitle": "Chapter 01 · The First Fractures",
   "introduction": "Backstage after the final applause, a violinist rests a bow in velvet and notices a telegram on the dressing table.",
+  "description": "Backstage after the final applause, a violinist rests a bow in velvet and notices a telegram on the dressing table.",
   "observation": "The bow settles. The telegram waits. The musician's attention moves from the stage door to a message already opened.",
   "reconstruction": "Carry the horsehair bow, the telegram, and the brass travel case.",
-  "attunements": ["The telegram confirms a safe arrival across the sea.", "The case latch has just been opened.", "The final note is preserved in the bow's quiet vibration."],
+  "attunements": [
+    "The telegram confirms a safe arrival across the sea.",
+    "The case latch has just been opened.",
+    "The final note is preserved in the bow's quiet vibration."
+  ],
   "revelation": "When the bow settled into velvet, the final note was already safely across the sea.",
   "background": "res://assets/witness/wm_003_dressing_room.png",
   "action": "res://assets/witness/wm_003_violinist_action.png",
-  "reveal": "res://assets/witness/wm_003_telegram_reveal.png"
+  "reveal": "res://assets/witness/wm_003_telegram_reveal.png",
+  "observation_duration": 2.0,
+  "anomaly_definition": {
+    "location": {"x": 280.0, "y": 390.0},
+    "size": {"x": 110.0, "y": 110.0},
+    "misstep_text": "Not there. Watch the velvet case on the dressing table.",
+    "success_text": "You found the break. The travel case latch is unclicked before the performer reaches it."
+  },
+  "capture_window": {
+    "start_time": 0.85,
+    "end_time": 1.30,
+    "hold_duration": 0.35,
+    "guidance_text": "HOLD WHEN THE CASE LATCH ENCOUNTERS PRESSURE.",
+    "success_text": "Timeline isolated: case opened before performer arrives."
+  },
+  "evidence_nodes": [
+    {
+      "identifier": "violin_bow",
+      "location": {"x": 140.0, "y": 200.0},
+      "description": "The horsehair bow",
+      "relevance": "The bow retains the final note's vibration.",
+      "truth_connection": "Resonance matches transatlantic timeline."
+    },
+    {
+      "identifier": "telegram_desk",
+      "location": {"x": 140.0, "y": 250.0},
+      "description": "The telegram message",
+      "relevance": "The ink is dry, but the text changes.",
+      "truth_connection": "Message is registered before final string release."
+    },
+    {
+      "identifier": "travel_case",
+      "location": {"x": 140.0, "y": 300.0},
+      "description": "The brass case",
+      "relevance": "The latch carries safe transatlantic postmarks.",
+      "truth_connection": "Transatlantic sequence verified."
+    }
+  ],
+  "reward_definition": {
+    "base_resonance": 20,
+    "accuracy_multiplier": 15.0,
+    "unassisted_bonus": 6
+  }
 }

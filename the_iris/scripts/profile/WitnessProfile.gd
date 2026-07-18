@@ -75,6 +75,7 @@ func record_completion(moment_id: String, result: Dictionary = {}) -> Dictionary
 			observation_style[style] = int(observation_style.get(style, 0)) + 1
 	moment_records[moment_id] = record
 
+	WitnessArchive.update_archive_entry(self, moment_id, result, int(award["total"]))
 	_refresh_progression(true)
 	return award
 
