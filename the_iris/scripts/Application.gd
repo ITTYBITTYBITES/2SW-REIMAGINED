@@ -112,6 +112,7 @@ func _ready() -> void:
 
 func _on_startup_finished() -> void:
 	boot_introduction_pending = true
+	IrisAudioConsumer.play_presence_sound("iris_awaken")
 	show_iris(true)
 
 func prepare_iris() -> void:
@@ -345,6 +346,7 @@ func _on_generic_completion_requested(result: WitnessMomentResult) -> void:
 	generic_gameplay.present_reward(award, witness_profile)
 
 func _on_generic_return_requested() -> void:
+	IrisAudioConsumer.stop_ambient_loop()
 	generic_gameplay.close()
 	if replayed_from_archive:
 		replayed_from_archive = false

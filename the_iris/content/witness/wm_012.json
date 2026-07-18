@@ -91,9 +91,9 @@
       }
     },
     "audio_assets": {
-      "ambient": "res://assets/audio/wm012_ambient.ogg",
-      "anomaly": "res://assets/audio/wm012_anomaly.ogg",
-      "resolution": "res://assets/audio/wm012_resolution.ogg"
+      "ambient": "res://assets/audio/environments/canvas_room_ambient.ogg",
+      "anomaly": "res://assets/audio/witness/correct_detection.ogg",
+      "resolution": "res://assets/audio/witness/resolution.ogg"
     },
     "visual_effects": {
       "pulse_speed": 1.2
