@@ -95,6 +95,8 @@ func show_chapters() -> void:
 		child.queue_free()
 	for moment in director.chapter_moments():
 		var id := str(moment.get("id", ""))
+		if id in ["WM_TEST", "WM_ASSET_TEST"]:
+			continue
 		var button_text := "%s  ·  %s" % [id, str(moment.get("title", "Untitled"))]
 		if registry.is_completed(id):
 			button_text += "   ✓ WITNESSED"
