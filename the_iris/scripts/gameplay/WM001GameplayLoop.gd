@@ -149,7 +149,7 @@ func _set_phase(next_phase: Phase) -> void:
 	action_button.visible = false
 	timer_label.text = ""
 	for child in evidence_container.get_children():
-		child.queue_free()
+		child.free()
 
 	match phase:
 		Phase.BRIEFING:

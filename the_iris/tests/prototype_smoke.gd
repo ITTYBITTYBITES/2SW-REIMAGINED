@@ -112,8 +112,8 @@ func _run() -> void:
 		_fail("Continue Witness shard did not reacquire Iris attention")
 		return
 	await create_timer(0.5).timeout
-	if not app.wm001_gameplay.visible or app.iris.iris_core.state != IrisCore.State.OBSERVING:
-		_fail("Continue Witness shard did not enter the WM_001 gameplay loop")
+	if not app.flagship_gameplay.visible or app.iris.iris_core.state != IrisCore.State.OBSERVING:
+		_fail("Continue Witness shard did not enter the flagship gameplay loop")
 		return
 	if _find_intent(response_intents, "memory_focus", "ATTENTIVE") == null:
 		_fail("Focused memory did not emit an attentive response intent")
@@ -122,49 +122,60 @@ func _run() -> void:
 		_fail("Memory selection did not emit guiding response intents")
 		return
 
-	var loop := app.wm001_gameplay
+	var loop := app.flagship_gameplay
 	loop._advance()
 	await create_timer(2.1).timeout
-	if loop.phase != WM001GameplayLoop.Phase.DISCOVERY:
-		_fail("WM_001 did not complete its two-second observation")
+	if loop.phase != FlagshipWitnessMoment.Phase.ANOMALY:
+		_fail("Flagship moment did not complete its two-second observation")
 		return
 	loop._find_anomaly()
 	loop._advance()
-	if loop.phase != WM001GameplayLoop.Phase.CONTEXT:
-		_fail("WM_001 did not advance from anomaly capture to context")
+	if loop.phase != FlagshipWitnessMoment.Phase.CAPTURE:
+		_fail("Flagship moment did not enter capture")
 		return
-	for evidence_key in ["paused_brush", "crystal_prism", "color_notes"]:
+	loop.capture_elapsed = 0.98
+	loop.capture_holding = true
+	loop._update_capture(0.26)
+	if loop.phase != FlagshipWitnessMoment.Phase.REVIEW:
+		_fail("Flagship moment did not capture the impossible instant")
+		return
+	loop._review_changed(1.08)
+	loop._advance()
+	if loop.phase != FlagshipWitnessMoment.Phase.CONTEXT:
+		_fail("Flagship moment did not unlock context from review")
+		return
+	for evidence_key in ["paused_brush", "crystal_prism", "color_note"]:
 		var evidence_button := loop.evidence_container.get_node("Evidence_%s" % evidence_key) as Button
 		if evidence_button == null:
-			_fail("WM_001 evidence interaction is missing: %s" % evidence_key)
+			_fail("Flagship evidence interaction is missing: %s" % evidence_key)
 			return
 		evidence_button.pressed.emit()
 	loop._advance()
-	if loop.phase != WM001GameplayLoop.Phase.RESOLUTION:
-		_fail("WM_001 did not resolve after context collection")
+	if loop.phase != FlagshipWitnessMoment.Phase.RESOLUTION:
+		_fail("Flagship moment did not resolve after context collection")
 		return
 	loop._advance()
 	await process_frame
-	if loop.phase != WM001GameplayLoop.Phase.REWARD:
-		_fail("WM_001 did not produce a reward result")
+	if loop.phase != FlagshipWitnessMoment.Phase.REWARD:
+		_fail("Flagship moment did not produce a reward result")
 		return
-	if not app.registry.is_completed("WM_001") or not app.witness_profile.completed_moment_ids.has("WM_001"):
-		_fail("WM_001 completion did not update the protected route and local profile")
+	if not app.witness_profile.completed_moment_ids.has(FlagshipWitnessMoment.MOMENT_ID):
+		_fail("Flagship completion did not update the local profile")
 		return
 	if evolution_updates.is_empty() or app.latest_iris_evolution == null:
 		_fail("Profile completion did not emit an Iris evolution hook")
 		return
 	if app.iris.iris_core.state != IrisCore.State.REFLECTIVE:
-		_fail("WM_001 completion did not make the Iris reflective")
+		_fail("Flagship completion did not make the Iris reflective")
 		return
 	if _find_intent(response_intents, "witness_completed", "REFLECTIVE") == null:
-		_fail("Witness completion did not emit a reflective response intent")
+		_fail("Flagship completion did not emit a reflective response intent")
 		return
 
 	var hub_returns_before_reflection := _count_intents(response_intents, "hub_return", "IDLE")
 	loop._advance()
 	if not app.home.visible:
-		_fail("WM_001 reward did not return to Iris Hub")
+		_fail("Flagship reward did not return to Iris Hub")
 		return
 	if app.iris.iris_core.state != IrisCore.State.REFLECTIVE:
 		_fail("Reflective return did not preserve Iris reflection in the Hub")
@@ -180,9 +191,9 @@ func _run() -> void:
 		_fail("Reflective Hub return did not emit a new idle response intent")
 		return
 
-	# WM_002–WM_005 remain playable through the unchanged generic Witness runtime.
+	# WM_001–WM_005 remain playable through the unchanged generic Witness runtime.
 	app.show_witness()
-	for moment_id in ["WM_002", "WM_003", "WM_004", "WM_005"]:
+	for moment_id in ["WM_001", "WM_002", "WM_003", "WM_004", "WM_005"]:
 		app.witness.open_moment(moment_id)
 		for _phase in range(5):
 			app.orchestrator.advance()
@@ -196,6 +207,8 @@ func _run() -> void:
 		_fail("Return path did not restore the welcoming Iris")
 		return
 	print("LIVING_IRIS_PRESENCE_PASS: boot, emergence, attention, home, witness, return, and WM_001–WM_005 loaded.")
+	app.free()
+	await process_frame
 	quit(0)
 
 func _find_intent(intents: Array, event_key: String, mode: String) -> IrisResponseIntent:

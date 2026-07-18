@@ -14,6 +14,7 @@ var iris_personality: IrisPersonalityResolver
 var home: IrisHome
 var witness: WitnessChapters
 var wm001_gameplay: WM001GameplayLoop
+var flagship_gameplay: FlagshipWitnessMoment
 var startup: StartupFlow
 var pending_witness_results: Dictionary = {}
 var boot_introduction_pending := false
@@ -57,7 +58,7 @@ func _ready() -> void:
 	home = IrisHome.new()
 	home.name = "IrisHome"
 	home.witness_requested.connect(show_witness)
-	home.continue_witness_requested.connect(start_wm001_gameplay)
+	home.continue_witness_requested.connect(start_flagship_moment)
 	home.iris_requested.connect(show_iris)
 	home.memory_intent_focused.connect(_on_home_memory_intent_focused)
 	home.memory_intent_released.connect(_on_home_memory_intent_released)
@@ -77,6 +78,12 @@ func _ready() -> void:
 	wm001_gameplay.return_requested.connect(_on_wm001_return_requested)
 	add_child(wm001_gameplay)
 
+	flagship_gameplay = FlagshipWitnessMoment.new()
+	flagship_gameplay.name = "FlagshipWitnessMoment"
+	flagship_gameplay.completion_requested.connect(_on_flagship_completion_requested)
+	flagship_gameplay.return_requested.connect(_on_flagship_return_requested)
+	add_child(flagship_gameplay)
+
 	startup = StartupFlow.new()
 	startup.name = "StartupFlow"
 	startup.finished.connect(_on_startup_finished)
@@ -93,6 +100,7 @@ func prepare_iris() -> void:
 	home.visible = false
 	witness.visible = false
 	wm001_gameplay.visible = false
+	flagship_gameplay.visible = false
 	iris.dormant()
 
 func show_iris(from_boot := false) -> void:
@@ -101,6 +109,7 @@ func show_iris(from_boot := false) -> void:
 	home.visible = false
 	witness.visible = false
 	wm001_gameplay.visible = false
+	flagship_gameplay.visible = false
 	if from_boot:
 		iris.calibrate()
 	else:
@@ -120,6 +129,7 @@ func show_home() -> void:
 	home.visible = true
 	witness.visible = false
 	wm001_gameplay.visible = false
+	flagship_gameplay.visible = false
 
 func _on_home_memory_intent_focused(normalized_target: Vector2) -> void:
 	if home.visible and iris.visible:
@@ -169,6 +179,32 @@ func _on_wm001_return_requested() -> void:
 	wm001_gameplay.close()
 	show_home()
 
+func start_flagship_moment() -> void:
+	reflective_return_pending = false
+	reflective_return_in = -1.0
+	iris.set_home_environment(false)
+	iris.visible = false
+	home.visible = false
+	witness.visible = false
+	wm001_gameplay.visible = false
+	iris.observe()
+	_emit_personality_response("witness_entered")
+	flagship_gameplay.start()
+
+func _on_flagship_completion_requested(result: WitnessMomentResult) -> void:
+	var award := {"total": 0, "components": {}}
+	if witness_profile != null:
+		award = witness_profile.record_completion(result.moment_id, result.to_dictionary())
+		profile_store.save_profile(witness_profile)
+	reflective_return_pending = true
+	iris.reflect()
+	_emit_personality_response("witness_completed")
+	flagship_gameplay.present_reward(award, witness_profile)
+
+func _on_flagship_return_requested() -> void:
+	flagship_gameplay.close()
+	show_home()
+
 func show_witness() -> void:
 	reflective_return_pending = false
 	reflective_return_in = -1.0
@@ -177,6 +213,7 @@ func show_witness() -> void:
 	home.visible = false
 	witness.visible = true
 	wm001_gameplay.visible = false
+	flagship_gameplay.visible = false
 	iris.observe()
 	_emit_personality_response("witness_entered")
 	witness.show_chapters()
