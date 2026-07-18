@@ -322,9 +322,22 @@ func _on_generic_completion_requested(result: WitnessMomentResult) -> void:
 		result_dict["discovered_clues"] = generic_gameplay.evidence_found.keys()
 		award = witness_profile.record_completion(result.moment_id, result_dict)
 		profile_store.save_profile(witness_profile)
+	
 	reflective_return_pending = true
 	iris.reflect()
-	_emit_personality_response("witness_completed")
+	
+	# Check if Chapter 1 has just been completely restored!
+	var all_completed := true
+	for id in ["WM_001", "WM_002", "WM_003", "WM_004", "WM_005"]:
+		if not registry.is_completed(id):
+			all_completed = false
+			break
+			
+	if all_completed:
+		_emit_personality_response("chapter_restored")
+	else:
+		_emit_personality_response("witness_completed")
+		
 	generic_gameplay.present_reward(award, witness_profile)
 
 func _on_generic_return_requested() -> void:

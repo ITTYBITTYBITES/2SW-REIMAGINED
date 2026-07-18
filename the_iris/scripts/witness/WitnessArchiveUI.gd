@@ -196,6 +196,12 @@ func show_details(moment_id: String) -> void:
 		status_str, date_str, acc_str, res_str, count_str, mastery_str
 	]
 	
+	if is_completed:
+		if mastery_str != "Mastery":
+			stats_text += "\n\n💡 PATH TO MASTER: Achieve >=95% accuracy unassisted, and discover all 3 clues."
+		else:
+			stats_text += "\n\n✨ RESTORATION PERFECT: Complete Master alignment achieved."
+	
 	var stats_body := _label(stats_text, 12, Color("#d7eee7"), Vector2(38, y_offset), Vector2(440, 110))
 	stats_body.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	details_view.add_child(stats_body)
