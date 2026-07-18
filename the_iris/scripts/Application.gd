@@ -35,6 +35,8 @@ func _ready() -> void:
 	home.name = "IrisHome"
 	home.witness_requested.connect(show_witness)
 	home.iris_requested.connect(show_iris)
+	home.memory_intent_focused.connect(_on_home_memory_intent_focused)
+	home.memory_intent_released.connect(_on_home_memory_intent_released)
 	add_child(home)
 
 	witness = WitnessChapters.new()
@@ -76,6 +78,14 @@ func show_home() -> void:
 	iris.set_home_environment(true)
 	home.visible = true
 	witness.visible = false
+
+func _on_home_memory_intent_focused(normalized_target: Vector2) -> void:
+	if home.visible and iris.visible:
+		iris.iris_core.acquire_attention(normalized_target)
+
+func _on_home_memory_intent_released() -> void:
+	if home.visible and iris.visible:
+		iris.settle()
 
 func show_witness() -> void:
 	iris.set_home_environment(false)

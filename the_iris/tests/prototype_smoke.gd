@@ -70,14 +70,33 @@ func _run() -> void:
 		_fail("Home rest action did not restore direct Iris presence")
 		return
 	app.show_home()
-	var archive_action := app.home.get_node_or_null("ContinueWitnessCard/ArchiveAction") as Button
-	if archive_action == null:
-		_fail("Home Witness Archive action is unavailable")
-		return
-	archive_action.pressed.emit()
 	await process_frame
+	var memory_field := app.home.get_node_or_null("MemoryField") as MemoryField
+	if memory_field == null:
+		_fail("Iris Home Memory Field is unavailable")
+		return
+	var shard_hover := InputEventMouseMotion.new()
+	shard_hover.position = memory_field._shard_position()
+	memory_field._gui_input(shard_hover)
+	if app.iris.iris_core.state != IrisCore.State.ATTENDING:
+		_fail("Continue Witness shard did not acquire Iris attention")
+		return
+	var intent_exit := InputEventMouseMotion.new()
+	intent_exit.position = Vector2(20, 620)
+	memory_field._gui_input(intent_exit)
+	if app.iris.iris_core.state != IrisCore.State.SETTLED:
+		_fail("Iris did not settle when Memory Field intent was released")
+		return
+	var shard_tap := InputEventMouseButton.new()
+	shard_tap.pressed = true
+	shard_tap.position = memory_field._shard_position()
+	memory_field._gui_input(shard_tap)
+	if app.iris.iris_core.state != IrisCore.State.ATTENDING:
+		_fail("Continue Witness shard did not reacquire Iris attention")
+		return
+	await create_timer(0.5).timeout
 	if not app.witness.visible or app.iris.iris_core.state != IrisCore.State.OBSERVING:
-		_fail("Witness Archive action did not enter the protected Witness flow")
+		_fail("Continue Witness shard did not enter the protected Witness flow")
 		return
 
 	for moment in app.director.chapter_moments():
