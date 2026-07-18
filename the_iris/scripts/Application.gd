@@ -12,6 +12,8 @@ var witness: WitnessChapters
 var startup: StartupFlow
 var boot_introduction_pending := false
 var memory_focus_active := false
+var reflective_return_pending := false
+var reflective_return_in := -1.0
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -37,6 +39,7 @@ func _ready() -> void:
 
 	iris_personality = IrisPersonalityResolver.new()
 	iris_personality.name = "IrisPersonalityResolver"
+	iris_personality.response_intent_emitted.connect(iris.present_response_intent)
 	add_child(iris_personality)
 
 	home = IrisHome.new()
@@ -84,11 +87,16 @@ func show_iris(from_boot := false) -> void:
 func show_home() -> void:
 	# The single Living Iris remains visible as the settled center of Home.
 	iris.visible = true
-	iris.settle()
+	if reflective_return_pending:
+		# Preserve the existing REFLECTIVE state briefly so return carries meaning.
+		iris.reflect()
+		reflective_return_in = 1.65
+	else:
+		iris.settle()
+		_emit_personality_response("hub_return")
 	iris.set_home_environment(true)
 	home.visible = true
 	witness.visible = false
-	_emit_personality_response("hub_return")
 
 func _on_home_memory_intent_focused(normalized_target: Vector2) -> void:
 	if home.visible and iris.visible:
@@ -117,6 +125,8 @@ func _emit_personality_response(experience_event: String) -> void:
 		iris_personality.resolve(int(iris.iris_core.state), experience_event)
 
 func show_witness() -> void:
+	reflective_return_pending = false
+	reflective_return_in = -1.0
 	iris.set_home_environment(false)
 	iris.visible = false
 	home.visible = false
@@ -126,8 +136,20 @@ func show_witness() -> void:
 	witness.show_chapters()
 
 func _on_witness_moment_completed(_moment_id: String) -> void:
+	reflective_return_pending = true
 	iris.reflect()
 	_emit_personality_response("witness_completed")
+
+func _process(delta: float) -> void:
+	if reflective_return_in < 0.0:
+		return
+	reflective_return_in -= delta
+	if reflective_return_in <= 0.0:
+		reflective_return_in = -1.0
+		reflective_return_pending = false
+		if home.visible and iris.visible:
+			iris.settle()
+			_emit_personality_response("hub_return")
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):

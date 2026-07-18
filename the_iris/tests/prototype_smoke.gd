@@ -47,6 +47,9 @@ func _run() -> void:
 	if introducing_intent == null or introducing_intent.audio_key.is_empty() or introducing_intent.voice_key.is_empty():
 		_fail("Boot did not emit an introducing response intent contract")
 		return
+	if app.iris.expression_overlay.active_intent == null or app.iris.expression_overlay.active_intent.expression_mode != "INTRODUCING" or app.iris.expression_overlay.message_label.text.is_empty():
+		_fail("Introducing intent did not reach the Iris expression consumer")
+		return
 
 	var tap := InputEventMouseButton.new()
 	tap.pressed = true
@@ -90,6 +93,9 @@ func _run() -> void:
 	if _find_intent(response_intents, "memory_focus", "CURIOUS") == null:
 		_fail("Memory focus did not emit a curious response intent")
 		return
+	if app.iris.expression_overlay.active_intent == null or app.iris.expression_overlay.active_intent.expression_mode != "CURIOUS":
+		_fail("Curious intent did not reach the Iris expression consumer")
+		return
 	var intent_exit := InputEventMouseMotion.new()
 	intent_exit.position = Vector2(20, 620)
 	memory_field._gui_input(intent_exit)
@@ -130,9 +136,20 @@ func _run() -> void:
 		_fail("Witness completion did not emit a reflective response intent")
 		return
 
+	var hub_returns_before_reflection := _count_intents(response_intents, "hub_return", "IDLE")
 	app.show_home()
-	if _find_intent(response_intents, "hub_return", "IDLE") == null:
-		_fail("Hub return did not emit an idle response intent")
+	if app.iris.iris_core.state != IrisCore.State.REFLECTIVE:
+		_fail("Reflective return did not preserve Iris reflection in the Hub")
+		return
+	if app.iris.expression_overlay.active_intent == null or app.iris.expression_overlay.active_intent.expression_mode != "REFLECTIVE":
+		_fail("Reflective response did not reach the Iris expression consumer")
+		return
+	await create_timer(1.8).timeout
+	if app.iris.iris_core.state != IrisCore.State.SETTLED:
+		_fail("Reflective Hub return did not settle after its presentation interval")
+		return
+	if _count_intents(response_intents, "hub_return", "IDLE") <= hub_returns_before_reflection:
+		_fail("Reflective Hub return did not emit a new idle response intent")
 		return
 	app.show_iris()
 	if app.iris.iris_core.state != IrisCore.State.WELCOMING:
@@ -146,6 +163,13 @@ func _find_intent(intents: Array, event_key: String, mode: String) -> IrisRespon
 		if intent.source_event == event_key and intent.expression_mode == mode:
 			return intent
 	return null
+
+func _count_intents(intents: Array, event_key: String, mode: String) -> int:
+	var count := 0
+	for intent: IrisResponseIntent in intents:
+		if intent.source_event == event_key and intent.expression_mode == mode:
+			count += 1
+	return count
 
 func _fail(message: String) -> void:
 	push_error(message)

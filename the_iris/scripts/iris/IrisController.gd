@@ -9,6 +9,7 @@ const ATTENTION_HOLD_SECONDS := 0.56
 
 var iris_core: IrisCore
 var living_iris: LivingIris
+var expression_overlay: IrisExpressionOverlay
 var brand_label: Label
 var invitation: Label
 var state_label: Label
@@ -33,6 +34,10 @@ func _ready() -> void:
 	living_iris.name = "LivingIris"
 	living_iris.set_core(iris_core)
 	add_child(living_iris)
+
+	expression_overlay = IrisExpressionOverlay.new()
+	expression_overlay.name = "IrisExpressionOverlay"
+	add_child(expression_overlay)
 
 	brand_label = _label("THE IRIS", 16, Color("#e2faf1"), Vector2(30, 31), Vector2(400, 30))
 	state_label = _label("A LIVING PERCEPTION INSTRUMENT", 10, Color("#6f9e92"), Vector2(31, 58), Vector2(420, 22))
@@ -70,10 +75,14 @@ func welcome() -> void:
 ## settled presence behind the archive environment. No second renderer exists.
 func set_home_environment(active: bool) -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE if active else Control.MOUSE_FILTER_STOP
+	expression_overlay.set_home_environment(active)
 	brand_label.visible = not active
 	state_label.visible = not active
 	invitation.visible = not active
 	navigation_label.visible = not active
+
+func present_response_intent(intent: IrisResponseIntent) -> void:
+	expression_overlay.present(intent)
 
 func observe() -> void:
 	_cancel_attention()
