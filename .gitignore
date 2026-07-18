@@ -11,3 +11,10 @@
 *.aab
 *.exe
 *.pck
+
+# Local Android signing material and Godot export credentials
+export_credentials.cfg
+*.jks
+*.keystore
+*.p12
+*.pfx
