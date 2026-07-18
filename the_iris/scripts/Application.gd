@@ -205,18 +205,7 @@ func _on_wm001_return_requested() -> void:
 	show_home()
 
 func start_flagship_moment() -> void:
-	reflective_return_pending = false
-	reflective_return_in = -1.0
-	iris.set_home_environment(false)
-	iris.visible = false
-	home.visible = false
-	witness.visible = false
-	wm001_gameplay.visible = false
-	generic_gameplay.visible = false
-	archive_ui.visible = false
-	iris.observe()
-	_emit_personality_response("witness_entered")
-	flagship_gameplay.start()
+	start_generic_gameplay("FM_001")
 
 func _on_flagship_completion_requested(result: WitnessMomentResult) -> void:
 	var award := {"total": 0, "components": {}}

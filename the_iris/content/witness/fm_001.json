@@ -1,0 +1,106 @@
+{
+  "id": "FM_001",
+  "moment_id": "FM_001",
+  "incident_id": "INC_BORROWED_LIGHT",
+  "title": "The Borrowed Light",
+  "subtitle": "Chapter 01 · First Fractures",
+  "introduction": "The Iris has held a moment that cannot keep its order. Watch for what arrives too soon.",
+  "description": "The Iris has held a moment that cannot keep its order. Watch for what arrives too soon.",
+  "observation": "Verify all procedurally resolved background layers and textures.",
+  "reconstruction": "Reconstruct and verify manifest indicators.",
+  "attunements": [
+    "Verify the background layers resolved successfully.",
+    "Verify evidence node icons map correctly.",
+    "Verify the lighting profile color modulation applied."
+  ],
+  "revelation": "What was wrong: the rainbow reached the canvas before the prism received the sun.\n\nWhy it mattered: the memory was showing the instant cause and effect came apart.",
+  "background": "res://assets/witness/wm_001_studio_background.png",
+  "action": "res://assets/witness/wm_001_hand_action.png",
+  "reveal": "res://assets/witness/wm_001_prism_reveal.png",
+  "observation_duration": 2.0,
+  "anomaly_definition": {
+    "location": {"x": 350.0, "y": 366.0},
+    "size": {"x": 94.0, "y": 94.0},
+    "misstep_text": "Not that. Watch which light arrives first.",
+    "success_text": "You saw it. The spectrum arrives before the prism receives light."
+  },
+  "capture_window": {
+    "start_time": 0.92,
+    "end_time": 1.26,
+    "hold_duration": 0.26,
+    "guidance_text": "HOLD WHEN YOU SEE THE FRACTURE.",
+    "success_text": "There. The canvas receives color before the prism is lit."
+  },
+  "evidence_nodes": [
+    {
+      "identifier": "paused_brush",
+      "location": {"x": 100.0, "y": 200.0},
+      "description": "The paused brush",
+      "relevance": "THE BRUSH PAUSED BEFORE THE COLOR COULD BE TRUE.",
+      "truth_connection": "Causal trace aligned.",
+      "asset_reference": "res://assets/witness/wm_001_prism_reveal.png",
+      "color_modulation": "#8de8c7",
+      "visual_effect": "glow"
+    },
+    {
+      "identifier": "crystal_prism",
+      "location": {"x": 100.0, "y": 250.0},
+      "description": "The crystal prism",
+      "relevance": "THE PRISM HAD NOT YET RECEIVED THE SUN.",
+      "truth_connection": "Prism alignment verified.",
+      "asset_reference": "res://assets/witness/wm_001_prism_reveal.png",
+      "color_modulation": "#8ee9c8",
+      "visual_effect": "glow"
+    },
+    {
+      "identifier": "color_note",
+      "location": {"x": 100.0, "y": 300.0},
+      "description": "The color note",
+      "relevance": "THE NOTE WAS WAITING FOR THE REAL LIGHT.",
+      "truth_connection": "Writings confirmed.",
+      "asset_reference": "res://assets/witness/wm_001_prism_reveal.png",
+      "color_modulation": "#8fc8b8",
+      "visual_effect": "glow"
+    }
+  ],
+  "reward_definition": {
+    "base_resonance": 20,
+    "accuracy_multiplier": 15.0,
+    "unassisted_bonus": 6
+  },
+  "asset_manifest": {
+    "environment_asset": "res://assets/witness/wm_001_studio_background.png",
+    "background_layers": [
+      "res://assets/witness/wm_001_studio_background.png"
+    ],
+    "evidence_assets": {
+      "paused_brush": {
+        "texture_path": "res://assets/witness/wm_001_prism_reveal.png",
+        "color_modulation": "#8de8c7",
+        "visual_effect": "glow"
+      },
+      "crystal_prism": {
+        "texture_path": "res://assets/witness/wm_001_prism_reveal.png",
+        "color_modulation": "#8ee9c8",
+        "visual_effect": "glow"
+      },
+      "color_note": {
+        "texture_path": "res://assets/witness/wm_001_prism_reveal.png",
+        "color_modulation": "#8fc8b8",
+        "visual_effect": "glow"
+      }
+    },
+    "audio_assets": {
+      "ambient": "res://assets/audio/fm001_ambient.ogg",
+      "anomaly": "res://assets/audio/fm001_anomaly.ogg",
+      "resolution": "res://assets/audio/fm001_resolution.ogg"
+    },
+    "visual_effects": {
+      "distortion": 1.1
+    },
+    "lighting_profile": {
+      "modulate_color": "#a8ebd4",
+      "vignette_intensity": 0.50
+    }
+  }
+}
