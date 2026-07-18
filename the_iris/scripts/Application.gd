@@ -68,6 +68,7 @@ func _ready() -> void:
 	home.memory_selected.connect(_on_home_memory_selected)
 	home.archive_requested.connect(show_archive)
 	add_child(home)
+	home.update_profile_presentation(witness_profile)
 
 	witness = WitnessChapters.new()
 	witness.name = "WitnessChapters"
@@ -258,6 +259,9 @@ func _on_iris_evolution_changed(data: IrisEvolutionData) -> void:
 	var new_evo := IrisEvolutionProfile.new(data.aperture_rank, data.resonance)
 	if iris != null and iris.living_iris != null:
 		iris.living_iris.evolution_profile = new_evo
+		
+	if home != null:
+		home.update_profile_presentation(witness_profile)
 		
 	# Check for progression feedback triggers
 	if old_data != null and old_data.aperture_rank > 0:

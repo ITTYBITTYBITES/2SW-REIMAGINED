@@ -125,6 +125,16 @@ func show_collection() -> void:
 		var card := _button(button_text + "\n   " + details_subtext, Vector2.ZERO, Vector2(440, 70), Color("#174943") if is_completed else Color("#122a28"), 13, false)
 		card.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		
+		var style := StyleBoxFlat.new()
+		style.bg_color = Color("#174943") if is_completed else Color("#122a28")
+		style.border_color = Color("#389d81") if is_completed else Color("#1c423f")
+		style.set_border_width_all(1)
+		style.corner_radius_top_left = 8
+		style.corner_radius_top_right = 8
+		style.corner_radius_bottom_left = 8
+		style.corner_radius_bottom_right = 8
+		card.add_theme_stylebox_override("normal", style)
+		
 		var status_label := _label(status_text, 10, Color("#88cbb9") if is_completed else Color("#557371"), Vector2(310, 22), Vector2(110, 26))
 		status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 		card.add_child(status_label)

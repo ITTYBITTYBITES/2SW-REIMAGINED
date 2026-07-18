@@ -12,6 +12,8 @@ signal archive_requested
 var elapsed := 0.0
 var atmosphere_redraw_in := 0.0
 var memory_field: MemoryField
+var journey_stat_label: Label
+var discoveries_stat_label: Label
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -42,9 +44,10 @@ func _ready() -> void:
 	_label("One living thread is close enough to follow.", 14, Color("#d7eee7"), Vector2(28, 668), Vector2(430, 24))
 
 	_label("JOURNEY", 10, Color("#86b9ad"), Vector2(28, 742), Vector2(220, 18))
-	_label("Progress takes shape with each return.", 12, Color("#a9c9be"), Vector2(28, 760), Vector2(220, 34))
+	journey_stat_label = _label("Aperture 1 · Observer\n0 Resonance", 11, Color("#a9c9be"), Vector2(28, 760), Vector2(220, 34))
+	
 	_label("DISCOVERIES", 10, Color("#86b9ad"), Vector2(290, 742), Vector2(220, 18))
-	_label("A shared record forms with the Iris.", 12, Color("#a9c9be"), Vector2(290, 760), Vector2(220, 34))
+	discoveries_stat_label = _label("0 / 6 Restored\nMastery: Observer", 11, Color("#a9c9be"), Vector2(290, 760), Vector2(220, 34))
 
 	_label("The archive keeps only what attention carried.", 11, Color("#668e85"), Vector2(24, 889), Vector2(492, 22), HORIZONTAL_ALIGNMENT_CENTER)
 
@@ -111,3 +114,12 @@ func _text_button(text_value: String, position_value: Vector2, size_value: Vecto
 	button.alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	add_child(button)
 	return button
+
+func update_profile_presentation(profile: WitnessProfile) -> void:
+	if profile == null:
+		return
+	if journey_stat_label != null:
+		journey_stat_label.text = "Aperture %d · %s\n%d Resonance" % [profile.aperture_rank, profile.aperture_title, profile.resonance]
+	if discoveries_stat_label != null:
+		var completed_count := profile.completed_moment_ids.size()
+		discoveries_stat_label.text = "%d / 6 Restored\nMastery: %s" % [completed_count, profile.aperture_title]
