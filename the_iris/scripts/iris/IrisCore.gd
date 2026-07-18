@@ -13,6 +13,12 @@ var gaze := Vector2.ZERO
 var gaze_target := Vector2.ZERO
 var pupil := 0.38
 var glow := 0.0
+var presence := 0.0
+var fiber_motion := 0.0
+var fiber_density := 0.0
+var focus_amount := 0.0
+var reflective_amount := 0.0
+var calibration_amount := 0.0
 var saccade_in := 0.65
 var blink_in := 6.0
 var blink_elapsed := -1.0
@@ -34,6 +40,18 @@ func transition_to(next_state: State) -> void:
 	state = next_state
 	state_time = 0.0
 	saccade_in = random.randf_range(0.06, 0.22)
+	match state:
+		State.CALIBRATING, State.STIRRING, State.ATTENDING, State.FOCUSED, State.OBSERVING:
+			blink_elapsed = -1.0
+			blink_amount = 0.0
+		State.AWAKENING:
+			# A single early closure makes the first emergence feel ocular, not loaded.
+			blink_in = 0.92
+		State.WELCOMING:
+			# Recognition lands with a restrained second blink before the idle cadence resumes.
+			blink_in = minf(blink_in, 0.68)
+		State.AWARE:
+			blink_in = maxf(blink_in, 1.8)
 	state_changed.emit(state)
 
 func acquire_attention(normalized_target: Vector2) -> void:
@@ -55,8 +73,15 @@ func tick(delta: float) -> Dictionary:
 	var secondary_breath := sin(life_time * float(profile["breath_secondary"]) * TAU + organic_seed * 2.17) * 0.5 + 0.5
 	var breath_wave := clampf(0.5 + (primary_breath - 0.5) * 0.72 + (secondary_breath - 0.5) * 0.28, 0.0, 1.0)
 	var pupil_target := float(profile["pupil"]) + (breath_wave - 0.5) * float(profile["pupil_breath"])
+	var transition_speed := float(profile["transition_speed"])
 	pupil = lerpf(pupil, pupil_target, minf(1.0, delta * float(profile["pupil_response"])))
 	glow = lerpf(glow, float(profile["glow"]), minf(1.0, delta * 2.35))
+	presence = lerpf(presence, float(profile["presence"]), minf(1.0, delta * transition_speed))
+	fiber_motion = lerpf(fiber_motion, float(profile["fiber_motion"]), minf(1.0, delta * transition_speed))
+	fiber_density = lerpf(fiber_density, float(profile["fiber_density"]), minf(1.0, delta * transition_speed * 1.4))
+	focus_amount = lerpf(focus_amount, float(profile["focus"]), minf(1.0, delta * transition_speed * 1.35))
+	reflective_amount = lerpf(reflective_amount, float(profile["reflective"]), minf(1.0, delta * transition_speed * 0.85))
+	calibration_amount = lerpf(calibration_amount, float(profile["calibration"]), minf(1.0, delta * transition_speed * 1.8))
 
 	var energy_drift := sin(life_time * 0.093 + organic_seed) * 0.5 + 0.5
 	energy_drift = clampf(energy_drift * 0.65 + (sin(life_time * 0.027 + organic_seed * 1.6) * 0.5 + 0.5) * 0.35, 0.0, 1.0)
@@ -67,12 +92,12 @@ func tick(delta: float) -> Dictionary:
 		"glow": glow,
 		"pupil": pupil,
 		"gaze": gaze,
-		"fiber_motion": float(profile["fiber_motion"]),
-		"fiber_density": int(profile["fiber_density"]),
-		"focus": float(profile["focus"]),
-		"reflective": float(profile["reflective"]),
-		"presence": float(profile["presence"]),
-		"calibration": float(profile["calibration"]),
+		"fiber_motion": fiber_motion,
+		"fiber_density": roundi(fiber_density),
+		"focus": focus_amount,
+		"reflective": reflective_amount,
+		"presence": presence,
+		"calibration": calibration_amount,
 		"blink": blink_amount,
 		"pulse": pulse_amount,
 		"drift": energy_drift,
@@ -137,30 +162,30 @@ func _profile() -> Dictionary:
 	var profile := _base_profile()
 	match state:
 		State.DORMANT:
-			profile.merge({"presence": 0.0, "glow": 0.0, "pupil": 0.42, "fiber_motion": 0.0, "fiber_density": 0, "pulse_enabled": false}, true)
+			profile.merge({"presence": 0.0, "glow": 0.0, "pupil": 0.42, "fiber_motion": 0.0, "fiber_density": 0, "pulse_enabled": false, "blink_enabled": false, "transition_speed": 1.6}, true)
 		State.CALIBRATING:
 			var calibration_rise := _ease_out(clampf(state_time / 0.62, 0.0, 1.0))
-			profile.merge({"presence": 0.08 + calibration_rise * 0.13, "glow": 0.10 + calibration_rise * 0.10, "pupil": 0.40, "fiber_motion": 0.14, "fiber_density": 22, "calibration": 0.8, "blink_enabled": false}, true)
+			profile.merge({"presence": 0.08 + calibration_rise * 0.13, "glow": 0.10 + calibration_rise * 0.10, "pupil": 0.40, "fiber_motion": 0.14, "fiber_density": 22, "calibration": 0.8, "blink_enabled": false, "transition_speed": 2.2}, true)
 		State.STIRRING:
 			var stirring_rise := _ease_out(clampf(state_time / 1.05, 0.0, 1.0))
-			profile.merge({"presence": 0.22 + stirring_rise * 0.25, "glow": 0.16 + stirring_rise * 0.17, "pupil": 0.38 - stirring_rise * 0.04, "fiber_motion": 0.25 + stirring_rise * 0.18, "fiber_density": 32, "calibration": 0.18}, true)
+			profile.merge({"presence": 0.22 + stirring_rise * 0.25, "glow": 0.16 + stirring_rise * 0.17, "pupil": 0.38 - stirring_rise * 0.04, "fiber_motion": 0.25 + stirring_rise * 0.18, "fiber_density": 32, "calibration": 0.18, "blink_enabled": false, "transition_speed": 2.2}, true)
 		State.AWAKENING:
 			var opening := _ease_out(clampf(state_time / 1.72, 0.0, 1.0))
-			profile.merge({"presence": 0.50 + opening * 0.42, "glow": 0.34 + opening * 0.48, "pupil": 0.35 - opening * 0.08, "pupil_breath": 0.020, "pupil_response": 5.2, "fiber_motion": 0.40 + opening * 0.45, "fiber_density": 46, "focus": opening * 0.42, "calibration": 0.0}, true)
+			profile.merge({"presence": 0.50 + opening * 0.42, "glow": 0.34 + opening * 0.48, "pupil": 0.35 - opening * 0.08, "pupil_breath": 0.020, "pupil_response": 5.2, "fiber_motion": 0.40 + opening * 0.45, "fiber_density": 46, "focus": opening * 0.42, "calibration": 0.0, "blink_enabled": true, "transition_speed": 2.3}, true)
 		State.WELCOMING:
-			profile.merge({"presence": 1.0, "glow": 0.76, "pupil": 0.268, "fiber_motion": 0.74, "fiber_density": 54, "focus": 0.34}, true)
+			profile.merge({"presence": 1.0, "glow": 0.76, "pupil": 0.268, "fiber_motion": 0.74, "fiber_density": 54, "focus": 0.34, "blink_enabled": true, "transition_speed": 2.9}, true)
 		State.AWARE:
 			profile.merge({"presence": 1.0, "glow": 0.60, "pupil": 0.286, "fiber_motion": 0.55, "fiber_density": 48, "focus": 0.16}, true)
 		State.ATTENDING:
-			profile.merge({"presence": 1.0, "glow": 0.80, "pupil": 0.245, "pupil_response": 9.0, "fiber_motion": 0.78, "fiber_density": 54, "focus": 0.72}, true)
+			profile.merge({"presence": 1.0, "glow": 0.80, "pupil": 0.245, "pupil_response": 9.0, "fiber_motion": 0.78, "fiber_density": 54, "focus": 0.72, "blink_enabled": false, "transition_speed": 5.2}, true)
 		State.FOCUSED:
-			profile.merge({"presence": 1.0, "glow": 0.98, "pupil": 0.205, "pupil_response": 8.0, "fiber_motion": 0.90, "fiber_density": 56, "focus": 1.0}, true)
+			profile.merge({"presence": 1.0, "glow": 0.98, "pupil": 0.205, "pupil_response": 8.0, "fiber_motion": 0.90, "fiber_density": 56, "focus": 1.0, "blink_enabled": false, "transition_speed": 5.2}, true)
 		State.OBSERVING:
-			profile.merge({"presence": 1.0, "glow": 0.80, "pupil": 0.226, "pupil_breath": 0.008, "pupil_response": 6.4, "fiber_motion": 0.74, "fiber_density": 52, "focus": 0.82}, true)
+			profile.merge({"presence": 1.0, "glow": 0.80, "pupil": 0.226, "pupil_breath": 0.008, "pupil_response": 6.4, "fiber_motion": 0.74, "fiber_density": 52, "focus": 0.82, "blink_enabled": false, "transition_speed": 3.8}, true)
 		State.SETTLED:
-			profile.merge({"presence": 1.0, "glow": 0.40, "pupil": 0.307, "fiber_motion": 0.38, "fiber_density": 40, "focus": 0.06, "reflective": 0.24}, true)
+			profile.merge({"presence": 1.0, "glow": 0.40, "pupil": 0.307, "fiber_motion": 0.38, "fiber_density": 40, "focus": 0.06, "reflective": 0.24, "blink_enabled": true, "transition_speed": 1.8}, true)
 		State.REFLECTIVE:
-			profile.merge({"presence": 1.0, "glow": 0.50, "pupil": 0.314, "fiber_motion": 0.32, "fiber_density": 42, "reflective": 1.0, "pulse_enabled": true}, true)
+			profile.merge({"presence": 1.0, "glow": 0.50, "pupil": 0.314, "fiber_motion": 0.32, "fiber_density": 42, "reflective": 1.0, "pulse_enabled": true, "blink_enabled": true, "transition_speed": 1.7}, true)
 	return profile
 
 func _base_profile() -> Dictionary:
@@ -178,6 +203,7 @@ func _base_profile() -> Dictionary:
 		"reflective": 0.0,
 		"presence": 1.0,
 		"calibration": 0.0,
+		"transition_speed": 2.6,
 		"blink_enabled": true,
 		"pulse_enabled": true
 	}

@@ -33,7 +33,7 @@ func _ready() -> void:
 	add_child(living_iris)
 
 	_label("THE IRIS", 16, Color("#e2faf1"), Vector2(30, 31), Vector2(400, 30))
-	state_label = _label("PERCEPTION INSTRUMENT · DORMANT", 10, Color("#6f9e92"), Vector2(31, 58), Vector2(420, 22))
+	state_label = _label("A LIVING PERCEPTION INSTRUMENT", 10, Color("#6f9e92"), Vector2(31, 58), Vector2(420, 22))
 	invitation = _label("the iris is listening", 15, Color("#bde8d9"), Vector2(30, 736), Vector2(480, 34), HORIZONTAL_ALIGNMENT_CENTER)
 	_label("HOME  ·  WITNESS CHAPTERS", 11, Color("#668d84"), Vector2(30, 774), Vector2(480, 24), HORIZONTAL_ALIGNMENT_CENTER)
 	iris_core.state_changed.connect(_on_state_changed)
@@ -97,7 +97,7 @@ func _cancel_attention() -> void:
 	attention_locked = false
 
 func _on_state_changed(next_state: IrisCore.State) -> void:
-	state_label.text = "PERCEPTION INSTRUMENT · %s" % IrisCore.State.keys()[int(next_state)]
+	state_label.text = _presence_line(next_state)
 	match next_state:
 		IrisCore.State.STIRRING:
 			invitation.text = "something stirs"
@@ -113,6 +113,30 @@ func _on_state_changed(next_state: IrisCore.State) -> void:
 			invitation.text = "attention is held"
 		IrisCore.State.REFLECTIVE:
 			invitation.text = "what was noticed remains"
+
+func _presence_line(next_state: IrisCore.State) -> String:
+	match next_state:
+		IrisCore.State.CALIBRATING:
+			return "THE FIELD BEGINS TO FORM"
+		IrisCore.State.STIRRING:
+			return "SOMETHING NOTICES"
+		IrisCore.State.AWAKENING:
+			return "ATTENTION TAKES SHAPE"
+		IrisCore.State.WELCOMING:
+			return "THE IRIS IS OPEN"
+		IrisCore.State.AWARE:
+			return "THE IRIS IS AWARE"
+		IrisCore.State.ATTENDING:
+			return "ATTENTION ACQUIRED"
+		IrisCore.State.FOCUSED:
+			return "FOCUS HELD"
+		IrisCore.State.OBSERVING:
+			return "WITNESSING"
+		IrisCore.State.SETTLED:
+			return "THE FIELD SETTLES"
+		IrisCore.State.REFLECTIVE:
+			return "THE MOMENT REMAINS"
+	return "A LIVING PERCEPTION INSTRUMENT"
 
 func _label(text_value: String, font_size: int, color: Color, position_value: Vector2, size_value: Vector2, alignment := HORIZONTAL_ALIGNMENT_LEFT) -> Label:
 	var label := Label.new()
