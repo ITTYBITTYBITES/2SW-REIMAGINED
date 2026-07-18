@@ -57,7 +57,6 @@ func _ready() -> void:
 
 	home = IrisHome.new()
 	home.name = "IrisHome"
-	home.witness_requested.connect(show_witness)
 	home.continue_witness_requested.connect(start_flagship_moment)
 	home.iris_requested.connect(show_iris)
 	home.memory_intent_focused.connect(_on_home_memory_intent_focused)

@@ -2,7 +2,6 @@ extends Control
 class_name IrisHome
 
 ## The Iris-centered archive overlay. The one real destination lives in MemoryField.
-signal witness_requested
 signal continue_witness_requested
 signal iris_requested
 signal memory_intent_focused(normalized_target: Vector2)
