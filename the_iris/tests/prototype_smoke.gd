@@ -14,7 +14,9 @@ func _run() -> void:
 	root.add_child(app)
 	await process_frame
 	var response_intents: Array = []
+	var evolution_updates: Array = []
 	app.iris_personality.response_intent_emitted.connect(func(intent): response_intents.append(intent))
+	app.iris_evolution_updated.connect(func(data): evolution_updates.append(data))
 
 	if app.registry.chapter_moments().size() != 5:
 		_fail("Expected exactly five retained Witness Moments")
@@ -129,6 +131,12 @@ func _run() -> void:
 		if not app.registry.is_completed(id):
 			_fail("Moment did not complete: %s" % id)
 			return
+		if not app.witness_profile.completed_moment_ids.has(id):
+			_fail("Moment did not update the local Witness Profile: %s" % id)
+			return
+	if evolution_updates.is_empty() or app.latest_iris_evolution == null:
+		_fail("Profile completion did not emit an Iris evolution hook")
+		return
 	if app.iris.iris_core.state != IrisCore.State.REFLECTIVE:
 		_fail("Witness completion did not make the Iris reflective")
 		return

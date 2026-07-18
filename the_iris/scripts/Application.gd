@@ -2,9 +2,13 @@ extends Control
 class_name PrototypeApplication
 
 ## Clean-room application composition: boot → Iris → Iris Home → Witness.
+signal iris_evolution_updated(data: IrisEvolutionData)
 var registry: IncidentRegistry
 var director: WitnessExperienceDirector
 var orchestrator: WitnessMomentOrchestrator
+var profile_store: WitnessProfileStore
+var witness_profile: WitnessProfile
+var latest_iris_evolution: IrisEvolutionData
 var iris: IrisController
 var iris_personality: IrisPersonalityResolver
 var home: IrisHome
@@ -22,6 +26,12 @@ func _ready() -> void:
 	registry.name = "IncidentRegistry"
 	registry.load_catalogue()
 	add_child(registry)
+
+	profile_store = WitnessProfileStore.new()
+	witness_profile = profile_store.load_profile()
+	witness_profile.iris_evolution_changed.connect(_on_iris_evolution_changed)
+	latest_iris_evolution = witness_profile.iris_evolution
+
 	director = WitnessExperienceDirector.new()
 	director.name = "WitnessExperienceDirector"
 	director.configure(registry)
@@ -135,10 +145,17 @@ func show_witness() -> void:
 	_emit_personality_response("witness_entered")
 	witness.show_chapters()
 
-func _on_witness_moment_completed(_moment_id: String) -> void:
+func _on_witness_moment_completed(moment_id: String) -> void:
+	if witness_profile != null:
+		witness_profile.record_completion(moment_id)
+		profile_store.save_profile(witness_profile)
 	reflective_return_pending = true
 	iris.reflect()
 	_emit_personality_response("witness_completed")
+
+func _on_iris_evolution_changed(data: IrisEvolutionData) -> void:
+	latest_iris_evolution = data
+	iris_evolution_updated.emit(data)
 
 func _process(delta: float) -> void:
 	if reflective_return_in < 0.0:
