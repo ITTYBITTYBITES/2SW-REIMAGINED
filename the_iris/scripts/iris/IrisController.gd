@@ -1,13 +1,18 @@
 extends Control
 class_name IrisController
 
-## Presentation and navigation presence for the Living Iris.
+## Owns the current Iris screen and translates a deliberate Iris interaction
+## into the existing Home navigation request.
 signal home_requested
+
+const ATTENTION_HOLD_SECONDS := 0.56
 
 var iris_core: IrisCore
 var living_iris: LivingIris
 var invitation: Label
 var state_label: Label
+var home_request_in := -1.0
+var attention_locked := false
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -33,46 +38,77 @@ func _ready() -> void:
 	_label("HOME  ·  WITNESS CHAPTERS", 11, Color("#668d84"), Vector2(30, 774), Vector2(480, 24), HORIZONTAL_ALIGNMENT_CENTER)
 	iris_core.state_changed.connect(_on_state_changed)
 
+func _process(delta: float) -> void:
+	if home_request_in < 0.0:
+		return
+	home_request_in -= delta
+	if home_request_in <= 0.0:
+		home_request_in = -1.0
+		attention_locked = false
+		home_requested.emit()
+
 func dormant() -> void:
+	_cancel_attention()
 	iris_core.transition_to(IrisCore.State.DORMANT)
 	invitation.text = "the iris is listening"
 
 func calibrate() -> void:
+	_cancel_attention()
 	visible = true
 	iris_core.transition_to(IrisCore.State.CALIBRATING)
 	invitation.text = "the instrument calibrates"
 
 func welcome() -> void:
+	_cancel_attention()
 	visible = true
 	iris_core.transition_to(IrisCore.State.WELCOMING)
 	invitation.text = "touch the iris to enter"
 
 func observe() -> void:
+	_cancel_attention()
 	iris_core.transition_to(IrisCore.State.OBSERVING)
 
 func settle() -> void:
+	_cancel_attention()
 	iris_core.transition_to(IrisCore.State.SETTLED)
 
 func reflect() -> void:
+	_cancel_attention()
 	iris_core.transition_to(IrisCore.State.REFLECTIVE)
 
 func _gui_input(event: InputEvent) -> void:
+	if attention_locked:
+		return
 	if event is InputEventMouseButton and event.pressed:
-		iris_core.transition_to(IrisCore.State.FOCUSED)
-		home_requested.emit()
+		_begin_attention(event.position)
 	elif event is InputEventScreenTouch and event.pressed:
-		iris_core.transition_to(IrisCore.State.FOCUSED)
-		home_requested.emit()
+		_begin_attention(event.position)
+
+func _begin_attention(position: Vector2) -> void:
+	attention_locked = true
+	var safe_size := Vector2(maxf(size.x, 1.0), maxf(size.y, 1.0))
+	var normalized_target := (position - safe_size * 0.5) / safe_size
+	iris_core.acquire_attention(normalized_target)
+	invitation.text = "attention acquired"
+	home_request_in = ATTENTION_HOLD_SECONDS
+
+func _cancel_attention() -> void:
+	home_request_in = -1.0
+	attention_locked = false
 
 func _on_state_changed(next_state: IrisCore.State) -> void:
 	state_label.text = "PERCEPTION INSTRUMENT · %s" % IrisCore.State.keys()[int(next_state)]
 	match next_state:
+		IrisCore.State.STIRRING:
+			invitation.text = "something stirs"
 		IrisCore.State.AWAKENING:
 			invitation.text = "attention wakes the instrument"
 		IrisCore.State.WELCOMING:
 			invitation.text = "touch the iris to enter"
 		IrisCore.State.AWARE:
 			invitation.text = "the iris is ready"
+		IrisCore.State.FOCUSED:
+			invitation.text = "attention acquired"
 		IrisCore.State.OBSERVING:
 			invitation.text = "attention is held"
 		IrisCore.State.REFLECTIVE:

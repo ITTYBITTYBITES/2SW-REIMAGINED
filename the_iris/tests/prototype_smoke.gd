@@ -25,22 +25,37 @@ func _run() -> void:
 	if app.iris.iris_core.state != IrisCore.State.CALIBRATING:
 		_fail("Boot did not enter Iris calibration")
 		return
-	app.iris.iris_core.tick(0.8)
-	if app.iris.iris_core.state != IrisCore.State.AWAKENING:
-		_fail("Calibration did not advance to awakening")
+	app.iris.iris_core.tick(0.7)
+	if app.iris.iris_core.state != IrisCore.State.STIRRING:
+		_fail("Calibration did not advance to stirring")
 		return
-	app.iris.iris_core.tick(1.4)
+	app.iris.iris_core.tick(1.1)
+	if app.iris.iris_core.state != IrisCore.State.AWAKENING:
+		_fail("Stirring did not advance to awakening")
+		return
+	app.iris.iris_core.tick(1.8)
 	if app.iris.iris_core.state != IrisCore.State.WELCOMING:
 		_fail("Awakening did not advance to welcoming")
 		return
-	app.iris.iris_core.tick(2.2)
+	app.iris.iris_core.tick(2.3)
 	if app.iris.iris_core.state != IrisCore.State.AWARE:
 		_fail("Welcoming did not advance to aware")
 		return
 
-	app.show_home()
-	if app.iris.iris_core.state != IrisCore.State.SETTLED:
-		_fail("Home transition did not settle the Iris")
+	var tap := InputEventMouseButton.new()
+	tap.pressed = true
+	tap.position = Vector2(270.0, 440.0)
+	app.iris._gui_input(tap)
+	if app.iris.iris_core.state != IrisCore.State.ATTENDING:
+		_fail("Iris did not acquire attention before focus")
+		return
+	app.iris.iris_core.tick(0.4)
+	if app.iris.iris_core.state != IrisCore.State.FOCUSED:
+		_fail("Attention did not advance to focused")
+		return
+	await create_timer(0.65).timeout
+	if not app.home.visible or app.iris.iris_core.state != IrisCore.State.SETTLED:
+		_fail("Focused Iris interaction did not arrive at settled Home")
 		return
 	app.show_witness()
 	if app.iris.iris_core.state != IrisCore.State.OBSERVING:
@@ -65,7 +80,7 @@ func _run() -> void:
 	if app.iris.iris_core.state != IrisCore.State.WELCOMING:
 		_fail("Return path did not restore the welcoming Iris")
 		return
-	print("LIVING_IRIS_SMOKE_PASS: boot, calibration, awakening, home, witness, return, and WM_001–WM_005 loaded.")
+	print("LIVING_IRIS_PRESENCE_PASS: boot, emergence, attention, home, witness, return, and WM_001–WM_005 loaded.")
 	quit(0)
 
 func _fail(message: String) -> void:

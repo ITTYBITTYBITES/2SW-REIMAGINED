@@ -1,6 +1,6 @@
 # Living Iris 4.0 — Current State Audit
 
-**Audit snapshot:** `6e0a4ed` on `main`
+**Audit scope:** current `main`
 
 **Scope:** current repository only. The Witness Runtime, `IncidentRegistry`, `WitnessExperienceDirector`, chapter content, and existing experience flow were inspected but not modified.
 
@@ -48,14 +48,16 @@ The application composes these nodes at runtime. `Application.tscn` contains onl
 Project launch
 → StartupFlow publisher/title sequence
 → Application.show_iris(true)
-→ IrisCore: CALIBRATING (0.72 s)
-→ IrisCore: AWAKENING (1.35 s)
-→ IrisCore: WELCOMING (2.1 s)
+→ IrisCore: CALIBRATING (0.62 s)
+→ IrisCore: STIRRING (1.05 s)
+→ IrisCore: AWAKENING (1.72 s)
+→ IrisCore: WELCOMING (2.25 s)
 → IrisCore: AWARE
 
 Iris touch
+→ IrisCore: ATTENDING (0.34 s)
 → IrisCore: FOCUSED
-→ IrisController.home_requested
+→ IrisController.home_requested after a 0.56 s attention hold
 → Application.show_home()
 → IrisCore: SETTLED
 
@@ -79,8 +81,8 @@ Home → Return to Iris
 | Concern | Current behavior |
 | --- | --- |
 | Visual presence | Works. The Iris is a full-screen procedural `Control` with an aura, organic silhouette, radial fibers, pupil, glints, calibration ring, and reflective threads. |
-| Animation | Works. Breathing, fiber motion, pupil response, micro-saccades, awakening scale, focus intensity, calibration, and reflection are state-driven. |
-| State handling | Works. `IrisCore` defines dormant, calibrating, awakening, welcoming, aware, focused, observing, settled, and reflective states. |
+| Animation | Works. Layered breathing, fiber motion, pupil response, micro-saccades, rare aperture blinks, energy drift, emergence scale, focus intensity, calibration, and reflection are state-driven. |
+| State handling | Works. `IrisCore` defines dormant, calibrating, stirring, awakening, welcoming, aware, attending, focused, observing, settled, and reflective states. |
 | Navigation interaction | Works for the current flow. `IrisController` emits a Home request; `Application` directly selects and shows Iris, Home, or Witness. |
 | Audio interaction | Not present. There is no Iris audio or voice runtime in the current repository. |
 | Haptic interaction | Not present. There is no haptic or vibration runtime in the current repository. |
@@ -136,5 +138,5 @@ The following are outside the Living Iris 4.0 implementation boundary and must r
 The audit clone opened with Godot `4.6.3.stable.official.7d41c59c4`. The current smoke test passed:
 
 ```text
-LIVING_IRIS_SMOKE_PASS: boot, calibration, awakening, home, witness, return, and WM_001–WM_005 loaded.
+LIVING_IRIS_PRESENCE_PASS: boot, emergence, attention, home, witness, return, and WM_001–WM_005 loaded.
 ```
