@@ -3,6 +3,7 @@ class_name WitnessChapters
 
 ## Displays Chapter 01 and plays each of the five completed Witness Moments.
 signal home_requested
+signal generic_moment_requested(moment_id: String)
 
 var registry: IncidentRegistry
 var director: WitnessExperienceDirector
@@ -97,6 +98,9 @@ func show_chapters() -> void:
 		chapter_list.add_child(card)
 
 func open_moment(moment_id: String) -> void:
+	if moment_id == "WM_TEST":
+		generic_moment_requested.emit(moment_id)
+		return
 	var launch := director.launch(moment_id)
 	if launch.is_empty():
 		return
