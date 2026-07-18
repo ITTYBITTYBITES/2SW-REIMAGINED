@@ -1,0 +1,106 @@
+{
+  "id": "WM_011",
+  "moment_id": "WM_011",
+  "incident_id": "INC_STILL_WATERFALL",
+  "title": "The Still Waterfall",
+  "subtitle": "Chapter 02 · The Wider Fractures",
+  "introduction": "A deep mountain gorge where a thin waterfall spills over granite rocks. Focus on the pool surface.",
+  "description": "A heavy river stone drops from the cliff rim, but the water spray rises and splatters the granite rocks exactly two seconds before the stone hits the pool surface.",
+  "observation": "The water splashes outwards, soaking the granite gorge before the falling stone can make contact.",
+  "reconstruction": "Carry the falling stone, the splash pool, and the wet granite canyon.",
+  "attunements": [
+    "The granite stone is dry and suspended in mid-air, carrying high gravitational energy.",
+    "The water is fully displaced and rippling before receiving the impact.",
+    "The cliff side is wet, showing fresh moisture from early water spray."
+  ],
+  "revelation": "What was wrong: the water splattered across the canyon before the falling stone could reach the pool.\n\nWhy it mattered: the gorge was keeping the memory of the impact, predicting the water's displacement before gravity could conclude its work.",
+  "background": "res://assets/witness/wm_001_studio_background.png",
+  "action": "res://assets/witness/wm_001_hand_action.png",
+  "reveal": "res://assets/witness/wm_001_prism_reveal.png",
+  "observation_duration": 2.0,
+  "anomaly_definition": {
+    "location": {"x": 300.0, "y": 460.0},
+    "size": {"x": 125.0, "y": 125.0},
+    "misstep_text": "Not there. Focus on the pool surface, not the falling stone.",
+    "success_text": "Gravitational desynchronization detected. Splash impact waves precede stone contact."
+  },
+  "capture_window": {
+    "start_time": 0.85,
+    "end_time": 1.30,
+    "hold_duration": 0.32,
+    "guidance_text": "HOLD WHEN THE WATER SPRAY DISPERSES.",
+    "success_text": "Timeline isolated: impact precedes contact."
+  },
+  "evidence_nodes": [
+    {
+      "identifier": "river_stone",
+      "location": {"x": 100.0, "y": 200.0},
+      "description": "The Falling Stone",
+      "relevance": "THE GRANITE STONE IS DRY AND SUSPENDED. The stone is falling, but remains completely dry in mid-air.",
+      "truth_connection": "Gravitational path aligned.",
+      "asset_reference": "res://assets/witness/wm_001_prism_reveal.png",
+      "color_modulation": "#8e9cc5",
+      "visual_effect": "glow"
+    },
+    {
+      "identifier": "water_splash",
+      "location": {"x": 100.0, "y": 250.0},
+      "description": "The Splash Pool",
+      "relevance": "THE WATER IS FULLY DISPLACED AND RIPPLING. The splash occurs before any solid objects break the water surface.",
+      "truth_connection": "Liquid path verified.",
+      "asset_reference": "res://assets/witness/wm_001_prism_reveal.png",
+      "color_modulation": "#7283ab",
+      "visual_effect": "glow"
+    },
+    {
+      "identifier": "granite_cliff",
+      "location": {"x": 100.0, "y": 300.0},
+      "description": "The Granite Gorge",
+      "relevance": "THE CLIFF SIDE IS ALREADY WET. Granite walls are covered in mist spray before the waterfall impact.",
+      "truth_connection": "Chronology confirmed.",
+      "asset_reference": "res://assets/witness/wm_001_prism_reveal.png",
+      "color_modulation": "#5d6d94",
+      "visual_effect": "glow"
+    }
+  ],
+  "reward_definition": {
+    "base_resonance": 20,
+    "accuracy_multiplier": 15.0,
+    "unassisted_bonus": 6
+  },
+  "asset_manifest": {
+    "environment_asset": "res://assets/witness/wm_001_studio_background.png",
+    "background_layers": [
+      "res://assets/witness/wm_001_studio_background.png"
+    ],
+    "evidence_assets": {
+      "river_stone": {
+        "texture_path": "res://assets/witness/wm_001_prism_reveal.png",
+        "color_modulation": "#8e9cc5",
+        "visual_effect": "glow"
+      },
+      "water_splash": {
+        "texture_path": "res://assets/witness/wm_001_prism_reveal.png",
+        "color_modulation": "#7283ab",
+        "visual_effect": "glow"
+      },
+      "granite_cliff": {
+        "texture_path": "res://assets/witness/wm_001_prism_reveal.png",
+        "color_modulation": "#5d6d94",
+        "visual_effect": "glow"
+      }
+    },
+    "audio_assets": {
+      "ambient": "res://assets/audio/wm011_ambient.ogg",
+      "anomaly": "res://assets/audio/wm011_anomaly.ogg",
+      "resolution": "res://assets/audio/wm011_resolution.ogg"
+    },
+    "visual_effects": {
+      "pulse_speed": 1.6
+    },
+    "lighting_profile": {
+      "modulate_color": "#a7b8eb",
+      "vignette_intensity": 0.60
+    }
+  }
+}

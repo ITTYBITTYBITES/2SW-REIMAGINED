@@ -1,0 +1,106 @@
+{
+  "id": "WM_010",
+  "moment_id": "WM_010",
+  "incident_id": "INC_UNBOUND_LEDGER",
+  "title": "The Unbound Ledger",
+  "subtitle": "Chapter 02 · The Wider Fractures",
+  "introduction": "A merchant's counting house by the docks has ledgers, inkwells, and shipping crates. Focus on the open page.",
+  "description": "An open inkwell sits on a desk. A merchant's steel nib pen lifts, but the ink print registers a finalized cargo trade transaction inside the ledger book exactly two seconds before the pen touches the paper.",
+  "observation": "The ledger page fills with black ink, finalizing the trade transaction before the pen makes contact.",
+  "reconstruction": "Carry the steel nib pen, the open inkwell, and the wax cargo seal.",
+  "attunements": [
+    "The steel nib pen tip is dry and pristine, carrying no residual black ink.",
+    "The open inkwell is full, showing no decrease in liquid volume.",
+    "The wax cargo seal on the document has solidified, yet carries fresh friction heat."
+  ],
+  "revelation": "What was wrong: the ledger registered the trade agreement before the pen could touch the page.\n\nWhy it mattered: the trade had already been finalized in the merchant's mind, creating a temporal imprint that recorded the agreement before it could be signed.",
+  "background": "res://assets/witness/wm_001_studio_background.png",
+  "action": "res://assets/witness/wm_001_hand_action.png",
+  "reveal": "res://assets/witness/wm_001_prism_reveal.png",
+  "observation_duration": 2.0,
+  "anomaly_definition": {
+    "location": {"x": 210.0, "y": 350.0},
+    "size": {"x": 115.0, "y": 115.0},
+    "misstep_text": "Not there. Focus on the freshly inked page of the ledger book.",
+    "success_text": "Causal transaction detected. The ink prints itself before pen-point contact."
+  },
+  "capture_window": {
+    "start_time": 0.65,
+    "end_time": 1.10,
+    "hold_duration": 0.28,
+    "guidance_text": "HOLD WHEN THE INK PRE-REGISTERS ON THE PAPER.",
+    "success_text": "Timeline isolated: writing precedes contact."
+  },
+  "evidence_nodes": [
+    {
+      "identifier": "steel_nib",
+      "location": {"x": 100.0, "y": 200.0},
+      "description": "The Steel Nib Pen",
+      "relevance": "THE PEN TIP IS DRY AND PRISTINE. The steel nib has not yet absorbed any black ink pigment.",
+      "truth_connection": "Mechanical state aligned.",
+      "asset_reference": "res://assets/witness/wm_001_prism_reveal.png",
+      "color_modulation": "#a2ebd6",
+      "visual_effect": "glow"
+    },
+    {
+      "identifier": "inkwell_core",
+      "location": {"x": 100.0, "y": 250.0},
+      "description": "The Open Inkwell",
+      "relevance": "THE INKWELL IS FULL. The ink volume is unchanged, showing no trace of ink draw or evaporation.",
+      "truth_connection": "Liquid path verified.",
+      "asset_reference": "res://assets/witness/wm_001_prism_reveal.png",
+      "color_modulation": "#78d4ab",
+      "visual_effect": "glow"
+    },
+    {
+      "identifier": "ledger_seal",
+      "location": {"x": 100.0, "y": 300.0},
+      "description": "The Cargo Seal",
+      "relevance": "THE WAX SEAL CARRIES RESIDUAL FRICTION HEAT. The red wax has hardened, but radiates warm energy.",
+      "truth_connection": "Chronology confirmed.",
+      "asset_reference": "res://assets/witness/wm_001_prism_reveal.png",
+      "color_modulation": "#5ebf91",
+      "visual_effect": "glow"
+    }
+  ],
+  "reward_definition": {
+    "base_resonance": 20,
+    "accuracy_multiplier": 15.0,
+    "unassisted_bonus": 6
+  },
+  "asset_manifest": {
+    "environment_asset": "res://assets/witness/wm_001_studio_background.png",
+    "background_layers": [
+      "res://assets/witness/wm_001_studio_background.png"
+    ],
+    "evidence_assets": {
+      "steel_nib": {
+        "texture_path": "res://assets/witness/wm_001_prism_reveal.png",
+        "color_modulation": "#a2ebd6",
+        "visual_effect": "glow"
+      },
+      "inkwell_core": {
+        "texture_path": "res://assets/witness/wm_001_prism_reveal.png",
+        "color_modulation": "#78d4ab",
+        "visual_effect": "glow"
+      },
+      "ledger_seal": {
+        "texture_path": "res://assets/witness/wm_001_prism_reveal.png",
+        "color_modulation": "#5ebf91",
+        "visual_effect": "glow"
+      }
+    },
+    "audio_assets": {
+      "ambient": "res://assets/audio/wm010_ambient.ogg",
+      "anomaly": "res://assets/audio/wm010_anomaly.ogg",
+      "resolution": "res://assets/audio/wm010_resolution.ogg"
+    },
+    "visual_effects": {
+      "pulse_speed": 1.4
+    },
+    "lighting_profile": {
+      "modulate_color": "#a2ebd6",
+      "vignette_intensity": 0.45
+    }
+  }
+}

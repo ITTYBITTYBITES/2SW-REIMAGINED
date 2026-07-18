@@ -98,7 +98,7 @@ func show_chapters() -> void:
 		chapter_list.add_child(card)
 
 func open_moment(moment_id: String) -> void:
-	if moment_id in ["WM_001", "WM_002", "WM_003", "WM_004", "WM_005", "WM_TEST", "WM_ASSET_TEST", "WM_006", "WM_007", "WM_008"]:
+	if moment_id in ["WM_001", "WM_002", "WM_003", "WM_004", "WM_005", "WM_TEST", "WM_ASSET_TEST", "WM_006", "WM_007", "WM_008", "WM_009", "WM_010", "WM_011", "WM_012"]:
 		generic_moment_requested.emit(moment_id)
 		return
 	var launch := director.launch(moment_id)
