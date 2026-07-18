@@ -32,6 +32,15 @@ version/name="4.0.0"
 
 Both presets target `armeabi-v7a` and `arm64-v8a`; x86 targets are disabled for the production mobile configuration.
 
+### Validation Fixes (Mission 026B)
+
+To address the validation errors preventing export, the following modifications were applied:
+
+1. **ETC2/ASTC Texture Compression**:
+   - Enabled global ETC2 and ASTC texture compression by adding `textures/vram_compression/import_etc2_astc=true` under `[rendering]` in `the_iris/project.godot`. This resolves the error *"Target platform requires ETC2/ASTC texture compression enabled"*.
+2. **Gradle Android Build & AAB Format**:
+   - Enabled Gradle build for the **Android Play Store** preset by setting `gradle_build/use_gradle_build=true` in `the_iris/export_presets.cfg`. This resolves the error *"Export AAB is only valid when use Gradle build is enabled"* while maintaining the required `.aab` format (`gradle_build/export_format=1`).
+
 ## Signing Readiness
 
 No signing material is committed.
@@ -58,19 +67,21 @@ A Play Store release is configuration-ready once a secure build environment inje
 
 ## Validation Results
 
-| Check | Result |
-| --- | --- |
-| Godot 4.6.3 project/editor parse | Pass |
-| Project version is 4.0.0 | Pass |
-| Debug preset package ID | Pass |
-| Play Store preset package ID | Pass |
-| Debug preset version code/name | Pass |
-| Play Store preset version code/name | Pass |
-| Debug output path / APK format | Pass |
-| Play Store output path / AAB format | Pass |
-| No keystore or signing secret tracked | Pass |
-| Debug export command preflight | Blocked by local Android tooling/templates |
-| Release AAB signing | Pending secure signing credentials and Android build environment |
+| Check | Result | Description |
+| --- | --- | --- |
+| Godot 4.6.3 project/editor parse | Pass | Settings successfully read by the editor |
+| Project version is 4.0.0 | Pass | Matches version requirement |
+| Debug preset package ID | Pass | `com.ittybittybites.the2secondwitness` |
+| Play Store preset package ID | Pass | `com.ittybittybites.the2secondwitness` |
+| Debug preset version code/name | Pass | Code: `40000`, Name: `4.0.0` |
+| Play Store preset version code/name | Pass | Code: `40000`, Name: `4.0.0` |
+| Debug output path / APK format | Pass | `build/android/TwoSecondWitness-debug.apk` |
+| Play Store output path / AAB format | Pass | `build/android/TwoSecondWitness-release.aab` |
+| ETC2 & ASTC Texture Compression | Pass | Enabled in `project.godot` |
+| Play Store Gradle Build | Pass | Enabled in `export_presets.cfg` |
+| No keystore or signing secret tracked | Pass | Checked via repository `.gitignore` and `git status` |
+| Debug export command preflight | Blocked by local Android tooling/templates | Tooling-pending |
+| Release AAB signing | Pending secure signing credentials and Android build environment | Tooling-pending |
 
 ## Debug Export Attempt
 
