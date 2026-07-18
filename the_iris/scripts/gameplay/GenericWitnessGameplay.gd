@@ -12,6 +12,10 @@ signal return_requested
 var definition: WitnessMomentDefinition
 var phase: Phase = Phase.BRIEFING
 
+var shake_time := 0.0
+var shake_intensity := 0.0
+var target_opacity := 0.48
+
 var observation_remaining := 0.0
 var anomaly_missteps := 0
 var capture_elapsed := 0.0
@@ -157,6 +161,36 @@ func close() -> void:
 func _process(delta: float) -> void:
 	if not visible:
 		return
+		
+	# Smoothly fade in background texture
+	scene_image.modulate.a = lerpf(scene_image.modulate.a, target_opacity, minf(1.0, delta * 3.5))
+	
+	# Smoothly fade in labels for premium designer aesthetic
+	title_label.modulate.a = lerpf(title_label.modulate.a, 1.0, minf(1.0, delta * 4.5))
+	body_label.modulate.a = lerpf(body_label.modulate.a, 1.0, minf(1.0, delta * 4.5))
+	guidance_label.modulate.a = lerpf(guidance_label.modulate.a, 1.0, minf(1.0, delta * 4.5))
+	phase_label.modulate.a = lerpf(phase_label.modulate.a, 1.0, minf(1.0, delta * 4.5))
+	
+	# Screen shake vibration feedback on misstep
+	if shake_time > 0.0:
+		shake_time -= delta
+		var offset := Vector2(
+			randf_range(-shake_intensity, shake_intensity) * (shake_time / 0.4),
+			randf_range(-shake_intensity, shake_intensity) * (shake_time / 0.4)
+		)
+		scene_image.position = offset
+	else:
+		scene_image.position = Vector2.ZERO
+
+	# Pulse visual feedback for timelines/captures
+	if phase == Phase.CAPTURE:
+		var pulse := sin(Time.get_ticks_msec() * 0.015) * 0.5 + 0.5
+		capture_progress.modulate = Color(1.0 + pulse * 0.35, 1.0 + pulse * 0.35, 1.0, 1.0)
+		capture_button.scale = Vector2.ONE * (1.0 + pulse * 0.015)
+		capture_button.pivot_offset = capture_button.size * 0.5
+	else:
+		capture_button.scale = Vector2.ONE
+
 	if phase == Phase.OBSERVATION:
 		observation_remaining = maxf(0.0, observation_remaining - delta)
 		timer_label.text = "WATCH  ·  %.1f" % observation_remaining
@@ -172,10 +206,18 @@ func _gui_input(event: InputEvent) -> void:
 		anomaly_missteps += 1
 		var misstep_text: String = definition.anomaly_definition.get("misstep_text", "Not there. Watch closely.")
 		body_label.text = misstep_text
+		# Add dramatic screenshake and red flash feedback
+		shake_time = 0.4
+		shake_intensity = 15.0
+		scene_image.modulate = Color(1.8, 0.4, 0.4, 0.8)
 	elif event is InputEventScreenTouch and event.pressed and not anomaly_button.get_global_rect().has_point(event.position):
 		anomaly_missteps += 1
 		var misstep_text: String = definition.anomaly_definition.get("misstep_text", "Not there. Watch closely.")
 		body_label.text = misstep_text
+		# Add dramatic screenshake and red flash feedback
+		shake_time = 0.4
+		shake_intensity = 15.0
+		scene_image.modulate = Color(1.8, 0.4, 0.4, 0.8)
 
 func _set_phase(next_phase: Phase) -> void:
 	phase = next_phase
@@ -191,6 +233,13 @@ func _set_phase(next_phase: Phase) -> void:
 	guidance_label.text = ""
 	for child in evidence_container.get_children():
 		child.queue_free()
+		
+	# Reset alpha for smooth cinematic fade-ins
+	scene_image.modulate.a = 0.0
+	title_label.modulate.a = 0.0
+	body_label.modulate.a = 0.0
+	guidance_label.modulate.a = 0.0
+	phase_label.modulate.a = 0.0
 
 	match phase:
 		Phase.BRIEFING:
@@ -274,6 +323,8 @@ func _find_anomaly() -> void:
 	guidance_label.text = "THE FRACTURE DETECTED."
 	action_button.text = "REPEAT THE MOMENT"
 	action_button.visible = true
+	# Success flash feedback
+	scene_image.modulate = Color(2.5, 2.5, 2.5, 1.0)
 
 func _begin_capture_hold() -> void:
 	if phase == Phase.CAPTURE:

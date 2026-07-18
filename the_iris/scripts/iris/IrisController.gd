@@ -14,6 +14,7 @@ var brand_label: Label
 var invitation: Label
 var state_label: Label
 var navigation_label: Label
+var background: ColorRect
 var home_request_in := -1.0
 var attention_locked := false
 
@@ -21,7 +22,7 @@ func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 
-	var background := ColorRect.new()
+	background = ColorRect.new()
 	background.color = Color("#030a0d")
 	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	background.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -80,6 +81,29 @@ func set_home_environment(active: bool) -> void:
 	state_label.visible = not active
 	invitation.visible = not active
 	navigation_label.visible = not active
+	if active:
+		background.color = Color(0.002, 0.015, 0.021, 0.32)
+		living_iris.modulate = Color.WHITE
+	else:
+		background.color = Color("#030a0d")
+
+func set_gameplay_environment(active: bool) -> void:
+	mouse_filter = Control.MOUSE_FILTER_IGNORE if active else Control.MOUSE_FILTER_STOP
+	# Keep expression overlay visible so personality resolved messages can float
+	expression_overlay.set_home_environment(false)
+	brand_label.visible = not active
+	state_label.visible = not active
+	invitation.visible = not active
+	navigation_label.visible = not active
+	
+	if active:
+		# Make background fully transparent so gameplay is visible beneath
+		background.color = Color(0.0, 0.0, 0.0, 0.0)
+		# Semi-transparent watermark background effect for the Living Iris
+		living_iris.modulate = Color(1.0, 1.0, 1.0, 0.15)
+	else:
+		background.color = Color("#030a0d")
+		living_iris.modulate = Color.WHITE
 
 func present_response_intent(intent: IrisResponseIntent) -> void:
 	expression_overlay.present(intent)

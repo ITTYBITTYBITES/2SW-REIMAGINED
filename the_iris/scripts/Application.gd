@@ -140,6 +140,7 @@ func show_iris(from_boot := false) -> void:
 func show_home() -> void:
 	# The single Living Iris remains visible as the settled center of Home.
 	iris.visible = true
+	iris.set_gameplay_environment(false)
 	if reflective_return_pending:
 		# Preserve the existing REFLECTIVE state briefly so return carries meaning.
 		iris.reflect()
@@ -235,6 +236,7 @@ func show_witness() -> void:
 	reflective_return_pending = false
 	reflective_return_in = -1.0
 	iris.set_home_environment(false)
+	iris.set_gameplay_environment(false)
 	iris.visible = false
 	home.visible = false
 	witness.visible = true
@@ -280,6 +282,7 @@ func show_archive() -> void:
 	reflective_return_pending = false
 	reflective_return_in = -1.0
 	iris.set_home_environment(false)
+	iris.set_gameplay_environment(false)
 	iris.visible = false
 	home.visible = false
 	witness.visible = false
@@ -297,7 +300,8 @@ func start_generic_gameplay(moment_id: String) -> void:
 	reflective_return_pending = false
 	reflective_return_in = -1.0
 	iris.set_home_environment(false)
-	iris.visible = false
+	iris.visible = true
+	iris.set_gameplay_environment(true)
 	home.visible = false
 	witness.visible = false
 	wm001_gameplay.visible = false
