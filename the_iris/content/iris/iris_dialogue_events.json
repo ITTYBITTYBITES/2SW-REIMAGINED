@@ -1,0 +1,36 @@
+{
+  "events": {
+    "iris_welcome": {
+      "text": "I remember your perspective.",
+      "accessibility_text": "The Iris awakens and recognizes your perspective.",
+      "expression_mode": "INTRODUCING",
+      "audio": "res://assets/audio/iris/iris_focus.ogg",
+      "haptic": "iris_welcome_pulse",
+      "voice": "voice_placeholder_iris_welcome"
+    },
+    "iris_idle": {
+      "text": "I am still here.",
+      "accessibility_text": "The Iris remains present and attentive.",
+      "expression_mode": "IDLE",
+      "audio": "res://assets/audio/iris/iris_presence.ogg",
+      "haptic": "iris_idle_breath",
+      "voice": "voice_placeholder_iris_idle"
+    },
+    "iris_ready": {
+      "text": "A memory is waiting.",
+      "accessibility_text": "The Iris is ready. A memory is waiting.",
+      "expression_mode": "GUIDING",
+      "audio": "res://assets/audio/iris/iris_confirm.ogg",
+      "haptic": "iris_ready_pulse",
+      "voice": "voice_placeholder_iris_ready"
+    },
+    "iris_return": {
+      "text": "You came back with more of the pattern.",
+      "accessibility_text": "The Iris acknowledges your return from the memory field.",
+      "expression_mode": "REFLECTIVE",
+      "audio": "res://assets/audio/iris/iris_presence.ogg",
+      "haptic": "iris_return_pulse",
+      "voice": "voice_placeholder_iris_return"
+    }
+  }
+}

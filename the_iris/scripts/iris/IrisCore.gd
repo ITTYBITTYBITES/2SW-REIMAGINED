@@ -25,6 +25,8 @@ var blink_elapsed := -1.0
 var blink_amount := 0.0
 var pulse_in := 7.0
 var pulse_amount := 0.0
+var simulated_attention_in := 2.4
+var simulated_focus_amount := 0.0
 var organic_seed := 0.0
 var random := RandomNumberGenerator.new()
 
@@ -33,6 +35,7 @@ func _ready() -> void:
 	organic_seed = random.randf_range(0.0, TAU)
 	blink_in = random.randf_range(4.8, 9.6)
 	pulse_in = random.randf_range(5.5, 11.0)
+	simulated_attention_in = random.randf_range(1.4, 3.6)
 
 func transition_to(next_state: State) -> void:
 	if state == next_state:
@@ -44,6 +47,7 @@ func transition_to(next_state: State) -> void:
 		State.CALIBRATING, State.STIRRING, State.ATTENDING, State.FOCUSED, State.OBSERVING:
 			blink_elapsed = -1.0
 			blink_amount = 0.0
+			simulated_focus_amount = 0.0
 		State.AWAKENING:
 			# A single early closure makes the first emergence feel ocular, not loaded.
 			blink_in = 0.92
@@ -68,6 +72,7 @@ func tick(delta: float) -> Dictionary:
 	_update_gaze(delta, float(profile["saccade"]))
 	_update_blink(delta, bool(profile["blink_enabled"]))
 	_update_energy_pulse(delta, bool(profile["pulse_enabled"]))
+	_update_simulated_attention(delta, float(profile["saccade"]))
 
 	var primary_breath := sin(life_time * float(profile["breath_primary"]) * TAU + organic_seed) * 0.5 + 0.5
 	var secondary_breath := sin(life_time * float(profile["breath_secondary"]) * TAU + organic_seed * 2.17) * 0.5 + 0.5
@@ -79,7 +84,8 @@ func tick(delta: float) -> Dictionary:
 	presence = lerpf(presence, float(profile["presence"]), minf(1.0, delta * transition_speed))
 	fiber_motion = lerpf(fiber_motion, float(profile["fiber_motion"]), minf(1.0, delta * transition_speed))
 	fiber_density = lerpf(fiber_density, float(profile["fiber_density"]), minf(1.0, delta * transition_speed * 1.4))
-	focus_amount = lerpf(focus_amount, float(profile["focus"]), minf(1.0, delta * transition_speed * 1.35))
+	var authored_focus := clampf(float(profile["focus"]) + simulated_focus_amount, 0.0, 1.0)
+	focus_amount = lerpf(focus_amount, authored_focus, minf(1.0, delta * transition_speed * 1.35))
 	reflective_amount = lerpf(reflective_amount, float(profile["reflective"]), minf(1.0, delta * transition_speed * 0.85))
 	calibration_amount = lerpf(calibration_amount, float(profile["calibration"]), minf(1.0, delta * transition_speed * 1.8))
 
@@ -158,6 +164,22 @@ func _update_energy_pulse(delta: float, enabled: bool) -> void:
 		pulse_amount = random.randf_range(0.24, 0.55)
 		pulse_in = random.randf_range(7.0, 17.0)
 
+func _update_simulated_attention(delta: float, amplitude: float) -> void:
+	simulated_focus_amount = move_toward(simulated_focus_amount, 0.0, delta * 0.55)
+	if not (state in [State.WELCOMING, State.AWARE, State.SETTLED, State.REFLECTIVE]):
+		return
+	simulated_attention_in -= delta
+	if simulated_attention_in > 0.0:
+		return
+	# Authored, low-amplitude attention changes: not camera/eye tracking, just a living scan.
+	var direction := Vector2(random.randf_range(-1.0, 1.0), random.randf_range(-0.58, 0.58))
+	if direction.length_squared() < 0.01:
+		direction = Vector2.LEFT
+	gaze_target = direction.normalized() * random.randf_range(amplitude * 0.34, amplitude * 1.18)
+	saccade_in = random.randf_range(0.04, 0.16)
+	simulated_focus_amount = random.randf_range(0.045, 0.16)
+	simulated_attention_in = random.randf_range(2.2, 6.4)
+
 func _profile() -> Dictionary:
 	var profile := _base_profile()
 	match state:
@@ -173,9 +195,9 @@ func _profile() -> Dictionary:
 			var opening := _ease_out(clampf(state_time / 1.72, 0.0, 1.0))
 			profile.merge({"presence": 0.50 + opening * 0.42, "glow": 0.34 + opening * 0.48, "pupil": 0.35 - opening * 0.08, "pupil_breath": 0.020, "pupil_response": 5.2, "fiber_motion": 0.40 + opening * 0.45, "fiber_density": 46, "focus": opening * 0.42, "calibration": 0.0, "blink_enabled": true, "transition_speed": 2.3}, true)
 		State.WELCOMING:
-			profile.merge({"presence": 1.0, "glow": 0.76, "pupil": 0.268, "fiber_motion": 0.74, "fiber_density": 54, "focus": 0.34, "blink_enabled": true, "transition_speed": 2.9}, true)
+			profile.merge({"presence": 1.0, "glow": 0.76, "pupil": 0.268, "fiber_motion": 0.74, "fiber_density": 54, "focus": 0.34, "saccade": 0.024, "blink_enabled": true, "transition_speed": 2.9}, true)
 		State.AWARE:
-			profile.merge({"presence": 1.0, "glow": 0.60, "pupil": 0.286, "fiber_motion": 0.55, "fiber_density": 48, "focus": 0.16}, true)
+			profile.merge({"presence": 1.0, "glow": 0.60, "pupil": 0.286, "fiber_motion": 0.55, "fiber_density": 48, "focus": 0.16, "saccade": 0.026}, true)
 		State.ATTENDING:
 			profile.merge({"presence": 1.0, "glow": 0.80, "pupil": 0.245, "pupil_response": 9.0, "fiber_motion": 0.78, "fiber_density": 54, "focus": 0.72, "blink_enabled": false, "transition_speed": 5.2}, true)
 		State.FOCUSED:
@@ -183,9 +205,9 @@ func _profile() -> Dictionary:
 		State.OBSERVING:
 			profile.merge({"presence": 1.0, "glow": 0.80, "pupil": 0.226, "pupil_breath": 0.008, "pupil_response": 6.4, "fiber_motion": 0.74, "fiber_density": 52, "focus": 0.82, "blink_enabled": false, "transition_speed": 3.8}, true)
 		State.SETTLED:
-			profile.merge({"presence": 1.0, "glow": 0.40, "pupil": 0.307, "fiber_motion": 0.38, "fiber_density": 40, "focus": 0.06, "reflective": 0.24, "blink_enabled": true, "transition_speed": 1.8}, true)
+			profile.merge({"presence": 1.0, "glow": 0.40, "pupil": 0.307, "fiber_motion": 0.38, "fiber_density": 40, "focus": 0.06, "reflective": 0.24, "saccade": 0.022, "blink_enabled": true, "transition_speed": 1.8}, true)
 		State.REFLECTIVE:
-			profile.merge({"presence": 1.0, "glow": 0.50, "pupil": 0.314, "fiber_motion": 0.32, "fiber_density": 42, "reflective": 1.0, "pulse_enabled": true, "blink_enabled": true, "transition_speed": 1.7}, true)
+			profile.merge({"presence": 1.0, "glow": 0.50, "pupil": 0.314, "fiber_motion": 0.32, "fiber_density": 42, "reflective": 1.0, "saccade": 0.020, "pulse_enabled": true, "blink_enabled": true, "transition_speed": 1.7}, true)
 	return profile
 
 func _base_profile() -> Dictionary:

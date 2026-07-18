@@ -9,6 +9,9 @@ class_name IrisAudioConsumer
 ## Map of Iris presence events to audio file paths.
 const PRESENCE_AUDIO := {
 	"iris_awaken": "res://assets/audio/iris/iris_awaken.ogg",
+	"iris_welcome": "res://assets/audio/iris/iris_focus.ogg",
+	"iris_ready": "res://assets/audio/iris/iris_confirm.ogg",
+	"iris_return": "res://assets/audio/iris/iris_presence.ogg",
 	"hub_return": "res://assets/audio/iris/iris_presence.ogg",
 	"idle": "res://assets/audio/iris/iris_breath_loop.ogg",
 	"evolution_detected": "res://assets/audio/iris/iris_transition.ogg",

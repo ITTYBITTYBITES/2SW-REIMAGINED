@@ -11,15 +11,20 @@ var latest_intent: IrisResponseIntent
 
 func resolve(core_state: int, experience_event: String) -> IrisResponseIntent:
 	var mode := _resolve_mode(core_state, experience_event)
-	var mode_name: String = str(ExpressionMode.keys()[int(mode)])
-	var mode_key: String = mode_name.to_lower()
+	var fallback_mode_name: String = str(ExpressionMode.keys()[int(mode)])
+	var mode_name := IrisDialogueRegistry.expression_for_event(experience_event, fallback_mode_name)
+	var mode_key := mode_name.to_lower()
+	var text_key := "dialogue:%s" % experience_event if IrisDialogueRegistry.has_event(experience_event) else "iris_%s_text" % mode_key
+	var audio_key := IrisDialogueRegistry.audio_for_event(experience_event) if IrisDialogueRegistry.has_event(experience_event) else "iris_%s_audio" % mode_key
+	var haptic_key := IrisDialogueRegistry.haptic_for_event(experience_event) if IrisDialogueRegistry.has_event(experience_event) else "iris_%s_haptic" % mode_key
+	var voice_key := IrisDialogueRegistry.voice_for_event(experience_event) if IrisDialogueRegistry.has_event(experience_event) else "iris_%s_voice" % mode_key
 	var intent := IrisResponseIntent.new(
 		mode_name,
 		"iris_%s_visual" % mode_key,
-		"iris_%s_text" % mode_key,
-		"iris_%s_audio" % mode_key,
-		"iris_%s_haptic" % mode_key,
-		"iris_%s_voice" % mode_key,
+		text_key,
+		audio_key,
+		haptic_key,
+		voice_key,
 		experience_event,
 		core_state
 	)
@@ -29,8 +34,14 @@ func resolve(core_state: int, experience_event: String) -> IrisResponseIntent:
 
 func _resolve_mode(core_state: int, experience_event: String) -> ExpressionMode:
 	match experience_event:
-		"boot_complete":
+		"boot_complete", "iris_welcome":
 			return ExpressionMode.INTRODUCING
+		"iris_ready":
+			return ExpressionMode.GUIDING
+		"iris_return":
+			return ExpressionMode.REFLECTIVE
+		"iris_idle":
+			return ExpressionMode.IDLE
 		"memory_focus":
 			if core_state == IrisCore.State.FOCUSED:
 				return ExpressionMode.ATTENTIVE

@@ -94,6 +94,8 @@ func _color_for(mode: String) -> Color:
 		_: return Color("#78bfb0")
 
 func _message_for(text_key: String) -> String:
+	if active_intent != null and IrisDialogueRegistry.has_event(active_intent.source_event):
+		return IrisDialogueRegistry.text_for_event(active_intent.source_event)
 	if active_intent != null:
 		match active_intent.source_event:
 			"evolution_detected":

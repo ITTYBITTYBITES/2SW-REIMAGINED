@@ -26,6 +26,8 @@ static func consume(intent: IrisResponseIntent) -> void:
 		
 	# Text alternatives translation
 	var speech_text := ""
+	if IrisDialogueRegistry.has_event(intent.source_event):
+		speech_text = IrisDialogueRegistry.accessibility_text_for_event(intent.source_event)
 	match intent.text_key:
 		"iris_introducing_text":
 			speech_text = "The Iris has emerged. It is here."
