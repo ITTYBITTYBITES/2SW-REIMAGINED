@@ -36,13 +36,11 @@ class_name IrisController
 @onready var visual: ColorRect = $Visual
 @onready var living_iris_3d: LivingIris3D = $LivingIris3D if has_node("LivingIris3D") else null
 @onready var particles: CPUParticles2D = $Particles
-@onready var outer_energy_layer: TextureRect = $OuterEnergyLayer
 @onready var pupil_portal_layer: Control = $PupilPortalLayer
 @onready var portal_container: Control = $PupilPortalLayer/PortalContainer
 @onready var destination_preview: TextureRect = $PupilPortalLayer/PortalContainer/DestinationPreview
 @onready var destination_title: Label = $PupilPortalLayer/DestinationTitle
 @onready var destination_prompt: Label = $PupilPortalLayer/DestinationPrompt
-@onready var cornea_layer: TextureRect = $CorneaLayer
 @onready var memory_fragments_container: Node2D = $MemoryFragmentsContainer
 
 const PREVIEW_STORY := preload("res://assets/iris/reflections/story_mode.png")
@@ -137,7 +135,7 @@ func _ready() -> void:
     var shader_material := visual.material as ShaderMaterial
     if shader_material:
         shader_material.set_shader_parameter("aspect", get_viewport_rect().size.x / max(get_viewport_rect().size.y, 1.0))
-        shader_material.set_shader_parameter("has_textures", 1.0)
+        shader_material.set_shader_parameter("has_textures", 0.0)
     particles.emitting = true
     _sync_progression()
 
@@ -405,17 +403,6 @@ func _update_portal_shader() -> void:
     mat.set_shader_parameter("aspect", 1.0)
 
 func _update_visual_layers(delta: float) -> void:
-    if is_instance_valid(outer_energy_layer):
-        outer_energy_layer.rotation = sin(elapsed * 0.18 * fiber_speed) * 0.08 + orientation_motion * 0.15
-        var glow_scale := 1.0 + sin(elapsed * 0.6 * fiber_speed) * 0.03 + pulse * 0.12 + (float(progression_level) * 0.05)
-        outer_energy_layer.scale = Vector2(glow_scale, glow_scale)
-        outer_energy_layer.modulate.a = clampf(0.35 + glow_strength * 0.25 + recent_alert * 0.2, 0.2, 0.85)
-    
-    if is_instance_valid(cornea_layer):
-        var parallax_pos := Vector2(110, 384) + sensor_offset * -320.0 + (gaze_current - neutral_gaze) * -85.0
-        cornea_layer.position = cornea_layer.position.lerp(parallax_pos, minf(1.0, delta * 5.0 * intensity))
-        cornea_layer.modulate.a = clampf(0.32 + glow_strength * 0.15 + awakening_level * 0.15, 0.2, 0.65)
-    
     if is_instance_valid(portal_container):
         var aspect_ratio: float = get_viewport_rect().size.x / max(get_viewport_rect().size.y, 1.0)
         var gaze_delta := gaze_current - neutral_gaze
