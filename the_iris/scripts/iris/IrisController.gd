@@ -8,7 +8,7 @@ signal home_requested
 const ATTENTION_HOLD_SECONDS := 0.56
 
 var iris_core: IrisCore
-var living_iris: LivingIris
+var living_iris: Iris3DHub
 var expression_overlay: IrisExpressionOverlay
 var brand_label: Label
 var invitation: Label
@@ -24,6 +24,9 @@ var ritual_ambient_started := false
 var ritual_activation_played := false
 var ritual_transition_played := false
 var ritual_ready_played := false
+var voice_manager: IrisVoiceManager
+var soundscape: IrisSoundscape
+var onboarding_ritual: IrisOnboardingRitual
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -38,10 +41,24 @@ func _ready() -> void:
 	iris_core = IrisCore.new()
 	iris_core.name = "IrisCore"
 	add_child(iris_core)
-	living_iris = LivingIris.new()
+	living_iris = Iris3DHub.new()
 	living_iris.name = "LivingIris"
 	living_iris.set_core(iris_core)
 	add_child(living_iris)
+
+	# V4.0 Acoustic Nervous System + Onboarding Ritual
+	voice_manager = IrisVoiceManager.new()
+	voice_manager.name = "IrisVoiceManager"
+	add_child(voice_manager)
+
+	soundscape = IrisSoundscape.new()
+	soundscape.name = "IrisSoundscape"
+	add_child(soundscape)
+
+	onboarding_ritual = IrisOnboardingRitual.new()
+	onboarding_ritual.name = "IrisOnboardingRitual"
+	onboarding_ritual.configure(iris_core, living_iris, voice_manager, soundscape)
+	add_child(onboarding_ritual)
 
 	expression_overlay = IrisExpressionOverlay.new()
 	expression_overlay.name = "IrisExpressionOverlay"
@@ -63,6 +80,9 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if awakening_ritual_active:
 		_update_awakening_ritual(delta)
+	# Drive the acoustic nervous system from IrisCore's live state fields.
+	if soundscape and iris_core:
+		soundscape.update_from_core(iris_core, delta)
 	if home_request_in < 0.0:
 		return
 	home_request_in -= delta
@@ -98,6 +118,9 @@ func begin_awakening_ritual() -> void:
 		label.modulate.a = 0.0
 	ritual_veil.visible = true
 	ritual_veil.modulate.a = 1.0
+	# V4.0: Start the First 60 Seconds onboarding ritual
+	if onboarding_ritual:
+		onboarding_ritual.begin()
 
 func welcome() -> void:
 	_cancel_attention()

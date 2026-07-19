@@ -15,7 +15,7 @@ const DILATE_SECONDS := 0.72
 const ENTER_SECONDS := 0.68
 const TRANSITION_SECONDS := 0.46
 
-var living_iris: LivingIris
+var living_iris: Control
 var state: PortalState = PortalState.READY
 var elapsed := 0.0
 var current_moment_id := ""
@@ -37,7 +37,7 @@ func _ready() -> void:
 	subtitle_label = _label("", 12, Color("#9ed5c5"), Vector2(32, 718), Vector2(476, 23), HORIZONTAL_ALIGNMENT_CENTER)
 	instruction_label = _label("", 11, Color("#b8e4d8"), Vector2(32, 750), Vector2(476, 24), HORIZONTAL_ALIGNMENT_CENTER)
 
-func configure(value_living_iris: LivingIris) -> void:
+func configure(value_living_iris: Control) -> void:
 	living_iris = value_living_iris
 
 func begin_entry(moment_id: String, moment_data: Dictionary) -> void:
