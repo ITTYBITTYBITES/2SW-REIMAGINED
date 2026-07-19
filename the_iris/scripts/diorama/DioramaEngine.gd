@@ -319,6 +319,10 @@ func _create_material(obj_def: Dictionary) -> StandardMaterial3D:
 	mat.albedo_color = _color(obj_def.get("albedo", [0.5, 0.5, 0.5]))
 	mat.roughness = float(obj_def.get("roughness", 0.85))
 	mat.metallic = float(obj_def.get("metallic", 0.0))
+	if bool(obj_def.get("double_sided", false)):
+		# Disable back-face culling so thin discs/caps (e.g. a clock dial rotated
+		# to face the camera) render from both sides instead of being culled.
+		mat.cull_mode = BaseMaterial3D.CULL_DISABLED
 	if obj_def.has("emission"):
 		mat.emission_enabled = true
 		mat.emission = _color(obj_def["emission"])
