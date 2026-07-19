@@ -774,3 +774,24 @@ Legacy `WM001GameplayLoop`, `FlagshipWitnessMoment`, and orchestrator routes rem
 A graphical human test remains needed to confirm the repaired controls are visually clear. The supplied human log’s repeated Memory Collapse events indicate the player reached Synchronization but did not sustain HOLD FOCUS; verify visible instruction/button clarity in the desktop/device UI.
 
 Detailed report: `MISSION_067_RUNTIME_ROOT_CAUSE.md`.
+
+---
+
+## Mission 068A — Verify Production Runtime Architecture
+
+Date: 2026-07-19
+Scope: read-only commit-history, scene-structure, route, and script-intent audit. No runtime, content, persistence, navigation, Archive, progression, or gameplay behavior was changed.
+
+### Conclusion
+
+`GenericWitnessGameplay` is the intentional **production runtime** for data-driven WM-001–WM-012 execution. It began as Mission 027 data-driven Witness architecture and was repeatedly expanded with production asset, cinematic, sensory, audio, Fracture, Synchronization, Truth Fragment, and showcase work.
+
+There is no missing WM-001 gameplay `.tscn`; `Application.tscn` is the only committed scene and the active production UI is constructed under `GenericWitnessGameplay`. The easel image comes from WM-001 asset data. The likely empty box is GenericWitnessGameplay's generated backing Panel.
+
+Legacy `WM001GameplayLoop`, `FlagshipWitnessMoment`, `WitnessMomentOrchestrator`, and MemoryField paths are retained prototype/history paths, not the normal Chapter production route.
+
+### Next investigation
+
+Do not replace GenericWitnessGameplay or create a parallel per-moment scene architecture. Capture graphical WM-001 runtime control visibility, z-order, alpha, global rectangles, and mouse filters to determine why the intentional generated production UI appears empty to humans.
+
+Detailed audit: `MISSION_068A_PRODUCTION_RUNTIME_ARCHITECTURE_AUDIT.md`.
