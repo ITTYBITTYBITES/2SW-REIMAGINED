@@ -4,12 +4,12 @@ class_name PrototypeApplication
 ## Platform shell plus the Diorama-powered Experience One launch path.
 ##
 ## Flow:
-##   Living Iris → Iris Home → WITNESS → Iris portal →
-##   Diorama Engine → Clock Witness Experience → return → Iris
+##   Living Iris → (tap the Iris) → Iris portal →
+##   Diorama Engine → Experience One → return → Living Iris
 ##
-## The old bespoke "Missing Second" Control scene and its assets have been
-## retired (experience-path reset). The Living Iris system, navigation, and
-## shared platform infrastructure are retained unchanged.
+## The Iris is the threshold straight into the memory. The SpatialHub
+## navigation screen is retained in code but is no longer on the player-facing
+## forward path (there is exactly one experience).
 
 const EXPERIENCE_ONE_ID := "experience_one"
 const EXPERIENCE_ONE_DEFINITION_PATH := "res://content/experience_one/experience_one.json"
@@ -30,7 +30,7 @@ func _ready() -> void:
 
 	iris = IrisController.new()
 	iris.name = "IrisController"
-	iris.home_requested.connect(show_home)
+	iris.home_requested.connect(start_experience_one)
 	add_child(iris)
 	iris.living_iris.evolution_profile = IrisEvolutionProfile.new()
 
@@ -50,7 +50,7 @@ func _ready() -> void:
 	iris_portal.name = "IrisPortalTransition"
 	iris_portal.configure(iris.living_iris)
 	iris_portal.entry_arrived.connect(_on_portal_entry_arrived)
-	iris_portal.return_arrived.connect(show_home)
+	iris_portal.return_arrived.connect(_return_to_iris_presence)
 	add_child(iris_portal)
 
 	# Diorama Engine: the 3D experience renderer. Sits between the Iris portal
@@ -118,7 +118,7 @@ func start_experience_one() -> void:
 
 func _on_portal_entry_arrived(entry_id: String) -> void:
 	if entry_id != EXPERIENCE_ONE_ID or not FileAccess.file_exists(EXPERIENCE_ONE_DEFINITION_PATH):
-		show_home()
+		_return_to_iris_presence()
 		return
 	iris.visible = false
 	diorama_engine.launch_experience(EXPERIENCE_ONE_DEFINITION_PATH)
@@ -132,13 +132,26 @@ func _on_experience_one_complete() -> void:
 
 func return_from_experience_one() -> void:
 	if not diorama_engine.visible:
-		show_home()
+		_return_to_iris_presence()
 		return
 	diorama_engine.clear_experience()
 	iris.visible = true
 	iris.set_gameplay_environment(false)
 	iris.set_home_environment(false)
 	iris_portal.begin_return()
+
+## Return to the Living Iris presence (settled), the threshold the player
+## crossed on the way in. Used as the post-experience destination instead of the
+## SpatialHub navigation screen.
+func _return_to_iris_presence() -> void:
+	iris.visible = true
+	iris.set_gameplay_environment(false)
+	iris.set_home_environment(false)
+	iris.settle()
+	IrisAudioConsumer.play_ambient_loop("res://assets/audio/iris/iris_breath_loop.ogg")
+	home.visible = false
+	_hide_diorama()
+	_emit_iris_event("iris_return")
 
 func _hide_diorama() -> void:
 	if diorama_engine != null:
