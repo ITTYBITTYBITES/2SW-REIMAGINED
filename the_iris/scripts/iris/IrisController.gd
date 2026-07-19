@@ -206,6 +206,30 @@ func settle() -> void:
 	_cancel_attention()
 	iris_core.transition_to(IrisCore.State.SETTLED)
 
+## Fire the SUCCESS mood flare (a truth has been witnessed). Locks the mood so
+## the following state transitions (REFLECTIVE) don't immediately wash it out,
+## then auto-releases after a beat so the Iris settles back to its identity.
+func trigger_success_mood(hold_seconds := 3.5) -> void:
+	iris_core.change_mood(IrisCore.Mood.SUCCESS, true)
+	var tree := get_tree()
+	if tree != null:
+		var t := tree.create_timer(hold_seconds)
+		t.timeout.connect(_release_success_mood)
+
+func _release_success_mood() -> void:
+	if iris_core != null:
+		iris_core.release_mood()
+
+## Progression tint (protocol §4). When the player's evolution profile crosses
+## a threshold, the Iris gains a secondary highlight color ("multi-chromatic
+## flecks"). Wired to IrisEvolutionProfile so the Progression Service boundary
+## stays intact — no rank system is invented here.
+func apply_progression_tint(secondary_color: Color, weight: float) -> void:
+	iris_core.mood_secondary_color = secondary_color
+	iris_core.mood_secondary_weight = weight
+	iris_core._mood_target_secondary = secondary_color
+	iris_core._mood_target_secondary_weight = weight
+
 func reflect() -> void:
 	_cancel_attention()
 	iris_core.transition_to(IrisCore.State.REFLECTIVE)

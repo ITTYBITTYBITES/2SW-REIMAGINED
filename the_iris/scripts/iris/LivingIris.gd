@@ -27,9 +27,21 @@ var behavior := {
 	"asymmetry": 0.0
 }
 
+var _atmosphere_shader: ShaderMaterial
+
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_attach_atmosphere_shader()
+
+func _attach_atmosphere_shader() -> void:
+	# The atmosphere shader adds an energy-driven bloom/flicker layer on top of
+	# the procedural iris. Uniforms are pushed each frame from the mood values.
+	var shader := load("res://shaders/iris_atmosphere.shader")
+	if shader is Shader:
+		_atmosphere_shader = ShaderMaterial.new()
+		_atmosphere_shader.shader = shader
+		material = _atmosphere_shader
 
 func set_core(value: IrisCore) -> void:
 	core = value
@@ -44,11 +56,42 @@ func _process(delta: float) -> void:
 			behavior = IrisEvolutionVisualConsumer.apply_evolution(evolution_profile, base_behavior)
 		else:
 			behavior = base_behavior
+	_push_atmosphere_uniforms()
 	queue_redraw()
+
+func _push_atmosphere_uniforms() -> void:
+	if _atmosphere_shader == null:
+		return
+	_atmosphere_shader.set_shader_parameter("base_color", behavior.get("mood_base_color", Color.BLACK))
+	_atmosphere_shader.set_shader_parameter("glow_color", behavior.get("mood_glow_color", Color.BLACK))
+	_atmosphere_shader.set_shader_parameter("energy_intensity", float(behavior.get("mood_energy", 0.0)))
+	_atmosphere_shader.set_shader_parameter("time", elapsed)
+
+# Per-frame mood color cache (set in _process, read by the draw helpers).
+var _mood_base := Color(0.02, 0.03, 0.055)
+var _mood_glow := Color(0.075, 0.12, 0.28)
+var _mood_secondary := Color.BLACK
+var _mood_secondary_weight := 0.0
+
+func _cache_mood_colors() -> void:
+	_mood_base = behavior.get("mood_base_color", _mood_base)
+	_mood_glow = behavior.get("mood_glow_color", _mood_glow)
+	_mood_secondary = behavior.get("mood_secondary_color", Color.BLACK)
+	_mood_secondary_weight = float(behavior.get("mood_secondary_weight", 0.0))
+
+## Blend between the mood's deep base and its emissive glow by t in [0,1].
+## When the progression tint is active, a secondary highlight is mixed in
+## (the "multi-chromatic flecks" for advanced players).
+func _mood_tint(t: float) -> Color:
+	var c := _mood_base.lerp(_mood_glow, clampf(t, 0.0, 1.0))
+	if _mood_secondary_weight > 0.001:
+		c = c.lerp(_mood_secondary, _mood_secondary_weight * 0.5 * (0.5 + 0.5 * t))
+	return c
 
 func _draw() -> void:
 	if size.x <= 0.0 or size.y <= 0.0:
 		return
+	_cache_mood_colors()
 	var presence := float(behavior.get("presence", 0.0))
 	if presence <= 0.001:
 		return
@@ -91,13 +134,15 @@ func _draw_aura(center: Vector2, radius: float, presence: float, glow: float, fo
 		var amount := float(index) / float(rings)
 		var spread := 1.08 + amount * (0.54 + focus * 0.15 + pulse * 0.12 + depth_offset * 0.25)
 		var alpha := (0.003 + glow * 0.023 + pulse * 0.012) * (1.0 - amount * 0.48) * presence
-		var tint := Color(0.07 + focus * 0.06, 0.38 + glow * 0.30 + drift * 0.03, 0.33 + glow * 0.24, alpha)
+		var tint := _mood_tint(0.35 + glow * 0.45 + focus * 0.10)
+		tint.a = alpha
 		draw_circle(center, radius * spread, tint)
 		
 	# Dynamic Evolution Flare Layer for high-end procedural glow visuals
 	if depth_offset > 0.05:
 		var flare_alpha := (0.015 + glow * 0.08) * depth_offset * presence
-		var flare_tint := Color(0.42, 0.95, 0.82, flare_alpha)
+		var flare_tint := _mood_tint(0.9)
+		flare_tint.a = flare_alpha
 		draw_circle(center, radius * (0.85 + depth_offset * 0.15), flare_tint)
 
 func _draw_iris_body(center: Vector2, radius: float, presence: float, glow: float, breath_wave: float, drift: float, asymmetry: float) -> void:
@@ -112,20 +157,34 @@ func _draw_iris_body(center: Vector2, radius: float, presence: float, glow: floa
 		ripple += sin(angle * 11.0 - elapsed * 0.19 + asymmetry * 1.7) * 0.006 * geometry_scale
 		ripple += sin(angle * 3.0 + elapsed * 0.071) * 0.004
 		silhouette.append(center + Vector2(cos(angle), sin(angle)) * radius * (1.07 + ripple))
-	draw_colored_polygon(silhouette, Color(0.018, 0.105 + glow * 0.06, 0.105 + glow * 0.045, presence))
+	var body_tint := _mood_tint(0.18 + glow * 0.08)
+	body_tint.a = presence
+	draw_colored_polygon(silhouette, body_tint)
 	
 	if depth_offset > 0.05:
-		draw_circle(center, radius * (1.02 + depth_offset * 0.05), Color(0.012, 0.08, 0.07, presence * 0.42))
-		draw_arc(center, radius * (0.98 + depth_offset * 0.06), 0.0, TAU, 50, Color(0.25, 0.92, 0.78, presence * 0.35 * depth_offset), 0.75, true)
+		var depth_base := _mood_tint(0.12)
+		depth_base.a = presence * 0.42
+		draw_circle(center, radius * (1.02 + depth_offset * 0.05), depth_base)
+		var depth_arc := _mood_tint(0.88)
+		depth_arc.a = presence * 0.35 * depth_offset
+		draw_arc(center, radius * (0.98 + depth_offset * 0.06), 0.0, TAU, 50, depth_arc, 0.75, true)
 		
-	draw_circle(center, radius * 1.015, Color(0.05, 0.31 + glow * 0.15, 0.28 + glow * 0.12, presence))
-	draw_circle(center, radius * 0.965, Color(0.017, 0.145 + breath_wave * 0.065 + drift * 0.02, 0.145 + breath_wave * 0.050, presence))
-	draw_circle(center, radius * 0.908, Color(0.007, 0.052, 0.066, presence))
+	var outer_ring := _mood_tint(0.34 + glow * 0.18)
+	outer_ring.a = presence
+	draw_circle(center, radius * 1.015, outer_ring)
+	var mid_ring := _mood_tint(0.20 + breath_wave * 0.10 + drift * 0.04)
+	mid_ring.a = presence
+	draw_circle(center, radius * 0.965, mid_ring)
+	var inner_ring := _mood_base.darkened(0.7)
+	inner_ring.a = presence
+	draw_circle(center, radius * 0.908, inner_ring)
 
 	var rim_alpha := (0.055 + glow * 0.18) * presence
 	for ring in range(2):
 		var ring_radius := radius * (0.912 + float(ring) * 0.048)
-		draw_arc(center, ring_radius, 0.0, TAU, 40, Color(0.14, 0.70 + drift * 0.08, 0.56 + drift * 0.10, rim_alpha / float(ring + 1)), 0.85, true)
+		var rim_tint := _mood_tint(0.62 + drift * 0.12)
+		rim_tint.a = rim_alpha / float(ring + 1)
+		draw_arc(center, ring_radius, 0.0, TAU, 40, rim_tint, 0.85, true)
 
 func _draw_fibers(center: Vector2, radius: float, pupil_ratio: float, motion: float, density: int, presence: float, glow: float, focus: float, drift: float, asymmetry: float) -> void:
 	if density <= 0:
@@ -149,7 +208,8 @@ func _draw_fibers(center: Vector2, radius: float, pupil_ratio: float, motion: fl
 		var fourth := center + direction * outer + tangent * second_bend * 0.22
 		var bright := 0.32 + 0.68 * (sin(fiber_seed * 4.17 + elapsed * 1.09 + drift) * 0.5 + 0.5)
 		var alpha := (0.028 + glow * 0.17 + focus * 0.035) * bright * presence
-		var fiber_color := Color(0.10 + bright * 0.19, 0.39 + bright * 0.36, 0.32 + bright * 0.29, alpha)
+		var fiber_color := _mood_tint(0.22 + bright * 0.65)
+		fiber_color.a = alpha
 		var width := 0.42 + bright * 0.54 + focus * 0.14
 		draw_line(first, second, fiber_color, width, true)
 		draw_line(second, third, fiber_color, width * 0.74, true)
@@ -161,26 +221,40 @@ func _draw_pupil(center: Vector2, radius: float, pupil_ratio: float, presence: f
 	# Portal dilation is temporary presentation input; it never changes IrisCore.
 	var pupil_radius := radius * pupil_ratio * lerpf(1.0, 2.48, portal_dilation)
 	var corona_alpha := (0.06 + glow * 0.18 + pulse * 0.08) * presence
-	draw_circle(center, pupil_radius * (1.28 + pulse * 0.06), Color(0.13, 0.72, 0.57, corona_alpha))
+	var corona := _mood_tint(0.72)
+	corona.a = corona_alpha
+	draw_circle(center, pupil_radius * (1.28 + pulse * 0.06), corona)
 	draw_circle(center, pupil_radius * 1.11, Color(0.004, 0.018, 0.029, 0.98 * presence))
 	draw_circle(center, pupil_radius, Color(0.001, 0.004, 0.009, presence))
 
 	var glint_position := center + Vector2(-radius * (0.24 - focus * 0.045), -radius * 0.255)
 	var glint_radius := radius * (0.062 + breath_wave * 0.016 + pulse * 0.012) * biological_pulse
-	draw_circle(glint_position, glint_radius, Color(0.63, 1.0, 0.86, (0.12 + glow * 0.38) * presence))
-	draw_circle(glint_position + Vector2(-radius * 0.017, -radius * 0.017), glint_radius * 0.32, Color(0.95, 1.0, 0.98, 0.72 * presence))
-	draw_circle(center + Vector2(radius * 0.14, radius * 0.18), radius * 0.017, Color(0.25, 0.86, 0.70, (0.08 + glow * 0.24) * presence))
+	var primary_glint := _mood_glow.lightened(0.4)
+	primary_glint.a = (0.12 + glow * 0.38) * presence
+	draw_circle(glint_position, glint_radius, primary_glint)
+	var secondary_glint := _mood_glow.lightened(0.7)
+	secondary_glint.a = 0.72 * presence
+	draw_circle(glint_position + Vector2(-radius * 0.017, -radius * 0.017), glint_radius * 0.32, secondary_glint)
+	var accent := _mood_glow.darkened(0.2)
+	accent.a = (0.08 + glow * 0.24) * presence
+	draw_circle(center + Vector2(radius * 0.14, radius * 0.18), radius * 0.017, accent)
 	
 	if behavior.has("full_evolution_flare"):
-		draw_arc(center, radius * 0.42, 0.0, TAU, 60, Color(0.82, 1.0, 0.94, presence * 0.5), 1.2, true)
+		var flare := _mood_glow.lightened(0.6)
+		flare.a = presence * 0.5
+		draw_arc(center, radius * 0.42, 0.0, TAU, 60, flare, 1.2, true)
 
 func _draw_reflections(center: Vector2, radius: float, amount: float, drift: float) -> void:
 	for index in range(3):
 		var angle := elapsed * (0.19 + float(index) * 0.037) + float(index) * TAU / 3.0 + drift
 		var start := center + Vector2(cos(angle), sin(angle)) * radius * 0.47
 		var end := center + Vector2(cos(angle + 0.21), sin(angle + 0.21)) * radius * 0.78
-		draw_line(start, end, Color(0.73, 0.96, 0.82, amount * 0.17), 0.9, true)
+		var refl := _mood_glow.lightened(0.35)
+		refl.a = amount * 0.17
+		draw_line(start, end, refl, 0.9, true)
 
 func _draw_calibration(center: Vector2, radius: float, amount: float) -> void:
 	var calibration_radius := radius * (0.54 + sin(elapsed * 2.7) * 0.05)
-	draw_arc(center, calibration_radius, 0.0, TAU, 40, Color(0.61, 0.98, 0.85, amount * 0.21), 0.9, true)
+	var cal := _mood_glow.lightened(0.5)
+	cal.a = amount * 0.21
+	draw_arc(center, calibration_radius, 0.0, TAU, 40, cal, 0.9, true)

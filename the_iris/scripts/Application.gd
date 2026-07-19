@@ -128,6 +128,8 @@ func _on_experience_one_complete() -> void:
 	iris.visible = true
 	iris.set_gameplay_environment(true)
 	iris.reflect()
+	# A truth has been witnessed: flare the SUCCESS mood, then settle.
+	iris.trigger_success_mood()
 	_emit_iris_event("iris_return")
 
 func return_from_experience_one() -> void:

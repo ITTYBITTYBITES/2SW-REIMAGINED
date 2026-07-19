@@ -2,9 +2,22 @@ extends Node
 class_name IrisCore
 
 ## The single behavior authority for the procedural Living Iris.
+##
+## Owns two cooperating layers (both owned here, so the View/Consumers stay dumb):
+##   - State: the 11-phase lifecycle (DORMANT..REFLECTIVE) — when/whether the Iris
+##     is present, blinking, saccading, etc.
+##   - Mood: the dynamic color identity (DORMANT/AWARE/FOCUSED/SUCCESS + neural
+##     bleed). Mood is driven by State by default, and can be forced (e.g. SUCCESS
+##     on a witnessed truth). Colors NEVER snap — they lerp every frame toward
+##     the active mood profile, producing the "neural bleed" through the fibers.
 enum State { DORMANT, CALIBRATING, STIRRING, AWAKENING, WELCOMING, AWARE, ATTENDING, FOCUSED, OBSERVING, SETTLED, REFLECTIVE }
 
+## Mood identity. Maps 1:1 to the protocol's Mood Palette.
+enum Mood { DORMANT, AWARE, FOCUSED, SUCCESS }
+
 signal state_changed(state: State)
+signal mood_changed(mood: Mood)
+signal mood_bleed_completed(mood: Mood)
 
 var state: State = State.DORMANT
 var state_time := 0.0
@@ -30,12 +43,70 @@ var simulated_focus_amount := 0.0
 var organic_seed := 0.0
 var random := RandomNumberGenerator.new()
 
+# ---------------------------------------------------------------------------
+# MOOD SYSTEM (Atmospheric Mood / Dynamic Color Identity)
+# ---------------------------------------------------------------------------
+# Active mood, the live (lerping) color values, and the per-mood profile table.
+# `_mood_target_*` are the destination values for the current mood; the
+# `mood_*` vars lerp toward them every tick. This is the "neural bleed".
+var mood: Mood = Mood.DORMANT
+var mood_base_color := Color.BLACK
+var mood_glow_color := Color.BLACK
+var mood_energy := 0.0
+var mood_secondary_color := Color.BLACK  # progression tint (Archivist+)
+var mood_secondary_weight := 0.0
+var _mood_target_base := Color.BLACK
+var _mood_target_glow := Color.BLACK
+var _mood_target_energy := 0.0
+var _mood_target_secondary := Color.BLACK
+var _mood_target_secondary_weight := 0.0
+var _mood_bleed_speed := 1.0   # per-second lerp rate; change_mood raises this during a transition
+var _mood_forced := false       # when true, State changes do not override the mood
+
+const _MOOD_BLEED_DURATION := 1.8  # seconds — protocol §3 "1.5 to 2.0 seconds"
+
+## Mood Profiles — the protocol's Mood Palette (§2), expressed as exact colors.
+## Each profile: base_color, glow_color, energy_intensity, [secondary tint].
+static func mood_profile(m: Mood) -> Dictionary:
+	match m:
+		Mood.DORMANT:
+			# Obsidian / deep blue — resting. Low emission, slow breath.
+			return {
+				"base_color": Color(0.020, 0.030, 0.055),    # deep obsidian-blue
+				"glow_color": Color(0.075, 0.12, 0.28),       # faint deep-blue glow
+				"energy": 0.18,
+			}
+		Mood.AWARE:
+			# Indigo / neural cyan — the Iris has noticed the player.
+			return {
+				"base_color": Color(0.030, 0.065, 0.105),     # indigo bed
+				"glow_color": Color(0.20, 0.62, 0.78),        # neural cyan glow
+				"energy": 0.55,
+			}
+		Mood.FOCUSED:
+			# Electric gold / amber — analyzing a target. High emission.
+			return {
+				"base_color": Color(0.075, 0.045, 0.020),     # warm dark amber bed
+				"glow_color": Color(0.98, 0.74, 0.22),        # electric gold
+				"energy": 0.92,
+			}
+		Mood.SUCCESS:
+			# Warm radiant white/gold — a truth witnessed. Flares, then settles.
+			return {
+				"base_color": Color(0.12, 0.10, 0.07),        # warm pale bed
+				"glow_color": Color(1.0, 0.92, 0.74),         # radiant warm white-gold
+				"energy": 1.35,
+			}
+	return {}
+
 func _ready() -> void:
 	random.randomize()
 	organic_seed = random.randf_range(0.0, TAU)
 	blink_in = random.randf_range(4.8, 9.6)
 	pulse_in = random.randf_range(5.5, 11.0)
 	simulated_attention_in = random.randf_range(1.4, 3.6)
+	# Initialize mood colors to the dormant profile so the first frame is not black.
+	_apply_mood_profile(Mood.DORMANT, true)
 
 func transition_to(next_state: State) -> void:
 	if state == next_state:
@@ -56,7 +127,68 @@ func transition_to(next_state: State) -> void:
 			blink_in = minf(blink_in, 0.68)
 		State.AWARE:
 			blink_in = maxf(blink_in, 1.8)
+	# Auto-map the new state to a mood, unless the mood is currently forced
+	# (e.g. mid-SUCCESS flare). This keeps color identity following presence.
+	_auto_set_mood_for_state(state)
 	state_changed.emit(state)
+
+## Change the Iris mood with a smooth "neural bleed" (1.8s lerp).
+## Pass `forced := true` to lock the mood (State changes won't override it) —
+## used for the SUCCESS flare. Pass `forced := false` to release the lock.
+func change_mood(new_mood: Mood, forced := false) -> void:
+	if new_mood == mood and not forced:
+		return
+	_mood_forced = forced
+	# Set the destination profile; the per-tick bleed moves the live values toward it.
+	var profile := mood_profile(new_mood)
+	_mood_target_base = profile["base_color"]
+	_mood_target_glow = profile["glow_color"]
+	_mood_target_energy = float(profile["energy"])
+	_mood_target_secondary = mood_secondary_color
+	_mood_target_secondary_weight = mood_secondary_weight
+	# Bleed rate tuned so the transition completes in ~_MOOD_BLEED_DURATION.
+	_mood_bleed_speed = 4.5 / _MOOD_BLEED_DURATION
+	# Haptic sync: an increase in energy intensity gets a stronger pulse (protocol §4).
+	var prev_energy := mood_energy
+	mood = new_mood
+	mood_changed.emit(new_mood)
+	var energy_delta := float(profile["energy"]) - prev_energy
+	if energy_delta > 0.2:
+		IrisHapticConsumer.trigger_pattern(
+			IrisHapticConsumer.Pattern.LIGHT if energy_delta < 0.5 else IrisHapticConsumer.Pattern.MEDIUM,
+			"Mood energy rise -> %s" % Mood.keys()[int(new_mood)]
+		)
+
+## Release a forced mood lock so State can drive the mood again.
+func release_mood() -> void:
+	_mood_forced = false
+	_auto_set_mood_for_state(state)
+
+## Apply a full profile instantly (snap). Used for initialization and tests.
+func _apply_mood_profile(m: Mood, snap := false) -> void:
+	var profile := mood_profile(m)
+	_mood_target_base = profile["base_color"]
+	_mood_target_glow = profile["glow_color"]
+	_mood_target_energy = float(profile["energy"])
+	if snap:
+		mood = m
+		mood_base_color = _mood_target_base
+		mood_glow_color = _mood_target_glow
+		mood_energy = _mood_target_energy
+
+## Default State -> Mood mapping (the mood "follows" presence unless forced).
+func _auto_set_mood_for_state(s: State) -> void:
+	if _mood_forced:
+		return
+	var mapped: Mood = Mood.DORMANT
+	match s:
+		State.DORMANT, State.CALIBRATING:
+			mapped = Mood.DORMANT
+		State.STIRRING, State.AWAKENING, State.WELCOMING, State.AWARE, State.SETTLED, State.REFLECTIVE:
+			mapped = Mood.AWARE
+		State.ATTENDING, State.FOCUSED, State.OBSERVING:
+			mapped = Mood.FOCUSED
+	change_mood(mapped, false)
 
 func acquire_attention(normalized_target: Vector2) -> void:
 	gaze_target = normalized_target.limit_length(0.035)
@@ -73,6 +205,7 @@ func tick(delta: float) -> Dictionary:
 	_update_blink(delta, bool(profile["blink_enabled"]))
 	_update_energy_pulse(delta, bool(profile["pulse_enabled"]))
 	_update_simulated_attention(delta, float(profile["saccade"]))
+	_update_mood_bleed(delta)
 
 	var primary_breath := sin(life_time * float(profile["breath_primary"]) * TAU + organic_seed) * 0.5 + 0.5
 	var secondary_breath := sin(life_time * float(profile["breath_secondary"]) * TAU + organic_seed * 2.17) * 0.5 + 0.5
@@ -107,7 +240,13 @@ func tick(delta: float) -> Dictionary:
 		"blink": blink_amount,
 		"pulse": pulse_amount,
 		"drift": energy_drift,
-		"asymmetry": organic_seed
+		"asymmetry": organic_seed,
+		"mood": int(mood),
+		"mood_base_color": mood_base_color,
+		"mood_glow_color": mood_glow_color,
+		"mood_energy": mood_energy,
+		"mood_secondary_color": mood_secondary_color,
+		"mood_secondary_weight": mood_secondary_weight
 	}
 
 func _advance_lifecycle() -> void:
@@ -179,6 +318,19 @@ func _update_simulated_attention(delta: float, amplitude: float) -> void:
 	saccade_in = random.randf_range(0.04, 0.16)
 	simulated_focus_amount = random.randf_range(0.045, 0.16)
 	simulated_attention_in = random.randf_range(2.2, 6.4)
+
+## Per-tick neural bleed: lerp the live mood values toward the target profile.
+## Called every tick so colors NEVER snap (protocol §3).
+func _update_mood_bleed(delta: float) -> void:
+	var rate := minf(1.0, delta * _mood_bleed_speed)
+	mood_base_color = mood_base_color.lerp(_mood_target_base, rate)
+	mood_glow_color = mood_glow_color.lerp(_mood_target_glow, rate)
+	mood_energy = lerpf(mood_energy, _mood_target_energy, rate)
+	mood_secondary_color = mood_secondary_color.lerp(_mood_target_secondary, rate)
+	mood_secondary_weight = lerpf(mood_secondary_weight, _mood_target_secondary_weight, rate)
+	# Settle the bleed rate back toward the idle drift speed so post-transition
+	# values keep breathing subtly instead of locking the moment the bleed ends.
+	_mood_bleed_speed = lerpf(_mood_bleed_speed, 0.6, minf(1.0, delta * 0.7))
 
 func _profile() -> Dictionary:
 	var profile := _base_profile()
