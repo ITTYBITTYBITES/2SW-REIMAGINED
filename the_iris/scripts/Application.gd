@@ -87,6 +87,7 @@ func _ready() -> void:
 	generic_gameplay.name = "GenericWitnessGameplay"
 	generic_gameplay.completion_requested.connect(_on_generic_completion_requested)
 	generic_gameplay.return_requested.connect(_on_generic_return_requested)
+	generic_gameplay.iris_guidance_requested.connect(_on_generic_iris_guidance_requested)
 	add_child(generic_gameplay)
 
 	archive_ui = WitnessArchiveUI.new()
@@ -393,6 +394,12 @@ func start_generic_gameplay(moment_id: String) -> void:
 			show_archive()
 		else:
 			show_witness()
+
+func _on_generic_iris_guidance_requested(event_name: String) -> void:
+	# Generic gameplay supplies authored event keys; the existing personality
+	# resolver remains the single source for dialogue, expression, audio, and haptics.
+	if generic_gameplay.visible and iris.visible and not event_name.is_empty():
+		_emit_personality_response(event_name)
 
 func _on_generic_completion_requested(result: WitnessMomentResult) -> void:
 	var award := {"total": 0, "components": {}}

@@ -39,6 +39,46 @@
       "audio": "res://assets/audio/iris/iris_confirm.ogg",
       "haptic": "truth_fragment_absorbed_pulse",
       "voice": "voice_placeholder_truth_fragment_absorbed"
+    },
+    "wm001_observe": {
+      "text": "Stay with the light. It is trying to remember its order.",
+      "accessibility_text": "The Iris guides you to observe the light and the painter before interacting.",
+      "expression_mode": "GUIDING",
+      "audio": "res://assets/audio/iris/iris_presence.ogg",
+      "haptic": "wm001_observe_pulse",
+      "voice": "voice_placeholder_wm001_observe"
+    },
+    "wm001_fracture_prompt": {
+      "text": "Do not look for a mistake. Look for what arrived too soon.",
+      "accessibility_text": "The Iris directs attention to an impossible ordering in the memory.",
+      "expression_mode": "CURIOUS",
+      "audio": "res://assets/audio/iris/iris_attention.ogg",
+      "haptic": "wm001_fracture_prompt_pulse",
+      "voice": "voice_placeholder_wm001_fracture_prompt"
+    },
+    "wm001_fracture_found": {
+      "text": "Yes. The color came before its source.",
+      "accessibility_text": "The Iris confirms that you located the memory fracture.",
+      "expression_mode": "ATTENTIVE",
+      "audio": "res://assets/audio/iris/iris_focus.ogg",
+      "haptic": "wm001_fracture_found_pulse",
+      "voice": "voice_placeholder_wm001_fracture_found"
+    },
+    "wm001_synchronize": {
+      "text": "Hold it with me. Let the light arrive in its own time.",
+      "accessibility_text": "The Iris asks you to hold focus while the memory stabilizes.",
+      "expression_mode": "GUIDING",
+      "audio": "res://assets/audio/iris/iris_focus.ogg",
+      "haptic": "wm001_synchronize_pulse",
+      "voice": "voice_placeholder_wm001_synchronize"
+    },
+    "wm001_revelation": {
+      "text": "What was lost was waiting to be seen.",
+      "accessibility_text": "The Iris recognizes the recovered meaning of Clara's light.",
+      "expression_mode": "REFLECTIVE",
+      "audio": "res://assets/audio/iris/iris_transition.ogg",
+      "haptic": "wm001_revelation_pulse",
+      "voice": "voice_placeholder_wm001_revelation"
     }
   }
 }

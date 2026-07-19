@@ -3,7 +3,7 @@
   "moment_id": "WM_001",
   "incident_id": "INC_UNFINISHED_CANVAS",
   "title": "The Unfinished Canvas",
-  "subtitle": "Chapter 01 · The First Fractures",
+  "subtitle": "Chapter 01 \u00b7 The First Fractures",
   "introduction": "A painter pauses before a sunlit canvas. Do not look for mistakes. Look for what inspired the stroke.",
   "description": "The painter spend his life chasing a fleeting ray of light that split across his late wife Clara's portrait. The canvas contains microscopic charcoal underdrawings mapping her grid.",
   "observation": "The hand lifts the brush, turns toward the window, and lowers it untouched. A prism catches the late-afternoon light.",
@@ -13,14 +13,20 @@
     "The charcoal underdrawing follows Clara's outline.",
     "A note reads: wait for the 5:14 PM sunlight."
   ],
-  "revelation": "What was wrong: the rainbow reached the canvas before the sun could strike Clara's quartz prism.\n\nWhy it mattered: the painter did not abandon his work. He was waiting for the exact instant cause and effect came apart, allowing him to paint a light that had no physical source—and capturing a final glimpse of Clara's presence.",
+  "revelation": "What was wrong: the rainbow reached the canvas before the sun could strike Clara's quartz prism.\n\nWhy it mattered: the painter did not abandon his work. He was waiting for the exact instant cause and effect came apart, allowing him to paint a light that had no physical source\u2014and capturing a final glimpse of Clara's presence.",
   "background": "res://assets/witness/wm_001_studio_background.png",
   "action": "res://assets/witness/wm_001_hand_action.png",
   "reveal": "res://assets/witness/wm_001_prism_reveal.png",
   "observation_duration": 2.0,
   "anomaly_definition": {
-    "location": {"x": 350.0, "y": 366.0},
-    "size": {"x": 94.0, "y": 94.0},
+    "location": {
+      "x": 350.0,
+      "y": 366.0
+    },
+    "size": {
+      "x": 94.0,
+      "y": 94.0
+    },
     "misstep_text": "Not there. Watch the light, not the painter.",
     "success_text": "You found it. The prism is breaking light across the canvas."
   },
@@ -34,8 +40,14 @@
   "fractures": [
     {
       "fracture_id": "borrowed_light",
-      "location": {"x": 350.0, "y": 366.0},
-      "size": {"x": 94.0, "y": 94.0},
+      "location": {
+        "x": 350.0,
+        "y": 366.0
+      },
+      "size": {
+        "x": 94.0,
+        "y": 94.0
+      },
       "discovery_text": "You found it. The rainbow arrived before the prism received the sun.",
       "misstep_text": "Not there. Watch the light, not the painter.",
       "truth_fragment_reward": "fragment_borrowed_light",
@@ -60,16 +72,24 @@
     "summary": "Cause arrived after its effect. The Iris keeps the light that Clara's memory returned.",
     "revelation_text": "The rainbow reached the canvas before sunlight could strike the prism. In stabilizing that impossible instant, you returned the painter's last glimpse of Clara.",
     "revelation_audio_hook": "res://assets/audio/witness/resolution.ogg",
-    "archive_entry": "Borrowed Light — a recovered causal truth from The Unfinished Canvas."
+    "archive_entry": "Borrowed Light \u2014 a recovered causal truth from The Unfinished Canvas."
   },
   "iris_guidance": {
-    "fracture_discovered_event": "memory_focus",
+    "observation_event": "wm001_observe",
+    "fracture_prompt_event": "wm001_fracture_prompt",
+    "fracture_discovered_event": "wm001_fracture_found",
+    "synchronization_event": "wm001_synchronize",
+    "synchronization_complete_event": "wm001_revelation",
+    "revelation_event": "wm001_revelation",
     "fracture_resolved_event": "truth_fragment_absorbed"
   },
   "evidence_nodes": [
     {
       "identifier": "paused_brush",
-      "location": {"x": 100.0, "y": 200.0},
+      "location": {
+        "x": 100.0,
+        "y": 200.0
+      },
       "description": "The Suspended Brush",
       "relevance": "THE BRUSH PAUSED BEFORE THE COLOR COULD BE TRUE. A dynamic sable hair brush loaded with rare cobalt pigment hangs in the air exactly one second before contact.",
       "truth_connection": "Reconstruction aligns brush stroke.",
@@ -79,7 +99,10 @@
     },
     {
       "identifier": "crystal_prism",
-      "location": {"x": 100.0, "y": 250.0},
+      "location": {
+        "x": 100.0,
+        "y": 250.0
+      },
       "description": "The Wife's Crystal Prism",
       "relevance": "THE PRISM HAD NOT YET RECEIVED THE SUN. Clara's quartz prism splits the 5:14 PM sunlight directly across the linen.",
       "truth_connection": "Light vector matches anomaly.",
@@ -89,7 +112,10 @@
     },
     {
       "identifier": "color_notes",
-      "location": {"x": 100.0, "y": 300.0},
+      "location": {
+        "x": 100.0,
+        "y": 300.0
+      },
       "description": "Clara's Color Note",
       "relevance": "THE NOTE WAS WAITING FOR THE REAL LIGHT. Frayed note in Clara's handwriting: 'Wait for the 5:14 light. The composition is only complete when the sun and the quartz align.'",
       "truth_connection": "A note confirms temporal waiting.",
@@ -128,14 +154,34 @@
     "audio_assets": {
       "ambient": "res://assets/audio/environments/canvas_room_ambient.ogg",
       "anomaly": "res://assets/audio/witness/correct_detection.ogg",
-      "resolution": "res://assets/audio/witness/resolution.ogg"
+      "resolution": "res://assets/audio/witness/resolution.ogg",
+      "fracture_discovery": "res://assets/audio/iris/iris_attention.ogg",
+      "synchronization_complete": "res://assets/audio/iris/iris_confirm.ogg",
+      "reconstruction": "res://assets/audio/iris/iris_transition.ogg"
     },
     "visual_effects": {
-      "pulse_speed": 1.2
+      "pulse_speed": 1.2,
+      "late_light_strength": 0.72,
+      "dust_motes": 18,
+      "fracture_refraction": 1.0
     },
     "lighting_profile": {
       "modulate_color": "#f2ebd5",
       "vignette_intensity": 0.48
     }
+  },
+  "showcase": {
+    "enabled": true,
+    "intro_seconds": 2.15,
+    "reconstruction_seconds": 1.75,
+    "observation_prompt": "Watch the brush, then the prism. The painted light is the only thing that moves with certainty.",
+    "fracture_prompt": "The painter is not the break. Follow the color back to where it should have begun.",
+    "synchronization_prompt": "Keep the light in focus. The Iris will hold the moment while cause catches up to effect.",
+    "false_leads": [
+      "The brush is suspended, but it is waiting. Look for the light that has no source.",
+      "Clara's outline is important, but the fracture is where color escaped before sunlight arrived.",
+      "The note tells you when to look. Follow the prism, not the hand."
+    ],
+    "iris_presence_alpha": 0.56
   }
 }

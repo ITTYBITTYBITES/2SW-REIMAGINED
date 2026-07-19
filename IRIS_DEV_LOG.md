@@ -370,3 +370,34 @@ godot --headless -s tests/witness_engine_evolution_validation.gd
 - The first pass supports one active fracture at a time; the data contract can carry multiple future fractures.
 - Synchronization is deliberately a short hold-focus proof rather than a balanced minigame.
 - Truth Fragment presentation is runtime text/feedback and record persistence; constellation/Archive visual redesign remains later work.
+
+---
+
+## Mission 055B — WM-001 Showcase Pass
+
+Date: 2026-07-18
+Scope: authored player-experience pass for `WM_001` / *The Unfinished Canvas*. The Mission 055 engine, Application routing, profile persistence, Archive authority, and pupil portal were preserved.
+
+### Implemented
+
+- Added optional `showcase` data to `WitnessMomentDefinition`; it is empty by default and does not alter other moments.
+- Authored WM-001 presentation data for deliberate observation prompts, fracture language, meaningful false leads, synchronization language, studio pacing, and a short reconstruction duration.
+- Added data-driven WM-001 Iris guidance events for observation, fracture prompting, discovery, synchronization, and revelation. They use the existing personality resolver, expression overlay, production audio, haptic consumer, and Application ownership.
+- Added procedural WM-001-only atmosphere in the active generic runtime: late studio-light rays, dust motes, a living fracture halo, coherence rings during synchronization, and a brief reconstruction sweep during revelation. No final art assets were required.
+- Improved Fracture discovery feedback with custom audio, haptics, guidance, visual halo, and authored false-lead responses.
+- Improved synchronization presentation with authored focus language, Iris guidance, completion cue, coherence visuals, and the existing stability/recovery mechanic.
+- Strengthened revelation using a short reconstruction pass, Iris reaction, existing transition/resolution audio, and the existing `fragment_borrowed_light` absorption/Archive/portal return flow.
+- Added `tests/wm001_showcase_validation.gd` for WM-001 data, audio, Iris guidance events, generic runtime presentation hooks, existing persistence, and return-route wiring.
+
+### Limitations
+
+- Studio atmosphere and reconstruction are procedural prototype effects layered over existing WM-001 assets, not final production art or shaders.
+- Reveal pacing, ambient mix, haptic feel, and visual contrast require device review in a real Godot build.
+- The Archive retains fragment data; its constellation presentation remains Mission 056 work.
+
+Run when Godot is available:
+
+```bash
+cd the_iris
+godot --headless -s tests/wm001_showcase_validation.gd
+```

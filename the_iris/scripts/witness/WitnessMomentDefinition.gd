@@ -39,6 +39,8 @@ var iris_guidance := {
 	"fracture_discovered_event": "memory_focus",
 	"fracture_resolved_event": "truth_fragment_absorbed"
 }
+# Optional authored presentation tuning. Empty for all non-showcase moments.
+var showcase: Dictionary = {}
 
 var evidence_nodes: Array[Dictionary] = []
 var resolution_text := ""
@@ -66,6 +68,7 @@ func from_dictionary(dict: Dictionary) -> void:
 	_merge_contract(memory_stability, dict.get("memory_stability", {}))
 	_load_truth_fragment(dict)
 	_merge_contract(iris_guidance, dict.get("iris_guidance", {}))
+	showcase = _dictionary(dict.get("showcase", {}))
 
 	evidence_nodes.clear()
 	var raw_nodes = dict.get("evidence_nodes", [])

@@ -7,6 +7,8 @@ enum Phase { BRIEFING, OBSERVATION, FRACTURE, SYNCHRONIZATION, CONTEXT, REVELATI
 
 signal completion_requested(result: WitnessMomentResult)
 signal return_requested
+## Keeps Iris personality routing in Application; gameplay never owns the Iris.
+signal iris_guidance_requested(event_name: String)
 
 var definition: WitnessMomentDefinition
 var phase: Phase = Phase.BRIEFING
@@ -20,7 +22,10 @@ var memory_collapsed := false
 var last_result: WitnessMomentResult
 var intro_timer := 0.0
 var in_intro_cinematic := false
+var showcase_elapsed := 0.0
+var showcase_reconstruction := 0.0
 
+var backdrop: ColorRect
 var scene_image: TextureRect
 var phase_label: Label
 var title_label: Label
@@ -37,7 +42,7 @@ func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	visible = false
-	var backdrop := ColorRect.new()
+	backdrop = ColorRect.new()
 	backdrop.color = Color("#030a0d")
 	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -105,10 +110,16 @@ func start(value_definition: WitnessMomentDefinition) -> bool:
 	memory_stability = clampf(float(definition.memory_stability.get("initial", 1.0)), 0.0, 1.0)
 	memory_collapsed = false
 	last_result = null
+	showcase_elapsed = 0.0
+	showcase_reconstruction = 0.0
+	# The showcase intentionally leaves a little room for the existing Iris
+	# watermark/expression layer; legacy moments retain their opaque backdrop.
+	if backdrop != null:
+		backdrop.color = Color(0.012, 0.035, 0.04, float(definition.showcase.get("iris_presence_alpha", 1.0)))
 	var ambient_path: String = definition.asset_manifest.audio_assets.get("ambient", "")
 	IrisAudioConsumer.play_ambient_loop(ambient_path)
 	in_intro_cinematic = true
-	intro_timer = 1.35
+	intro_timer = float(definition.showcase.get("intro_seconds", 1.35))
 	_set_phase(Phase.BRIEFING)
 	return true
 
@@ -129,6 +140,8 @@ func close() -> void:
 func _process(delta: float) -> void:
 	if not visible:
 		return
+	showcase_elapsed += delta
+	showcase_reconstruction = maxf(0.0, showcase_reconstruction - delta)
 	if in_intro_cinematic:
 		intro_timer -= delta
 		if intro_timer <= 0.0:
@@ -146,6 +159,7 @@ func _process(delta: float) -> void:
 	var pulse := sin(Time.get_ticks_msec() * 0.008) * 0.008
 	scene_image.scale = Vector2.ONE * (1.0 + pulse)
 	scene_image.pivot_offset = scene_image.size * 0.5
+	queue_redraw()
 
 func _gui_input(event: InputEvent) -> void:
 	if not visible or phase != Phase.FRACTURE:
@@ -179,16 +193,18 @@ func _set_phase(next_phase: Phase) -> void:
 			scene_image.texture = WitnessAssetResolver.resolve_texture(definition.action_path, definition.action_path)
 			phase_label.text = "OBSERVE"
 			title_label.text = "Let the moment happen"
-			body_label.text = "Watch without touching. The truth only stays for a short time."
-			guidance_label.text = "LET THE MEMORY ARRIVE."
+			body_label.text = str(definition.showcase.get("observation_prompt", definition.description))
+			guidance_label.text = "WATCH THE LIGHT. DO NOT HURRY IT."
 			timer_label.set_meta("remaining", definition.observation_duration)
 			IrisAudioConsumer.play_manifest_sound("res://assets/audio/witness/observation_start.ogg")
+			_emit_guidance("observation_event")
 		Phase.FRACTURE:
 			scene_image.texture = WitnessAssetResolver.resolve_texture(definition.asset_manifest.environment_asset, definition.background_path)
 			phase_label.text = "LOCATE FRACTURE"
 			title_label.text = "What arrived out of order?"
-			body_label.text = "Find the point where the memory cannot hold its shape."
+			body_label.text = str(definition.showcase.get("fracture_prompt", "Find the point where the memory cannot hold its shape."))
 			guidance_label.text = "SOMETHING IS OUT OF SEQUENCE."
+			_emit_guidance("fracture_prompt_event")
 			fracture_button.position = Vector2(float(active_fracture.location.get("x", 350.0)), float(active_fracture.location.get("y", 366.0)))
 			fracture_button.size = Vector2(float(active_fracture.size.get("x", 94.0)), float(active_fracture.size.get("y", 94.0)))
 			fracture_button.visible = true
@@ -196,8 +212,9 @@ func _set_phase(next_phase: Phase) -> void:
 			scene_image.texture = WitnessAssetResolver.resolve_texture(definition.action_path, definition.action_path)
 			phase_label.text = "SYNCHRONIZE"
 			title_label.text = "Hold the fracture in focus"
-			body_label.text = "Maintain attention while the Iris aligns the unstable memory."
-			guidance_label.text = "HOLD TO STABILIZE."
+			body_label.text = str(definition.showcase.get("synchronization_prompt", "Maintain attention while the Iris aligns the unstable memory."))
+			guidance_label.text = "HOLD THE LIGHT STEADY."
+			_emit_guidance("synchronization_event")
 			action_button.text = "HOLD FOCUS"
 			action_button.visible = true
 			synchronization_progress.visible = true
@@ -218,12 +235,15 @@ func _set_phase(next_phase: Phase) -> void:
 			IrisAudioConsumer.play_manifest_sound("res://assets/audio/witness/reveal.ogg")
 		Phase.REVELATION:
 			scene_image.texture = WitnessAssetResolver.resolve_texture(definition.reveal_path, definition.reveal_path)
+			showcase_reconstruction = float(definition.showcase.get("reconstruction_seconds", 1.5))
 			phase_label.text = "REVELATION"
 			title_label.text = definition.title
 			body_label.text = definition.resolution_text
-			guidance_label.text = "THE FRACTURE HAS A REASON."
+			guidance_label.text = "THE MEMORY REMEMBERS WHY IT BROKE."
 			action_button.text = "RECEIVE THE TRUTH"
 			action_button.visible = true
+			_emit_guidance("revelation_event")
+			IrisAudioConsumer.play_manifest_sound(str(definition.asset_manifest.audio_assets.get("reconstruction", "res://assets/audio/iris/iris_transition.ogg")))
 			IrisAudioConsumer.play_manifest_sound(str(definition.truth_fragment.get("revelation_audio_hook", "res://assets/audio/witness/resolution.ogg")))
 		Phase.TRUTH_FRAGMENT:
 			phase_label.text = "TRUTH FRAGMENT"
@@ -247,7 +267,8 @@ func _find_fracture() -> void:
 	guidance_label.text = "THE IRIS RECOGNIZES THE FRACTURE."
 	action_button.text = "BEGIN SYNCHRONIZATION"
 	action_button.visible = true
-	IrisAudioConsumer.play_manifest_sound("res://assets/audio/witness/correct_detection.ogg")
+	_emit_guidance("fracture_discovered_event")
+	IrisAudioConsumer.play_manifest_sound(str(definition.asset_manifest.audio_assets.get("fracture_discovery", "res://assets/audio/witness/correct_detection.ogg")))
 	IrisHapticConsumer.trigger_pattern(IrisHapticConsumer.Pattern.LIGHT, "Fracture Located")
 
 # Compatibility hook for legacy callers/tests that still use anomaly vocabulary.
@@ -257,7 +278,11 @@ func _find_anomaly() -> void:
 func _register_fracture_misstep() -> void:
 	fracture_missteps += 1
 	memory_stability = maxf(float(definition.memory_stability.get("collapse_at", 0.0)), memory_stability - float(definition.memory_stability.get("misstep_cost", 0.15)))
-	body_label.text = active_fracture.misstep_text
+	var false_leads = definition.showcase.get("false_leads", [])
+	if false_leads is Array and not false_leads.is_empty():
+		body_label.text = str(false_leads[(fracture_missteps - 1) % false_leads.size()])
+	else:
+		body_label.text = active_fracture.misstep_text
 	guidance_label.text = "THE MEMORY DESTABILIZES."
 	IrisAudioConsumer.play_manifest_sound("res://assets/audio/witness/incorrect_detection.ogg")
 	if not IrisAccessibilityConsumer.is_reduced_motion():
@@ -297,7 +322,8 @@ func _update_synchronization(delta: float) -> void:
 		synchronization_holding = false
 		memory_stability = clampf(float(active_fracture.synchronization.get("stability_recovery", definition.memory_stability.get("recovery_on_synchronization", 1.0))), 0.0, 1.0)
 		active_fracture.synchronization_state = true
-		IrisAudioConsumer.play_manifest_sound("res://assets/audio/iris/iris_confirm.ogg")
+		_emit_guidance("synchronization_complete_event")
+		IrisAudioConsumer.play_manifest_sound(str(definition.asset_manifest.audio_assets.get("synchronization_complete", "res://assets/audio/iris/iris_confirm.ogg")))
 		IrisHapticConsumer.trigger_pattern(IrisHapticConsumer.Pattern.LIGHT, "Fracture Stabilized")
 		_set_phase(Phase.CONTEXT)
 
@@ -361,6 +387,46 @@ func _emit_completion() -> void:
 		"archive_entry": definition.truth_fragment.get("archive_entry", "")
 	})
 	completion_requested.emit(last_result)
+
+func _emit_guidance(key: String) -> void:
+	if definition == null:
+		return
+	var event_name := str(definition.iris_guidance.get(key, ""))
+	if not event_name.is_empty():
+		iris_guidance_requested.emit(event_name)
+
+## WM-001 can use existing imagery with procedural atmosphere rather than final art.
+func _draw() -> void:
+	if definition == null or not bool(definition.showcase.get("enabled", false)) or size.x <= 0.0 or size.y <= 0.0:
+		return
+	var light_origin := Vector2(size.x * 0.82, size.y * 0.18)
+	var warm := Color("#f4d99a")
+	for ray in range(4):
+		var phase_offset := float(ray) * 0.7
+		var end := Vector2(size.x * (0.20 + float(ray) * 0.18), size.y * 0.69)
+		var drift := sin(showcase_elapsed * 0.35 + phase_offset) * 12.0
+		draw_line(light_origin + Vector2(drift, 0), end + Vector2(-drift, 0), Color(warm, 0.035), 18.0, true)
+	# Dust motes make the studio feel suspended in late light.
+	for index in range(18):
+		var seed := float(index) * 1.73
+		var x := fmod(seed * 73.0 + showcase_elapsed * (6.0 + float(index % 3)), maxf(size.x, 1.0))
+		var y := fmod(seed * 137.0 + sin(showcase_elapsed * 0.45 + seed) * 28.0 + 280.0, maxf(size.y, 1.0))
+		draw_circle(Vector2(x, y), 0.7 + float(index % 3) * 0.35, Color(1.0, 0.90, 0.66, 0.16))
+	if phase == Phase.FRACTURE and active_fracture != null:
+		var point := fracture_button.position + fracture_button.size * 0.5
+		for ring in range(3):
+			var radius := 34.0 + float(ring) * 15.0 + sin(showcase_elapsed * 3.0 + ring) * 4.0
+			draw_arc(point, radius, 0.0, TAU, 36, Color(0.48, 0.96, 0.80, 0.22 - float(ring) * 0.05), 1.2, true)
+	if phase == Phase.SYNCHRONIZATION:
+		var coherence := clampf(synchronization_progress.value / 100.0, 0.0, 1.0)
+		for ring in range(4):
+			var radius := 42.0 + float(ring) * 29.0 - coherence * 15.0
+			draw_arc(Vector2(size.x * 0.5, size.y * 0.45), radius, 0.0, TAU, 48, Color(0.56, 0.95, 0.79, (0.05 + coherence * 0.08) * (1.0 - float(ring) * 0.15)), 1.0, true)
+	if phase == Phase.REVELATION or phase == Phase.TRUTH_FRAGMENT:
+		var amount := clampf(showcase_reconstruction / maxf(0.1, float(definition.showcase.get("reconstruction_seconds", 1.5))), 0.0, 1.0)
+		for index in range(6):
+			var y := 284.0 + float(index) * 25.0
+			draw_line(Vector2(66, y), Vector2(size.x - 66, y - 38.0), Color(0.72, 1.0, 0.84, 0.10 + amount * 0.12), 1.0, true)
 
 func _progress_bar(position_value: Vector2, fill_color: Color) -> ProgressBar:
 	var bar := ProgressBar.new()
