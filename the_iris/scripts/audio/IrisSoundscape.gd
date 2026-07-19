@@ -17,7 +17,6 @@ const AMBIENT_BUS := "IrisAmbient"
 const SFX_BUS := "IrisSFX"
 
 var _ambient_player: AudioStreamPlayer
-var _sfx_player: AudioStreamPlayer
 var _sub_bass: AudioStreamPlayer
 
 var _prev_gaze: Vector2 = Vector2.ZERO

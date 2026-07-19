@@ -105,7 +105,7 @@ func _load_stems() -> void:
 
 ## Play a voice bark through the Ghost FX chain.
 ## Optionally mix in the whisper layer underneath.
-func play_bark(bark_id: String, with_whisper := true) -> void:
+func play_bark(bark_id: String, _with_whisper := true) -> void:
 	if not _players.has(bark_id):
 		return
 	var player: AudioStreamPlayer = _players[bark_id]

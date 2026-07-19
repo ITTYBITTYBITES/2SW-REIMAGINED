@@ -14,8 +14,6 @@ class_name Iris3DHub
 ## All visual/behavioral params are @export for calibration.
 ## Architecture: SubViewportContainer → SubViewport (transparent) → Node3D.
 
-signal iris_tapped
-
 # --- Calibration (@export for VISUAL_CALIBRATION_GUIDE.md) ---
 @export_group("Stroma")
 @export var stroma_color: Color = Color(0.020, 0.045, 0.075)
@@ -46,8 +44,8 @@ signal iris_tapped
 @export var glint_intensity: float = 1.8
 
 @export_group("Camera")
-@export var camera_fov: float = 35.0
-@export var camera_distance: float = 3.5
+@export var camera_fov: float = 28.0
+@export var camera_distance: float = 2.6
 @export var parallax_strength: float = 0.08
 
 @export_group("Lighting")
@@ -81,7 +79,6 @@ var _eye_root: Node3D  # all iris content pivots from here (for gaze/parallax)
 # --- Blink state ---
 var _blink_timer: float = 4.0
 var _blink_phase: float = -1.0  # -1 = open, 0..1 = closing/opening
-var _idle_gaze_timer: float = 0.0
 var _gaze_target: Vector2 = Vector2.ZERO
 var _current_gaze: Vector2 = Vector2.ZERO
 var _hippus_rng := RandomNumberGenerator.new()
@@ -254,9 +251,10 @@ func _build_concave_bowl(radius: float, depth: float, radial_seg: int, ring_coun
 func _build_sphere_cap(radius: float, coverage: float, segments: int) -> ArrayMesh:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
-	for ring in range(int(segments / 2)):
-		var phi1 := (float(ring) / float(int(segments / 2))) * coverage * PI
-		var phi2 := (float(ring + 1) / float(int(segments / 2))) * coverage * PI
+	var half_segs: int = int(float(segments) * 0.5)
+	for ring in range(half_segs):
+		var phi1 := (float(ring) / float(half_segs)) * coverage * PI
+		var phi2 := (float(ring + 1) / float(half_segs)) * coverage * PI
 		for seg in range(segments):
 			var theta1 := TAU * float(seg) / float(segments)
 			var theta2 := TAU * float(seg + 1) / float(segments)

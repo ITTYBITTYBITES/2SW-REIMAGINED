@@ -17,7 +17,6 @@ enum Mood { DORMANT, AWARE, FOCUSED, SUCCESS }
 
 signal state_changed(state: State)
 signal mood_changed(mood: Mood)
-signal mood_bleed_completed(mood: Mood)
 
 var state: State = State.DORMANT
 var state_time := 0.0
