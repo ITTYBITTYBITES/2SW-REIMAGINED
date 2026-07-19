@@ -409,19 +409,21 @@ func _emit_guidance(key: String) -> void:
 func _draw() -> void:
 	if definition == null or not bool(definition.showcase.get("enabled", false)) or size.x <= 0.0 or size.y <= 0.0:
 		return
-	var light_origin := Vector2(size.x * 0.82, size.y * 0.18)
-	var warm := Color("#f4d99a")
+	var origin_x := clampf(float(definition.showcase.get("atmosphere_light_origin_x", 0.82)), 0.0, 1.0)
+	var light_origin := Vector2(size.x * origin_x, size.y * 0.18)
+	var atmosphere_light := Color.from_string(str(definition.showcase.get("atmosphere_light_color", "#f4d99a")), Color("#f4d99a"))
+	var mote_color := Color.from_string(str(definition.showcase.get("atmosphere_mote_color", "#f4d99a")), Color("#f4d99a"))
 	for ray in range(4):
 		var phase_offset := float(ray) * 0.7
 		var end := Vector2(size.x * (0.20 + float(ray) * 0.18), size.y * 0.69)
 		var drift := sin(showcase_elapsed * 0.35 + phase_offset) * 12.0
-		draw_line(light_origin + Vector2(drift, 0), end + Vector2(-drift, 0), Color(warm, 0.035), 18.0, true)
+		draw_line(light_origin + Vector2(drift, 0), end + Vector2(-drift, 0), Color(atmosphere_light, 0.035), 18.0, true)
 	# Dust motes make the studio feel suspended in late light.
 	for index in range(18):
 		var seed := float(index) * 1.73
 		var x := fmod(seed * 73.0 + showcase_elapsed * (6.0 + float(index % 3)), maxf(size.x, 1.0))
 		var y := fmod(seed * 137.0 + sin(showcase_elapsed * 0.45 + seed) * 28.0 + 280.0, maxf(size.y, 1.0))
-		draw_circle(Vector2(x, y), 0.7 + float(index % 3) * 0.35, Color(1.0, 0.90, 0.66, 0.16))
+		draw_circle(Vector2(x, y), 0.7 + float(index % 3) * 0.35, Color(mote_color, 0.16))
 	if phase == Phase.FRACTURE and active_fracture != null:
 		var point := fracture_button.position + fracture_button.size * 0.5
 		for ring in range(3):

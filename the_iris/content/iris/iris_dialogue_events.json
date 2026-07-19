@@ -95,6 +95,54 @@
       "audio": "res://assets/audio/iris/iris_presence.ogg",
       "haptic": "borrowed_light_reflection_pulse",
       "voice": "voice_placeholder_borrowed_light_reflection"
+    },
+    "wm002_observe": {
+      "text": "The room is still. Listen for what the glass remembers.",
+      "accessibility_text": "The Iris guides you to observe Arthur, the watch, and the display glass.",
+      "expression_mode": "GUIDING",
+      "audio": "res://assets/audio/iris/iris_presence.ogg",
+      "haptic": "wm002_observe_pulse",
+      "voice": "voice_placeholder_wm002_observe"
+    },
+    "wm002_fracture_prompt": {
+      "text": "Do not look for a ghost. Look for the touch that arrived too soon.",
+      "accessibility_text": "The Iris directs attention to a handprint that appears before contact.",
+      "expression_mode": "CURIOUS",
+      "audio": "res://assets/audio/iris/iris_attention.ogg",
+      "haptic": "wm002_fracture_prompt_pulse",
+      "voice": "voice_placeholder_wm002_fracture_prompt"
+    },
+    "wm002_fracture_found": {
+      "text": "Yes. The glass kept his warmth before he gave it.",
+      "accessibility_text": "The Iris confirms the inherited warmth fracture.",
+      "expression_mode": "ATTENTIVE",
+      "audio": "res://assets/audio/iris/iris_focus.ogg",
+      "haptic": "wm002_fracture_found_pulse",
+      "voice": "voice_placeholder_wm002_fracture_found"
+    },
+    "wm002_synchronize": {
+      "text": "Hold the warmth with me. Let remembrance return to its time.",
+      "accessibility_text": "The Iris asks you to stabilize the remembered warmth.",
+      "expression_mode": "GUIDING",
+      "audio": "res://assets/audio/iris/iris_focus.ogg",
+      "haptic": "wm002_synchronize_pulse",
+      "voice": "voice_placeholder_wm002_synchronize"
+    },
+    "wm002_revelation": {
+      "text": "The room was not haunted. It was cared for.",
+      "accessibility_text": "The Iris recognizes Arthur's devotion as the recovered truth.",
+      "expression_mode": "REFLECTIVE",
+      "audio": "res://assets/audio/iris/iris_transition.ogg",
+      "haptic": "wm002_revelation_pulse",
+      "voice": "voice_placeholder_wm002_revelation"
+    },
+    "inherited_warmth_reflection": {
+      "text": "A place remembers the hands that refused to let it become empty.",
+      "accessibility_text": "The Iris reflects on the recovered truth called Inherited Warmth.",
+      "expression_mode": "REFLECTIVE",
+      "audio": "res://assets/audio/iris/iris_presence.ogg",
+      "haptic": "inherited_warmth_reflection_pulse",
+      "voice": "voice_placeholder_inherited_warmth_reflection"
     }
   }
 }

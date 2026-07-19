@@ -463,3 +463,37 @@ Run when Godot is available:
 cd the_iris
 godot --headless -s tests/living_archive_experience_validation.gd
 ```
+
+---
+
+## Mission 058 — WM-002 Production Migration Pass
+
+Date: 2026-07-18
+Scope: author `WM_002` / *The Forgotten Museum* through the established Living Iris 4.0 production contract. No new gameplay, persistence, progression, navigation, Archive, or chapter system was added.
+
+### Production audit
+
+Before authoring, confirmed WM-002 already had a distinct museum corridor/action/palm-reveal asset triplet, existing evidence/revelation content, museum ambience, and a valid legacy anomaly/capture definition. It lacked authored Fracture, stability, showcase, Truth Fragment, Iris guidance/reflection, and manifest cue data.
+
+Detailed audit: `MISSION_058_WM002_PRODUCTION_AUDIT.md`.
+
+### Implemented
+
+- Authored WM-002 Fracture `inherited_warmth`: museum glass remembers Arthur's warmth before he touches it.
+- Authored WM-002 stability pressure, 1.18-second synchronization hold, investigation false leads, and existing Iris audio/haptic guidance hooks.
+- Authored optional showcase pacing and cool museum atmosphere values through existing `showcase` data. The generic renderer now reads authored light/mote color values; WM-001 preserves its current defaults.
+- Authored Truth Fragment **Inherited Warmth** (`fragment_inherited_warmth`) with recovered-memory summary, truth statement, revelation, Archive entry, Iris reflection, and reflection event.
+- Added WM-002 observation, fracture, synchronization, revelation, and Archive reflection dialogue events using existing Iris audio/haptic/expression architecture.
+- Added `tests/wm002_production_validation.gd` covering loader/runtime contract, authored audio/events, Archive persistence/projection, Chapter 01 membership, serialization, and WM-001 / WM-003–WM-012 compatibility.
+
+### Limitations
+
+- WM-002 uses existing museum assets and procedural showcase atmosphere; final scene animation, bespoke shaders, and device-tuned pacing remain future production polish.
+- The existing generic runtime supports one active Fracture; this migration intentionally does not expand that system.
+
+Run when Godot is available:
+
+```bash
+cd the_iris
+godot --headless -s tests/wm002_production_validation.gd
+```
