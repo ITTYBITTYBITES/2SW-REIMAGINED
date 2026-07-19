@@ -1,8 +1,88 @@
 # IRIS_DEV_LOG.md
 
+## Mission 054B — Living Iris Spatial Hub
+
+Date: 2026-07-18
+Scope: interaction-architecture prototype following Mission 054A. No Witness Moments, chapters, or final visual content were added.
+
+### Objective
+
+Move the Home experience from a single navigation fragment toward a living memory field: the existing Living Iris remains the artifact at the center while memory shards and existing routes arrange themselves around it.
+
+### Implemented foundation
+
+#### 1. Spatial Hub hierarchy
+
+Added `the_iris/scripts/home/SpatialHub.gd`, hosted by the existing `IrisHome` container.
+
+It declares the requested Node3D composition contract:
+
+```text
+SpatialHub
+├── Foreground_Nav
+├── Midground_Active
+├── Background_Constellation
+└── SpatialHubCamera
+```
+
+The project still uses its established procedural 2D renderer for the prototype visual layer. The Node3D hierarchy and `Camera3D` are deliberately present as the transition-safe spatial/camera foundation; no final art, scene migration, or competing navigation scene was introduced.
+
+#### 2. Three experiential layers
+
+| Layer | Current prototype role |
+| --- | --- |
+| `Foreground_Nav` | Always-present **Story**, **Archive**, and **Profile** controls. Story and Archive preserve their existing Application routes; Profile is an in-place view of the existing `WitnessProfile` data. |
+| `Midground_Active` | One selectable current-memory shard (`FM_001`) retaining the pre-existing Continue Witness route. |
+| `Background_Constellation` | Placeholder constellation shards for existing `WM_001`–`WM_005` identifiers. Profile-completed IDs are styled as restored truth fragments; the rest remain dormant placeholders. |
+
+No new moment definition, chapter, or content data was created. Existing identifiers are used only as spatial placeholders.
+
+#### 3. Spatial interaction proof
+
+The hub includes:
+
+- low-frequency orbit behavior, with distinct active and constellation bands;
+- procedural prototype shard visuals and connecting field lines;
+- pointer proximity focus and selected states;
+- focus camera target movement using `SpatialHubCamera`;
+- selection of the active shard through the existing flagship route;
+- selection of constellation placeholders through the existing Archive route;
+- focus signals carrying a normalized target to the pre-existing Iris attention path.
+
+#### 4. Iris and route preservation
+
+`IrisHome` forwards hub focus/select events to its original `memory_intent_*` signals. `Application.gd` therefore continues to call the existing `IrisCore.acquire_attention()`, personality resolution, audio, haptic, and settle behavior. The 054A awakening ritual and its authored Iris lifecycle were not changed.
+
+The existing `Application.gd` routes remain authoritative:
+
+- Story → `show_witness()`
+- Archive → `show_archive()`
+- current-memory shard → existing `start_flagship_moment()` path
+
+#### 5. Validation
+
+Added `the_iris/tests/spatial_hub_validation.gd`.
+
+It asserts the Node3D layer names, Camera3D foundation, orbit and selection contracts, pre-existing content IDs, existing IrisHome route forwarding, and Application profile/registry configuration.
+
+Run when Godot is available:
+
+```bash
+godot --headless -s tests/spatial_hub_validation.gd
+```
+
+### Current limitations
+
+1. The Node3D graph is an intentional foundation, while the mobile prototype still renders its shards procedurally in 2D.
+2. Camera motion records live spatial intent; a later art/portal pass can attach a `SubViewport` or move this contract into a rendered 3D scene without changing hub routing.
+3. Profile is deliberately a foreground in-place data view, not a new profile navigation screen.
+4. Constellation nodes are placeholders, not access to new or expanded Witness content.
+
+---
+
 ## Mission 054A — Living Iris Awakening Ritual
 
-Date: 2026-07-18  
+Date: 2026-07-18
 Scope: first authored Living Iris presence milestone after Mission 053C production audio foundation.
 
 ### Objective

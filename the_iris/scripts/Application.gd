@@ -71,6 +71,7 @@ func _ready() -> void:
 	home.archive_requested.connect(show_archive)
 	home.witness_chapters_requested.connect(show_witness)
 	add_child(home)
+	home.configure(witness_profile, registry)
 	home.update_profile_presentation(witness_profile)
 
 	witness = WitnessChapters.new()
