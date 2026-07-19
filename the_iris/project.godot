@@ -12,9 +12,9 @@ config_version=5
 
 config/name="Two Second Witness"
 config/description="The Living Iris platform and the first new Witness experience."
-config/version="4.0.0"
+config/version="5.0.0"
 run/main_scene="res://scenes/Application.tscn"
-config/features=PackedStringArray("4.6", "GL Compatibility")
+config/features=PackedStringArray("4.6", "Forward Plus")
 boot_splash/bg_color=Color(0.008, 0.012, 0.021, 1)
 boot_splash/show_image=false
 config/icon="res://assets/brand/app_icon_1024.png"
@@ -31,7 +31,8 @@ window/handheld/orientation=1
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
+renderer/rendering_method="forward_plus"
+renderer/rendering_method.mobile="mobile"
 textures/vram_compression/import_etc2_astc=true
 environment/defaults/default_clear_color=Color(0.008, 0.012, 0.021, 1)
+anti_aliasing/quality/msaa_3d=2

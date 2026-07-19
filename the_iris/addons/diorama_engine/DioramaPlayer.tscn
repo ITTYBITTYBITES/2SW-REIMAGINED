@@ -1,0 +1,104 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://addons/diorama_engine/DioramaPlayer.gd" id="1_player"]
+[ext_resource type="Script" path="res://addons/diorama_engine/CinematicCamera.gd" id="2_camera"]
+
+[sub_resource type="Environment" id="Environment_cinematic"]
+background_mode = 1
+background_color = Color(0.008, 0.012, 0.021, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.15, 0.18, 0.25, 1)
+ambient_light_energy = 0.6
+tonemap_mode = 2
+tonemap_white = 6.0
+tonemap_exposure = 1.0
+glow_enabled = true
+glow_intensity = 0.8
+glow_bloom = 0.1
+glow_blend_mode = 2
+glow_hdr_threshold = 0.8
+glow_hdr_scale = 2.0
+ssao_enabled = true
+ssao_radius = 1.0
+ssao_intensity = 2.0
+ssao_power = 1.5
+ssao_detail = 0.5
+ssao_light_affect = 0.0
+ssr_enabled = true
+ssr_max_steps = 64
+ssr_fade_in = 0.15
+ssr_fade_out = 2.0
+ssr_depth_tolerance = 0.2
+fog_enabled = true
+fog_light_color = Color(0.04, 0.06, 0.1, 1)
+fog_light_energy = 0.4
+fog_density = 0.015
+fog_sky_affect = 0.5
+adjustment_enabled = true
+adjustment_brightness = 1.0
+adjustment_contrast = 1.1
+adjustment_saturation = 0.95
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributes_dof"]
+dof_blur_far_enabled = true
+dof_blur_far_distance = 5.0
+dof_blur_far_transition = 2.0
+dof_blur_near_enabled = false
+dof_blur_near_distance = 0.5
+
+[node name="DioramaPlayer" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_player")
+
+[node name="ViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+mouse_filter = 2
+
+[node name="DioramaViewport" type="SubViewport" parent="ViewportContainer"]
+size = Vector2i(540, 960)
+own_world_3d = true
+render_target_update_mode = 3
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="ViewportContainer/DioramaViewport"]
+environment = SubResource("Environment_cinematic")
+
+[node name="CinematicCamera" type="Camera3D" parent="ViewportContainer/DioramaViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 5.4)
+current = true
+fov = 45.0
+camera_attributes = SubResource("CameraAttributes_dof")
+script = ExtResource("2_camera")
+
+[node name="CinematicKeyLight" type="DirectionalLight3D" parent="ViewportContainer/DioramaViewport"]
+transform = Transform3D(0.669, -0.342, 0.659, 0, 0.887, 0.462, -0.743, -0.309, 0.594, 0, 0, 0)
+light_energy = 1.35
+light_color = Color(1, 0.92, 0.78, 1)
+shadow_enabled = true
+
+[node name="CinematicFillLight" type="DirectionalLight3D" parent="ViewportContainer/DioramaViewport"]
+transform = Transform3D(-0.821, -0.259, 0.507, 0, 0.889, 0.458, -0.571, 0.376, -0.730, 0, 0, 0)
+light_energy = 0.45
+light_color = Color(0.55, 0.6, 0.85, 1)
+shadow_enabled = false
+
+[node name="FadeVeil" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.005, 0.008, 0.014, 1)
