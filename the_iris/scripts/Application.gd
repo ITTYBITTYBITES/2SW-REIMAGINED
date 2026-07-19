@@ -11,6 +11,8 @@ var witness_profile: WitnessProfile
 var latest_iris_evolution: IrisEvolutionData
 var iris: IrisController
 var iris_personality: IrisPersonalityResolver
+var iris_portal: IrisPortalTransition
+var portal_return_destination := "home"
 var home: IrisHome
 var witness: WitnessChapters
 var wm001_gameplay: WM001GameplayLoop
@@ -63,7 +65,7 @@ func _ready() -> void:
 
 	home = IrisHome.new()
 	home.name = "IrisHome"
-	home.continue_witness_requested.connect(start_flagship_moment)
+	home.continue_witness_requested.connect(request_flagship_portal)
 	home.iris_requested.connect(show_iris)
 	home.memory_intent_focused.connect(_on_home_memory_intent_focused)
 	home.memory_intent_released.connect(_on_home_memory_intent_released)
@@ -78,7 +80,7 @@ func _ready() -> void:
 	witness.name = "WitnessChapters"
 	witness.configure(registry, director, orchestrator)
 	witness.home_requested.connect(show_home)
-	witness.generic_moment_requested.connect(start_generic_gameplay)
+	witness.generic_moment_requested.connect(request_memory_portal)
 	add_child(witness)
 
 	generic_gameplay = GenericWitnessGameplay.new()
@@ -106,6 +108,14 @@ func _ready() -> void:
 	flagship_gameplay.completion_requested.connect(_on_flagship_completion_requested)
 	flagship_gameplay.return_requested.connect(_on_flagship_return_requested)
 	add_child(flagship_gameplay)
+
+	# Portal is composed above existing routes; it does not own them.
+	iris_portal = IrisPortalTransition.new()
+	iris_portal.name = "IrisPortalTransition"
+	iris_portal.configure(iris.living_iris)
+	iris_portal.entry_arrived.connect(_on_portal_entry_arrived)
+	iris_portal.return_arrived.connect(_on_portal_return_arrived)
+	add_child(iris_portal)
 
 	startup = StartupFlow.new()
 	startup.name = "StartupFlow"
@@ -217,10 +227,65 @@ func _on_wm001_completion_requested(result: WitnessMomentResult) -> void:
 
 func _on_wm001_return_requested() -> void:
 	wm001_gameplay.close()
-	show_home()
+	_begin_portal_return()
+
+func request_flagship_portal() -> void:
+	request_memory_portal("FM_001")
 
 func start_flagship_moment() -> void:
-	start_generic_gameplay("FM_001")
+	# Compatibility entry point retained for existing callers.
+	request_flagship_portal()
+
+func request_memory_portal(moment_id: String) -> void:
+	if iris_portal == null or iris_portal.state != IrisPortalTransition.PortalState.READY:
+		return
+	var moment_data: Dictionary = registry.moment(moment_id) if registry != null else {}
+	if moment_data.is_empty():
+		var path := "res://content/witness/" + moment_id.to_lower() + ".json"
+		var definition := WitnessContentLoader.load_moment_definition(path)
+		if definition != null:
+			moment_data = {"title": definition.title, "subtitle": definition.subtitle}
+	if moment_data.is_empty():
+		# Preserve prior routing fallback when existing content cannot resolve.
+		start_generic_gameplay(moment_id)
+		return
+	reflective_return_pending = false
+	reflective_return_in = -1.0
+	iris.visible = true
+	iris.set_gameplay_environment(false)
+	iris.set_home_environment(false)
+	home.visible = false
+	witness.visible = false
+	archive_ui.visible = false
+	iris.iris_core.acquire_attention(Vector2(0.0, 0.0))
+	_emit_personality_response("memory_focus")
+	iris_portal.begin_entry(moment_id, moment_data)
+
+func _on_portal_entry_arrived(moment_id: String) -> void:
+	start_generic_gameplay(moment_id)
+
+func _begin_portal_return(destination := "home") -> void:
+	if iris_portal == null or iris_portal.state != IrisPortalTransition.PortalState.READY:
+		if destination == "archive":
+			show_archive()
+		else:
+			show_home()
+		return
+	portal_return_destination = destination
+	iris.visible = true
+	iris.set_gameplay_environment(false)
+	iris.set_home_environment(false)
+	home.visible = false
+	witness.visible = false
+	archive_ui.visible = false
+	iris.reflect()
+	iris_portal.begin_return()
+
+func _on_portal_return_arrived() -> void:
+	if portal_return_destination == "archive":
+		show_archive()
+	else:
+		show_home()
 
 func _on_flagship_completion_requested(result: WitnessMomentResult) -> void:
 	var award := {"total": 0, "components": {}}
@@ -234,7 +299,7 @@ func _on_flagship_completion_requested(result: WitnessMomentResult) -> void:
 
 func _on_flagship_return_requested() -> void:
 	flagship_gameplay.close()
-	show_home()
+	_begin_portal_return()
 
 func show_witness() -> void:
 	reflective_return_pending = false
@@ -303,7 +368,7 @@ func show_archive() -> void:
 
 func replay_from_archive(moment_id: String) -> void:
 	replayed_from_archive = true
-	start_generic_gameplay(moment_id)
+	request_memory_portal(moment_id)
 
 func start_generic_gameplay(moment_id: String) -> void:
 	reflective_return_pending = false
@@ -361,9 +426,9 @@ func _on_generic_return_requested() -> void:
 	generic_gameplay.close()
 	if replayed_from_archive:
 		replayed_from_archive = false
-		show_archive()
+		_begin_portal_return("archive")
 	else:
-		show_home()
+		_begin_portal_return("home")
 
 func _process(delta: float) -> void:
 	if iris_idle_dialogue_in >= 0.0:

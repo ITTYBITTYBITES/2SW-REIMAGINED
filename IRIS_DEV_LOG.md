@@ -301,3 +301,27 @@ REMAINING:
 - add real voice assets later if desired
 - build 054B Spatial Hub separately
 - build 054C Portal Transition separately
+
+---
+
+## Mission 054C — Through the Pupil Portal
+
+Date: 2026-07-18
+Scope: physical transition foundation between the existing Spatial Hub and existing Witness Moment loading. No Witness content, chapter, or navigation authority was added.
+
+### Implemented
+
+- Added `IrisPortalTransition.gd` with an authored portal lifecycle:
+  `READY → FOCUSING → DILATING → ENTERING → TRANSITIONING → ARRIVED`.
+- Added temporary `LivingIris.portal_dilation`, consumed exclusively by the pupil renderer. This presentation value enlarges the actual existing pupil without modifying `IrisCore` state authority.
+- Added a current-memory preview using existing moment title/subtitle data and abstract procedural refraction bands; no new visual asset/content dependency was introduced.
+- Added focus/dilation/transition audio and light haptic hooks using the production Iris audio foundation.
+- Routed existing Home, chapter, and Archive replay moment entry through `Application.request_memory_portal()` before calling the unchanged `start_generic_gameplay()` loader route.
+- Added a return foundation: after the existing reward return request, gameplay closes, the memory collapses through the portal, and the original home/archive destination resumes. Home return continues through the existing reflective return timing and `iris_return` personality event.
+- Added `tests/iris_portal_validation.gd` for portal state, preview, pupil, route-preservation, no-content-dependency, and return-path contract checks.
+
+### Limitations
+
+1. The portal uses procedural refraction and a pupil-window prototype rather than a final shader or memory-art composition.
+2. Camera approach is represented by the portal camera amount/visual scale foundation; a later rendering pass can bind it to a SubViewport or full 3D camera without changing Application routing.
+3. Runtime Godot/device playback is still required for timing, visual intensity, and accessibility review.

@@ -5,6 +5,8 @@ class_name LivingIris
 ## suspends all animation work while the Iris screen is hidden.
 var core: IrisCore
 var evolution_profile: IrisEvolutionProfile
+## Authored by IrisPortalTransition; the core remains the lifecycle authority.
+var portal_dilation := 0.0
 var elapsed := 0.0
 var behavior := {
 	"breath_primary": 0.46,
@@ -156,7 +158,8 @@ func _draw_fibers(center: Vector2, radius: float, pupil_ratio: float, motion: fl
 
 func _draw_pupil(center: Vector2, radius: float, pupil_ratio: float, presence: float, glow: float, focus: float, breath_wave: float, pulse: float) -> void:
 	var biological_pulse: float = float(behavior.get("biological_pulse", 1.0))
-	var pupil_radius := radius * pupil_ratio
+	# Portal dilation is temporary presentation input; it never changes IrisCore.
+	var pupil_radius := radius * pupil_ratio * lerpf(1.0, 2.48, portal_dilation)
 	var corona_alpha := (0.06 + glow * 0.18 + pulse * 0.08) * presence
 	draw_circle(center, pupil_radius * (1.28 + pulse * 0.06), Color(0.13, 0.72, 0.57, corona_alpha))
 	draw_circle(center, pupil_radius * 1.11, Color(0.004, 0.018, 0.029, 0.98 * presence))
