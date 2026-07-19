@@ -683,3 +683,21 @@ Static preflight confirms the Chapter 01 production contracts, portal routing, o
 Run `MISSION_064_DEVICE_RUNTIME_VALIDATION.md` on a real Godot/device environment. Capture first-launch, per-moment, five-fragment Chapter Bloom, restart persistence, interruption/resume, reduced-motion, audio-disabled, and haptics-disabled evidence before authorizing WM-006 migration.
 
 Detailed protocol and PASS/TUNE/BLOCKER classification: `MISSION_064_DEVICE_RUNTIME_VALIDATION.md`.
+
+---
+
+## Mission 065 — Chapter 01 Human Experience Test Preparation
+
+Date: 2026-07-18
+Scope: Android build/test readiness audit and human playtest preparation. No gameplay, persistence, Archive, navigation, progression, or runtime architecture was changed.
+
+### Deliverables
+
+- Added `MISSION_065_CHAPTER_01_PLAYTEST_PROTOCOL.md`, a repeatable first-launch, WM-001–WM-005, return-loop, five-fragment, persistence, resilience, and accessibility test procedure.
+- Added `MISSION_065_HUMAN_EXPERIENCE_TEST_PREPARATION.md`, documenting Android export readiness, build instructions, profile location, debug log capture, toolchain requirements, and PASS/TUNE/BLOCKER status.
+
+### Status
+
+The committed project/export configuration is statically ready for an Android Debug test build. APK generation is blocked in this workspace because Godot, Android export templates, Android SDK/platform-tools, adb, emulator/device access, and debug-signing confirmation are absent.
+
+Run the build and protocol on an external Godot/Android environment before authorizing additional content migration.
