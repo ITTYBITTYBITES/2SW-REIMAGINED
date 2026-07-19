@@ -622,8 +622,13 @@ func _read_property(target: Node3D, prop: String) -> float:
 	return 0.0
 
 func _hide_other_text(keep: String) -> void:
-	if keep != "entry": entry_label.visible = false
-	if keep != "prompt": prompt_label.visible = false
+	# Clear ALL sibling text labels except the one being shown, so phases never
+	# stack entry/prompt/response/resolution text on top of each other (which
+	# was causing the "doubled text" effect during experience playback).
+	if keep != "entry" and entry_label: entry_label.visible = false
+	if keep != "prompt" and prompt_label: prompt_label.visible = false
+	if keep != "response" and response_label: response_label.visible = false
+	if keep != "resolution" and resolution_label: resolution_label.visible = false
 
 func _ease_in_out(v: float) -> float:
 	return v * v * (3.0 - 2.0 * v)

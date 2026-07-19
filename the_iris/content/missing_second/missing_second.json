@@ -1,5 +1,5 @@
 {
-  "_doc": "Experience 1 — The Missing Second. Data-driven module for the Diorama Engine v2.0. Schema supports Actor Position, Camera Animation, and Clue ID. All experience-specific knowledge lives here; the engine contains none. This definition is loaded by DioramaPlayer.load_and_play() and assembled into a cinematic 3D scene with ACES tonemapping, key/fill lighting, SSAO, and depth of field. PBR materials specified where textures are available; primitive geometry uses roughness/metallic to catch the cinematic light.",
+  "_doc": "Experience 1 — The Missing Second. Rebuilt for the Diorama Engine v2.0 (Cinematic). All experience-specific data lives here; the DioramaPlayer engine contains none. Drives ACES tonemapping, SSAO, SSR, Glow, volumetric fog, 35mm DOF camera with slow orbit, and PBR materials that catch the cinematic key/fill light. The engine assembles this into a living 3D memory behind the Living Iris.",
 
   "schema_version": "2.0",
   "id": "missing_second",
@@ -9,66 +9,66 @@
 
   "environment": {
     "background_mode": "color",
-    "background_color": [0.008, 0.012, 0.021],
+    "background_color": [0.006, 0.010, 0.018],
     "tonemap": "aces",
-    "tonemap_exposure": 1.0,
+    "tonemap_exposure": 1.05,
     "tonemap_white": 6.0,
     "ambient_source": "color",
-    "ambient_color": [0.22, 0.28, 0.32],
-    "ambient_energy": 0.9,
+    "ambient_color": [0.18, 0.22, 0.28],
+    "ambient_energy": 0.65,
     "ssao": {
       "enabled": true,
-      "radius": 1.2,
-      "intensity": 2.5,
+      "radius": 1.0,
+      "intensity": 2.0,
       "power": 1.5
     },
     "ssr": {
-      "enabled": true,
-      "max_steps": 64
+      "enabled": false,
+      "max_steps": 32
     },
     "glow": {
       "enabled": true,
-      "intensity": 0.7,
-      "bloom": 0.08,
-      "hdr_threshold": 0.85
+      "intensity": 0.55,
+      "bloom": 0.06,
+      "hdr_threshold": 0.9
     },
     "fog": {
       "enabled": true,
-      "color": [0.06, 0.12, 0.16],
-      "energy": 0.35,
-      "density": 0.012
+      "color": [0.04, 0.07, 0.11],
+      "energy": 0.30,
+      "density": 0.008
     },
     "adjustment_brightness": 1.0,
-    "adjustment_contrast": 1.15,
-    "adjustment_saturation": 0.9
+    "adjustment_contrast": 1.12,
+    "adjustment_saturation": 0.92
   },
 
   "camera": {
     "focal_length_mm": 35,
     "fov": 45.0,
-    "position": [0.0, 1.6, 5.4],
-    "look_at": [0.0, 1.5, -1.0],
+    "position": [0.0, 1.65, 5.8],
+    "look_at": [0.0, 1.4, -1.2],
     "idle_drift": true,
     "dof": {
       "enabled": true,
-      "distance": 4.5,
-      "blur_amount": 0.8,
-      "far_transition": 2.5,
+      "distance": 4.8,
+      "blur_amount": 0.7,
+      "far_transition": 2.8,
       "near_enabled": false,
       "near_distance": 0.5
     },
     "path": {
-      "id": "orbit_slow",
+      "id": "slow_orbit",
       "type": "orbit_slow",
       "duration": 15.0,
-      "loop": false,
-      "center": [0.0, 1.5, 0.0],
-      "radius": 5.2,
-      "height": 1.6,
-      "start_angle_deg": -8.0,
-      "end_angle_deg": 8.0,
-      "steps": 10,
-      "look_at": [0.0, 1.5, -1.0]
+      "loop": true,
+      "center": [0.0, 1.4, -1.0],
+      "radius": 5.5,
+      "height": 1.65,
+      "start_angle_deg": -6.0,
+      "end_angle_deg": 6.0,
+      "steps": 12,
+      "look_at": [0.0, 1.4, -1.0]
     }
   },
 
@@ -76,13 +76,24 @@
     {
       "id": "platform_sweep",
       "type": "spot",
-      "position": [-3.5, 3.2, -0.4],
-      "rotation_deg": [-58.0, 0.0, 0.0],
-      "energy": 2.4,
-      "range": 14.0,
-      "spot_angle_deg": 46.0,
-      "color": [1.0, 0.62, 0.28],
+      "position": [-3.8, 3.4, -0.6],
+      "rotation_deg": [-55.0, 8.0, 0.0],
+      "energy": 2.2,
+      "range": 16.0,
+      "spot_angle_deg": 42.0,
+      "color": [1.0, 0.58, 0.24],
       "shadow": true
+    },
+    {
+      "id": "window_fill",
+      "type": "spot",
+      "position": [4.2, 2.6, -1.8],
+      "rotation_deg": [-48.0, -120.0, 0.0],
+      "energy": 0.8,
+      "range": 12.0,
+      "spot_angle_deg": 55.0,
+      "color": [0.4, 0.5, 0.7],
+      "shadow": false
     }
   ],
 
@@ -90,279 +101,292 @@
     {
       "id": "floor",
       "type": "box",
-      "size": [12.0, 0.1, 9.0],
+      "size": [14.0, 0.1, 10.0],
       "position": [0.0, 0.0, 0.0],
-      "albedo": [0.16, 0.18, 0.22],
-      "roughness": 0.4,
-      "metallic": 0.05,
-      "specular": 0.6
+      "albedo": [0.10, 0.11, 0.14],
+      "roughness": 0.35,
+      "metallic": 0.1,
+      "specular": 0.7
     },
     {
       "id": "back_wall",
       "type": "box",
-      "size": [12.0, 4.2, 0.1],
-      "position": [0.0, 2.1, -3.0],
-      "albedo": [0.22, 0.24, 0.28],
-      "roughness": 0.65,
+      "size": [14.0, 4.5, 0.1],
+      "position": [0.0, 2.25, -3.2],
+      "albedo": [0.16, 0.18, 0.22],
+      "roughness": 0.7,
       "metallic": 0.0
     },
     {
       "id": "side_wall_left",
       "type": "box",
-      "size": [0.1, 4.2, 9.0],
-      "position": [-5.5, 2.1, 0.0],
-      "albedo": [0.20, 0.22, 0.26],
-      "roughness": 0.7,
+      "size": [0.1, 4.5, 10.0],
+      "position": [-6.0, 2.25, 0.0],
+      "albedo": [0.14, 0.16, 0.20],
+      "roughness": 0.72,
+      "metallic": 0.0
+    },
+    {
+      "id": "side_wall_right",
+      "type": "box",
+      "size": [0.1, 4.5, 10.0],
+      "position": [6.0, 2.25, 0.0],
+      "albedo": [0.14, 0.16, 0.20],
+      "roughness": 0.72,
       "metallic": 0.0
     },
     {
       "id": "window_glow",
       "type": "box",
-      "size": [2.6, 2.4, 0.06],
-      "position": [3.4, 1.9, -2.94],
-      "albedo": [0.3, 0.26, 0.16],
+      "size": [2.8, 2.6, 0.06],
+      "position": [4.0, 2.0, -3.14],
+      "albedo": [0.22, 0.20, 0.14],
       "roughness": 0.3,
       "metallic": 0.0,
-      "emission": [0.55, 0.4, 0.18],
-      "emission_energy": 0.9
+      "emission": [0.60, 0.44, 0.20],
+      "emission_energy": 1.1
     },
     {
       "id": "bench_seat",
       "type": "box",
-      "size": [3.0, 0.14, 0.8],
-      "position": [0.0, 0.62, -0.7],
-      "albedo": [0.38, 0.26, 0.16],
-      "roughness": 0.55,
+      "size": [3.2, 0.14, 0.85],
+      "position": [0.0, 0.62, -0.9],
+      "albedo": [0.34, 0.23, 0.14],
+      "roughness": 0.5,
       "metallic": 0.0
     },
     {
       "id": "bench_leg_l",
       "type": "box",
-      "size": [0.14, 0.6, 0.7],
-      "position": [-1.4, 0.3, -0.7],
-      "albedo": [0.32, 0.22, 0.14],
-      "roughness": 0.5,
-      "metallic": 0.15
+      "size": [0.14, 0.62, 0.72],
+      "position": [-1.5, 0.31, -0.9],
+      "albedo": [0.28, 0.19, 0.12],
+      "roughness": 0.45,
+      "metallic": 0.2
     },
     {
       "id": "bench_leg_r",
       "type": "box",
-      "size": [0.14, 0.6, 0.7],
-      "position": [1.4, 0.3, -0.7],
-      "albedo": [0.32, 0.22, 0.14],
-      "roughness": 0.5,
-      "metallic": 0.15
+      "size": [0.14, 0.62, 0.72],
+      "position": [1.5, 0.31, -0.9],
+      "albedo": [0.28, 0.19, 0.12],
+      "roughness": 0.45,
+      "metallic": 0.2
+    },
+    {
+      "id": "bench_back",
+      "type": "box",
+      "size": [3.2, 0.6, 0.1],
+      "position": [0.0, 0.92, -1.3],
+      "albedo": [0.30, 0.20, 0.12],
+      "roughness": 0.55,
+      "metallic": 0.0
     },
     {
       "id": "clock_face",
       "type": "group",
-      "position": [0.0, 1.85, -2.88],
+      "position": [0.0, 2.05, -3.12],
       "children": [
         {
           "id": "clock_rim",
           "type": "cylinder",
-          "size": [1.2, 0.2, 1.2],
-          "position": [0.0, 0.0, -0.04],
+          "size": [1.15, 0.22, 1.15],
+          "position": [0.0, 0.0, -0.05],
           "rotation_deg": [90.0, 0.0, 0.0],
-          "albedo": [0.06, 0.06, 0.07],
-          "roughness": 0.3,
-          "metallic": 0.7,
-          "emission": [0.04, 0.04, 0.05],
-          "emission_energy": 0.2
+          "albedo": [0.05, 0.05, 0.06],
+          "roughness": 0.25,
+          "metallic": 0.85,
+          "emission": [0.03, 0.03, 0.04],
+          "emission_energy": 0.15
         },
         {
           "id": "clock_dial",
           "type": "cylinder",
-          "size": [1.0, 0.16, 1.0],
+          "size": [0.98, 0.16, 0.98],
           "position": [0.0, 0.0, 0.0],
           "rotation_deg": [90.0, 0.0, 0.0],
-          "albedo": [0.96, 0.92, 0.80],
-          "roughness": 0.45,
+          "albedo": [0.95, 0.91, 0.78],
+          "roughness": 0.4,
           "metallic": 0.0,
-          "emission": [0.85, 0.80, 0.66],
-          "emission_energy": 1.3
+          "emission": [0.80, 0.75, 0.60],
+          "emission_energy": 1.1,
+          "double_sided": true
         },
         {
           "id": "clock_hub",
           "type": "cylinder",
-          "size": [0.14, 0.16, 0.14],
-          "position": [0.0, 0.0, 0.08],
+          "size": [0.12, 0.14, 0.12],
+          "position": [0.0, 0.0, 0.10],
           "rotation_deg": [90.0, 0.0, 0.0],
-          "albedo": [0.08, 0.08, 0.09],
-          "roughness": 0.2,
-          "metallic": 0.8
+          "albedo": [0.07, 0.07, 0.08],
+          "roughness": 0.15,
+          "metallic": 0.9
         }
       ]
     },
     {
       "id": "clock_pivot",
       "type": "pivot",
-      "position": [0.0, 1.85, -2.88],
+      "position": [0.0, 2.05, -3.12],
       "children": [
         {
           "id": "clock_hour_hand",
           "type": "box",
-          "size": [0.09, 0.34, 0.04],
-          "position": [0.0, 0.12, 0.1],
-          "albedo": [0.04, 0.04, 0.05],
-          "roughness": 0.2,
-          "metallic": 0.6
+          "size": [0.08, 0.32, 0.04],
+          "position": [0.0, 0.11, 0.12],
+          "albedo": [0.03, 0.03, 0.04],
+          "roughness": 0.15,
+          "metallic": 0.7
         },
         {
           "id": "clock_minute_hand",
           "type": "box",
-          "size": [0.07, 0.52, 0.04],
-          "position": [0.0, 0.21, 0.12],
-          "albedo": [0.04, 0.04, 0.05],
-          "roughness": 0.2,
-          "metallic": 0.6
+          "size": [0.06, 0.48, 0.04],
+          "position": [0.0, 0.19, 0.14],
+          "albedo": [0.03, 0.03, 0.04],
+          "roughness": 0.15,
+          "metallic": 0.7
         },
         {
           "id": "second_hand",
           "type": "box",
-          "size": [0.07, 0.6, 0.05],
-          "position": [0.0, 0.27, 0.15],
-          "albedo": [0.9, 0.16, 0.12],
-          "roughness": 0.3,
-          "metallic": 0.4,
-          "emission": [0.8, 0.09, 0.05],
-          "emission_energy": 1.2
+          "size": [0.06, 0.56, 0.05],
+          "position": [0.0, 0.25, 0.17],
+          "albedo": [0.92, 0.14, 0.10],
+          "roughness": 0.25,
+          "metallic": 0.5,
+          "emission": [0.85, 0.08, 0.04],
+          "emission_energy": 1.4
         }
       ]
     },
     {
       "id": "traveler",
       "type": "group",
-      "position": [0.7, 0.0, -0.5],
+      "position": [0.8, 0.0, -0.8],
       "children": [
         {
           "id": "traveler_legs",
           "type": "box",
-          "size": [0.34, 0.9, 0.34],
-          "position": [0.0, 0.45, 0.0],
-          "albedo": [0.16, 0.16, 0.20],
-          "roughness": 0.75,
+          "size": [0.32, 0.88, 0.32],
+          "position": [0.0, 0.44, 0.0],
+          "albedo": [0.12, 0.12, 0.16],
+          "roughness": 0.78,
           "metallic": 0.0
         },
         {
           "id": "traveler_body",
           "type": "box",
-          "size": [0.56, 0.95, 0.4],
-          "position": [0.0, 1.25, 0.0],
-          "albedo": [0.22, 0.23, 0.28],
-          "roughness": 0.7,
-          "metallic": 0.0,
-          "emission": [0.05, 0.06, 0.08],
-          "emission_energy": 0.3
+          "size": [0.54, 0.92, 0.38],
+          "position": [0.0, 1.22, 0.0],
+          "albedo": [0.18, 0.19, 0.24],
+          "roughness": 0.72,
+          "metallic": 0.0
         },
         {
           "id": "traveler_head",
           "type": "sphere",
-          "size": [0.3, 0.3, 0.3],
-          "position": [0.0, 1.95, 0.0],
-          "albedo": [0.64, 0.52, 0.43],
-          "roughness": 0.6,
-          "metallic": 0.0,
-          "emission": [0.12, 0.10, 0.08],
-          "emission_energy": 0.3
+          "size": [0.28, 0.28, 0.28],
+          "position": [0.0, 1.88, 0.0],
+          "albedo": [0.62, 0.50, 0.41],
+          "roughness": 0.58,
+          "metallic": 0.0
         },
         {
           "id": "traveler_arm",
           "type": "box",
-          "size": [0.16, 0.6, 0.16],
-          "position": [0.34, 1.35, 0.12],
-          "albedo": [0.22, 0.23, 0.28],
-          "roughness": 0.7,
-          "metallic": 0.0,
-          "emission": [0.05, 0.06, 0.08],
-          "emission_energy": 0.3
+          "size": [0.14, 0.58, 0.14],
+          "position": [0.32, 1.32, 0.1],
+          "albedo": [0.18, 0.19, 0.24],
+          "roughness": 0.72,
+          "metallic": 0.0
         }
       ]
     },
     {
       "id": "suitcase",
       "type": "box",
-      "size": [0.7, 0.42, 0.4],
-      "position": [1.5, 0.83, -0.5],
-      "albedo": [0.40, 0.28, 0.18],
-      "roughness": 0.5,
-      "metallic": 0.05
+      "size": [0.68, 0.40, 0.38],
+      "position": [1.6, 0.82, -0.7],
+      "albedo": [0.38, 0.26, 0.16],
+      "roughness": 0.48,
+      "metallic": 0.08
     },
     {
       "id": "suitcase_handle",
       "type": "box",
-      "size": [0.3, 0.06, 0.1],
-      "position": [1.5, 1.07, -0.5],
-      "albedo": [0.20, 0.14, 0.08],
-      "roughness": 0.4,
-      "metallic": 0.1
+      "size": [0.28, 0.05, 0.08],
+      "position": [1.6, 1.04, -0.7],
+      "albedo": [0.18, 0.12, 0.06],
+      "roughness": 0.35,
+      "metallic": 0.15
     },
     {
       "id": "tea_saucer",
       "type": "cylinder",
-      "size": [0.32, 0.08, 0.32],
-      "position": [-0.9, 0.71, -0.6],
-      "albedo": [0.90, 0.86, 0.78],
-      "roughness": 0.25,
+      "size": [0.30, 0.06, 0.30],
+      "position": [-0.95, 0.72, -0.75],
+      "albedo": [0.88, 0.84, 0.76],
+      "roughness": 0.22,
       "metallic": 0.0,
-      "emission": [0.30, 0.26, 0.20],
-      "emission_energy": 0.35,
+      "emission": [0.28, 0.24, 0.18],
+      "emission_energy": 0.3,
       "double_sided": true
     },
     {
       "id": "tea_cup",
       "type": "cylinder",
-      "size": [0.22, 0.18, 0.22],
-      "position": [-0.9, 0.80, -0.6],
-      "albedo": [0.94, 0.90, 0.82],
-      "roughness": 0.2,
+      "size": [0.20, 0.16, 0.20],
+      "position": [-0.95, 0.80, -0.75],
+      "albedo": [0.92, 0.88, 0.80],
+      "roughness": 0.18,
       "metallic": 0.0,
-      "emission": [0.35, 0.31, 0.24],
-      "emission_energy": 0.4
+      "emission": [0.32, 0.28, 0.22],
+      "emission_energy": 0.35
     },
     {
       "id": "tea_steam",
       "type": "group",
-      "position": [-0.9, 0.95, -0.6],
+      "position": [-0.95, 0.92, -0.75],
       "children": [
         {
           "id": "steam_wisp_a",
           "type": "sphere",
-          "size": [0.18, 0.18, 0.18],
+          "size": [0.16, 0.16, 0.16],
           "position": [0.0, 0.1, 0.0],
-          "albedo": [0.90, 0.92, 0.94],
+          "albedo": [0.88, 0.90, 0.92],
           "roughness": 1.0,
           "metallic": 0.0,
-          "emission": [0.70, 0.72, 0.75],
-          "emission_energy": 0.6,
-          "transparency": 0.45
+          "emission": [0.65, 0.68, 0.72],
+          "emission_energy": 0.5,
+          "transparency": 0.5
         },
         {
           "id": "steam_wisp_b",
           "type": "sphere",
-          "size": [0.15, 0.15, 0.15],
-          "position": [0.06, 0.28, 0.02],
-          "albedo": [0.90, 0.92, 0.94],
+          "size": [0.13, 0.13, 0.13],
+          "position": [0.05, 0.26, 0.02],
+          "albedo": [0.88, 0.90, 0.92],
           "roughness": 1.0,
           "metallic": 0.0,
-          "emission": [0.70, 0.72, 0.75],
-          "emission_energy": 0.6,
-          "transparency": 0.5
+          "emission": [0.65, 0.68, 0.72],
+          "emission_energy": 0.5,
+          "transparency": 0.55
         }
       ]
     },
     {
       "id": "photograph",
       "type": "box",
-      "size": [0.42, 0.06, 0.30],
-      "position": [-0.1, 0.735, -0.78],
-      "albedo": [0.82, 0.76, 0.64],
-      "roughness": 0.35,
+      "size": [0.40, 0.05, 0.28],
+      "position": [-0.15, 0.72, -0.95],
+      "albedo": [0.80, 0.74, 0.62],
+      "roughness": 0.32,
       "metallic": 0.0,
-      "emission": [0.16, 0.13, 0.08],
-      "emission_energy": 0.25,
-      "_reveal_emission_energy": 1.4,
-      "_reveal_albedo": [0.96, 0.84, 0.58]
+      "emission": [0.14, 0.11, 0.07],
+      "emission_energy": 0.2,
+      "_reveal_emission_energy": 1.5,
+      "_reveal_albedo": [0.96, 0.84, 0.56]
     }
   ],
 
@@ -392,9 +416,8 @@
       "id": "clue_clock",
       "target": "clock_pivot",
       "type": "correct",
-      "hit_radius": 1.1,
-      "response": "THE CLOCK ARRIVED BEFORE THE MOMENT DID.",
-      "discovery_text": "THE MISSING SECOND WAS A CHOICE TO BE REMEMBERED."
+      "hit_radius": 1.2,
+      "response": "THE CLOCK ARRIVED BEFORE THE MOMENT DID."
     }
   ],
 
@@ -426,8 +449,8 @@
           "target": "traveler",
           "property": "position:x",
           "type": "lerp",
-          "from": 0.7,
-          "to": 0.55
+          "from": 0.8,
+          "to": 0.6
         },
         {
           "target": "clock_pivot",
@@ -441,8 +464,8 @@
           "target": "platform_sweep",
           "property": "rotation:y",
           "type": "lerp",
-          "from": -28.0,
-          "to": 28.0
+          "from": -30.0,
+          "to": 30.0
         },
         {
           "target": "tea_steam",
@@ -470,7 +493,6 @@
       "id": "resolving",
       "mode": "animate",
       "duration": 3.0,
-      "entry_text_key": "resolution_text",
       "animations": [
         {
           "target": "clock_pivot",
@@ -482,15 +504,15 @@
           "target": "platform_sweep",
           "property": "rotation:y",
           "type": "lerp",
-          "from": 28.0,
-          "to": 40.0
+          "from": 30.0,
+          "to": 42.0
         },
         {
           "target": "traveler",
           "property": "position:x",
           "type": "lerp_delayed",
-          "from": 0.55,
-          "to": -2.6,
+          "from": 0.6,
+          "to": -2.8,
           "delay": 0.28
         },
         {
