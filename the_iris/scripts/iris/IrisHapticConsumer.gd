@@ -26,14 +26,6 @@ static func consume(intent: IrisResponseIntent) -> void:
 			trigger_pattern(Pattern.LIGHT, "Iris Return Acknowledgment")
 		"memory_focus":
 			trigger_pattern(Pattern.LIGHT, "Awareness Pulse")
-		"anomaly_found":
-			trigger_pattern(Pattern.MEDIUM, "Discovery Pulse")
-		"capture_succeeded":
-			trigger_pattern(Pattern.SUCCESS, "Capture Confirmation")
-		"witness_completed":
-			trigger_pattern(Pattern.RESONANCE, "Completion Resonance")
-		"evolution_detected":
-			trigger_pattern(Pattern.HEAVY, "Evolution Shockwave")
 		_:
 			# Fallback based on expression mode
 			if intent.expression_mode == "ATTENTIVE":

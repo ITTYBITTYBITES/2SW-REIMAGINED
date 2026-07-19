@@ -46,16 +46,10 @@ func _resolve_mode(core_state: int, experience_event: String) -> ExpressionMode:
 			if core_state == IrisCore.State.FOCUSED:
 				return ExpressionMode.ATTENTIVE
 			return ExpressionMode.CURIOUS
-		"memory_selected", "witness_entered":
-			return ExpressionMode.GUIDING
-		"witness_completed":
-			return ExpressionMode.REFLECTIVE
 		"hub_return":
 			return ExpressionMode.IDLE
-		"evolution_detected", "new_aperture_reached", "iris_pattern_changed":
+		"iris_pattern_changed":
 			return ExpressionMode.ATTENTIVE
-		"chapter_restored":
-			return ExpressionMode.REFLECTIVE
 
 	if core_state == IrisCore.State.REFLECTIVE:
 		return ExpressionMode.REFLECTIVE

@@ -96,17 +96,7 @@ func _color_for(mode: String) -> Color:
 func _message_for(text_key: String) -> String:
 	if active_intent != null and IrisDialogueRegistry.has_event(active_intent.source_event):
 		return IrisDialogueRegistry.text_for_event(active_intent.source_event)
-	if active_intent != null:
-		match active_intent.source_event:
-			"evolution_detected":
-				return "The Iris pattern has evolved."
-			"new_aperture_reached":
-				return "New Aperture tier reached."
-			"iris_pattern_changed":
-				return "Aperture alignment adjusted."
-			"chapter_restored":
-				return "Chapter 01 is fully restored. The fractures are whole."
-	
+
 	match text_key:
 		"iris_introducing_text": return "I am here."
 		"iris_idle_text": return "The field is quiet."

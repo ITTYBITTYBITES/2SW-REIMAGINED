@@ -1,5 +1,17 @@
-# Two Second Witness
+# Two Second Witness — Living Iris
 
-Open `the_iris/project.godot` with **Godot 4.6.3** and run the project.
+The retired Witness runtime and its historical content branch have been archived under:
 
-The playable prototype includes the publisher/startup flow, the Living Iris, Iris Home, and Witness Chapter 01: `WM_001` through `WM_005`.
+```text
+archive/retired_witness_runtime_docs/
+```
+
+The active project currently preserves the Living Iris platform, navigation shell, local profile boundary, sensory/accessibility foundations, and an intentional empty Witness entry state.
+
+The next gameplay work is the one bespoke experience planned in:
+
+```text
+MISSION_071_FIRST_WITNESS_EXPERIENCE_PLAN.md
+```
+
+No retired moment runtime, content catalogue, or generated gameplay pipeline remains active.

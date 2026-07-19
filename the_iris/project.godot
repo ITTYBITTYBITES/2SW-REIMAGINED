@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Two Second Witness"
-config/description="The Living Iris and five completed Witness Moments."
+config/description="The Living Iris platform and the first new Witness experience."
 config/version="4.0.0"
 run/main_scene="res://scenes/Application.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")

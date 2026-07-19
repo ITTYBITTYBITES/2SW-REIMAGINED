@@ -38,9 +38,9 @@ static func consume(intent: IrisResponseIntent) -> void:
 		"iris_attentive_text":
 			speech_text = "The Iris has locked attention onto your focus."
 		"iris_guiding_text":
-			speech_text = "The Iris is guiding your reconstruction."
+			speech_text = "The Iris is guiding your attention."
 		"iris_reflective_text":
-			speech_text = "The Iris is reflecting on the restored memory."
+			speech_text = "The Iris is reflecting."
 			
 	if not speech_text.is_empty():
 		announce(speech_text)
@@ -51,12 +51,6 @@ static func consume(intent: IrisResponseIntent) -> void:
 			announce("Calibration sequence concluded successfully.")
 		"memory_focus":
 			announce("Memory shard selection is focused.")
-		"witness_entered":
-			announce("Entered Witness Moment. Gathering observations.")
-		"evolution_detected":
-			announce("Progression wave detected. The Iris pattern is evolving.")
-		"new_aperture_reached":
-			announce("Your Aperture Rank has increased.")
 
 ## Query whether animations, screen-shakes, or fast strobe flashes should be skipped.
 static func is_reduced_motion() -> bool:
