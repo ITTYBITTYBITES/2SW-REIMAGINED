@@ -170,9 +170,9 @@ func start(value_definition: WitnessMomentDefinition) -> bool:
 	var color_hex: String = definition.asset_manifest.lighting_profile.get("modulate_color", "#ffffff")
 	scene_image.self_modulate = WitnessAssetResolver.resolve_color(color_hex, Color.WHITE)
 	
-	# Play ambient audio dynamically from manifest
+	# Play ambient audio loop from manifest — persistent through the moment
 	var ambient_path: String = definition.asset_manifest.audio_assets.get("ambient", "")
-	IrisAudioConsumer.play_manifest_sound(ambient_path)
+	IrisAudioConsumer.play_ambient_loop(ambient_path)
 	
 	# Initialize cinematic opening sequence
 	in_intro_cinematic = true
@@ -183,6 +183,7 @@ func start(value_definition: WitnessMomentDefinition) -> bool:
 
 func present_reward(award: Dictionary, profile: WitnessProfile) -> void:
 	_set_phase(Phase.REWARD)
+	IrisAudioConsumer.play_manifest_sound("res://assets/audio/navigation/chapter_complete.ogg")
 	var total := int(award.get("total", 0))
 	body_label.text = "Truth restored.\n\n+%d Resonance\nAperture %d · %s\n\nYour Iris carried this pattern forward." % [total, profile.aperture_rank, profile.aperture_title]
 	guidance_label.text = "THE MOMENT HOLDS."
@@ -192,6 +193,7 @@ func present_reward(award: Dictionary, profile: WitnessProfile) -> void:
 func close() -> void:
 	visible = false
 	evidence_found.clear()
+	IrisAudioConsumer.stop_ambient_loop()
 
 func _process(delta: float) -> void:
 	if not visible:
@@ -285,7 +287,7 @@ func _gui_input(event: InputEvent) -> void:
 			shake_intensity = 15.0
 		scene_image.modulate = Color(1.8, 0.4, 0.4, 0.8)
 		# Play misstep warning sound
-		IrisAudioConsumer.play_manifest_sound("res://assets/audio/ui_misstep_error.wav")
+		IrisAudioConsumer.play_manifest_sound("res://assets/audio/witness/incorrect_detection.ogg")
 	elif event is InputEventScreenTouch and event.pressed and not anomaly_button.get_global_rect().has_point(event.position):
 		anomaly_missteps += 1
 		var misstep_text: String = definition.anomaly_definition.get("misstep_text", "Not there. Watch closely.")
@@ -296,7 +298,7 @@ func _gui_input(event: InputEvent) -> void:
 			shake_intensity = 15.0
 		scene_image.modulate = Color(1.8, 0.4, 0.4, 0.8)
 		# Play misstep warning sound
-		IrisAudioConsumer.play_manifest_sound("res://assets/audio/ui_misstep_error.wav")
+		IrisAudioConsumer.play_manifest_sound("res://assets/audio/witness/incorrect_detection.ogg")
 
 func _set_phase(next_phase: Phase) -> void:
 	phase = next_phase
@@ -336,6 +338,7 @@ func _set_phase(next_phase: Phase) -> void:
 			body_label.text = "Watch without touching. The truth only stays for a short time."
 			guidance_label.text = "LET THE MOMENT ARRIVE."
 			observation_remaining = definition.observation_duration
+			IrisAudioConsumer.play_manifest_sound("res://assets/audio/witness/observation_start.ogg")
 		Phase.ANOMALY:
 			scene_image.texture = WitnessAssetResolver.resolve_texture(definition.asset_manifest.environment_asset, definition.background_path)
 			phase_label.text = "NOTICE"
@@ -370,6 +373,7 @@ func _set_phase(next_phase: Phase) -> void:
 			review_slider.value = 0.0
 			review_slider.visible = true
 			review_legend.visible = true
+			IrisAudioConsumer.play_manifest_sound("res://assets/audio/witness/recall_start.ogg")
 		Phase.CONTEXT:
 			scene_image.texture = WitnessAssetResolver.resolve_texture(definition.reveal_path, definition.reveal_path)
 			phase_label.text = "UNDERSTAND"
@@ -377,6 +381,7 @@ func _set_phase(next_phase: Phase) -> void:
 			body_label.text = "Carry each piece of the truth to complete the memory."
 			guidance_label.text = "THE CLUES EXPLAIN EACH OTHER."
 			evidence_container.visible = true
+			IrisAudioConsumer.play_manifest_sound("res://assets/audio/witness/reveal.ogg")
 			
 			# Populate evidence buttons dynamically
 			for node in definition.evidence_nodes:
@@ -520,7 +525,7 @@ func _toggle_evidence(node: Dictionary, button: Button) -> void:
 	guidance_label.text = str(node.get("relevance", ""))
 	
 	# Play clue attuned feedback audio
-	IrisAudioConsumer.play_manifest_sound("res://assets/audio/ui_clue_attuned.wav")
+	IrisAudioConsumer.play_manifest_sound("res://assets/audio/witness/memory_lock.ogg")
 	
 	if evidence_found.size() == definition.evidence_nodes.size():
 		guidance_label.text = "ALL ELEMENTS VERIFIED."

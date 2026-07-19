@@ -35,15 +35,15 @@ func _ready() -> void:
 
 	var rest_button := _text_button("REST WITH IRIS", Vector2(377, 30), Vector2(135, 28))
 	rest_button.name = "RestWithIris"
-	rest_button.pressed.connect(iris_requested.emit)
+	rest_button.pressed.connect(_on_rest_with_iris_pressed)
 
 	var archive_button := _text_button("OPEN ARCHIVE", Vector2(377, 65), Vector2(135, 28))
 	archive_button.name = "OpenArchive"
-	archive_button.pressed.connect(archive_requested.emit)
+	archive_button.pressed.connect(_on_archive_pressed)
 
 	var chapter_button := _text_button("CHAPTER PORTAL", Vector2(377, 100), Vector2(135, 28))
 	chapter_button.name = "ChapterPortal"
-	chapter_button.pressed.connect(witness_chapters_requested.emit)
+	chapter_button.pressed.connect(_on_chapter_portal_pressed)
 
 	_label("MEMORY FIELD", 10, Color("#7fbcae"), Vector2(28, 648), Vector2(240, 20))
 	_label("One living thread is close enough to follow.", 14, Color("#d7eee7"), Vector2(28, 668), Vector2(430, 24))
@@ -57,8 +57,21 @@ func _ready() -> void:
 	_label("The archive keeps only what attention carried.", 11, Color("#668e85"), Vector2(24, 889), Vector2(492, 22), HORIZONTAL_ALIGNMENT_CENTER)
 
 func _on_continue_witness_selected() -> void:
+	IrisAudioConsumer.play_manifest_sound("res://assets/audio/navigation/ui_click.ogg")
 	memory_selected.emit()
 	continue_witness_requested.emit()
+
+func _on_rest_with_iris_pressed() -> void:
+	IrisAudioConsumer.play_manifest_sound("res://assets/audio/navigation/ui_click.ogg")
+	iris_requested.emit()
+
+func _on_archive_pressed() -> void:
+	IrisAudioConsumer.play_manifest_sound("res://assets/audio/navigation/ui_click.ogg")
+	archive_requested.emit()
+
+func _on_chapter_portal_pressed() -> void:
+	IrisAudioConsumer.play_manifest_sound("res://assets/audio/navigation/portal_open.ogg")
+	witness_chapters_requested.emit()
 
 func _process(delta: float) -> void:
 	if not is_visible_in_tree():

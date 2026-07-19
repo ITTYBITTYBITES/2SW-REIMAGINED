@@ -37,10 +37,3 @@ static func resolve_color(hex_str: String, fallback := Color.WHITE) -> Color:
 		return Color.from_string(clean_hex, fallback)
 		
 	return fallback
-
-## Safely resolves haptic / audio paths, validating metadata presence.
-static func resolve_sound_path(path: String, fallback := "") -> String:
-	var clean_path := path.strip_edges()
-	if clean_path.is_empty() or not FileAccess.file_exists(clean_path):
-		return fallback
-	return clean_path

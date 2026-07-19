@@ -91,9 +91,9 @@
       }
     },
     "audio_assets": {
-      "ambient": "res://assets/audio/wm004_ambient.ogg",
-      "anomaly": "res://assets/audio/wm004_anomaly.ogg",
-      "resolution": "res://assets/audio/wm004_resolution.ogg"
+      "ambient": "res://assets/audio/environments/reactor_ambient.ogg",
+      "anomaly": "res://assets/audio/witness/correct_detection.ogg",
+      "resolution": "res://assets/audio/witness/resolution.ogg"
     },
     "visual_effects": {
       "pulse_speed": 1.4

@@ -15,8 +15,15 @@ var invitation: Label
 var state_label: Label
 var navigation_label: Label
 var background: ColorRect
+var ritual_veil: ColorRect
 var home_request_in := -1.0
 var attention_locked := false
+var awakening_ritual_active := false
+var awakening_ritual_elapsed := 0.0
+var ritual_ambient_started := false
+var ritual_activation_played := false
+var ritual_transition_played := false
+var ritual_ready_played := false
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -44,9 +51,18 @@ func _ready() -> void:
 	state_label = _label("A LIVING PERCEPTION INSTRUMENT", 10, Color("#6f9e92"), Vector2(31, 58), Vector2(420, 22))
 	invitation = _label("the iris is listening", 15, Color("#bde8d9"), Vector2(30, 736), Vector2(480, 34), HORIZONTAL_ALIGNMENT_CENTER)
 	navigation_label = _label("HOME  ·  WITNESS CHAPTERS", 11, Color("#668d84"), Vector2(30, 774), Vector2(480, 24), HORIZONTAL_ALIGNMENT_CENTER)
+
+	ritual_veil = ColorRect.new()
+	ritual_veil.color = Color("#010306")
+	ritual_veil.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	ritual_veil.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	ritual_veil.visible = false
+	add_child(ritual_veil)
 	iris_core.state_changed.connect(_on_state_changed)
 
 func _process(delta: float) -> void:
+	if awakening_ritual_active:
+		_update_awakening_ritual(delta)
 	if home_request_in < 0.0:
 		return
 	home_request_in -= delta
@@ -57,6 +73,7 @@ func _process(delta: float) -> void:
 
 func dormant() -> void:
 	_cancel_attention()
+	_end_awakening_ritual()
 	iris_core.transition_to(IrisCore.State.DORMANT)
 	invitation.text = "the iris is listening"
 
@@ -66,11 +83,81 @@ func calibrate() -> void:
 	iris_core.transition_to(IrisCore.State.CALIBRATING)
 	invitation.text = "the instrument calibrates"
 
+func begin_awakening_ritual() -> void:
+	_cancel_attention()
+	visible = true
+	awakening_ritual_active = true
+	awakening_ritual_elapsed = 0.0
+	ritual_ambient_started = false
+	ritual_activation_played = false
+	ritual_transition_played = false
+	ritual_ready_played = false
+	iris_core.transition_to(IrisCore.State.DORMANT)
+	invitation.text = ""
+	for label in [brand_label, state_label, invitation, navigation_label]:
+		label.modulate.a = 0.0
+	ritual_veil.visible = true
+	ritual_veil.modulate.a = 1.0
+
 func welcome() -> void:
 	_cancel_attention()
+	_end_awakening_ritual()
 	visible = true
 	iris_core.transition_to(IrisCore.State.WELCOMING)
 	invitation.text = "touch the iris to enter"
+
+func _update_awakening_ritual(delta: float) -> void:
+	awakening_ritual_elapsed += delta
+	var t := awakening_ritual_elapsed
+
+	# Dark/quiet state first; ambience enters before the aperture is visible.
+	if not ritual_ambient_started and t >= 0.46:
+		ritual_ambient_started = true
+		IrisAudioConsumer.play_ambient_loop("res://assets/audio/iris/iris_breath_loop.ogg")
+
+	# The core lifecycle still owns animation; the ritual only authors the first cue timing.
+	if t >= 1.08 and iris_core.state == IrisCore.State.DORMANT:
+		iris_core.transition_to(IrisCore.State.CALIBRATING)
+		IrisHapticConsumer.trigger_pattern(IrisHapticConsumer.Pattern.LIGHT, "Iris Awakening Pulse")
+
+	if not ritual_activation_played and t >= 2.04:
+		ritual_activation_played = true
+		IrisAudioConsumer.play_presence_sound("iris_awaken")
+
+	if not ritual_transition_played and t >= 3.62:
+		ritual_transition_played = true
+		IrisAudioConsumer.play_manifest_sound("res://assets/audio/iris/iris_transition.ogg")
+
+	if not ritual_ready_played and t >= 6.45:
+		ritual_ready_played = true
+		IrisHapticConsumer.trigger_pattern(IrisHapticConsumer.Pattern.LIGHT, "Iris Ready Pulse")
+
+	# Reveal UI language only after the artifact has visibly noticed the player.
+	var label_alpha := _ease_in_out(clampf((t - 4.2) / 1.25, 0.0, 1.0))
+	brand_label.modulate.a = label_alpha
+	state_label.modulate.a = label_alpha
+	invitation.modulate.a = label_alpha
+	navigation_label.modulate.a = label_alpha * 0.82
+
+	if ritual_veil != null:
+		var veil_alpha := 1.0 - _ease_in_out(clampf((t - 0.78) / 2.35, 0.0, 1.0))
+		ritual_veil.modulate.a = veil_alpha
+		if veil_alpha <= 0.01:
+			ritual_veil.visible = false
+
+	if t >= 7.2:
+		_end_awakening_ritual()
+
+func _end_awakening_ritual() -> void:
+	awakening_ritual_active = false
+	if ritual_veil != null:
+		ritual_veil.visible = false
+	for label in [brand_label, state_label, invitation, navigation_label]:
+		if label != null:
+			label.modulate.a = 1.0
+
+func _ease_in_out(value: float) -> float:
+	return value * value * (3.0 - 2.0 * value)
 
 ## Direct Iris Home integration: the existing Iris becomes a non-interactive
 ## settled presence behind the archive environment. No second renderer exists.
@@ -124,7 +211,7 @@ func reflect() -> void:
 	iris_core.transition_to(IrisCore.State.REFLECTIVE)
 
 func _gui_input(event: InputEvent) -> void:
-	if attention_locked:
+	if awakening_ritual_active or attention_locked:
 		return
 	if event is InputEventMouseButton and event.pressed:
 		_begin_attention(event.position)
@@ -136,6 +223,8 @@ func _begin_attention(tap_position: Vector2) -> void:
 	var safe_size := Vector2(maxf(size.x, 1.0), maxf(size.y, 1.0))
 	var normalized_target := (tap_position - safe_size * 0.5) / safe_size
 	iris_core.acquire_attention(normalized_target)
+	IrisAudioConsumer.play_manifest_sound("res://assets/audio/iris/iris_attention.ogg")
+	IrisHapticConsumer.trigger_pattern(IrisHapticConsumer.Pattern.LIGHT, "Iris Interaction Acknowledgment")
 	invitation.text = "attention acquired"
 	home_request_in = ATTENTION_HOLD_SECONDS
 

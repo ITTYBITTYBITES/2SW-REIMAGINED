@@ -16,6 +16,14 @@ static func consume(intent: IrisResponseIntent) -> void:
 	
 	# Resolve event-based haptic triggers
 	match event:
+		"iris_welcome":
+			trigger_pattern(Pattern.LIGHT, "Iris Welcome Pulse")
+		"iris_idle":
+			trigger_pattern(Pattern.LIGHT, "Iris Breathing Presence")
+		"iris_ready":
+			trigger_pattern(Pattern.LIGHT, "Iris Ready Pulse")
+		"iris_return":
+			trigger_pattern(Pattern.LIGHT, "Iris Return Acknowledgment")
 		"memory_focus":
 			trigger_pattern(Pattern.LIGHT, "Awareness Pulse")
 		"anomaly_found":

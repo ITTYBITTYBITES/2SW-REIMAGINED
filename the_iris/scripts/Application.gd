@@ -21,6 +21,8 @@ var replayed_from_archive := false
 var startup: StartupFlow
 var pending_witness_results: Dictionary = {}
 var boot_introduction_pending := false
+var boot_ready_pending := false
+var iris_idle_dialogue_in := -1.0
 var memory_focus_active := false
 var reflective_return_pending := false
 var reflective_return_in := -1.0
@@ -112,6 +114,8 @@ func _ready() -> void:
 
 func _on_startup_finished() -> void:
 	boot_introduction_pending = true
+	boot_ready_pending = true
+	iris_idle_dialogue_in = -1.0
 	show_iris(true)
 
 func prepare_iris() -> void:
@@ -135,9 +139,11 @@ func show_iris(from_boot := false) -> void:
 	generic_gameplay.visible = false
 	archive_ui.visible = false
 	if from_boot:
-		iris.calibrate()
+		iris.begin_awakening_ritual()
 	else:
+		IrisAudioConsumer.play_ambient_loop("res://assets/audio/iris/iris_breath_loop.ogg")
 		iris.welcome()
+		_emit_personality_response("iris_welcome")
 
 func show_home() -> void:
 	# The single Living Iris remains visible as the settled center of Home.
@@ -145,12 +151,13 @@ func show_home() -> void:
 	iris.set_gameplay_environment(false)
 	if reflective_return_pending:
 		# Preserve the existing REFLECTIVE state briefly so return carries meaning.
+		IrisAudioConsumer.play_ambient_loop("res://assets/audio/iris/iris_breath_loop.ogg")
 		iris.reflect()
 		reflective_return_in = 1.65
 	else:
 		iris.settle()
-		_emit_personality_response("hub_return")
-		IrisAudioConsumer.play_presence_sound("hub_return")
+		IrisAudioConsumer.play_ambient_loop("res://assets/audio/iris/iris_breath_loop.ogg")
+		_emit_personality_response("iris_return")
 	iris.set_home_environment(true)
 	home.visible = true
 	witness.visible = false
@@ -177,7 +184,11 @@ func _on_home_memory_selected() -> void:
 func _on_iris_core_state_changed(next_state: IrisCore.State) -> void:
 	if boot_introduction_pending and next_state == IrisCore.State.WELCOMING:
 		boot_introduction_pending = false
-		_emit_personality_response("boot_complete")
+		_emit_personality_response("iris_welcome")
+	if boot_ready_pending and next_state == IrisCore.State.AWARE:
+		boot_ready_pending = false
+		_emit_personality_response("iris_ready")
+		iris_idle_dialogue_in = 10.0
 	if memory_focus_active and next_state == IrisCore.State.FOCUSED:
 		_emit_personality_response("memory_focus")
 
@@ -345,6 +356,7 @@ func _on_generic_completion_requested(result: WitnessMomentResult) -> void:
 	generic_gameplay.present_reward(award, witness_profile)
 
 func _on_generic_return_requested() -> void:
+	IrisAudioConsumer.stop_ambient_loop()
 	generic_gameplay.close()
 	if replayed_from_archive:
 		replayed_from_archive = false
@@ -353,6 +365,12 @@ func _on_generic_return_requested() -> void:
 		show_home()
 
 func _process(delta: float) -> void:
+	if iris_idle_dialogue_in >= 0.0:
+		iris_idle_dialogue_in -= delta
+		if iris_idle_dialogue_in <= 0.0:
+			iris_idle_dialogue_in = 16.0
+			if iris.visible and not home.visible and not witness.visible and not generic_gameplay.visible and not archive_ui.visible:
+				_emit_personality_response("iris_idle")
 	if reflective_return_in < 0.0:
 		return
 	reflective_return_in -= delta
@@ -361,7 +379,7 @@ func _process(delta: float) -> void:
 		reflective_return_pending = false
 		if home.visible and iris.visible:
 			iris.settle()
-			_emit_personality_response("hub_return")
+			_emit_personality_response("iris_return")
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):

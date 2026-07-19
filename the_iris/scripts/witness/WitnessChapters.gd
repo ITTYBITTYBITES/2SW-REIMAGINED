@@ -106,6 +106,7 @@ func show_chapters() -> void:
 		chapter_list.add_child(card)
 
 func open_moment(moment_id: String) -> void:
+	IrisAudioConsumer.play_manifest_sound("res://assets/audio/navigation/chapter_enter.ogg")
 	if moment_id in ["WM_001", "WM_002", "WM_003", "WM_004", "WM_005", "WM_TEST", "WM_ASSET_TEST", "WM_006", "WM_007", "WM_008", "WM_009", "WM_010", "WM_011", "WM_012"]:
 		generic_moment_requested.emit(moment_id)
 		return
@@ -162,6 +163,7 @@ func _show_attunements(moment: Dictionary) -> void:
 		_add_action(prefix + text, _attune.bind(index, details.size()), 11)
 
 func _attune(index: int, total: int) -> void:
+	IrisAudioConsumer.play_manifest_sound("res://assets/audio/witness/memory_lock.ogg")
 	attuned[index] = true
 	if attuned.size() >= total:
 		_clear_actions()
@@ -172,14 +174,17 @@ func _attune(index: int, total: int) -> void:
 	_show_attunements(moment)
 
 func _on_moment_completed(moment_id: String) -> void:
+	IrisAudioConsumer.play_manifest_sound("res://assets/audio/navigation/chapter_complete.ogg")
 	registry.mark_completed(moment_id)
 	orchestrator.cancel()
 	show_chapters()
 
 func _advance() -> void:
+	IrisAudioConsumer.play_manifest_sound("res://assets/audio/navigation/ui_click.ogg")
 	orchestrator.advance()
 
 func _back() -> void:
+	IrisAudioConsumer.play_manifest_sound("res://assets/audio/navigation/portal_close.ogg")
 	if in_chapters:
 		home_requested.emit()
 	else:
