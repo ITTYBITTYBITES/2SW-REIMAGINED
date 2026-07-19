@@ -1,0 +1,517 @@
+{
+  "_doc": "Experience 1 — The Missing Second. Data-driven module for the Diorama Engine v2.0. Schema supports Actor Position, Camera Animation, and Clue ID. All experience-specific knowledge lives here; the engine contains none. This definition is loaded by DioramaPlayer.load_and_play() and assembled into a cinematic 3D scene with ACES tonemapping, key/fill lighting, SSAO, and depth of field. PBR materials specified where textures are available; primitive geometry uses roughness/metallic to catch the cinematic light.",
+
+  "schema_version": "2.0",
+  "id": "missing_second",
+  "title": "The Missing Second",
+  "subtitle": "A waiting room holds one missing second.",
+  "duration": 15.0,
+
+  "environment": {
+    "background_mode": "color",
+    "background_color": [0.008, 0.012, 0.021],
+    "tonemap": "aces",
+    "tonemap_exposure": 1.0,
+    "tonemap_white": 6.0,
+    "ambient_source": "color",
+    "ambient_color": [0.22, 0.28, 0.32],
+    "ambient_energy": 0.9,
+    "ssao": {
+      "enabled": true,
+      "radius": 1.2,
+      "intensity": 2.5,
+      "power": 1.5
+    },
+    "ssr": {
+      "enabled": true,
+      "max_steps": 64
+    },
+    "glow": {
+      "enabled": true,
+      "intensity": 0.7,
+      "bloom": 0.08,
+      "hdr_threshold": 0.85
+    },
+    "fog": {
+      "enabled": true,
+      "color": [0.06, 0.12, 0.16],
+      "energy": 0.35,
+      "density": 0.012
+    },
+    "adjustment_brightness": 1.0,
+    "adjustment_contrast": 1.15,
+    "adjustment_saturation": 0.9
+  },
+
+  "camera": {
+    "focal_length_mm": 35,
+    "fov": 45.0,
+    "position": [0.0, 1.6, 5.4],
+    "look_at": [0.0, 1.5, -1.0],
+    "idle_drift": true,
+    "dof": {
+      "enabled": true,
+      "distance": 4.5,
+      "blur_amount": 0.8,
+      "far_transition": 2.5,
+      "near_enabled": false,
+      "near_distance": 0.5
+    },
+    "path": {
+      "id": "orbit_slow",
+      "type": "orbit_slow",
+      "duration": 15.0,
+      "loop": false,
+      "center": [0.0, 1.5, 0.0],
+      "radius": 5.2,
+      "height": 1.6,
+      "start_angle_deg": -8.0,
+      "end_angle_deg": 8.0,
+      "steps": 10,
+      "look_at": [0.0, 1.5, -1.0]
+    }
+  },
+
+  "lights": [
+    {
+      "id": "platform_sweep",
+      "type": "spot",
+      "position": [-3.5, 3.2, -0.4],
+      "rotation_deg": [-58.0, 0.0, 0.0],
+      "energy": 2.4,
+      "range": 14.0,
+      "spot_angle_deg": 46.0,
+      "color": [1.0, 0.62, 0.28],
+      "shadow": true
+    }
+  ],
+
+  "actors": [
+    {
+      "id": "floor",
+      "type": "box",
+      "size": [12.0, 0.1, 9.0],
+      "position": [0.0, 0.0, 0.0],
+      "albedo": [0.16, 0.18, 0.22],
+      "roughness": 0.4,
+      "metallic": 0.05,
+      "specular": 0.6
+    },
+    {
+      "id": "back_wall",
+      "type": "box",
+      "size": [12.0, 4.2, 0.1],
+      "position": [0.0, 2.1, -3.0],
+      "albedo": [0.22, 0.24, 0.28],
+      "roughness": 0.65,
+      "metallic": 0.0
+    },
+    {
+      "id": "side_wall_left",
+      "type": "box",
+      "size": [0.1, 4.2, 9.0],
+      "position": [-5.5, 2.1, 0.0],
+      "albedo": [0.20, 0.22, 0.26],
+      "roughness": 0.7,
+      "metallic": 0.0
+    },
+    {
+      "id": "window_glow",
+      "type": "box",
+      "size": [2.6, 2.4, 0.06],
+      "position": [3.4, 1.9, -2.94],
+      "albedo": [0.3, 0.26, 0.16],
+      "roughness": 0.3,
+      "metallic": 0.0,
+      "emission": [0.55, 0.4, 0.18],
+      "emission_energy": 0.9
+    },
+    {
+      "id": "bench_seat",
+      "type": "box",
+      "size": [3.0, 0.14, 0.8],
+      "position": [0.0, 0.62, -0.7],
+      "albedo": [0.38, 0.26, 0.16],
+      "roughness": 0.55,
+      "metallic": 0.0
+    },
+    {
+      "id": "bench_leg_l",
+      "type": "box",
+      "size": [0.14, 0.6, 0.7],
+      "position": [-1.4, 0.3, -0.7],
+      "albedo": [0.32, 0.22, 0.14],
+      "roughness": 0.5,
+      "metallic": 0.15
+    },
+    {
+      "id": "bench_leg_r",
+      "type": "box",
+      "size": [0.14, 0.6, 0.7],
+      "position": [1.4, 0.3, -0.7],
+      "albedo": [0.32, 0.22, 0.14],
+      "roughness": 0.5,
+      "metallic": 0.15
+    },
+    {
+      "id": "clock_face",
+      "type": "group",
+      "position": [0.0, 1.85, -2.88],
+      "children": [
+        {
+          "id": "clock_rim",
+          "type": "cylinder",
+          "size": [1.2, 0.2, 1.2],
+          "position": [0.0, 0.0, -0.04],
+          "rotation_deg": [90.0, 0.0, 0.0],
+          "albedo": [0.06, 0.06, 0.07],
+          "roughness": 0.3,
+          "metallic": 0.7,
+          "emission": [0.04, 0.04, 0.05],
+          "emission_energy": 0.2
+        },
+        {
+          "id": "clock_dial",
+          "type": "cylinder",
+          "size": [1.0, 0.16, 1.0],
+          "position": [0.0, 0.0, 0.0],
+          "rotation_deg": [90.0, 0.0, 0.0],
+          "albedo": [0.96, 0.92, 0.80],
+          "roughness": 0.45,
+          "metallic": 0.0,
+          "emission": [0.85, 0.80, 0.66],
+          "emission_energy": 1.3
+        },
+        {
+          "id": "clock_hub",
+          "type": "cylinder",
+          "size": [0.14, 0.16, 0.14],
+          "position": [0.0, 0.0, 0.08],
+          "rotation_deg": [90.0, 0.0, 0.0],
+          "albedo": [0.08, 0.08, 0.09],
+          "roughness": 0.2,
+          "metallic": 0.8
+        }
+      ]
+    },
+    {
+      "id": "clock_pivot",
+      "type": "pivot",
+      "position": [0.0, 1.85, -2.88],
+      "children": [
+        {
+          "id": "clock_hour_hand",
+          "type": "box",
+          "size": [0.09, 0.34, 0.04],
+          "position": [0.0, 0.12, 0.1],
+          "albedo": [0.04, 0.04, 0.05],
+          "roughness": 0.2,
+          "metallic": 0.6
+        },
+        {
+          "id": "clock_minute_hand",
+          "type": "box",
+          "size": [0.07, 0.52, 0.04],
+          "position": [0.0, 0.21, 0.12],
+          "albedo": [0.04, 0.04, 0.05],
+          "roughness": 0.2,
+          "metallic": 0.6
+        },
+        {
+          "id": "second_hand",
+          "type": "box",
+          "size": [0.07, 0.6, 0.05],
+          "position": [0.0, 0.27, 0.15],
+          "albedo": [0.9, 0.16, 0.12],
+          "roughness": 0.3,
+          "metallic": 0.4,
+          "emission": [0.8, 0.09, 0.05],
+          "emission_energy": 1.2
+        }
+      ]
+    },
+    {
+      "id": "traveler",
+      "type": "group",
+      "position": [0.7, 0.0, -0.5],
+      "children": [
+        {
+          "id": "traveler_legs",
+          "type": "box",
+          "size": [0.34, 0.9, 0.34],
+          "position": [0.0, 0.45, 0.0],
+          "albedo": [0.16, 0.16, 0.20],
+          "roughness": 0.75,
+          "metallic": 0.0
+        },
+        {
+          "id": "traveler_body",
+          "type": "box",
+          "size": [0.56, 0.95, 0.4],
+          "position": [0.0, 1.25, 0.0],
+          "albedo": [0.22, 0.23, 0.28],
+          "roughness": 0.7,
+          "metallic": 0.0,
+          "emission": [0.05, 0.06, 0.08],
+          "emission_energy": 0.3
+        },
+        {
+          "id": "traveler_head",
+          "type": "sphere",
+          "size": [0.3, 0.3, 0.3],
+          "position": [0.0, 1.95, 0.0],
+          "albedo": [0.64, 0.52, 0.43],
+          "roughness": 0.6,
+          "metallic": 0.0,
+          "emission": [0.12, 0.10, 0.08],
+          "emission_energy": 0.3
+        },
+        {
+          "id": "traveler_arm",
+          "type": "box",
+          "size": [0.16, 0.6, 0.16],
+          "position": [0.34, 1.35, 0.12],
+          "albedo": [0.22, 0.23, 0.28],
+          "roughness": 0.7,
+          "metallic": 0.0,
+          "emission": [0.05, 0.06, 0.08],
+          "emission_energy": 0.3
+        }
+      ]
+    },
+    {
+      "id": "suitcase",
+      "type": "box",
+      "size": [0.7, 0.42, 0.4],
+      "position": [1.5, 0.83, -0.5],
+      "albedo": [0.40, 0.28, 0.18],
+      "roughness": 0.5,
+      "metallic": 0.05
+    },
+    {
+      "id": "suitcase_handle",
+      "type": "box",
+      "size": [0.3, 0.06, 0.1],
+      "position": [1.5, 1.07, -0.5],
+      "albedo": [0.20, 0.14, 0.08],
+      "roughness": 0.4,
+      "metallic": 0.1
+    },
+    {
+      "id": "tea_saucer",
+      "type": "cylinder",
+      "size": [0.32, 0.08, 0.32],
+      "position": [-0.9, 0.71, -0.6],
+      "albedo": [0.90, 0.86, 0.78],
+      "roughness": 0.25,
+      "metallic": 0.0,
+      "emission": [0.30, 0.26, 0.20],
+      "emission_energy": 0.35,
+      "double_sided": true
+    },
+    {
+      "id": "tea_cup",
+      "type": "cylinder",
+      "size": [0.22, 0.18, 0.22],
+      "position": [-0.9, 0.80, -0.6],
+      "albedo": [0.94, 0.90, 0.82],
+      "roughness": 0.2,
+      "metallic": 0.0,
+      "emission": [0.35, 0.31, 0.24],
+      "emission_energy": 0.4
+    },
+    {
+      "id": "tea_steam",
+      "type": "group",
+      "position": [-0.9, 0.95, -0.6],
+      "children": [
+        {
+          "id": "steam_wisp_a",
+          "type": "sphere",
+          "size": [0.18, 0.18, 0.18],
+          "position": [0.0, 0.1, 0.0],
+          "albedo": [0.90, 0.92, 0.94],
+          "roughness": 1.0,
+          "metallic": 0.0,
+          "emission": [0.70, 0.72, 0.75],
+          "emission_energy": 0.6,
+          "transparency": 0.45
+        },
+        {
+          "id": "steam_wisp_b",
+          "type": "sphere",
+          "size": [0.15, 0.15, 0.15],
+          "position": [0.06, 0.28, 0.02],
+          "albedo": [0.90, 0.92, 0.94],
+          "roughness": 1.0,
+          "metallic": 0.0,
+          "emission": [0.70, 0.72, 0.75],
+          "emission_energy": 0.6,
+          "transparency": 0.5
+        }
+      ]
+    },
+    {
+      "id": "photograph",
+      "type": "box",
+      "size": [0.42, 0.06, 0.30],
+      "position": [-0.1, 0.735, -0.78],
+      "albedo": [0.82, 0.76, 0.64],
+      "roughness": 0.35,
+      "metallic": 0.0,
+      "emission": [0.16, 0.13, 0.08],
+      "emission_energy": 0.25,
+      "_reveal_emission_energy": 1.4,
+      "_reveal_albedo": [0.96, 0.84, 0.58]
+    }
+  ],
+
+  "clues": [
+    {
+      "id": "clue_tea",
+      "target": "tea_cup",
+      "type": "wrong",
+      "hit_radius": 0.6,
+      "response": "THE TEA IS STILL COOLING WHERE THE ROOM LEFT IT."
+    },
+    {
+      "id": "clue_suitcase",
+      "target": "suitcase",
+      "type": "wrong",
+      "hit_radius": 0.7,
+      "response": "THE TRAVELER HAS NOT YET DECIDED TO LEAVE."
+    },
+    {
+      "id": "clue_photograph",
+      "target": "photograph",
+      "type": "wrong",
+      "hit_radius": 0.55,
+      "response": "SOMEONE WILL ARRIVE AFTER THE PLATFORM IS EMPTY."
+    },
+    {
+      "id": "clue_clock",
+      "target": "clock_pivot",
+      "type": "correct",
+      "hit_radius": 1.1,
+      "response": "THE CLOCK ARRIVED BEFORE THE MOMENT DID.",
+      "discovery_text": "THE MISSING SECOND WAS A CHOICE TO BE REMEMBERED."
+    }
+  ],
+
+  "text": {
+    "entry_line": "WATCH CAREFULLY. ONE SECOND IS MISSING.",
+    "observing_line": "WATCH THE ROOM. DO NOT TOUCH YET.",
+    "reconstructing_prompt": "THE ROOM REMEMBERS DIFFERENTLY.",
+    "investigating_prompt": "WHAT MOVED AHEAD OF THE ROOM?",
+    "resolution_text": "THE MISSING SECOND WAS A CHOICE TO BE REMEMBERED.\n\nTHE TRAVELER STAYED LONG ENOUGH TO LEAVE A PHOTOGRAPH FOR SOMEONE ARRIVING AFTER THEM.",
+    "return_label": "RETURN TO IRIS",
+    "complete_label": "THE MOMENT HAS BEEN WITNESSED."
+  },
+
+  "timeline": [
+    {
+      "id": "forming",
+      "mode": "animate",
+      "duration": 1.25,
+      "entry_text_key": "entry_line",
+      "animations": []
+    },
+    {
+      "id": "observing",
+      "mode": "animate",
+      "duration": 2.0,
+      "entry_text_key": "observing_line",
+      "animations": [
+        {
+          "target": "traveler",
+          "property": "position:x",
+          "type": "lerp",
+          "from": 0.7,
+          "to": 0.55
+        },
+        {
+          "target": "clock_pivot",
+          "property": "rotation:z",
+          "type": "rate_with_jump",
+          "rate": 0.14137,
+          "jump_at": 0.95,
+          "jump": 0.10472
+        },
+        {
+          "target": "platform_sweep",
+          "property": "rotation:y",
+          "type": "lerp",
+          "from": -28.0,
+          "to": 28.0
+        },
+        {
+          "target": "tea_steam",
+          "property": "position:y",
+          "type": "rate",
+          "rate": 0.12
+        }
+      ]
+    },
+    {
+      "id": "reconstructing",
+      "mode": "freeze",
+      "duration": 0.55,
+      "prompt_text_key": "reconstructing_prompt",
+      "animations": []
+    },
+    {
+      "id": "investigating",
+      "mode": "freeze",
+      "enable_interactions": true,
+      "prompt_text_key": "investigating_prompt",
+      "animations": []
+    },
+    {
+      "id": "resolving",
+      "mode": "animate",
+      "duration": 3.0,
+      "entry_text_key": "resolution_text",
+      "animations": [
+        {
+          "target": "clock_pivot",
+          "property": "rotation:z",
+          "type": "ease_back_by",
+          "amount": 0.10472
+        },
+        {
+          "target": "platform_sweep",
+          "property": "rotation:y",
+          "type": "lerp",
+          "from": 28.0,
+          "to": 40.0
+        },
+        {
+          "target": "traveler",
+          "property": "position:x",
+          "type": "lerp_delayed",
+          "from": 0.55,
+          "to": -2.6,
+          "delay": 0.28
+        },
+        {
+          "target": "tea_steam",
+          "property": "position:y",
+          "type": "rate",
+          "rate": 0.12
+        },
+        {
+          "target": "photograph",
+          "property": "reveal",
+          "type": "event",
+          "at": 0.3
+        }
+      ],
+      "resolution_beats": [
+        {"at": 0.3, "action": "reveal_photograph"},
+        {"at": 0.6, "action": "show_resolution_text"},
+        {"at": 1.0, "action": "complete"}
+      ],
+      "show_return_at_end": true
+    }
+  ]
+}
