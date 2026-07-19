@@ -32,6 +32,7 @@ func _run() -> void:
 
 	# Retired Missing Second experience must be fully removed.
 	_assert(ResourceLoader.exists("res://scenes/MissingSecondExperience.tscn") == false, "retired MissingSecond scene is removed")
+	_assert(ResourceLoader.exists("res://scenes/ClockWitnessExperience.tscn") == false, "renderer-validation scene removed")
 	_assert(DirAccess.dir_exists_absolute("res://assets/missing_second") == false, "retired missing_second asset folder is removed")
 
 	# Living Iris + Home must remain available.
@@ -40,20 +41,18 @@ func _run() -> void:
 	await process_frame
 	_assert(app.home.visible and app.iris.visible, "Living Iris Home remains available")
 
-	# The Diorama Engine experience renderer must be present and wired.
+	# The Diorama Engine experience renderer must be present and JSON-driven.
 	_assert(app.diorama_engine != null and app.diorama_engine is DioramaEngine, "Diorama Engine experience renderer is present")
-	_assert(app.experience_one_scene != null, "Experience One (Clock Witness) scene is registered")
+	_assert(FileAccess.file_exists("res://content/experience_one/experience_one.json"), "Experience One is a JSON definition")
 
-	# Experience One launch → Diorama → return → Home routing. Drive the natural
-	# portal flow (entry fires once, then return) exactly as the real game does.
+	# Experience One launch -> Diorama -> return -> Home routing. Natural portal flow.
 	app.start_experience_one()
-	await create_timer(3.2).timeout  # portal entry completes → Diorama launches
+	await create_timer(3.2).timeout
 	_assert(app.diorama_engine.visible, "Experience One launches into the Diorama Engine")
-	_assert(app.diorama_engine.current_experience is ClockWitnessExperience, "Clock Witness is the active Diorama experience")
+	_assert(app.diorama_engine.objects.size() >= 12, "engine assembles the scene from JSON")
 	app.return_from_experience_one()
-	await create_timer(3.0).timeout  # return portal completes → show_home
+	await create_timer(3.0).timeout
 	_assert(not app.diorama_engine.visible, "Diorama Engine hides after return")
-	_assert(app.diorama_engine.current_experience == null, "experience cleared after return")
 
 	app.free()
 	await process_frame

@@ -12,7 +12,7 @@ class_name PrototypeApplication
 ## shared platform infrastructure are retained unchanged.
 
 const EXPERIENCE_ONE_ID := "experience_one"
-const EXPERIENCE_ONE_SCENE_PATH := "res://scenes/ClockWitnessExperience.tscn"
+const EXPERIENCE_ONE_DEFINITION_PATH := "res://content/experience_one/experience_one.json"
 
 var profile_store: WitnessProfileStore
 var witness_profile: WitnessProfile
@@ -22,7 +22,6 @@ var home: IrisHome
 var startup: StartupFlow
 var iris_portal: IrisPortalTransition
 var diorama_engine: DioramaEngine
-var experience_one_scene: PackedScene
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -63,8 +62,6 @@ func _ready() -> void:
 	diorama_engine.experience_return_requested.connect(return_from_experience_one)
 	add_child(diorama_engine)
 
-	experience_one_scene = load(EXPERIENCE_ONE_SCENE_PATH)
-
 	startup = StartupFlow.new()
 	startup.name = "StartupFlow"
 	startup.finished.connect(_on_startup_finished)
@@ -104,9 +101,9 @@ func show_home() -> void:
 	_emit_iris_event("iris_return")
 
 ## Experience One launch: the Iris pupil opens onto the Diorama Engine, which
-## then renders the Clock Witness memory.
+## then assembles and renders the experience defined in the Experience One JSON.
 func start_experience_one() -> void:
-	if experience_one_scene == null or iris_portal.state != IrisPortalTransition.PortalState.READY:
+	if not FileAccess.file_exists(EXPERIENCE_ONE_DEFINITION_PATH) or iris_portal.state != IrisPortalTransition.PortalState.READY:
 		return
 	iris.visible = true
 	iris.set_home_environment(false)
@@ -115,16 +112,16 @@ func start_experience_one() -> void:
 	home.visible = false
 	_hide_diorama()
 	iris_portal.begin_entry(EXPERIENCE_ONE_ID, {
-		"title": "The Clock Witness",
-		"subtitle": "A memory behind the Iris."
+		"title": "The Missing Second",
+		"subtitle": "A waiting room holds one missing second."
 	})
 
 func _on_portal_entry_arrived(entry_id: String) -> void:
-	if entry_id != EXPERIENCE_ONE_ID or experience_one_scene == null:
+	if entry_id != EXPERIENCE_ONE_ID or not FileAccess.file_exists(EXPERIENCE_ONE_DEFINITION_PATH):
 		show_home()
 		return
 	iris.visible = false
-	diorama_engine.launch_experience(experience_one_scene)
+	diorama_engine.launch_experience(EXPERIENCE_ONE_DEFINITION_PATH)
 
 func _on_experience_one_complete() -> void:
 	# The Iris receives the experience only at the threshold, never in-memory.
@@ -134,7 +131,7 @@ func _on_experience_one_complete() -> void:
 	_emit_iris_event("iris_return")
 
 func return_from_experience_one() -> void:
-	if not diorama_engine.visible and diorama_engine.current_experience == null:
+	if not diorama_engine.visible:
 		show_home()
 		return
 	diorama_engine.clear_experience()

@@ -1,0 +1,155 @@
+{
+  "_doc": "Experience One — The Missing Second. The first Diorama-powered memory. All experience-specific data (environment, objects, camera, timeline, interactions, mechanics, text) lives in this file. The Diorama Engine assembles and drives the scene from this definition; it contains no clock/witness/missing-second knowledge of its own. Recreation of the original Missing Second Witness Moment (per MISSION_072 design spec), rebuilt fresh as a 3D Diorama experience. Visual content is scaffold-grade primitive geometry; production stylized-cinematic art lands behind the MISSION_073D asset gate.",
+
+  "id": "experience_one",
+  "title": "The Missing Second",
+  "subtitle": "A waiting room holds one missing second.",
+
+  "camera": {
+    "position": [0.0, 1.6, 5.4],
+    "fov": 52.0,
+    "look_at": [0.0, 1.5, -1.0]
+  },
+
+  "environment": {
+    "background_color": [0.010, 0.018, 0.028],
+    "ambient_color": [0.22, 0.28, 0.32],
+    "ambient_energy": 0.9,
+    "fog_enabled": true,
+    "fog_color": [0.06, 0.12, 0.16],
+    "fog_energy": 0.35,
+    "fog_density": 0.035
+  },
+
+  "lights": [
+    {
+      "id": "key",
+      "type": "directional",
+      "rotation_deg": [-42.0, 26.0, 0.0],
+      "energy": 1.35,
+      "color": [1.0, 0.90, 0.72]
+    },
+    {
+      "id": "platform_sweep",
+      "type": "spot",
+      "position": [-3.5, 3.2, -0.4],
+      "rotation_deg": [-58.0, 0.0, 0.0],
+      "energy": 2.4,
+      "range": 14.0,
+      "spot_angle_deg": 46.0,
+      "color": [1.0, 0.62, 0.28],
+      "shadow": true
+    }
+  ],
+
+  "objects": [
+    { "id": "floor", "type": "box", "size": [12.0, 0.1, 9.0], "position": [0.0, 0.0, 0.0], "albedo": [0.20, 0.24, 0.28] },
+    { "id": "back_wall", "type": "box", "size": [12.0, 4.2, 0.1], "position": [0.0, 2.1, -3.0], "albedo": [0.26, 0.28, 0.32] },
+    { "id": "side_wall_left", "type": "box", "size": [0.1, 4.2, 9.0], "position": [-5.5, 2.1, 0.0], "albedo": [0.23, 0.25, 0.29] },
+    { "id": "window_glow", "type": "box", "size": [2.6, 2.4, 0.06], "position": [3.4, 1.9, -2.94], "albedo": [0.30, 0.26, 0.16], "emission": [0.55, 0.40, 0.18], "emission_energy": 0.8 },
+
+    { "id": "bench_seat", "type": "box", "size": [3.0, 0.14, 0.8], "position": [0.0, 0.62, -0.7], "albedo": [0.40, 0.28, 0.18] },
+    { "id": "bench_leg_l", "type": "box", "size": [0.14, 0.6, 0.7], "position": [-1.4, 0.3, -0.7], "albedo": [0.34, 0.24, 0.15] },
+    { "id": "bench_leg_r", "type": "box", "size": [0.14, 0.6, 0.7], "position": [1.4, 0.3, -0.7], "albedo": [0.34, 0.24, 0.15] },
+
+    {
+      "id": "clock_pivot",
+      "type": "pivot",
+      "position": [0.0, 1.85, -2.88],
+      "children": [
+        { "id": "clock_rim", "type": "cylinder", "size": [1.0, 0.08, 1.0], "position": [0.0, 0.0, -0.02], "albedo": [0.12, 0.12, 0.13] },
+        { "id": "clock_dial", "type": "cylinder", "size": [0.9, 0.06, 0.9], "position": [0.0, 0.0, 0.0], "albedo": [0.94, 0.90, 0.78] },
+        { "id": "clock_hour_hand", "type": "box", "size": [0.07, 0.40, 0.03], "position": [0.0, 0.14, 0.05], "albedo": [0.10, 0.10, 0.11] },
+        { "id": "clock_minute_hand", "type": "box", "size": [0.05, 0.56, 0.03], "position": [0.0, 0.22, 0.07], "albedo": [0.10, 0.10, 0.11] },
+        { "id": "second_hand", "type": "box", "size": [0.045, 0.66, 0.03], "position": [0.0, 0.30, 0.10], "albedo": [0.82, 0.20, 0.16], "emission": [0.45, 0.06, 0.04], "emission_energy": 0.5 },
+        { "id": "clock_hub", "type": "cylinder", "size": [0.09, 0.05, 0.09], "position": [0.0, 0.0, 0.12], "albedo": [0.14, 0.14, 0.15] }
+      ]
+    },
+
+    {
+      "id": "traveler",
+      "type": "group",
+      "position": [0.7, 0.0, -0.5],
+      "children": [
+        { "id": "traveler_legs", "type": "box", "size": [0.34, 0.9, 0.34], "position": [0.0, 0.45, 0.0], "albedo": [0.10, 0.10, 0.13] },
+        { "id": "traveler_body", "type": "box", "size": [0.56, 0.95, 0.4], "position": [0.0, 1.25, 0.0], "albedo": [0.13, 0.14, 0.18] },
+        { "id": "traveler_head", "type": "sphere", "size": [0.3, 0.3, 0.3], "position": [0.0, 1.95, 0.0], "albedo": [0.62, 0.50, 0.42] },
+        { "id": "traveler_arm", "type": "box", "size": [0.16, 0.6, 0.16], "position": [0.34, 1.35, 0.12], "albedo": [0.13, 0.14, 0.18] }
+      ]
+    },
+
+    { "id": "suitcase", "type": "box", "size": [0.7, 0.42, 0.4], "position": [1.5, 0.83, -0.5], "albedo": [0.42, 0.30, 0.20] },
+    { "id": "suitcase_handle", "type": "box", "size": [0.3, 0.06, 0.1], "position": [1.5, 1.07, -0.5], "albedo": [0.22, 0.16, 0.10] },
+
+    { "id": "tea_cup", "type": "cylinder", "size": [0.16, 0.12, 0.16], "position": [-0.85, 0.75, -0.65], "albedo": [0.92, 0.88, 0.80] },
+    { "id": "tea_saucer", "type": "cylinder", "size": [0.24, 0.03, 0.24], "position": [-0.85, 0.70, -0.65], "albedo": [0.88, 0.84, 0.76] },
+    {
+      "id": "tea_steam",
+      "type": "group",
+      "position": [-0.85, 0.85, -0.65],
+      "children": [
+        { "id": "steam_wisp_a", "type": "sphere", "size": [0.12, 0.12, 0.12], "position": [0.0, 0.1, 0.0], "albedo": [0.9, 0.92, 0.94], "emission": [0.5, 0.55, 0.6], "emission_energy": 0.25, "transparency": 0.55 },
+        { "id": "steam_wisp_b", "type": "sphere", "size": [0.10, 0.10, 0.10], "position": [0.05, 0.25, 0.02], "albedo": [0.9, 0.92, 0.94], "emission": [0.5, 0.55, 0.6], "emission_energy": 0.25, "transparency": 0.65 }
+      ]
+    },
+
+    { "id": "photograph", "type": "box", "size": [0.34, 0.02, 0.24], "position": [-0.1, 0.72, -0.78], "albedo": [0.78, 0.74, 0.66], "emission": [0.2, 0.16, 0.10], "emission_energy": 0.0, "_reveal_emission_energy": 0.9, "_reveal_albedo": [0.92, 0.80, 0.56] }
+  ],
+
+  "interactions": [
+    { "id": "tea", "target": "tea_cup", "hit_radius": 0.6, "response": "THE TEA IS STILL COOLING WHERE THE ROOM LEFT IT.", "outcome": "wrong" },
+    { "id": "suitcase", "target": "suitcase", "hit_radius": 0.7, "response": "THE TRAVELER HAS NOT YET DECIDED TO LEAVE.", "outcome": "wrong" },
+    { "id": "photograph", "target": "photograph", "hit_radius": 0.55, "response": "SOMEONE WILL ARRIVE AFTER THE PLATFORM IS EMPTY.", "outcome": "wrong" },
+    { "id": "clock", "target": "clock_pivot", "hit_radius": 1.1, "response": "THE CLOCK ARRIVED BEFORE THE MOMENT DID.", "outcome": "correct" }
+  ],
+
+  "text": {
+    "entry_line": "WATCH CAREFULLY. ONE SECOND IS MISSING.",
+    "observing_line": "WATCH THE ROOM. DO NOT TOUCH YET.",
+    "reconstructing_prompt": "THE ROOM REMEMBERS DIFFERENTLY.",
+    "investigating_prompt": "WHAT MOVED AHEAD OF THE ROOM?",
+    "resolution_text": "THE MISSING SECOND WAS A CHOICE TO BE REMEMBERED.\n\nTHE TRAVELER STAYED LONG ENOUGH TO LEAVE A PHOTOGRAPH FOR SOMEONE ARRIVING AFTER THEM.",
+    "return_label": "RETURN TO IRIS",
+    "complete_label": "THE MOMENT HAS BEEN WITNESSED."
+  },
+
+  "timeline": [
+    {
+      "id": "forming", "mode": "animate", "duration": 1.25, "entry_text_key": "entry_line",
+      "animations": []
+    },
+    {
+      "id": "observing", "mode": "animate", "duration": 2.0, "entry_text_key": "observing_line",
+      "animations": [
+        { "target": "traveler", "property": "position:x", "type": "lerp", "from": 0.7, "to": 0.55 },
+        { "target": "clock_pivot", "property": "rotation:z", "type": "rate_with_jump", "rate": 0.14137, "jump_at": 0.95, "jump": 0.10472 },
+        { "target": "platform_sweep", "property": "rotation:y", "type": "lerp", "from": -28.0, "to": 28.0 },
+        { "target": "tea_steam", "property": "position:y", "type": "rate", "rate": 0.12 }
+      ]
+    },
+    {
+      "id": "reconstructing", "mode": "freeze", "duration": 0.55, "prompt_text_key": "reconstructing_prompt",
+      "animations": []
+    },
+    {
+      "id": "investigating", "mode": "freeze", "enable_interactions": true, "prompt_text_key": "investigating_prompt",
+      "animations": []
+    },
+    {
+      "id": "resolving", "mode": "animate", "duration": 3.0, "entry_text_key": "resolution_text",
+      "animations": [
+        { "target": "clock_pivot", "property": "rotation:z", "type": "ease_back_by", "amount": 0.10472 },
+        { "target": "platform_sweep", "property": "rotation:y", "type": "lerp", "from": 28.0, "to": 40.0 },
+        { "target": "traveler", "property": "position:x", "type": "lerp_delayed", "from": 0.55, "to": -2.6, "delay": 0.28 },
+        { "target": "tea_steam", "property": "position:y", "type": "rate", "rate": 0.12 },
+        { "target": "photograph", "property": "reveal", "type": "event", "at": 0.30 }
+      ],
+      "resolution_beats": [
+        { "at": 0.30, "action": "reveal_photograph" },
+        { "at": 0.60, "action": "show_resolution_text" },
+        { "at": 1.0, "action": "complete" }
+      ],
+      "show_return_at_end": true
+    }
+  ]
+}
