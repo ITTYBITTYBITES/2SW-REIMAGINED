@@ -88,6 +88,7 @@ func _ready() -> void:
 	generic_gameplay.completion_requested.connect(_on_generic_completion_requested)
 	generic_gameplay.return_requested.connect(_on_generic_return_requested)
 	generic_gameplay.iris_guidance_requested.connect(_on_generic_iris_guidance_requested)
+	generic_gameplay.iris_memory_response_requested.connect(_on_generic_iris_memory_response_requested)
 	add_child(generic_gameplay)
 
 	archive_ui = WitnessArchiveUI.new()
@@ -95,6 +96,7 @@ func _ready() -> void:
 	archive_ui.configure(witness_profile, registry)
 	archive_ui.back_to_hub_requested.connect(show_home)
 	archive_ui.replay_requested.connect(replay_from_archive)
+	archive_ui.fragment_inspected.connect(_on_archive_fragment_inspected)
 	add_child(archive_ui)
 
 	wm001_gameplay = WM001GameplayLoop.new()
@@ -213,7 +215,8 @@ func _apply_living_archive_to_iris() -> void:
 		return
 	var fragments := WitnessArchive.recovered_truth_fragments(witness_profile)
 	var blooms := WitnessArchive.chapter_blooms(witness_profile)
-	iris.living_iris.evolution_profile = IrisEvolutionProfile.new(witness_profile.aperture_rank, witness_profile.resonance, fragments, blooms)
+	var presentation := WitnessArchive.living_presentation(witness_profile)
+	iris.living_iris.evolution_profile = IrisEvolutionProfile.new(witness_profile.aperture_rank, witness_profile.resonance, fragments, blooms, presentation)
 
 func start_wm001_gameplay() -> void:
 	reflective_return_pending = false
@@ -345,7 +348,8 @@ func _on_iris_evolution_changed(data: IrisEvolutionData) -> void:
 	
 	var fragments := WitnessArchive.recovered_truth_fragments(witness_profile)
 	var blooms := WitnessArchive.chapter_blooms(witness_profile)
-	var new_evo := IrisEvolutionProfile.new(data.aperture_rank, data.resonance, fragments, blooms)
+	var presentation := WitnessArchive.living_presentation(witness_profile)
+	var new_evo := IrisEvolutionProfile.new(data.aperture_rank, data.resonance, fragments, blooms, presentation)
 	if iris != null and iris.living_iris != null:
 		iris.living_iris.evolution_profile = new_evo
 		
@@ -362,12 +366,24 @@ func _on_iris_evolution_changed(data: IrisEvolutionData) -> void:
 			_emit_personality_response("new_aperture_reached")
 			IrisAudioConsumer.play_presence_sound("new_aperture_reached")
 
+func _on_archive_fragment_inspected(_fragment: Dictionary) -> void:
+	# Inspection is a relationship beat, not new navigation or progression.
+	if iris != null and iris.living_iris != null:
+		iris.iris_core.acquire_attention(Vector2(0.0, -0.10))
+		iris.living_iris.present_memory_response("remembering")
+	var reflection_event := str(_fragment.get("iris_reflection_event", "archive_fragment_viewed"))
+	_emit_personality_response(reflection_event if not reflection_event.is_empty() else "archive_fragment_viewed")
+
 func show_archive() -> void:
 	reflective_return_pending = false
 	reflective_return_in = -1.0
+	# Keep the one Living Iris present beneath the translucent Archive so an
+	# inspected recovered memory can feel remembered rather than merely listed.
 	iris.set_home_environment(false)
-	iris.set_gameplay_environment(false)
-	iris.visible = false
+	iris.set_gameplay_environment(true)
+	iris.visible = true
+	iris.settle()
+	IrisAudioConsumer.play_ambient_loop("res://assets/audio/iris/iris_breath_loop.ogg")
 	home.visible = false
 	witness.visible = false
 	wm001_gameplay.visible = false
@@ -409,6 +425,10 @@ func _on_generic_iris_guidance_requested(event_name: String) -> void:
 	# resolver remains the single source for dialogue, expression, audio, and haptics.
 	if generic_gameplay.visible and iris.visible and not event_name.is_empty():
 		_emit_personality_response(event_name)
+
+func _on_generic_iris_memory_response_requested(response: String) -> void:
+	if generic_gameplay.visible and iris != null and iris.living_iris != null:
+		iris.living_iris.present_memory_response(response)
 
 func _on_generic_completion_requested(result: WitnessMomentResult) -> void:
 	var award := {"total": 0, "components": {}}

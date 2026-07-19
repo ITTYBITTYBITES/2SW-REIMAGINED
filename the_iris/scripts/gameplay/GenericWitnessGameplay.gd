@@ -9,6 +9,8 @@ signal completion_requested(result: WitnessMomentResult)
 signal return_requested
 ## Keeps Iris personality routing in Application; gameplay never owns the Iris.
 signal iris_guidance_requested(event_name: String)
+## Visual response remains owned by the existing LivingIris instance in Application.
+signal iris_memory_response_requested(response: String)
 
 var definition: WitnessMomentDefinition
 var phase: Phase = Phase.BRIEFING
@@ -267,6 +269,7 @@ func _find_fracture() -> void:
 	guidance_label.text = "THE IRIS RECOGNIZES THE FRACTURE."
 	action_button.text = "BEGIN SYNCHRONIZATION"
 	action_button.visible = true
+	iris_memory_response_requested.emit("remembering")
 	_emit_guidance("fracture_discovered_event")
 	IrisAudioConsumer.play_manifest_sound(str(definition.asset_manifest.audio_assets.get("fracture_discovery", "res://assets/audio/witness/correct_detection.ogg")))
 	IrisHapticConsumer.trigger_pattern(IrisHapticConsumer.Pattern.LIGHT, "Fracture Located")
@@ -277,6 +280,7 @@ func _find_anomaly() -> void:
 
 func _register_fracture_misstep() -> void:
 	fracture_missteps += 1
+	iris_memory_response_requested.emit("unsettled")
 	memory_stability = maxf(float(definition.memory_stability.get("collapse_at", 0.0)), memory_stability - float(definition.memory_stability.get("misstep_cost", 0.15)))
 	var false_leads = definition.showcase.get("false_leads", [])
 	if false_leads is Array and not false_leads.is_empty():
@@ -322,6 +326,7 @@ func _update_synchronization(delta: float) -> void:
 		synchronization_holding = false
 		memory_stability = clampf(float(active_fracture.synchronization.get("stability_recovery", definition.memory_stability.get("recovery_on_synchronization", 1.0))), 0.0, 1.0)
 		active_fracture.synchronization_state = true
+		iris_memory_response_requested.emit("stabilized")
 		_emit_guidance("synchronization_complete_event")
 		IrisAudioConsumer.play_manifest_sound(str(definition.asset_manifest.audio_assets.get("synchronization_complete", "res://assets/audio/iris/iris_confirm.ogg")))
 		IrisHapticConsumer.trigger_pattern(IrisHapticConsumer.Pattern.LIGHT, "Fracture Stabilized")
@@ -384,7 +389,12 @@ func _emit_completion() -> void:
 		"truth_fragment_id": definition.truth_fragment.get("truth_fragment_id", ""),
 		"revelation_text": definition.truth_fragment.get("revelation_text", definition.resolution_text),
 		"revelation_audio_hook": definition.truth_fragment.get("revelation_audio_hook", ""),
-		"archive_entry": definition.truth_fragment.get("archive_entry", "")
+		"archive_entry": definition.truth_fragment.get("archive_entry", ""),
+		"truth_fragment_title": definition.truth_fragment.get("title", ""),
+		"recovered_memory_summary": definition.truth_fragment.get("recovered_memory_summary", ""),
+		"truth_statement": definition.truth_fragment.get("truth_statement", ""),
+		"iris_reflection": definition.truth_fragment.get("iris_reflection", ""),
+		"iris_reflection_event": definition.truth_fragment.get("iris_reflection_event", "")
 	})
 	completion_requested.emit(last_result)
 

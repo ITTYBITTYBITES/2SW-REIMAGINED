@@ -72,7 +72,11 @@
     "summary": "Cause arrived after its effect. The Iris keeps the light that Clara's memory returned.",
     "revelation_text": "The rainbow reached the canvas before sunlight could strike the prism. In stabilizing that impossible instant, you returned the painter's last glimpse of Clara.",
     "revelation_audio_hook": "res://assets/audio/witness/resolution.ogg",
-    "archive_entry": "Borrowed Light \u2014 a recovered causal truth from The Unfinished Canvas."
+    "archive_entry": "Borrowed Light \u2014 a recovered causal truth from The Unfinished Canvas.",
+    "recovered_memory_summary": "The final moments of a forgotten artist, held at the edge of Clara's returning light.",
+    "truth_statement": "The light was not lost. It was protected until someone could witness it.",
+    "iris_reflection": "Some memories disappear because nobody was there to witness them.",
+    "iris_reflection_event": "borrowed_light_reflection"
   },
   "iris_guidance": {
     "observation_event": "wm001_observe",

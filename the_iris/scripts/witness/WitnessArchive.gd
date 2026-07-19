@@ -15,6 +15,9 @@ static func recovered_truth_fragments(profile: WitnessProfile) -> Array[Dictiona
 static func chapter_blooms(profile: WitnessProfile) -> Dictionary:
 	return LivingArchiveProjection.chapter_blooms(profile)
 
+static func living_presentation(profile: WitnessProfile) -> Dictionary:
+	return LivingArchiveProjection.presentation_state(profile)
+
 ## Retrieve a formatted string of the mastery level.
 static func mastery_title_for(level: MasteryLevel) -> String:
 	match level:
@@ -113,6 +116,11 @@ static func update_archive_entry(profile: WitnessProfile, moment_id: String, res
 		record["truth_fragment_recovered"] = true
 		record["truth_fragment_revelation"] = str(result.get("revelation_text", ""))
 		record["truth_fragment_archive_entry"] = str(result.get("archive_entry", ""))
+		record["truth_fragment_title"] = str(result.get("truth_fragment_title", ""))
+		record["truth_fragment_memory_summary"] = str(result.get("recovered_memory_summary", ""))
+		record["truth_fragment_truth_statement"] = str(result.get("truth_statement", ""))
+		record["truth_fragment_iris_reflection"] = str(result.get("iris_reflection", ""))
+		record["truth_fragment_iris_reflection_event"] = str(result.get("iris_reflection_event", ""))
 		if not record.has("truth_fragment_first_absorbed_at"):
 			var absorbed_at := Time.get_datetime_dict_from_system()
 			record["truth_fragment_first_absorbed_at"] = "%04d-%02d-%02d %02d:%02d" % [absorbed_at.year, absorbed_at.month, absorbed_at.day, absorbed_at.hour, absorbed_at.minute]

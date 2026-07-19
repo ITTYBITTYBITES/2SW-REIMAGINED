@@ -10,6 +10,9 @@ var portal_dilation := 0.0
 ## Transient confirmation layered on permanent archive-derived fragment detail.
 var fragment_absorption_flash := 0.0
 var latest_absorbed_fragment := ""
+## Short-lived relational responses; permanent qualities remain profile-derived.
+var memory_response := ""
+var memory_response_amount := 0.0
 var elapsed := 0.0
 var behavior := {
 	"breath_primary": 0.46,
@@ -40,6 +43,11 @@ func set_core(value: IrisCore) -> void:
 func absorb_truth_fragment(fragment_id: String) -> void:
 	latest_absorbed_fragment = fragment_id
 	fragment_absorption_flash = 1.0
+	present_memory_response("stabilized")
+
+func present_memory_response(response: String) -> void:
+	memory_response = response
+	memory_response_amount = 1.0
 	queue_redraw()
 
 func _process(delta: float) -> void:
@@ -47,6 +55,7 @@ func _process(delta: float) -> void:
 		return
 	elapsed += delta
 	fragment_absorption_flash = maxf(0.0, fragment_absorption_flash - delta * 0.42)
+	memory_response_amount = maxf(0.0, memory_response_amount - delta * 0.55)
 	if core != null:
 		var base_behavior := core.tick(delta)
 		if evolution_profile != null:
@@ -77,7 +86,12 @@ func _draw() -> void:
 
 	var base_radius := minf(size.x * 0.342, size.y * 0.192)
 	var radius := base_radius * lerpf(0.16, 1.0, presence)
-	radius *= 1.0 + (breath_wave - 0.5) * 0.028 + pulse * 0.024
+	var response_breath := 0.0
+	if memory_response == "unsettled":
+		response_breath = sin(elapsed * 5.2) * 0.018 * memory_response_amount
+	elif memory_response == "stabilized":
+		response_breath = sin(elapsed * 1.25) * 0.010 * memory_response_amount
+	radius *= 1.0 + (breath_wave - 0.5) * 0.028 + pulse * 0.024 + response_breath
 	var center := Vector2(size.x * 0.5, size.y * 0.458) + gaze * radius * 2.15
 	var openness := 1.0 - blink * 0.70
 
@@ -87,6 +101,7 @@ func _draw() -> void:
 	_draw_iris_body(Vector2.ZERO, radius, presence, glow, breath_wave, drift, asymmetry)
 	_draw_fibers(Vector2.ZERO, radius, pupil_ratio, fiber_motion, fiber_density, presence, glow, focus, drift, asymmetry)
 	_draw_recovered_fragments(Vector2.ZERO, radius, presence)
+	_draw_memory_response(Vector2.ZERO, radius, presence)
 	_draw_pupil(Vector2.ZERO, radius, pupil_ratio, presence, glow, focus, breath_wave, pulse)
 	if reflective > 0.0:
 		_draw_reflections(Vector2.ZERO, radius, reflective, drift)
@@ -185,6 +200,21 @@ func _draw_recovered_fragments(center: Vector2, radius: float, presence: float) 
 	if fragment_absorption_flash > 0.0:
 		var flash_radius := radius * (0.38 + (1.0 - fragment_absorption_flash) * 0.95)
 		draw_arc(center, flash_radius, 0.0, TAU, 48, Color(1.0, 0.87, 0.48, fragment_absorption_flash * presence * 0.64), 1.8, true)
+
+func _draw_memory_response(center: Vector2, radius: float, presence: float) -> void:
+	if memory_response_amount <= 0.01:
+		return
+	var amount := memory_response_amount * presence
+	if memory_response == "unsettled":
+		# A brief cool, irregular rhythm acknowledges a false detail without a punishment UI.
+		var offset := sin(elapsed * 11.0) * radius * 0.035
+		draw_arc(center + Vector2(offset, 0), radius * 0.68, -1.15, 1.2, 32, Color(0.38, 0.65, 1.0, amount * 0.32), 1.5, true)
+		draw_arc(center - Vector2(offset, 0), radius * 0.82, 1.9, 4.1, 32, Color(0.38, 0.65, 1.0, amount * 0.18), 0.9, true)
+	elif memory_response == "stabilized":
+		var settle_radius := radius * (0.42 + (1.0 - memory_response_amount) * 0.42)
+		draw_arc(center, settle_radius, 0.0, TAU, 44, Color(0.96, 0.80, 0.42, amount * 0.42), 1.4, true)
+	elif memory_response == "remembering":
+		draw_arc(center, radius * 0.74, -0.9, 0.9, 36, Color(0.70, 0.94, 0.82, amount * 0.30), 1.2, true)
 
 func _draw_pupil(center: Vector2, radius: float, pupil_ratio: float, presence: float, glow: float, focus: float, breath_wave: float, pulse: float) -> void:
 	var biological_pulse: float = float(behavior.get("biological_pulse", 1.0))

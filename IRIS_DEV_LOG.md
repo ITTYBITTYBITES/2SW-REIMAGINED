@@ -432,3 +432,34 @@ Run when Godot is available:
 cd the_iris
 godot --headless -s tests/living_archive_validation.gd
 ```
+
+---
+
+## Mission 057 — Living Archive Experience Integration
+
+Date: 2026-07-18
+Scope: make the existing Living Archive meaningful in the player experience without adding a save system, progression framework, navigation route, or Witness content.
+
+### Implemented
+
+- Added `LivingArchiveProjection.presentation_state()` and the public `WitnessArchive.living_presentation()` API. It derives `awareness_level`, `recovered_fragment_count`, `confirmed_truth_count`, `memory_stability`, and `relationship_state` exclusively from existing profile/archive records.
+- Extended `IrisEvolutionProfile` with those derived relationship presentation values and fed them through the existing `IrisEvolutionVisualConsumer`.
+- Extended `LivingIris` with subtle temporary responses: `unsettled`, `stabilized`, and `remembering`. They affect brief breathing cadence, color temperature/arc treatment, and response rhythm while permanent evolution remains profile-derived.
+- Connected existing generic Witness discovery/synchronization events through Application to the one Living Iris instance. False details briefly unsettle it; discovery and successful stabilization make it respond without new gameplay ownership.
+- Reframed Spatial Hub relationship text around what the Iris remembers instead of raw progression data. Recovered constellation nodes remain Archive-derived and preserve fragment identity/chapter metadata.
+- Extended the existing Archive UI—no new route—with recovered-memory inspection. Selecting WM-001 after recovery presents **Borrowed Light**, its Chapter 01 association, restored truth, and the Iris reflection. Inspecting it triggers the existing Iris personality/audio/haptic path and a subtle remembering response behind the translucent Archive.
+- Added data-driven `archive_fragment_viewed` Iris reflection event.
+- Added `tests/living_archive_experience_validation.gd` covering fresh profiles, recovered/multiple fragment derivation, serialization persistence, constellation identity, Iris response hooks, Archive inspection wiring, and WM-002–WM-012 compatibility.
+
+### Limitations
+
+- Archive inspection is a focused first interaction for recovered fragments, not a full archive encyclopedia or constellation UI overhaul.
+- Relationship state is currently derived from fragment count, chapter bloom, and recorded stability; its authored emotional range will expand only as additional real fragments exist.
+- Iris response visuals are subtle procedural presentation and require real device tuning for timing, contrast, audio mix, and accessibility.
+
+Run when Godot is available:
+
+```bash
+cd the_iris
+godot --headless -s tests/living_archive_experience_validation.gd
+```

@@ -24,9 +24,13 @@ static func recovered_fragments(profile: WitnessProfile) -> Array[Dictionary]:
 		fragments.append({
 			"fragment_id": fragment_id,
 			"moment_id": str(moment_id),
-			"display_name": _display_name(fragment_id),
+			"display_name": str(record.get("truth_fragment_title", _display_name(fragment_id))),
 			"archive_entry": str(record.get("truth_fragment_archive_entry", "")),
+			"memory_summary": str(record.get("truth_fragment_memory_summary", "")),
+			"truth_statement": str(record.get("truth_fragment_truth_statement", "")),
 			"revelation": str(record.get("truth_fragment_revelation", "")),
+			"iris_reflection": str(record.get("truth_fragment_iris_reflection", "")),
+			"iris_reflection_event": str(record.get("truth_fragment_iris_reflection_event", "")),
 			"absorbed_at": str(record.get("truth_fragment_first_absorbed_at", "")),
 			"chapter_id": chapter_for_moment(str(moment_id))
 		})
@@ -53,6 +57,39 @@ static func chapter_blooms(profile: WitnessProfile) -> Dictionary:
 			"bloomed": not recovered_members.is_empty()
 		}
 	return blooms
+
+## Relationship presentation is derived wholly from persisted Archive records.
+static func presentation_state(profile: WitnessProfile) -> Dictionary:
+	var fragments := recovered_fragments(profile)
+	var blooms := chapter_blooms(profile)
+	var stability_total := 0.0
+	var stability_samples := 0
+	if profile != null:
+		for record_value in profile.moment_records.values():
+			if record_value is Dictionary and (record_value as Dictionary).has("best_memory_stability"):
+				stability_total += clampf(float((record_value as Dictionary).get("best_memory_stability", 0.0)), 0.0, 1.0)
+				stability_samples += 1
+	var stability := stability_total / float(stability_samples) if stability_samples > 0 else 0.0
+	var count := fragments.size()
+	var relationship := "LISTENING"
+	if count >= 4:
+		relationship = "AWAKENING"
+	elif count >= 2:
+		relationship = "ATTUNING"
+	elif count == 1:
+		relationship = "REMEMBERING"
+	var bloom_count := 0
+	for bloom_value in blooms.values():
+		if bloom_value is Dictionary and bool((bloom_value as Dictionary).get("bloomed", false)):
+			bloom_count += 1
+	return {
+		"awareness_level": clampf(0.12 + float(count) * 0.18 + float(bloom_count) * 0.08, 0.0, 1.0),
+		"recovered_fragment_count": count,
+		"confirmed_truth_count": count,
+		"memory_stability": stability,
+		"relationship_state": relationship,
+		"chapter_bloom_count": bloom_count
+	}
 
 static func chapter_for_moment(moment_id: String) -> String:
 	for chapter_id in CHAPTER_MEMBERS.keys():

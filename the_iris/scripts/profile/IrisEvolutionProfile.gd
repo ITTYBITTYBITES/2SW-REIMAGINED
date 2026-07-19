@@ -14,13 +14,24 @@ var unlocked_features: Array[String] = []
 var recovered_fragments: Array[Dictionary] = []
 var chapter_blooms: Dictionary = {}
 var fragment_count := 0
+## These are relationship presentation values, never manual progression state.
+var awareness_level := 0.12
+var recovered_fragment_count := 0
+var confirmed_truth_count := 0
+var memory_stability := 0.0
+var relationship_state := "LISTENING"
 
-func _init(rank := 1, resonance := 0, fragments: Array[Dictionary] = [], blooms: Dictionary = {}) -> void:
+func _init(rank := 1, resonance := 0, fragments: Array[Dictionary] = [], blooms: Dictionary = {}, presentation: Dictionary = {}) -> void:
 	aperture_rank = rank
 	resonance_total = resonance
 	recovered_fragments = fragments.duplicate(true)
 	chapter_blooms = blooms.duplicate(true)
 	fragment_count = recovered_fragments.size()
+	recovered_fragment_count = int(presentation.get("recovered_fragment_count", fragment_count))
+	confirmed_truth_count = int(presentation.get("confirmed_truth_count", fragment_count))
+	awareness_level = clampf(float(presentation.get("awareness_level", 0.12)), 0.0, 1.0)
+	memory_stability = clampf(float(presentation.get("memory_stability", 0.0)), 0.0, 1.0)
+	relationship_state = str(presentation.get("relationship_state", "LISTENING"))
 	_compute_profile()
 
 func _compute_profile() -> void:
@@ -76,7 +87,14 @@ static func from_dictionary(data: Dictionary) -> IrisEvolutionProfile:
 		int(data.get("aperture_rank", 1)),
 		int(data.get("resonance_total", int(data.get("resonance", 0)))),
 		fragments,
-		blooms
+		blooms,
+		{
+			"awareness_level": data.get("awareness_level", 0.12),
+			"recovered_fragment_count": data.get("recovered_fragment_count", fragments.size()),
+			"confirmed_truth_count": data.get("confirmed_truth_count", fragments.size()),
+			"memory_stability": data.get("memory_stability", 0.0),
+			"relationship_state": data.get("relationship_state", "LISTENING")
+		}
 	)
 	return profile
 
@@ -90,5 +108,10 @@ func to_dictionary() -> Dictionary:
 		"unlocked_features": unlocked_features,
 		"recovered_fragments": recovered_fragments.duplicate(true),
 		"chapter_blooms": chapter_blooms.duplicate(true),
-		"fragment_count": fragment_count
+		"fragment_count": fragment_count,
+		"awareness_level": awareness_level,
+		"recovered_fragment_count": recovered_fragment_count,
+		"confirmed_truth_count": confirmed_truth_count,
+		"memory_stability": memory_stability,
+		"relationship_state": relationship_state
 	}

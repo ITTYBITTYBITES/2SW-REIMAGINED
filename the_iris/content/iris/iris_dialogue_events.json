@@ -79,6 +79,22 @@
       "audio": "res://assets/audio/iris/iris_transition.ogg",
       "haptic": "wm001_revelation_pulse",
       "voice": "voice_placeholder_wm001_revelation"
+    },
+    "archive_fragment_viewed": {
+      "text": "Some memories disappear because nobody was there to witness them.",
+      "accessibility_text": "The Iris reflects on the recovered memory you are viewing.",
+      "expression_mode": "REFLECTIVE",
+      "audio": "res://assets/audio/iris/iris_presence.ogg",
+      "haptic": "archive_fragment_viewed_pulse",
+      "voice": "voice_placeholder_archive_fragment_viewed"
+    },
+    "borrowed_light_reflection": {
+      "text": "Some memories disappear because nobody was there to witness them.",
+      "accessibility_text": "The Iris reflects on the recovered truth called Borrowed Light.",
+      "expression_mode": "REFLECTIVE",
+      "audio": "res://assets/audio/iris/iris_presence.ogg",
+      "haptic": "borrowed_light_reflection_pulse",
+      "voice": "voice_placeholder_borrowed_light_reflection"
     }
   }
 }

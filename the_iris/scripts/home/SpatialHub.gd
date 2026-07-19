@@ -150,10 +150,14 @@ func _update_labels() -> void:
 	else:
 		var fragments := WitnessArchive.recovered_truth_fragments(profile)
 		var blooms := WitnessArchive.chapter_blooms(profile)
+		var presentation := WitnessArchive.living_presentation(profile)
 		var chapter_one: Dictionary = blooms.get("chapter_01", {})
-		profile_panel.text = "PROFILE  ·  Aperture %d · %s     %d Resonance     %d Truth Fragment%s" % [profile.aperture_rank, profile.aperture_title, profile.resonance, fragments.size(), "s" if fragments.size() != 1 else ""]
+		var memory_word := "MEMORIES" if fragments.size() != 1 else "MEMORY"
+		profile_panel.text = "THE IRIS IS %s  ·  %d %s HELD" % [str(presentation.get("relationship_state", "LISTENING")), fragments.size(), memory_word]
 		if not fragments.is_empty():
-			hint_label.text = "%s is held in the Iris.  Chapter 01 bloom: %d / %d" % [str(fragments[0].get("display_name", "Recovered Truth")), int(chapter_one.get("recovered_count", 0)), int(chapter_one.get("total_count", 5))]
+			hint_label.text = "%s is held in the Iris.  Chapter 01 remembers %d of %d memories." % [str(fragments[0].get("display_name", "Recovered Truth")), int(chapter_one.get("recovered_count", 0)), int(chapter_one.get("total_count", 5))]
+		else:
+			hint_label.text = "The Iris is listening for the first memory you restore."
 
 func _process(delta: float) -> void:
 	if not is_visible_in_tree():

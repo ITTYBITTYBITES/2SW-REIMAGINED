@@ -66,10 +66,14 @@ static func apply_evolution(profile: IrisEvolutionProfile, base_behavior: Dictio
 	# Truth Fragments are a persistent, archive-derived visual layer. They are
 	# additive to rank progression and therefore visible even at Observer rank.
 	var fragments := profile.fragment_count
+	behavior["memory_awareness"] = profile.awareness_level
+	behavior["memory_stability"] = profile.memory_stability
+	behavior["relationship_state"] = profile.relationship_state
 	if fragments > 0:
 		behavior["fragment_memory"] = fragments
 		behavior["fragment_glow"] = minf(0.34, 0.12 + float(fragments) * 0.055)
-		behavior["glow"] = float(behavior.get("glow", 0.0)) + float(behavior["fragment_glow"])
+		behavior["glow"] = float(behavior.get("glow", 0.0)) + float(behavior["fragment_glow"]) + profile.awareness_level * 0.045
 		behavior["fiber_density"] = int(behavior.get("fiber_density", 0)) + mini(fragments * 3, 12)
+		behavior["fiber_motion"] = float(behavior.get("fiber_motion", 0.0)) + profile.awareness_level * 0.12
 		behavior["fragment_bloom"] = profile.chapter_blooms.has("chapter_01") and bool(profile.chapter_blooms["chapter_01"].get("bloomed", false))
 	return behavior

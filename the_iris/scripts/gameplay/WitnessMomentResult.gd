@@ -20,6 +20,11 @@ var truth_fragment_id := ""
 var revelation_text := ""
 var revelation_audio_hook := ""
 var archive_entry := ""
+var truth_fragment_title := ""
+var recovered_memory_summary := ""
+var truth_statement := ""
+var iris_reflection := ""
+var iris_reflection_event := ""
 
 func _init(id := "", accuracy_value := 0.0, found := 0, total := 0, used_assistance := false, mastery_value := false, style := "", living_outcomes: Dictionary = {}) -> void:
 	moment_id = id
@@ -39,6 +44,11 @@ func _init(id := "", accuracy_value := 0.0, found := 0, total := 0, used_assista
 	revelation_text = str(living_outcomes.get("revelation_text", ""))
 	revelation_audio_hook = str(living_outcomes.get("revelation_audio_hook", ""))
 	archive_entry = str(living_outcomes.get("archive_entry", ""))
+	truth_fragment_title = str(living_outcomes.get("truth_fragment_title", ""))
+	recovered_memory_summary = str(living_outcomes.get("recovered_memory_summary", ""))
+	truth_statement = str(living_outcomes.get("truth_statement", ""))
+	iris_reflection = str(living_outcomes.get("iris_reflection", ""))
+	iris_reflection_event = str(living_outcomes.get("iris_reflection_event", ""))
 
 func to_dictionary() -> Dictionary:
 	return {
@@ -57,5 +67,10 @@ func to_dictionary() -> Dictionary:
 		"truth_fragment_id": truth_fragment_id,
 		"revelation_text": revelation_text,
 		"revelation_audio_hook": revelation_audio_hook,
-		"archive_entry": archive_entry
+		"archive_entry": archive_entry,
+		"truth_fragment_title": truth_fragment_title,
+		"recovered_memory_summary": recovered_memory_summary,
+		"truth_statement": truth_statement,
+		"iris_reflection": iris_reflection,
+		"iris_reflection_event": iris_reflection_event
 	}

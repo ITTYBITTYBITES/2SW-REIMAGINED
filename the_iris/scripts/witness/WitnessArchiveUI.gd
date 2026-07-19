@@ -6,6 +6,7 @@ class_name WitnessArchiveUI
 
 signal back_to_hub_requested
 signal replay_requested(moment_id: String)
+signal fragment_inspected(fragment: Dictionary)
 
 var profile: WitnessProfile
 var registry: IncidentRegistry
@@ -42,7 +43,7 @@ func _ready() -> void:
 	background.modulate = Color(0.52, 0.70, 0.66, 0.42)
 	background.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(background)
-	
+
 	var veil := ColorRect.new()
 	veil.color = Color(0.01, 0.05, 0.06, 0.62)
 	veil.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -51,11 +52,11 @@ func _ready() -> void:
 
 	back_button = _button("‹  IRIS HUB", Vector2(25, 28), Vector2(130, 36), Color("#143e3b"), 12)
 	back_button.pressed.connect(_on_back_pressed)
-	
+
 	phase_label = _label("WITNESS ARCHIVE", 11, Color("#88cbb9"), Vector2(33, 86), Vector2(440, 24))
 	title_label = _label("Memory Restorations", 27, Color("#f1fff9"), Vector2(32, 115), Vector2(460, 47))
 	subtitle_label = _label("Your collection of aligned experiences", 14, Color("#b7dcd1"), Vector2(33, 164), Vector2(460, 27))
-	
+
 	body_label = _label("Align attention to reconstruct past timeline anomalies and achieve full mastery over restored patterns.", 15, Color("#d7eee7"), Vector2(33, 207), Vector2(470, 100))
 	body_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 
@@ -106,35 +107,35 @@ func show_collection() -> void:
 	list_view.visible = true
 	details_view.visible = false
 	back_button.text = "‹  IRIS HUB"
-	
-	title_label.text = "Memory Restorations"
-	subtitle_label.text = "Your collection of aligned experiences"
-	body_label.text = "Track your timeline restoration progress. Revisit completed moments to uncover deeper insights and master cause and effect."
+
+	title_label.text = "What the Iris Remembers"
+	subtitle_label.text = "Recovered memories held within the artifact"
+	body_label.text = "Each restored truth becomes part of the Iris. Return to a memory to understand what it preserved."
 	background.texture = null
-	
+
 	for child in list_container.get_children():
 		child.queue_free()
-		
+
 	for moment in registry.chapter_moments():
 		var id: String = moment.get("id", "")
 		var is_completed := profile.completed_moment_ids.has(id)
 		var record: Dictionary = profile.moment_records.get(id, {})
-		
+		var fragment := _fragment_for_moment(id)
+
 		var button_text := "%s  ·  %s" % [id, str(moment.get("title", "Untitled"))]
-		var status_text := "LOCKED"
-		var details_subtext := "Select to explore"
-		
-		if is_completed:
-			var level := WitnessArchive.calculate_mastery(record)
-			status_text = "✓ %s" % WitnessArchive.mastery_title_for(level).to_upper()
-			details_subtext = "%d Resonance  ·  Accuracy: %d%%" % [
-				record.get("highest_resonance", record.get("best_resonance_award", 20)),
-				roundi(float(record.get("best_accuracy", 1.0)) * 100.0)
-			]
-			
+		var status_text := "UNRESOLVED"
+		var details_subtext := "A memory waits beyond the fracture"
+
+		if not fragment.is_empty():
+			status_text = "HELD BY THE IRIS"
+			details_subtext = str(fragment.get("display_name", "Recovered Truth"))
+		elif is_completed:
+			status_text = "RESTORED"
+			details_subtext = "The Iris holds the shape of this memory."
+
 		var card := _button(button_text + "\n   " + details_subtext, Vector2.ZERO, Vector2(440, 70), Color("#174943") if is_completed else Color("#122a28"), 13, false)
 		card.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		
+
 		var style := StyleBoxFlat.new()
 		style.bg_color = Color("#174943") if is_completed else Color("#122a28")
 		style.border_color = Color("#389d81") if is_completed else Color("#1c423f")
@@ -144,11 +145,11 @@ func show_collection() -> void:
 		style.corner_radius_bottom_left = 8
 		style.corner_radius_bottom_right = 8
 		card.add_theme_stylebox_override("normal", style)
-		
+
 		var status_label := _label(status_text, 10, Color("#88cbb9") if is_completed else Color("#557371"), Vector2(310, 22), Vector2(110, 26))
 		status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 		card.add_child(status_label)
-		
+
 		card.pressed.connect(func(): IrisAudioConsumer.play_manifest_sound("res://assets/audio/navigation/ui_click.ogg"))
 		card.pressed.connect(show_details.bind(id))
 		list_container.add_child(card)
@@ -158,29 +159,51 @@ func show_details(moment_id: String) -> void:
 	list_view.visible = false
 	details_view.visible = true
 	back_button.text = "‹  COLLECTION"
-	
+
 	for child in details_view.get_children():
 		child.queue_free()
-		
+
 	var moment := registry.moment(moment_id)
 	title_label.text = moment.get("title", "Untitled")
 	subtitle_label.text = moment.get("subtitle", "Chapter 01")
 	body_label.text = moment.get("introduction", "No introduction text.")
-	
+
 	var bg_path: String = moment.get("background_path", moment.get("background", ""))
 	if not bg_path.is_empty():
 		background.texture = load(bg_path)
-		
+
 	var is_completed := profile.completed_moment_ids.has(moment_id)
 	var record: Dictionary = profile.moment_records.get(moment_id, {})
-	
+	var fragment := _fragment_for_moment(moment_id)
+
 	# Details panel labels
 	var y_offset := 345.0
-	
+	if not fragment.is_empty():
+		fragment_inspected.emit(fragment)
+		phase_label.text = "LIVING ARCHIVE  ·  CHAPTER 01"
+		title_label.text = str(fragment.get("display_name", moment.get("title", "Recovered Truth")))
+		subtitle_label.text = "A truth held by the Iris"
+		body_label.text = str(fragment.get("memory_summary", fragment.get("archive_entry", "A recovered memory has changed the Iris.")))
+		var memory_title := _label("RECOVERED MEMORY", 10, Color("#d8b86a"), Vector2(38, y_offset), Vector2(440, 18))
+		details_view.add_child(memory_title)
+		y_offset += 24.0
+		var memory_body := _label(str(fragment.get("memory_summary", fragment.get("archive_entry", ""))) + "\n\nTRUTH RESTORED\n" + str(fragment.get("truth_statement", fragment.get("revelation", ""))), 13, Color("#f4e3ae"), Vector2(38, y_offset), Vector2(440, 106))
+		memory_body.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+		memory_body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		details_view.add_child(memory_body)
+		y_offset += 118.0
+		var reflection := _label("THE IRIS REFLECTS: " + str(fragment.get("iris_reflection", "This memory remains because you witnessed it.")), 11, Color("#a9d7c7"), Vector2(38, y_offset), Vector2(440, 46))
+		reflection.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		details_view.add_child(reflection)
+		var revisit := _button("REVISIT THIS MEMORY", Vector2(38, 820), Vector2(440, 50), Color("#286e61"), 14, false)
+		revisit.pressed.connect(func(): replay_requested.emit(moment_id))
+		details_view.add_child(revisit)
+		return
+
 	var label_id := _label("MOMENT IDENTIFIER: %s" % moment_id, 11, Color("#88cbb9"), Vector2(38, y_offset), Vector2(440, 20))
 	details_view.add_child(label_id)
 	y_offset += 30.0
-	
+
 	var status_str := "LOCKED"
 	var acc_str := "--"
 	var res_str := "--"
@@ -188,7 +211,7 @@ func show_details(moment_id: String) -> void:
 	var mastery_str := "None"
 	var date_str := "--"
 	var clues_list: Array = []
-	
+
 	if is_completed:
 		status_str = "RESTORED"
 		acc_str = "%d%%" % roundi(float(record.get("best_accuracy", 1.0)) * 100.0)
@@ -198,31 +221,32 @@ func show_details(moment_id: String) -> void:
 		clues_list = record.get("discovered_clues", [])
 		var level := WitnessArchive.calculate_mastery(record)
 		mastery_str = WitnessArchive.mastery_title_for(level)
-		
-	var stats_title := _label("RECONSTRUCTION TELEMETRY", 10, Color("#7fbcae"), Vector2(38, y_offset), Vector2(440, 18))
+
+	var stats_heading := "WHAT THE IRIS HOLDS" if not fragment.is_empty() else "MEMORY STATE"
+	var stats_title := _label(stats_heading, 10, Color("#7fbcae"), Vector2(38, y_offset), Vector2(440, 18))
 	details_view.add_child(stats_title)
 	y_offset += 25.0
-	
+
 	var stats_text := "Completion Status: %s\nFirst Restored: %s\nBest Accuracy: %s\nHighest Resonance: %s\nTotal completions: %s\nMastery Level: %s" % [
 		status_str, date_str, acc_str, res_str, count_str, mastery_str
 	]
-	
+
 	if is_completed:
 		if mastery_str != "Mastery":
 			stats_text += "\n\n💡 PATH TO MASTER: Achieve >=95% accuracy unassisted, and discover all 3 clues."
 		else:
 			stats_text += "\n\n✨ RESTORATION PERFECT: Complete Master alignment achieved."
-	
+
 	var stats_body := _label(stats_text, 12, Color("#d7eee7"), Vector2(38, y_offset), Vector2(440, 110))
 	stats_body.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	details_view.add_child(stats_body)
 	y_offset += 125.0
-	
+
 	# Clues exploration
 	var clues_title := _label("DISCOVERED EVIDENCE (%d/3)" % clues_list.size(), 10, Color("#7fbcae"), Vector2(38, y_offset), Vector2(440, 18))
 	details_view.add_child(clues_title)
 	y_offset += 25.0
-	
+
 	var clues_text := ""
 	if clues_list.is_empty():
 		clues_text = "○ No evidence gathered. Complete the moment to attune to local clues."
@@ -232,14 +256,14 @@ func show_details(moment_id: String) -> void:
 		for i in range(clues_list.size()):
 			var clue_id: String = clues_list[i]
 			var desc := "Evidence node recorded"
-			
+
 			if evidence_nodes is Array:
 				for node in evidence_nodes:
 					if node is Dictionary and node.get("identifier", "") == clue_id:
 						desc = node.get("description", desc)
 						break
 			clues_text += "✓  %s\n" % desc
-			
+
 	var clues_body := _label(clues_text, 12, Color("#a9c9be"), Vector2(38, y_offset), Vector2(440, 75))
 	clues_body.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	clues_body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -250,6 +274,12 @@ func show_details(moment_id: String) -> void:
 	var play_button := _button("REPLAY THIS MOMENT" if is_completed else "RESTORE THIS MEMORY", Vector2(38, 820), Vector2(440, 50), Color("#286e61") if is_completed else Color("#174943"), 14, false)
 	play_button.pressed.connect(func(): replay_requested.emit(moment_id))
 	details_view.add_child(play_button)
+
+func _fragment_for_moment(moment_id: String) -> Dictionary:
+	for fragment in WitnessArchive.recovered_truth_fragments(profile):
+		if str(fragment.get("moment_id", "")) == moment_id:
+			return fragment
+	return {}
 
 func _on_back_pressed() -> void:
 	IrisAudioConsumer.play_manifest_sound("res://assets/audio/navigation/portal_close.ogg")
