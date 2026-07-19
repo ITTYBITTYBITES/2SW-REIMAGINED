@@ -664,3 +664,22 @@ Chapter 01 is architecturally complete as a Living Iris 4.0 experience:
 The highest remaining uncertainty is now actual player feel: portal timing, touch ergonomics, synchronization pacing, audio/haptic mix, Archive clarity, five-fragment bloom, accessibility, restart persistence, and interruption behavior. Do not begin WM-006–WM-012 migration before this validation.
 
 Detailed audit: `MISSION_063_CHAPTER_01_EXPERIENCE_AUDIT.md`.
+
+---
+
+## Mission 064 — Device Runtime Validation & Chapter 01 Experience Verification
+
+Date: 2026-07-18
+Scope: runtime/device validation protocol and blocker record. No game code, content, persistence, navigation, Archive, progression, or runtime architecture was changed.
+
+### Status
+
+**BLOCKED — no Godot executable, Android SDK/emulator, adb bridge, connected device, or visual capture path is available in this workspace.**
+
+Static preflight confirms the Chapter 01 production contracts, portal routing, one authority chain, profile serialization, Archive projection, and WM-001–WM-005 reference validation coverage. It cannot substitute for actual player/device evaluation.
+
+### Required next action
+
+Run `MISSION_064_DEVICE_RUNTIME_VALIDATION.md` on a real Godot/device environment. Capture first-launch, per-moment, five-fragment Chapter Bloom, restart persistence, interruption/resume, reduced-motion, audio-disabled, and haptics-disabled evidence before authorizing WM-006 migration.
+
+Detailed protocol and PASS/TUNE/BLOCKER classification: `MISSION_064_DEVICE_RUNTIME_VALIDATION.md`.
