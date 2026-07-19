@@ -42,15 +42,15 @@ static func create_from_def(env_def: Dictionary) -> Environment:
 	var tonemap := String(env_def.get("tonemap", "aces"))
 	match tonemap:
 		"linear":
-			env.tonemap_mode = Environment.TONE_MAP_LINEAR
+			env.tonemap_mode = Environment.TONE_MAPPER_LINEAR
 		"reinhard":
-			env.tonemap_mode = Environment.TONE_MAP_REINHARD
+			env.tonemap_mode = Environment.TONE_MAPPER_REINHARDT
 		"aces":
-			env.tonemap_mode = Environment.TONE_MAP_ACES
+			env.tonemap_mode = Environment.TONE_MAPPER_ACES
 		"aces_fitted":
-			env.tonemap_mode = Environment.TONE_MAP_ACES_FITTED
+			env.tonemap_mode = Environment.TONE_MAPPER_ACES
 		_:
-			env.tonemap_mode = Environment.TONE_MAP_ACES
+			env.tonemap_mode = Environment.TONE_MAPPER_ACES
 
 	env.tonemap_white = float(env_def.get("tonemap_white", 6.0))
 	env.tonemap_exposure = float(env_def.get("tonemap_exposure", 1.0))

@@ -60,7 +60,7 @@ func _ready() -> void:
 		attrs.dof_blur_far_transition = 2.0
 		attrs.dof_blur_near_enabled = false
 		attrs.dof_blur_near_distance = 0.5
-		camera_attributes = attrs
+		attributes = attrs
 
 # ---------------------------------------------------------------------------
 # Public API — configure from JSON camera_def
@@ -90,7 +90,7 @@ func configure_from_def(cam_def: Dictionary) -> void:
 			attrs.dof_blur_far_transition = float(dof_def.get("far_transition", 2.0))
 			attrs.dof_blur_near_enabled = bool(dof_def.get("near_enabled", false))
 			attrs.dof_blur_near_distance = float(dof_def.get("near_distance", 0.5))
-			camera_attributes = attrs
+			attributes = attrs
 
 	# Initial position
 	if cam_def.has("position"):

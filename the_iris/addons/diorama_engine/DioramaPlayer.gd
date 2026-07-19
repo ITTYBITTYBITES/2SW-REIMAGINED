@@ -250,6 +250,16 @@ func _build_actor(def: Dictionary, parent: Node) -> Node3D:
 
 	return mesh_inst
 
+## Apply position + rotation (and optional scale) from a definition to a Node3D.
+## Used by _build_actor for group/pivot, external-model, and mesh branches.
+func _apply_transform(node: Node3D, def: Dictionary) -> void:
+	if node == null:
+		return
+	node.position = _vec3(def.get("position", [0.0, 0.0, 0.0]))
+	node.rotation_degrees = _vec3(def.get("rotation_deg", [0.0, 0.0, 0.0]))
+	if def.has("scale"):
+		node.scale = _vec3(def["scale"])
+
 func _create_mesh(type: String, size: Vector3) -> Mesh:
 	match type:
 		"box":

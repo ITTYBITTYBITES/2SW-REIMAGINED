@@ -78,7 +78,7 @@ environment = SubResource("Environment_cinematic")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 5.4)
 current = true
 fov = 45.0
-camera_attributes = SubResource("CameraAttributes_dof")
+attributes = SubResource("CameraAttributes_dof")
 script = ExtResource("2_camera")
 
 [node name="CinematicKeyLight" type="DirectionalLight3D" parent="ViewportContainer/DioramaViewport"]

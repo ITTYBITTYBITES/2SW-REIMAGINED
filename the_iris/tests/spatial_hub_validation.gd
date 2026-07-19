@@ -22,11 +22,12 @@ func _init() -> void:
 		failures.append("SpatialHub does not expose the WITNESS entry affordance")
 	if not home_source.contains("witness_requested"):
 		failures.append("IrisHome does not forward the witness_requested navigation signal")
-	# The new path routes through the Diorama Engine.
+	# The experience path routes through the DioramaPlayer (SOP v2 renamed the
+	# engine from DioramaEngine to the addons/diorama_engine DioramaPlayer).
 	if not app_source.contains("start_experience_one"):
 		failures.append("Application does not wire witness entry to Experience One launch")
-	if not app_source.contains("DioramaEngine"):
-		failures.append("Application does not route the experience through the Diorama Engine")
+	if not (app_source.contains("DioramaPlayer") or app_source.contains("DioramaEngine")):
+		failures.append("Application does not route the experience through the Diorama engine")
 	# The retired path must be gone.
 	if app_source.contains("start_missing_second"):
 		failures.append("Retired Missing Second launch wiring still present in Application")

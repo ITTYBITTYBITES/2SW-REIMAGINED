@@ -37,7 +37,7 @@ func _ready() -> void:
 func _attach_atmosphere_shader() -> void:
 	# The atmosphere shader adds an energy-driven bloom/flicker layer on top of
 	# the procedural iris. Uniforms are pushed each frame from the mood values.
-	var shader := load("res://shaders/iris_atmosphere.shader")
+	var shader := load("res://shaders/iris_atmosphere.gdshader")
 	if shader is Shader:
 		_atmosphere_shader = ShaderMaterial.new()
 		_atmosphere_shader.shader = shader

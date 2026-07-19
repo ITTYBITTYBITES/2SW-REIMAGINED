@@ -41,18 +41,18 @@ func _run() -> void:
 	await process_frame
 	_assert(app.home.visible and app.iris.visible, "Living Iris Home remains available")
 
-	# The Diorama Engine experience renderer must be present and JSON-driven.
-	_assert(app.diorama_engine != null and app.diorama_engine is DioramaEngine, "Diorama Engine experience renderer is present")
-	_assert(FileAccess.file_exists("res://content/experience_one/experience_one.json"), "Experience One is a JSON definition")
+	# The DioramaPlayer (SOP v2 addon-based engine) must be present and JSON-driven.
+	_assert(app.diorama_player != null and app.diorama_player is DioramaPlayer, "DioramaPlayer experience renderer is present")
+	_assert(FileAccess.file_exists("res://content/missing_second/missing_second.json"), "Experience One is a JSON definition")
 
-	# Experience One launch -> Diorama -> return -> Home routing. Natural portal flow.
+	# Experience One launch -> DioramaPlayer -> return -> Iris routing. Natural portal flow.
 	app.start_experience_one()
 	await create_timer(3.2).timeout
-	_assert(app.diorama_engine.visible, "Experience One launches into the Diorama Engine")
-	_assert(app.diorama_engine.objects.size() >= 12, "engine assembles the scene from JSON")
-	app.return_from_experience_one()
+	_assert(app.diorama_player.visible, "Experience One launches into the DioramaPlayer")
+	_assert(app.diorama_player.objects.size() >= 12, "player assembles the scene from JSON")
+	app.return_from_experience()
 	await create_timer(3.0).timeout
-	_assert(not app.diorama_engine.visible, "Diorama Engine hides after return")
+	_assert(not app.diorama_player.visible, "DioramaPlayer hides after return")
 
 	app.free()
 	await process_frame

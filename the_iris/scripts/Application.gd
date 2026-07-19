@@ -57,7 +57,16 @@ func _ready() -> void:
 	# Loaded from addons/diorama_engine/. Contains its own SubViewport,
 	# CinematicCamera (35mm + DOF), ACES tonemapping, Glow, SSAO, SSR,
 	# and key/fill lighting. Content is loaded from JSON definitions.
-	diorama_player = DioramaPlayer.new()
+	#
+	# IMPORTANT: instantiate from the .tscn (not DioramaPlayer.new()). The scene
+	# defines the SubViewport/camera/lights/fade-veil node tree that the script's
+	# @onready references depend on; .new() on the script alone would leave all
+	# of those null and crash on first use.
+	var player_scene: PackedScene = load("res://addons/diorama_engine/DioramaPlayer.tscn")
+	if player_scene != null:
+		diorama_player = player_scene.instantiate() as DioramaPlayer
+	else:
+		diorama_player = DioramaPlayer.new()
 	diorama_player.name = "DioramaPlayer"
 	diorama_player.experience_completed.connect(_on_experience_complete)
 	diorama_player.experience_return_requested.connect(return_from_experience)
