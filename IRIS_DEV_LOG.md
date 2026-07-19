@@ -325,3 +325,48 @@ Scope: physical transition foundation between the existing Spatial Hub and exist
 1. The portal uses procedural refraction and a pupil-window prototype rather than a final shader or memory-art composition.
 2. Camera approach is represented by the portal camera amount/visual scale foundation; a later rendering pass can bind it to a SubViewport or full 3D camera without changing Application routing.
 3. Runtime Godot/device playback is still required for timing, visual intensity, and accessibility review.
+
+---
+
+## Mission 055 — Witness Engine Evolution
+
+Date: 2026-07-18
+Scope: additive production evolution of the active generic Witness runtime. Existing registries, loaders, profile persistence, Archive authority, Application routing, and Iris portal remain authoritative.
+
+### Implemented
+
+- Added `WitnessFracture`, a canonical runtime contract with fracture identity, location/size, discovery/synchronization/reveal state, and truth-fragment reward reference.
+- Extended `WitnessMomentDefinition` with backward-compatible `fractures`, `memory_stability`, `truth_fragment`, and `iris_guidance` fields. When absent, a safe primary Fracture is synthesized from existing `anomaly_definition` and `capture_window` fields.
+- Refactored the active `GenericWitnessGameplay` presentation into:
+
+```text
+Observe → Locate Fracture → Synchronize → Reveal Truth → Truth Fragment → Reward / portal return
+```
+
+- Implemented the synchronization prototype: hold-focus input, progress indicator, stability indicator, haptic/audio feedback, collapse/reset foundation, and successful stability recovery.
+- Extended `WitnessMomentResult`, `WitnessProfile.moment_records`, and `WitnessArchive` with optional synchronization, stability, revelation, and truth-fragment outcomes—without a second progression or save system.
+- Migrated **WM_001 only** with authored fracture, stability, truth-fragment, and Iris-guidance fields. WM_002–WM_012 remain unchanged and use compatibility defaults.
+- Added the data-driven `truth_fragment_absorbed` Iris dialogue/audio/haptic/expression event. `Application` emits it after existing profile completion persistence succeeds.
+- Added `tests/witness_engine_evolution_validation.gd` to validate all twelve production definitions, WM_001 authored data, result/archive persistence, runtime phases, and Iris feedback wiring.
+
+### Compatibility notes
+
+- Legacy `anomaly_definition` and `capture_window` remain supported and are not removed.
+- The existing `WitnessContentLoader` and `Application.start_generic_gameplay()` path remain unchanged as the content/runtime authority.
+- Existing Archive data remains in `WitnessProfile.moment_records`.
+- Legacy `WM001GameplayLoop`, `FlagshipWitnessMoment`, and `WitnessMomentOrchestrator` were not expanded; Mission 055 targets the active generic path only.
+
+### Validation
+
+Run when Godot is available:
+
+```bash
+cd the_iris
+godot --headless -s tests/witness_engine_evolution_validation.gd
+```
+
+### Limitations
+
+- The first pass supports one active fracture at a time; the data contract can carry multiple future fractures.
+- Synchronization is deliberately a short hold-focus proof rather than a balanced minigame.
+- Truth Fragment presentation is runtime text/feedback and record persistence; constellation/Archive visual redesign remains later work.

@@ -73,6 +73,17 @@ func record_completion(moment_id: String, result: Dictionary = {}) -> Dictionary
 		var style := str(result["observation_style"]).strip_edges()
 		if not style.is_empty():
 			observation_style[style] = int(observation_style.get(style, 0)) + 1
+	# Living Iris 4.0 outcomes remain in the existing per-moment authority.
+	if result.has("memory_stability"):
+		record["best_memory_stability"] = maxf(float(record.get("best_memory_stability", 0.0)), clampf(float(result["memory_stability"]), 0.0, 1.0))
+	if result.has("synchronization_score"):
+		record["best_synchronization_score"] = maxf(float(record.get("best_synchronization_score", 0.0)), clampf(float(result["synchronization_score"]), 0.0, 1.0))
+	if bool(result.get("synchronization_completed", false)):
+		record["synchronizations_completed"] = int(record.get("synchronizations_completed", 0)) + 1
+	if not str(result.get("truth_fragment_id", "")).is_empty():
+		record["truth_fragment_id"] = str(result["truth_fragment_id"])
+		record["truth_fragment_recovered"] = true
+		record["truth_fragment_revelation"] = str(result.get("revelation_text", ""))
 	moment_records[moment_id] = record
 
 	WitnessArchive.update_archive_entry(self, moment_id, result, int(award["total"]))

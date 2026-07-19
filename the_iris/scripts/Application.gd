@@ -404,6 +404,11 @@ func _on_generic_completion_requested(result: WitnessMomentResult) -> void:
 		award = witness_profile.record_completion(result.moment_id, result_dict)
 		profile_store.save_profile(witness_profile)
 	
+	# Existing Iris personality/audio/haptic consumers receive the absorption
+	# through their event-driven path; no parallel Iris system is introduced.
+	if not str(result_dict.get("truth_fragment_id", "")).is_empty():
+		_emit_personality_response("truth_fragment_absorbed")
+
 	reflective_return_pending = true
 	iris.reflect()
 	

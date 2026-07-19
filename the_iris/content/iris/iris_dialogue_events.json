@@ -31,6 +31,14 @@
       "audio": "res://assets/audio/iris/iris_presence.ogg",
       "haptic": "iris_return_pulse",
       "voice": "voice_placeholder_iris_return"
+    },
+    "truth_fragment_absorbed": {
+      "text": "Something hidden has returned.",
+      "accessibility_text": "The Iris absorbs a recovered truth fragment from the restored memory.",
+      "expression_mode": "REFLECTIVE",
+      "audio": "res://assets/audio/iris/iris_confirm.ogg",
+      "haptic": "truth_fragment_absorbed_pulse",
+      "voice": "voice_placeholder_truth_fragment_absorbed"
     }
   }
 }

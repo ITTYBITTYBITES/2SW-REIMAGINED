@@ -97,6 +97,21 @@ static func update_archive_entry(profile: WitnessProfile, moment_id: String, res
 			discovered_clues.append("clue_1") # at least 1 clue found on completion
 			
 	record["discovered_clues"] = discovered_clues
+
+	# Mission 055: archive the recovered Truth Fragment in the same record.
+	var fragment_id := str(result.get("truth_fragment_id", ""))
+	if not fragment_id.is_empty():
+		record["truth_fragment_id"] = fragment_id
+		record["truth_fragment_recovered"] = true
+		record["truth_fragment_revelation"] = str(result.get("revelation_text", ""))
+		record["truth_fragment_archive_entry"] = str(result.get("archive_entry", ""))
+		if not record.has("truth_fragment_first_absorbed_at"):
+			var absorbed_at := Time.get_datetime_dict_from_system()
+			record["truth_fragment_first_absorbed_at"] = "%04d-%02d-%02d %02d:%02d" % [absorbed_at.year, absorbed_at.month, absorbed_at.day, absorbed_at.hour, absorbed_at.minute]
+	if result.has("memory_stability"):
+		record["best_memory_stability"] = maxf(float(record.get("best_memory_stability", 0.0)), clampf(float(result["memory_stability"]), 0.0, 1.0))
+	if result.has("synchronization_score"):
+		record["best_synchronization_score"] = maxf(float(record.get("best_synchronization_score", 0.0)), clampf(float(result["synchronization_score"]), 0.0, 1.0))
 	
 	# Best mastery level
 	var computed_mastery := calculate_mastery(record)
