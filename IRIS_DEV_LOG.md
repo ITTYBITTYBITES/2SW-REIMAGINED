@@ -605,3 +605,38 @@ Run when Godot is available:
 cd the_iris
 godot --headless -s tests/wm004_production_validation.gd
 ```
+
+---
+
+## Mission 062 — WM-005 Production Migration Pass
+
+Date: 2026-07-18
+Scope: author `WM_005` / *The Witness* through the existing Living Iris 4.0 production contract. No gameplay, persistence, Archive, navigation, progression, chapter, or runtime authority was changed.
+
+### Production audit
+
+WM-005 already contained distinct internal-stroma/reflection assets, legacy anomaly/capture data, meta-story evidence nodes, revelation seed, and reward definition. It lacked authored Fracture, stability, showcase, Truth Fragment, Iris guidance/reflection, and existing Iris cue manifest data.
+
+Detailed audit: `MISSION_062_WM005_PRODUCTION_AUDIT.md`.
+
+### Implemented
+
+- Authored WM-005 Fracture `returned_gaze`: the Iris reflection returns attention before the player can offer it.
+- Authored the Chapter 01 meta-story reveal: the player and Iris share an aperture, and witness attention helps preserve damaged memories.
+- Authored WM-005 stability pressure, 1.34-second synchronization, meaningful false leads, and existing Iris audio/haptic guidance hooks.
+- Authored internal-Iris atmosphere/pacing data through existing optional showcase fields and changed the manifest ambience to the existing Iris breath asset; no new asset was added.
+- Authored Truth Fragment **Shared Aperture** (`fragment_shared_aperture`) with recovered-memory summary, truth statement, revelation, Archive entry, Iris reflection, and reflection event.
+- Added WM-005 observation, fracture, synchronization, revelation, and Archive reflection dialogue events through the existing Iris event architecture.
+- Added `tests/wm005_production_validation.gd` covering loader/runtime contract, audio/events, Archive persistence/projection, Chapter 01 membership, serialization, and WM-001–WM-004/WM-006–WM-012 compatibility.
+
+### Limitations
+
+- WM-005 uses existing internal-stroma/reflection imagery and procedural showcase presentation; final interior Iris animation, bespoke visual effects, and device-tuned pacing remain later production polish.
+- The runtime remains intentionally one active Fracture per moment.
+
+Run when Godot is available:
+
+```bash
+cd the_iris
+godot --headless -s tests/wm005_production_validation.gd
+```

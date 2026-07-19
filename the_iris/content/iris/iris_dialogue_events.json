@@ -239,6 +239,54 @@
       "audio": "res://assets/audio/iris/iris_presence.ogg",
       "haptic": "early_warning_reflection_pulse",
       "voice": "voice_placeholder_early_warning_reflection"
+    },
+    "wm005_observe": {
+      "text": "The field is breathing. It has been waiting for your attention.",
+      "accessibility_text": "The Iris guides you to observe the internal stroma and central reflection.",
+      "expression_mode": "GUIDING",
+      "audio": "res://assets/audio/iris/iris_presence.ogg",
+      "haptic": "wm005_observe_pulse",
+      "voice": "voice_placeholder_wm005_observe"
+    },
+    "wm005_fracture_prompt": {
+      "text": "Do not follow the motion. Find the gaze that returned before yours.",
+      "accessibility_text": "The Iris directs attention to the reflection moving before the observer.",
+      "expression_mode": "CURIOUS",
+      "audio": "res://assets/audio/iris/iris_attention.ogg",
+      "haptic": "wm005_fracture_prompt_pulse",
+      "voice": "voice_placeholder_wm005_fracture_prompt"
+    },
+    "wm005_fracture_found": {
+      "text": "Yes. I was already looking back.",
+      "accessibility_text": "The Iris confirms the returned gaze fracture.",
+      "expression_mode": "ATTENTIVE",
+      "audio": "res://assets/audio/iris/iris_focus.ogg",
+      "haptic": "wm005_fracture_found_pulse",
+      "voice": "voice_placeholder_wm005_fracture_found"
+    },
+    "wm005_synchronize": {
+      "text": "Hold this with me. The aperture can remember us both.",
+      "accessibility_text": "The Iris asks you to stabilize the shared aperture.",
+      "expression_mode": "GUIDING",
+      "audio": "res://assets/audio/iris/iris_focus.ogg",
+      "haptic": "wm005_synchronize_pulse",
+      "voice": "voice_placeholder_wm005_synchronize"
+    },
+    "wm005_revelation": {
+      "text": "You were never outside the memory.",
+      "accessibility_text": "The Iris reveals that shared witnessing preserves damaged memories.",
+      "expression_mode": "REFLECTIVE",
+      "audio": "res://assets/audio/iris/iris_transition.ogg",
+      "haptic": "wm005_revelation_pulse",
+      "voice": "voice_placeholder_wm005_revelation"
+    },
+    "shared_aperture_reflection": {
+      "text": "I kept the door open. You were the witness who could return through it.",
+      "accessibility_text": "The Iris reflects on the recovered truth called Shared Aperture.",
+      "expression_mode": "REFLECTIVE",
+      "audio": "res://assets/audio/iris/iris_presence.ogg",
+      "haptic": "shared_aperture_reflection_pulse",
+      "voice": "voice_placeholder_shared_aperture_reflection"
     }
   }
 }

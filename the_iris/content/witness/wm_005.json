@@ -3,7 +3,7 @@
   "moment_id": "WM_005",
   "incident_id": "INC_THE_WITNESS",
   "title": "The Witness",
-  "subtitle": "Chapter 01 · The First Fractures",
+  "subtitle": "Chapter 01 \u00b7 The First Fractures",
   "introduction": "Inside the instrument itself, light moves through the stroma and returns the observer's gaze.",
   "description": "The microscopic stroma is actually the interior lens of the Living Iris itself. By looking into the eye of the instrument, the player realizes they are in a mutual feedback loop of shared attention.",
   "observation": "The field breathes. Fine strands of color gather around an aperture that is both lens and reflection.",
@@ -19,13 +19,19 @@
   "reveal": "res://assets/witness/wm_005_reflection_reveal.png",
   "observation_duration": 2.0,
   "anomaly_definition": {
-    "location": {"x": 250.0, "y": 450.0},
-    "size": {"x": 140.0, "y": 140.0},
+    "location": {
+      "x": 250.0,
+      "y": 450.0
+    },
+    "size": {
+      "x": 140.0,
+      "y": 140.0
+    },
     "misstep_text": "Watch the center lens, not the borders.",
     "success_text": "Attention loop identified. The reflection moves before the observer."
   },
   "capture_window": {
-    "start_time": 0.90,
+    "start_time": 0.9,
     "end_time": 1.35,
     "hold_duration": 0.32,
     "guidance_text": "HOLD WHEN THE REFLECTION SEPARATES.",
@@ -34,7 +40,10 @@
   "evidence_nodes": [
     {
       "identifier": "internal_stroma",
-      "location": {"x": 160.0, "y": 200.0},
+      "location": {
+        "x": 160.0,
+        "y": 200.0
+      },
       "description": "The Living Stroma Strands",
       "relevance": "THE STRANDS GLOW WITH RETURNING LIGHT. Fine, glowing blue-gray muscular fibers contract and drift procedurally in response to active gaze.",
       "truth_connection": "Pattern matches iris attention core.",
@@ -44,7 +53,10 @@
     },
     {
       "identifier": "returning_light",
-      "location": {"x": 160.0, "y": 250.0},
+      "location": {
+        "x": 160.0,
+        "y": 250.0
+      },
       "description": "The Blue-Shifted Reflection",
       "relevance": "THE REFLECTION GLINT CARRIES THE PLAYER'S FUTURE FOCUS. A blue-shifted light that reflects the observer's attention point.",
       "truth_connection": "Attention feedback loop complete.",
@@ -54,7 +66,10 @@
     },
     {
       "identifier": "central_lens",
-      "location": {"x": 160.0, "y": 300.0},
+      "location": {
+        "x": 160.0,
+        "y": 300.0
+      },
       "description": "The Aperture Core",
       "relevance": "THE CORE LENS CENTERS AROUND AN EMPTY FOCUS ORIGIN. Completing the universal mutual loop of attention.",
       "truth_connection": "Universal witness core aligned.",
@@ -91,16 +106,89 @@
       }
     },
     "audio_assets": {
-      "ambient": "res://assets/audio/environments/museum_ambient.ogg",
+      "ambient": "res://assets/audio/iris/iris_breath_loop.ogg",
       "anomaly": "res://assets/audio/witness/correct_detection.ogg",
-      "resolution": "res://assets/audio/witness/resolution.ogg"
+      "resolution": "res://assets/audio/witness/resolution.ogg",
+      "fracture_discovery": "res://assets/audio/iris/iris_attention.ogg",
+      "synchronization_complete": "res://assets/audio/iris/iris_confirm.ogg",
+      "reconstruction": "res://assets/audio/iris/iris_transition.ogg"
     },
     "visual_effects": {
-      "pulse_speed": 1.6
+      "pulse_speed": 1.6,
+      "internal_breath": 1.0,
+      "returning_gaze": 1.0,
+      "dust_motes": 12
     },
     "lighting_profile": {
       "modulate_color": "#a7b8eb",
-      "vignette_intensity": 0.60
+      "vignette_intensity": 0.6
     }
+  },
+  "fractures": [
+    {
+      "fracture_id": "returned_gaze",
+      "location": {
+        "x": 250.0,
+        "y": 450.0
+      },
+      "size": {
+        "x": 140.0,
+        "y": 140.0
+      },
+      "discovery_text": "The reflection is not following you. It has been waiting for you to notice it.",
+      "misstep_text": "The stroma carries light, but the break is at the center where the gaze returns before you give it.",
+      "truth_fragment_reward": "fragment_shared_aperture",
+      "synchronization": {
+        "hold_duration": 1.34,
+        "stability_recovery": 1.0,
+        "audio": "res://assets/audio/iris/iris_focus.ogg",
+        "haptic": "light"
+      }
+    }
+  ],
+  "memory_stability": {
+    "initial": 0.7,
+    "collapse_at": 0.0,
+    "idle_drain_per_second": 0.12,
+    "misstep_cost": 0.18,
+    "recovery_on_synchronization": 1.0
+  },
+  "truth_fragment": {
+    "truth_fragment_id": "fragment_shared_aperture",
+    "title": "Shared Aperture",
+    "summary": "The Iris was never only an instrument to observe. It has been holding the memories that need a witness to remain alive.",
+    "revelation_text": "The reflection moved first because the Iris was already looking back through the same aperture. The player can restore these damaged memories because witnessing them is part of the Iris\u2019s own act of preservation.",
+    "revelation_audio_hook": "res://assets/audio/witness/resolution.ogg",
+    "archive_entry": "Shared Aperture \u2014 the recovered bond between Witness and Iris.",
+    "recovered_memory_summary": "Inside the Iris, the observer discovers that attention itself keeps damaged memories from disappearing.",
+    "truth_statement": "You are not only observing the Iris. Together, you are preserving what would otherwise be lost.",
+    "iris_reflection": "I kept the door open. You were the witness who could return through it.",
+    "iris_reflection_event": "shared_aperture_reflection"
+  },
+  "iris_guidance": {
+    "observation_event": "wm005_observe",
+    "fracture_prompt_event": "wm005_fracture_prompt",
+    "fracture_discovered_event": "wm005_fracture_found",
+    "synchronization_event": "wm005_synchronize",
+    "synchronization_complete_event": "wm005_revelation",
+    "revelation_event": "wm005_revelation",
+    "fracture_resolved_event": "truth_fragment_absorbed"
+  },
+  "showcase": {
+    "enabled": true,
+    "intro_seconds": 2.1,
+    "reconstruction_seconds": 1.9,
+    "iris_presence_alpha": 0.48,
+    "observation_prompt": "The field breathes around you. Watch the reflection at the center; it may already know where you will look.",
+    "fracture_prompt": "The fibers are alive, but they are not the break. Find the gaze that returns before you offer it.",
+    "synchronization_prompt": "Hold the returning gaze with the Iris. Let the shared aperture remember you both at once.",
+    "false_leads": [
+      "The stroma moves with life, but the fracture is not motion. It is attention arriving before yours.",
+      "The blue glint is a clue, yet the break is where it looks back through the central lens.",
+      "The aperture seems empty until you notice that it has already found you."
+    ],
+    "atmosphere_light_color": "#9ab8ef",
+    "atmosphere_mote_color": "#d4ddff",
+    "atmosphere_light_origin_x": 0.5
   }
 }
