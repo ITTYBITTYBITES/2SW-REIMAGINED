@@ -1,7 +1,19 @@
 extends Control
 class_name PrototypeApplication
 
-## Platform shell plus one bespoke Missing Second experience.
+## Platform shell plus the Diorama-powered Experience One launch path.
+##
+## Flow:
+##   Living Iris → Iris Home → WITNESS → Iris portal →
+##   Diorama Engine → Clock Witness Experience → return → Iris
+##
+## The old bespoke "Missing Second" Control scene and its assets have been
+## retired (experience-path reset). The Living Iris system, navigation, and
+## shared platform infrastructure are retained unchanged.
+
+const EXPERIENCE_ONE_ID := "experience_one"
+const EXPERIENCE_ONE_SCENE_PATH := "res://scenes/ClockWitnessExperience.tscn"
+
 var profile_store: WitnessProfileStore
 var witness_profile: WitnessProfile
 var iris: IrisController
@@ -9,7 +21,8 @@ var iris_personality: IrisPersonalityResolver
 var home: IrisHome
 var startup: StartupFlow
 var iris_portal: IrisPortalTransition
-var missing_second: MissingSecondExperience
+var diorama_engine: DioramaEngine
+var experience_one_scene: PackedScene
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -29,7 +42,7 @@ func _ready() -> void:
 
 	home = IrisHome.new()
 	home.name = "IrisHome"
-	home.witness_requested.connect(start_missing_second)
+	home.witness_requested.connect(start_experience_one)
 	home.iris_requested.connect(show_iris)
 	add_child(home)
 	home.configure(witness_profile)
@@ -41,13 +54,16 @@ func _ready() -> void:
 	iris_portal.return_arrived.connect(show_home)
 	add_child(iris_portal)
 
-	var missing_scene: PackedScene = load("res://scenes/MissingSecondExperience.tscn")
-	if missing_scene != null:
-		missing_second = missing_scene.instantiate() as MissingSecondExperience
-		missing_second.name = "MissingSecondExperience"
-		missing_second.completion_requested.connect(_on_missing_second_complete)
-		missing_second.return_requested.connect(return_from_missing_second)
-		add_child(missing_second)
+	# Diorama Engine: the 3D experience renderer. Sits between the Iris portal
+	# and a memory experience. Drawn beneath the portal (z_index 100) so the
+	# pupil transition can bridge Iris ↔ memory cleanly.
+	diorama_engine = DioramaEngine.new()
+	diorama_engine.name = "DioramaEngine"
+	diorama_engine.experience_completed.connect(_on_experience_one_complete)
+	diorama_engine.experience_return_requested.connect(return_from_experience_one)
+	add_child(diorama_engine)
+
+	experience_one_scene = load(EXPERIENCE_ONE_SCENE_PATH)
 
 	startup = StartupFlow.new()
 	startup.name = "StartupFlow"
@@ -61,8 +77,7 @@ func _on_startup_finished() -> void:
 func prepare_iris() -> void:
 	iris.visible = false
 	home.visible = false
-	if missing_second != null:
-		missing_second.visible = false
+	_hide_diorama()
 	iris.dormant()
 
 func show_iris(from_boot := false) -> void:
@@ -70,8 +85,7 @@ func show_iris(from_boot := false) -> void:
 	iris.set_gameplay_environment(false)
 	iris.visible = true
 	home.visible = false
-	if missing_second != null:
-		missing_second.visible = false
+	_hide_diorama()
 	if from_boot:
 		iris.begin_awakening_ritual()
 	else:
@@ -86,47 +100,52 @@ func show_home() -> void:
 	iris.settle()
 	IrisAudioConsumer.play_ambient_loop("res://assets/audio/iris/iris_breath_loop.ogg")
 	home.visible = true
-	if missing_second != null:
-		missing_second.visible = false
+	_hide_diorama()
 	_emit_iris_event("iris_return")
 
-func start_missing_second() -> void:
-	if missing_second == null or iris_portal.state != IrisPortalTransition.PortalState.READY:
+## Experience One launch: the Iris pupil opens onto the Diorama Engine, which
+## then renders the Clock Witness memory.
+func start_experience_one() -> void:
+	if experience_one_scene == null or iris_portal.state != IrisPortalTransition.PortalState.READY:
 		return
 	iris.visible = true
 	iris.set_home_environment(false)
 	iris.set_gameplay_environment(false)
 	iris.iris_core.acquire_attention(Vector2.ZERO)
 	home.visible = false
-	missing_second.visible = false
-	iris_portal.begin_entry("missing_second", {
-		"title": "The Missing Second",
-		"subtitle": "A waiting room holds one missing second."
+	_hide_diorama()
+	iris_portal.begin_entry(EXPERIENCE_ONE_ID, {
+		"title": "The Clock Witness",
+		"subtitle": "A memory behind the Iris."
 	})
 
 func _on_portal_entry_arrived(entry_id: String) -> void:
-	if entry_id != "missing_second" or missing_second == null:
+	if entry_id != EXPERIENCE_ONE_ID or experience_one_scene == null:
 		show_home()
 		return
 	iris.visible = false
-	missing_second.begin()
+	diorama_engine.launch_experience(experience_one_scene)
 
-func _on_missing_second_complete() -> void:
-	# The Iris receives the experience only at the threshold, never as in-memory guidance.
+func _on_experience_one_complete() -> void:
+	# The Iris receives the experience only at the threshold, never in-memory.
 	iris.visible = true
 	iris.set_gameplay_environment(true)
 	iris.reflect()
 	_emit_iris_event("iris_return")
 
-func return_from_missing_second() -> void:
-	if missing_second == null:
+func return_from_experience_one() -> void:
+	if not diorama_engine.visible and diorama_engine.current_experience == null:
 		show_home()
 		return
-	missing_second.close()
+	diorama_engine.clear_experience()
 	iris.visible = true
 	iris.set_gameplay_environment(false)
 	iris.set_home_environment(false)
 	iris_portal.begin_return()
+
+func _hide_diorama() -> void:
+	if diorama_engine != null:
+		diorama_engine.clear_experience()
 
 func _emit_iris_event(event_name: String) -> void:
 	if iris_personality != null:
@@ -134,7 +153,7 @@ func _emit_iris_event(event_name: String) -> void:
 
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		if missing_second != null and missing_second.visible:
-			return_from_missing_second()
+		if diorama_engine != null and diorama_engine.visible:
+			return_from_experience_one()
 		elif home.visible:
 			show_iris()
