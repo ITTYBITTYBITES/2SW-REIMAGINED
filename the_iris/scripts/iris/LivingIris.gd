@@ -7,6 +7,9 @@ var core: IrisCore
 var evolution_profile: IrisEvolutionProfile
 ## Authored by IrisPortalTransition; the core remains the lifecycle authority.
 var portal_dilation := 0.0
+## Transient confirmation layered on permanent archive-derived fragment detail.
+var fragment_absorption_flash := 0.0
+var latest_absorbed_fragment := ""
 var elapsed := 0.0
 var behavior := {
 	"breath_primary": 0.46,
@@ -34,10 +37,16 @@ func _ready() -> void:
 func set_core(value: IrisCore) -> void:
 	core = value
 
+func absorb_truth_fragment(fragment_id: String) -> void:
+	latest_absorbed_fragment = fragment_id
+	fragment_absorption_flash = 1.0
+	queue_redraw()
+
 func _process(delta: float) -> void:
 	if not is_visible_in_tree():
 		return
 	elapsed += delta
+	fragment_absorption_flash = maxf(0.0, fragment_absorption_flash - delta * 0.42)
 	if core != null:
 		var base_behavior := core.tick(delta)
 		if evolution_profile != null:
@@ -77,6 +86,7 @@ func _draw() -> void:
 	_draw_aura(Vector2.ZERO, radius, presence, glow, focus, pulse, drift)
 	_draw_iris_body(Vector2.ZERO, radius, presence, glow, breath_wave, drift, asymmetry)
 	_draw_fibers(Vector2.ZERO, radius, pupil_ratio, fiber_motion, fiber_density, presence, glow, focus, drift, asymmetry)
+	_draw_recovered_fragments(Vector2.ZERO, radius, presence)
 	_draw_pupil(Vector2.ZERO, radius, pupil_ratio, presence, glow, focus, breath_wave, pulse)
 	if reflective > 0.0:
 		_draw_reflections(Vector2.ZERO, radius, reflective, drift)
@@ -155,6 +165,26 @@ func _draw_fibers(center: Vector2, radius: float, pupil_ratio: float, motion: fl
 		draw_line(second, third, fiber_color, width * 0.74, true)
 		if index % 3 == 0:
 			draw_line(third, fourth, fiber_color, width * 0.52, true)
+
+func _draw_recovered_fragments(center: Vector2, radius: float, presence: float) -> void:
+	var fragment_count := int(behavior.get("fragment_memory", 0))
+	if fragment_count <= 0:
+		return
+	var bloom := bool(behavior.get("fragment_bloom", false))
+	var glow := float(behavior.get("fragment_glow", 0.12))
+	for index in range(fragment_count):
+		var angle := elapsed * 0.31 + float(index) * TAU / float(fragment_count) - 0.72
+		var position_value := center + Vector2(cos(angle), sin(angle)) * radius * 0.56
+		var shard_radius := radius * (0.038 + sin(elapsed * 1.5 + float(index)) * 0.004)
+		for ring in range(3, 0, -1):
+			draw_circle(position_value, shard_radius * (1.0 + float(ring) * 0.9), Color(0.93, 0.76, 0.34, glow * presence * 0.14))
+		draw_circle(position_value, shard_radius, Color(1.0, 0.87, 0.48, (0.55 + glow) * presence))
+		draw_circle(position_value + Vector2(-shard_radius * 0.25, -shard_radius * 0.25), shard_radius * 0.28, Color(1.0, 1.0, 0.90, presence))
+	if bloom:
+		draw_arc(center, radius * 0.72, -1.35, 0.25, 30, Color(0.95, 0.78, 0.38, glow * presence * 0.55), 1.2, true)
+	if fragment_absorption_flash > 0.0:
+		var flash_radius := radius * (0.38 + (1.0 - fragment_absorption_flash) * 0.95)
+		draw_arc(center, flash_radius, 0.0, TAU, 48, Color(1.0, 0.87, 0.48, fragment_absorption_flash * presence * 0.64), 1.8, true)
 
 func _draw_pupil(center: Vector2, radius: float, pupil_ratio: float, presence: float, glow: float, focus: float, breath_wave: float, pulse: float) -> void:
 	var biological_pulse: float = float(behavior.get("biological_pulse", 1.0))

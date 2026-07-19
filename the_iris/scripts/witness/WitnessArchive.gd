@@ -7,6 +7,14 @@ class_name WitnessArchive
 
 enum MasteryLevel { NONE, DISCOVERY, UNDERSTANDING, INSIGHT, MASTERY }
 
+## Living Archive projections remain read-only views over profile records.
+## This class stays the public Archive authority; no alternate save exists.
+static func recovered_truth_fragments(profile: WitnessProfile) -> Array[Dictionary]:
+	return LivingArchiveProjection.recovered_fragments(profile)
+
+static func chapter_blooms(profile: WitnessProfile) -> Dictionary:
+	return LivingArchiveProjection.chapter_blooms(profile)
+
 ## Retrieve a formatted string of the mastery level.
 static func mastery_title_for(level: MasteryLevel) -> String:
 	match level:

@@ -55,7 +55,7 @@ func _ready() -> void:
 	iris.name = "IrisController"
 	iris.home_requested.connect(show_home)
 	add_child(iris)
-	iris.living_iris.evolution_profile = IrisEvolutionProfile.new(witness_profile.aperture_rank, witness_profile.resonance)
+	_apply_living_archive_to_iris()
 	iris.iris_core.state_changed.connect(_on_iris_core_state_changed)
 
 	iris_personality = IrisPersonalityResolver.new()
@@ -208,6 +208,13 @@ func _emit_personality_response(experience_event: String) -> void:
 	if iris_personality != null:
 		iris_personality.resolve(int(iris.iris_core.state), experience_event)
 
+func _apply_living_archive_to_iris() -> void:
+	if iris == null or iris.living_iris == null or witness_profile == null:
+		return
+	var fragments := WitnessArchive.recovered_truth_fragments(witness_profile)
+	var blooms := WitnessArchive.chapter_blooms(witness_profile)
+	iris.living_iris.evolution_profile = IrisEvolutionProfile.new(witness_profile.aperture_rank, witness_profile.resonance, fragments, blooms)
+
 func start_wm001_gameplay() -> void:
 	reflective_return_pending = false
 	reflective_return_in = -1.0
@@ -336,7 +343,9 @@ func _on_iris_evolution_changed(data: IrisEvolutionData) -> void:
 	latest_iris_evolution = data
 	iris_evolution_updated.emit(data)
 	
-	var new_evo := IrisEvolutionProfile.new(data.aperture_rank, data.resonance)
+	var fragments := WitnessArchive.recovered_truth_fragments(witness_profile)
+	var blooms := WitnessArchive.chapter_blooms(witness_profile)
+	var new_evo := IrisEvolutionProfile.new(data.aperture_rank, data.resonance, fragments, blooms)
 	if iris != null and iris.living_iris != null:
 		iris.living_iris.evolution_profile = new_evo
 		
@@ -414,6 +423,8 @@ func _on_generic_completion_requested(result: WitnessMomentResult) -> void:
 	# Existing Iris personality/audio/haptic consumers receive the absorption
 	# through their event-driven path; no parallel Iris system is introduced.
 	if not str(result_dict.get("truth_fragment_id", "")).is_empty():
+		if iris != null and iris.living_iris != null:
+			iris.living_iris.absorb_truth_fragment(str(result_dict["truth_fragment_id"]))
 		_emit_personality_response("truth_fragment_absorbed")
 
 	reflective_return_pending = true

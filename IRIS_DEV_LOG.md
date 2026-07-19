@@ -401,3 +401,34 @@ Run when Godot is available:
 cd the_iris
 godot --headless -s tests/wm001_showcase_validation.gd
 ```
+
+---
+
+## Mission 056 — Living Iris Archive Foundation
+
+Date: 2026-07-18
+Scope: first persistent Living Archive proof. Existing `WitnessProfile.moment_records` remains the save authority, and `WitnessArchive` remains the public Archive authority.
+
+### Implemented
+
+- Added a read-only `LivingArchiveProjection` behind new `WitnessArchive.recovered_truth_fragments()` and `WitnessArchive.chapter_blooms()` APIs. It derives fragment and Chapter Bloom state from existing persisted moment records; it stores no separate data.
+- Extended `IrisEvolutionProfile` with archive-derived recovered-fragment and chapter-bloom presentation values.
+- Extended `IrisEvolutionVisualConsumer` and `LivingIris` with a permanent recovered-memory layer: a warm internal fragment detail, increased glow/fiber response, and a Chapter 01 bloom arc. The first completion remains visible after return and after relaunch because it is derived from the profile record.
+- Added transient `LivingIris.absorb_truth_fragment()` feedback for the completion moment. Application calls it after the existing profile record succeeds, then uses the existing dialogue/audio/haptic `truth_fragment_absorbed` path.
+- Extended `SpatialHub.Background_Constellation` to derive nodes from `WitnessArchive`: recovered entries carry fragment identity, display state, chapter metadata, and a distinct gold Truth Fragment presentation. WM-001 appears as **Borrowed Light** when recovered.
+- Added Chapter 01 bloom data foundation (`WM_001`–`WM_005` membership) while proving only `Borrowed Light`.
+- Updated the Hub profile/hint language to show recovered fragment count and Chapter 01 bloom state without changing navigation.
+- Added `tests/living_archive_validation.gd` for persistence, fragment identity, Chapter Bloom, Iris visual projection, constellation metadata, and WM-002–WM-012 compatibility.
+
+### Limitations
+
+- This is a first persistent visual language, not the final constellation/archive UI.
+- Only Chapter 01 membership is defined; future chapters can add data without changing persistence or Iris projection.
+- The internal Iris detail and bloom are procedural prototype effects; final art direction and richer archive interactions remain later work.
+
+Run when Godot is available:
+
+```bash
+cd the_iris
+godot --headless -s tests/living_archive_validation.gd
+```

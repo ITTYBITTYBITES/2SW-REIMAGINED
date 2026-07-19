@@ -115,34 +115,45 @@ func _rebuild_shards() -> void:
 	# Midground: the presently actionable thread. It retains the existing
 	# Continue Witness behavior, rather than introducing a new story route.
 	_add_shard("FM_001", "CURRENT MEMORY", "Follow the living thread", "active", 0.18)
-	# Background: profile-derived placeholders for completed and future archive space.
-	var completed: Array[String] = []
-	if profile != null:
-		completed = profile.completed_moment_ids
+	# Background constellation derives from the one persisted Archive authority.
+	var fragments := WitnessArchive.recovered_truth_fragments(profile)
+	var by_moment := {}
+	for fragment in fragments:
+		by_moment[str(fragment.get("moment_id", ""))] = fragment
 	var archive_ids := ["WM_001", "WM_002", "WM_003", "WM_004", "WM_005"]
 	for index in range(archive_ids.size()):
 		var moment_id: String = archive_ids[index]
-		var state := "restored" if completed.has(moment_id) else "dormant"
-		var title := "TRUTH FRAGMENT" if state == "restored" else "UNRESOLVED MEMORY"
-		_add_shard(moment_id, title, moment_id.replace("_", " "), state, 2.2 + float(index) * 0.91)
+		var fragment: Dictionary = by_moment.get(moment_id, {})
+		var state := "fragment" if not fragment.is_empty() else "dormant"
+		var title := str(fragment.get("display_name", "UNRESOLVED MEMORY"))
+		var subtitle := "CHAPTER 01 · RECOVERED" if state == "fragment" else moment_id.replace("_", " ")
+		_add_shard(moment_id, title, subtitle, state, 2.2 + float(index) * 0.91, fragment)
 	_update_labels()
 	queue_redraw()
 
-func _add_shard(id: String, title: String, subtitle: String, state: String, angle: float) -> void:
+func _add_shard(id: String, title: String, subtitle: String, state: String, angle: float, fragment: Dictionary = {}) -> void:
 	var anchor := Node3D.new()
-	anchor.name = "Shard_%s" % id
+	anchor.name = "Fragment_%s" % str(fragment.get("fragment_id", id)) if state == "fragment" else "Shard_%s" % id
+	anchor.set_meta("display_state", state)
+	anchor.set_meta("fragment_identity", str(fragment.get("fragment_id", "")))
+	anchor.set_meta("chapter_id", str(fragment.get("chapter_id", "chapter_01")))
 	if state == "active":
 		Midground_Active.add_child(anchor)
 	else:
 		Background_Constellation.add_child(anchor)
 	anchor.position = Vector3(cos(angle) * 2.8, sin(angle) * 1.25, -1.5 if state == "active" else -4.0)
-	shards.append({"id": id, "title": title, "subtitle": subtitle, "state": state, "angle": angle, "anchor": anchor})
+	shards.append({"id": id, "title": title, "subtitle": subtitle, "state": state, "angle": angle, "fragment": fragment.duplicate(true), "anchor": anchor})
 
 func _update_labels() -> void:
 	if profile == null:
 		profile_panel.text = "PROFILE  ·  The archive is waiting for its first restored pattern."
 	else:
-		profile_panel.text = "PROFILE  ·  Aperture %d · %s     %d Resonance     %d memories restored" % [profile.aperture_rank, profile.aperture_title, profile.resonance, profile.completed_moment_ids.size()]
+		var fragments := WitnessArchive.recovered_truth_fragments(profile)
+		var blooms := WitnessArchive.chapter_blooms(profile)
+		var chapter_one: Dictionary = blooms.get("chapter_01", {})
+		profile_panel.text = "PROFILE  ·  Aperture %d · %s     %d Resonance     %d Truth Fragment%s" % [profile.aperture_rank, profile.aperture_title, profile.resonance, fragments.size(), "s" if fragments.size() != 1 else ""]
+		if not fragments.is_empty():
+			hint_label.text = "%s is held in the Iris.  Chapter 01 bloom: %d / %d" % [str(fragments[0].get("display_name", "Recovered Truth")), int(chapter_one.get("recovered_count", 0)), int(chapter_one.get("total_count", 5))]
 
 func _process(delta: float) -> void:
 	if not is_visible_in_tree():
@@ -230,10 +241,10 @@ func _draw() -> void:
 		var state: String = shard.get("state", "")
 		var focused := str(shard.get("id", "")) == focused_shard_id
 		var selected := str(shard.get("id", "")) == selected_shard_id
-		var radius := 15.0 if state == "active" else 9.0
+		var radius := 15.0 if state == "active" else (12.0 if state == "fragment" else 9.0)
 		radius += 4.0 if focused else 0.0
-		var alpha := 0.82 if state == "active" else (0.66 if state == "restored" else 0.30)
-		var tint := Color("#6ce1be") if state == "active" else (Color("#9be8c8") if state == "restored" else Color("#477a73"))
+		var alpha := 0.82 if state == "active" else (0.88 if state == "fragment" else 0.30)
+		var tint := Color("#6ce1be") if state == "active" else (Color("#f2c86f") if state == "fragment" else Color("#477a73"))
 		if state != "active":
 			draw_line(center, position_value, Color(tint, alpha * 0.13), 0.8, true)
 		for ring in range(3, 0, -1):

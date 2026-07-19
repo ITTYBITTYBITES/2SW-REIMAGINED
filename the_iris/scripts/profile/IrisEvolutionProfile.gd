@@ -10,10 +10,17 @@ var evolution_stage := "OBSERVER"
 var visual_signature := "basic_glow"
 var personality_alignment := "observant"
 var unlocked_features: Array[String] = []
+## Recovered fragments are derived from the existing Archive authority.
+var recovered_fragments: Array[Dictionary] = []
+var chapter_blooms: Dictionary = {}
+var fragment_count := 0
 
-func _init(rank := 1, resonance := 0) -> void:
+func _init(rank := 1, resonance := 0, fragments: Array[Dictionary] = [], blooms: Dictionary = {}) -> void:
 	aperture_rank = rank
 	resonance_total = resonance
+	recovered_fragments = fragments.duplicate(true)
+	chapter_blooms = blooms.duplicate(true)
+	fragment_count = recovered_fragments.size()
 	_compute_profile()
 
 func _compute_profile() -> void:
@@ -59,9 +66,17 @@ func _compute_profile() -> void:
 		]
 
 static func from_dictionary(data: Dictionary) -> IrisEvolutionProfile:
+	var fragments: Array[Dictionary] = []
+	if data.get("recovered_fragments", []) is Array:
+		for fragment in data.get("recovered_fragments", []):
+			if fragment is Dictionary:
+				fragments.append((fragment as Dictionary).duplicate(true))
+	var blooms: Dictionary = data.get("chapter_blooms", {}).duplicate(true) if data.get("chapter_blooms", {}) is Dictionary else {}
 	var profile := IrisEvolutionProfile.new(
 		int(data.get("aperture_rank", 1)),
-		int(data.get("resonance_total", int(data.get("resonance", 0))))
+		int(data.get("resonance_total", int(data.get("resonance", 0)))),
+		fragments,
+		blooms
 	)
 	return profile
 
@@ -72,5 +87,8 @@ func to_dictionary() -> Dictionary:
 		"evolution_stage": evolution_stage,
 		"visual_signature": visual_signature,
 		"personality_alignment": personality_alignment,
-		"unlocked_features": unlocked_features
+		"unlocked_features": unlocked_features,
+		"recovered_fragments": recovered_fragments.duplicate(true),
+		"chapter_blooms": chapter_blooms.duplicate(true),
+		"fragment_count": fragment_count
 	}
