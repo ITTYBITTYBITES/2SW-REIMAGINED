@@ -149,11 +149,12 @@ func _test_consume_null() -> void:
 # ─── 8. Dead code removed ───
 func _test_dead_code_removed() -> void:
 	print("── 8. Dead code verification ──")
-	# AUDIO_ASSETS constant should not exist
-	_assert(not IrisAudioConsumer.has_method("AUDIO_ASSETS"), "AUDIO_ASSETS dead constant removed (not a method)")
-	# Verify the class still has the key working methods
-	_assert(IrisAudioConsumer.has_method("play_manifest_sound"), "play_manifest_sound exists")
-	_assert(IrisAudioConsumer.has_method("play_ambient_loop"), "play_ambient_loop exists")
-	_assert(IrisAudioConsumer.has_method("stop_ambient_loop"), "stop_ambient_loop exists")
-	_assert(IrisAudioConsumer.has_method("play_presence_sound"), "play_presence_sound exists")
-	_assert(IrisAudioConsumer.has_method("consume"), "consume exists")
+	# Inspect an instance; calling has_method on a script class is a Godot 4.6 parse error.
+	var consumer := IrisAudioConsumer.new()
+	_assert(not consumer.has_method("AUDIO_ASSETS"), "AUDIO_ASSETS dead constant removed (not a method)")
+	# Verify the class still has the key working methods.
+	_assert(consumer.has_method("play_manifest_sound"), "play_manifest_sound exists")
+	_assert(consumer.has_method("play_ambient_loop"), "play_ambient_loop exists")
+	_assert(consumer.has_method("stop_ambient_loop"), "stop_ambient_loop exists")
+	_assert(consumer.has_method("play_presence_sound"), "play_presence_sound exists")
+	_assert(consumer.has_method("consume"), "consume exists")

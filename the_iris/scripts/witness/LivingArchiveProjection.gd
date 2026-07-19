@@ -21,10 +21,13 @@ static func recovered_fragments(profile: WitnessProfile) -> Array[Dictionary]:
 		var fragment_id := str(record.get("truth_fragment_id", ""))
 		if fragment_id.is_empty():
 			continue
+		var display_name := str(record.get("truth_fragment_title", "")).strip_edges()
+		if display_name.is_empty():
+			display_name = _display_name(fragment_id)
 		fragments.append({
 			"fragment_id": fragment_id,
 			"moment_id": str(moment_id),
-			"display_name": str(record.get("truth_fragment_title", _display_name(fragment_id))),
+			"display_name": display_name,
 			"archive_entry": str(record.get("truth_fragment_archive_entry", "")),
 			"memory_summary": str(record.get("truth_fragment_memory_summary", "")),
 			"truth_statement": str(record.get("truth_fragment_truth_statement", "")),

@@ -701,3 +701,28 @@ Scope: Android build/test readiness audit and human playtest preparation. No gam
 The committed project/export configuration is statically ready for an Android Debug test build. APK generation is blocked in this workspace because Godot, Android export templates, Android SDK/platform-tools, adb, emulator/device access, and debug-signing confirmation are absent.
 
 Run the build and protocol on an external Godot/Android environment before authorizing additional content migration.
+
+---
+
+## Mission 066 — Godot Desktop Runtime Experience Validation
+
+Date: 2026-07-18
+Scope: matching Godot 4.6.3 desktop headless import/runtime validation. This does not claim graphical desktop, Android/device, or release validation.
+
+### Runtime results
+
+- Downloaded and used a temporary external `4.6.3.stable.official.7d41c59c4` Godot Linux runtime; no tool/runtime artifact was committed.
+- Project editor/import scan completed; global classes and authored Chapter 01 assets imported with no parser/script/resource-load errors after a critical fix.
+- Application main scene booted headlessly. Incident Registry loaded 15 definitions with zero missing/failed entries. Living Iris awakening sensory hooks executed.
+- A temporary uncommitted runtime smoke exercise loaded and progressed WM-001–WM-005 through Fracture discovery, Synchronization, and Truth Fragment result construction. All five expected fragment IDs were generated.
+- Chapter 01/runtime validation scripts passed, including production validation for WM-001–WM-005, Witness Engine, Living Archive, Chapter pipeline, and production audio.
+
+### Critical fix
+
+Godot import found `Application.gd` used `result_dict` outside the scope where it was declared. The completion payload is now created before optional profile persistence, preserving WitnessProfile as save authority while allowing existing Iris absorption feedback to use the result safely.
+
+### Remaining runtime limits
+
+- Headless runtime cannot visually inspect awakening, Hub, portal, touch targets, animation pacing, Archive/constellation visuals, text readability, or player input feel.
+- Android/device validation remains pending.
+- See `MISSION_066_GODOT_RUNTIME_VALIDATION_REPORT.md` for PASS/TUNE/BLOCKER/DISCOVERY classification and exact test evidence.

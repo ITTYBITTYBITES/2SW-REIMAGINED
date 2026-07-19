@@ -432,11 +432,13 @@ func _on_generic_iris_memory_response_requested(response: String) -> void:
 
 func _on_generic_completion_requested(result: WitnessMomentResult) -> void:
 	var award := {"total": 0, "components": {}}
+	# Keep the completion payload available for Iris absorption even if profile
+	# persistence is unavailable, while WitnessProfile remains the save authority.
+	var result_dict := result.to_dictionary()
+	result_dict["discovered_clues"] = generic_gameplay.evidence_found.keys()
 	if registry != null:
 		registry.mark_completed(result.moment_id)
 	if witness_profile != null:
-		var result_dict := result.to_dictionary()
-		result_dict["discovered_clues"] = generic_gameplay.evidence_found.keys()
 		award = witness_profile.record_completion(result.moment_id, result_dict)
 		profile_store.save_profile(witness_profile)
 	
