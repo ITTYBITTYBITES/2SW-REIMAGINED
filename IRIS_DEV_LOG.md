@@ -497,3 +497,42 @@ Run when Godot is available:
 cd the_iris
 godot --headless -s tests/wm002_production_validation.gd
 ```
+
+---
+
+## Mission 059 — Chapter 01 Production Pipeline Validation
+
+Date: 2026-07-18
+Scope: production-readiness validation only. No Witness Moment, gameplay runtime, persistence, Archive, progression, navigation, or chapter system was changed.
+
+### Production status
+
+Chapter 01 has two fully authored Living Iris 4.0 reference moments:
+
+- `WM_001` / *The Unfinished Canvas* → **Borrowed Light**
+- `WM_002` / *The Forgotten Museum* → **Inherited Warmth**
+
+Both use the same authority chain from JSON loader through Generic Witness gameplay, result/profile/Archive persistence, Archive projection, Iris evolution, and Spatial Hub constellation.
+
+### Deliverables
+
+- Added `WITNESS_MOMENT_PRODUCTION_GUIDE.md`, the required authoring standard for future moments.
+- Added `MISSION_059_CHAPTER_PIPELINE_VALIDATION.md`, recording readiness, stable systems, workflow, limitations, and next production sequence.
+- Added `tests/chapter_pipeline_validation.gd`, validating authored WM-001/WM-002 contracts, shared fragment projection, `LISTENING → REMEMBERING → ATTUNING`, Chapter 01 `2 / 5` bloom, Iris evolution derivation, serialization, constellation authority, and WM-003–WM-012 compatibility.
+
+### Recommended next phase
+
+Production migration, in order:
+
+1. WM-003 — *The Last Performance*
+2. WM-004 — *The Faulty Reactor*
+3. WM-005 — *The Witness*
+
+Do not begin WM-003 as part of this validation mission.
+
+Run when Godot is available:
+
+```bash
+cd the_iris
+godot --headless -s tests/chapter_pipeline_validation.gd
+```
