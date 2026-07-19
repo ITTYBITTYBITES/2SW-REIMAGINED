@@ -241,8 +241,9 @@ func _draw_fibers(center: Vector2, radius: float, pupil_ratio: float, motion: fl
 
 		var inner := inner_base * (0.91 + 0.16 * sin(fiber_seed * 1.63))
 		# Fiber length also modulated by noise — some fibers reach further than others.
-		var length_mod := 1.0 + n_length * 0.18 * motion
-		var outer := radius * (0.62 + 0.27 * (sin(fiber_seed * 0.79 + drift) * 0.5 + 0.5)) * length_mod
+		var length_mod := 1.0 + n_length * 0.10 * motion  # reduced — was escaping the iris
+		var outer := radius * minf(0.62 + 0.25 * (sin(fiber_seed * 0.79 + drift) * 0.5 + 0.5), 0.90) * length_mod
+		outer = minf(outer, radius * 0.92)  # hard clamp — fibers never exceed iris boundary
 		var first_bend := radius * (0.012 + motion * 0.044) * organic
 		var second_bend := radius * (0.008 + motion * 0.030) * sin(fiber_seed * 3.73 - elapsed * 0.41)
 		var first := center + direction * inner
@@ -296,50 +297,56 @@ func _draw_pupil(center: Vector2, radius: float, pupil_ratio: float, presence: f
 		flare.a = presence * 0.5
 		draw_arc(center, radius * 0.42, 0.0, TAU, 60, flare, 1.2, true)
 
-## Procedural eyelid shutters — two arcs (upper + lower) that close over the
-## aperture driven by blink_amount. Semi-transparent teal-tinted, biologically
-## curved. openness = 0 -> fully closed; 1 -> fully open (arcs parked at edges).
+## Procedural eyelid frame — ALWAYS drawn. Gives the iris its eye shape (the
+## almond palpebral fissure). Upper lid covers more than lower (biology). During
+## a blink, both lids expand to close the aperture. The lid margins (lash lines)
+## are crisp teal-tinted arcs; the lid bodies are dark void color.
 func _draw_eyelids(center: Vector2, radius: float, presence: float, blink: float, focus: float) -> void:
-	if blink <= 0.01:
-		return  # eyes open — no shutter drawn (saves fill rate)
-	# blink 0..1 -> lid coverage 0..~0.6 of the radius past the centerline.
-	var coverage := clampf(blink, 0.0, 1.0) * 0.62
-	# Lid color: a muted teal-tinted membrane, brighter at the leading edge.
-	var lid_base := _mood_tint(0.12)
-	var lid_edge := _mood_tint(0.45 + focus * 0.1)
-	# Upper lid: a filled chord sweeping down from the top.
-	_draw_lid_arc(center, radius, coverage, true, presence, lid_base, lid_edge)
-	# Lower lid: mirrors from the bottom.
-	_draw_lid_arc(center, radius, coverage, false, presence, lid_base, lid_edge)
+	# Resting lid coverage: upper lid always covers the top ~18%% of the iris,
+	# lower lid covers the bottom ~8%%. This creates the almond eye shape.
+	var upper_rest := 0.18
+	var lower_rest := 0.08
+	# During blink, coverage ramps toward 0.50 (full closure at blink=1.0).
+	var upper_cov := clampf(upper_rest + blink * 0.42, 0.0, 0.55)
+	var lower_cov := clampf(lower_rest + blink * 0.52, 0.0, 0.55)
+	_draw_lid(center, radius, upper_cov, true, presence, focus)
+	_draw_lid(center, radius, lower_cov, false, presence, focus)
 
-func _draw_lid_arc(center: Vector2, radius: float, coverage: float, upper: bool, presence: float, base_col: Color, edge_col: Color) -> void:
-	# Build a filled "lid" as a polygon: an arc along the outer rim plus a chord
-	# across at the coverage depth.
-	var r := radius * 1.12
-	var half_arc := coverage * PI  # how much of the upper/lower hemisphere is covered
-	var start_a := (-PI / 2.0) - half_arc if upper else (PI / 2.0) - half_arc
-	var end_a := (-PI / 2.0) + half_arc if upper else (PI / 2.0) + half_arc
+## Draw a single lid (upper or lower) as a filled crescent that occludes the
+## top or bottom of the iris circle. Uses a clean polygon: outer arc + inner
+## chord, no degenerate triangles.
+func _draw_lid(center: Vector2, radius: float, coverage: float, upper: bool, presence: float, focus: float) -> void:
+	if coverage <= 0.001:
+		return
+	var r_out := radius * 1.25
+	var r_in := radius * 1.02
+	# The lid covers from the pole (top/bottom) down to the coverage line.
+	# coverage=0.18 -> the lid's lower edge is at radius*(1-0.18)=0.82 from center
+	var edge_y := radius * (1.0 - coverage) if upper else -radius * (1.0 - coverage)
+	# Build the lid polygon: outer arc (wide) + inner chord (the lid margin)
 	var pts := PackedVector2Array()
-	var steps := 18
-	# Outer rim points
+	var half_width := sqrt(maxf(r_out * r_out - edge_y * edge_y, 0.01))
+	var steps := 20
+	# Outer arc from left to right over the pole
+	var pole := -PI / 2.0 if upper else PI / 2.0
+	var arc_half := acos(clampf(edge_y / r_out, -1.0, 1.0))
 	for i in range(steps + 1):
 		var t := float(i) / float(steps)
-		var a := lerpf(start_a, end_a, t)
-		pts.append(center + Vector2(cos(a), sin(a)) * r)
-	# Chord across (the lid's leading edge)
-	var chord_y := center.y + (radius * (0.06 - coverage * 1.1) * (1.0 if upper else -1.0))
-	# Close the polygon back along the chord
-	pts.append(center + Vector2(cos(end_a), sin(end_a)) * r * 0.2)
-	pts.append(center + Vector2(cos(start_a), sin(start_a)) * r * 0.2)
-	var lid_color := base_col.lerp(edge_col, 0.3)
-	lid_color.a = presence * 0.92
-	draw_colored_polygon(pts, lid_color)
-	# Leading edge highlight — a crisp arc along the chord for definition.
-	var edge_a := presence * 0.55
-	edge_col.a = edge_a
-	var edge_start := center + Vector2(cos(start_a), sin(start_a)) * r
-	var edge_end := center + Vector2(cos(end_a), sin(end_a)) * r
-	draw_line(edge_start, edge_end, edge_col, 1.6, true)
+		var a := pole - arc_half + t * (arc_half * 2.0)
+		pts.append(center + Vector2(cos(a), sin(a)) * r_out)
+	# Back along the inner edge (the lid margin / lash line) right to left
+	for i in range(steps + 1):
+		var t := float(i) / float(steps)
+		pts.append(center + Vector2(half_width - t * half_width * 2.0, edge_y))
+	# Lid body color — very dark void with slight mood tint
+	var lid_body := _mood_base.darkened(0.4)
+	lid_body.a = presence * 0.98
+	if pts.size() >= 3:
+		draw_colored_polygon(pts, lid_body)
+	# Crisp lid margin (lash line) — a bright teal-tinted arc along the edge
+	var margin_color := _mood_tint(0.55 + focus * 0.15)
+	margin_color.a = presence * (0.5 + focus * 0.2)
+	draw_line(center + Vector2(-half_width, edge_y), center + Vector2(half_width, edge_y), margin_color, 2.0, true)
 
 func _draw_reflections(center: Vector2, radius: float, amount: float, drift: float) -> void:
 	for index in range(3):
