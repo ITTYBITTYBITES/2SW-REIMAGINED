@@ -48,7 +48,9 @@ var _noise: FastNoiseLite
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	_attach_atmosphere_shader()
+	# Atmosphere shader intentionally NOT attached — it samples TEXTURE on a
+	# _draw()-based Control which returns solid white on real GPUs (white-circle bug).
+	# All visuals are handled directly in _draw() with mood-driven colors.
 	_init_noise()
 
 func _init_noise() -> void:
@@ -60,11 +62,7 @@ func _init_noise() -> void:
 	_noise.fractal_gain = 0.5
 
 func _attach_atmosphere_shader() -> void:
-	var shader := load("res://shaders/iris_atmosphere.gdshader")
-	if shader is Shader:
-		_atmosphere_shader = ShaderMaterial.new()
-		_atmosphere_shader.shader = shader
-		material = _atmosphere_shader
+	pass  # Deprecated — white-circle bug on real GPUs.
 
 func set_core(value: IrisCore) -> void:
 	core = value
@@ -83,12 +81,7 @@ func _process(delta: float) -> void:
 	queue_redraw()
 
 func _push_atmosphere_uniforms() -> void:
-	if _atmosphere_shader == null:
-		return
-	_atmosphere_shader.set_shader_parameter("base_color", behavior.get("mood_base_color", Color.BLACK))
-	_atmosphere_shader.set_shader_parameter("glow_color", behavior.get("mood_glow_color", Color.BLACK))
-	_atmosphere_shader.set_shader_parameter("energy_intensity", float(behavior.get("mood_energy", 0.0)))
-	_atmosphere_shader.set_shader_parameter("time", elapsed)
+	pass  # Deprecated — no shader. All visuals in _draw().
 
 # Per-frame mood color cache (set in _process, read by the draw helpers).
 var _mood_base := Color(0.02, 0.03, 0.055)
