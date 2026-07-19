@@ -726,3 +726,51 @@ Godot import found `Application.gd` used `result_dict` outside the scope where i
 - Headless runtime cannot visually inspect awakening, Hub, portal, touch targets, animation pacing, Archive/constellation visuals, text readability, or player input feel.
 - Android/device validation remains pending.
 - See `MISSION_066_GODOT_RUNTIME_VALIDATION_REPORT.md` for PASS/TUNE/BLOCKER/DISCOVERY classification and exact test evidence.
+
+---
+
+## Mission 067 — Restore Playable WM_001 (Human Runtime Investigation)
+
+Date: 2026-07-19
+Scope: investigate and repair the human-blocking WM-001 runtime flow. No new gameplay, persistence, Archive, navigation, progression, or runtime authority was added.
+
+### Root cause
+
+`GenericWitnessGameplay.start()` made **BEGIN OBSERVATION** interactive while `in_intro_cinematic` was still active. If a player pressed it immediately, the game entered OBSERVATION and started its timer, but intro completion later reset the phase back to BRIEFING. This made the Observe/countdown/objective flow appear unstable or absent.
+
+### Repair
+
+The briefing action is now hidden while the memory-forming intro runs. When the intro completes, the existing briefing phase makes **BEGIN OBSERVATION** visible. The observation timer can no longer be reset by a premature player action.
+
+### Runtime evidence
+
+A real Godot 4.6.3 runtime trace verified the normal production route:
+
+```text
+portal → visible briefing → observation timer (2.0s) → Fracture target
+→ Synchronization hold → evidence selection → Revelation → Truth Fragment
+→ profile completion / Borrowed Light → pupil return → Iris Home
+```
+
+The trace confirmed active scene tree/controller, signal-connected gameplay controls, timer execution, all state transitions, result persistence, and return route.
+
+### Canonical path
+
+Production WM-001 does not use the historical `WitnessExperienceDirector → WitnessMomentOrchestrator → WM001GameplayLoop` path. It uses:
+
+```text
+WitnessChapters.generic_moment_requested
+→ Application.request_memory_portal
+→ IrisPortalTransition
+→ Application.start_generic_gameplay
+→ WitnessContentLoader
+→ GenericWitnessGameplay
+```
+
+Legacy `WM001GameplayLoop`, `FlagshipWitnessMoment`, and orchestrator routes remain present but are not the normal production player path.
+
+### Remaining verification
+
+A graphical human test remains needed to confirm the repaired controls are visually clear. The supplied human log’s repeated Memory Collapse events indicate the player reached Synchronization but did not sustain HOLD FOCUS; verify visible instruction/button clarity in the desktop/device UI.
+
+Detailed report: `MISSION_067_RUNTIME_ROOT_CAUSE.md`.

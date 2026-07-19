@@ -123,6 +123,10 @@ func start(value_definition: WitnessMomentDefinition) -> bool:
 	in_intro_cinematic = true
 	intro_timer = float(definition.showcase.get("intro_seconds", 1.35))
 	_set_phase(Phase.BRIEFING)
+	# Briefing copy can be visible while the memory forms, but the action must
+	# not be available until the intro is complete or its phase will be reset.
+	action_button.visible = false
+	guidance_label.text = "THE MEMORY IS FORMING."
 	return true
 
 func present_reward(award: Dictionary, profile: WitnessProfile) -> void:
