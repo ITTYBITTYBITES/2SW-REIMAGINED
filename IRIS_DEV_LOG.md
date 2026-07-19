@@ -640,3 +640,27 @@ Run when Godot is available:
 cd the_iris
 godot --headless -s tests/wm005_production_validation.gd
 ```
+
+---
+
+## Mission 063 — Chapter 01 Experience Audit
+
+Date: 2026-07-18
+Scope: read-only architecture, content, authority, and player-flow audit of the completed Chapter 01 Living Iris 4.0 experience. No runtime, persistence, navigation, Archive, progression, or content behavior was changed.
+
+### Audit outcome
+
+Chapter 01 is architecturally complete as a Living Iris 4.0 experience:
+
+- WM-001 through WM-005 use one authored production contract and one authority chain.
+- Each moment completes the repair loop: portal → observe → Fracture → synchronize → revelation → Truth Fragment → Iris absorption → Archive/Hub return.
+- All five fragments persist through `WitnessProfile.moment_records`, project through `WitnessArchive` / `LivingArchiveProjection`, and derive Iris/constellation relationship state without duplicate storage.
+- Shared Aperture provides a coherent Chapter 01 conclusion: the player and Iris preserve memories together through shared attention.
+
+### Recommendation
+
+**Mission 064: Device Runtime Validation.**
+
+The highest remaining uncertainty is now actual player feel: portal timing, touch ergonomics, synchronization pacing, audio/haptic mix, Archive clarity, five-fragment bloom, accessibility, restart persistence, and interruption behavior. Do not begin WM-006–WM-012 migration before this validation.
+
+Detailed audit: `MISSION_063_CHAPTER_01_EXPERIENCE_AUDIT.md`.
