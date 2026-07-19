@@ -20,7 +20,7 @@ func _ready() -> void:
 	profile_button.pressed.connect(profile_requested.emit)
 	_label("THE IRIS", 11, Color("#8ac8b9"), Vector2(28, 92), Vector2(220, 20))
 	_label("A quiet field between remembered things.", 24, Color("#effff8"), Vector2(28, 116), Vector2(470, 45))
-	hint_label = _label("The next Witness experience is being prepared.", 14, Color("#cce8df"), Vector2(28, 624), Vector2(484, 28))
+	hint_label = _label("A memory has lost one second.", 14, Color("#cce8df"), Vector2(28, 624), Vector2(484, 28))
 	status_label = _label("THE IRIS IS LISTENING", 11, Color("#86b9ad"), Vector2(28, 738), Vector2(484, 24), HORIZONTAL_ALIGNMENT_CENTER)
 	_label("The Iris remains open.", 11, Color("#668e85"), Vector2(24, 889), Vector2(492, 22), HORIZONTAL_ALIGNMENT_CENTER)
 

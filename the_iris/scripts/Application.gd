@@ -1,14 +1,15 @@
 extends Control
 class_name PrototypeApplication
 
-## Platform shell retained after the Witness gameplay reset.
+## Platform shell plus one bespoke Missing Second experience.
 var profile_store: WitnessProfileStore
 var witness_profile: WitnessProfile
 var iris: IrisController
 var iris_personality: IrisPersonalityResolver
 var home: IrisHome
 var startup: StartupFlow
-var reset_view: Control
+var iris_portal: IrisPortalTransition
+var missing_second: MissingSecondExperience
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -28,14 +29,25 @@ func _ready() -> void:
 
 	home = IrisHome.new()
 	home.name = "IrisHome"
-	home.witness_requested.connect(show_witness_reset)
+	home.witness_requested.connect(start_missing_second)
 	home.iris_requested.connect(show_iris)
 	add_child(home)
 	home.configure(witness_profile)
 
-	reset_view = _create_reset_view()
-	reset_view.name = "WitnessResetView"
-	add_child(reset_view)
+	iris_portal = IrisPortalTransition.new()
+	iris_portal.name = "IrisPortalTransition"
+	iris_portal.configure(iris.living_iris)
+	iris_portal.entry_arrived.connect(_on_portal_entry_arrived)
+	iris_portal.return_arrived.connect(show_home)
+	add_child(iris_portal)
+
+	var missing_scene: PackedScene = load("res://scenes/MissingSecondExperience.tscn")
+	if missing_scene != null:
+		missing_second = missing_scene.instantiate() as MissingSecondExperience
+		missing_second.name = "MissingSecondExperience"
+		missing_second.completion_requested.connect(_on_missing_second_complete)
+		missing_second.return_requested.connect(return_from_missing_second)
+		add_child(missing_second)
 
 	startup = StartupFlow.new()
 	startup.name = "StartupFlow"
@@ -49,7 +61,8 @@ func _on_startup_finished() -> void:
 func prepare_iris() -> void:
 	iris.visible = false
 	home.visible = false
-	reset_view.visible = false
+	if missing_second != null:
+		missing_second.visible = false
 	iris.dormant()
 
 func show_iris(from_boot := false) -> void:
@@ -57,7 +70,8 @@ func show_iris(from_boot := false) -> void:
 	iris.set_gameplay_environment(false)
 	iris.visible = true
 	home.visible = false
-	reset_view.visible = false
+	if missing_second != null:
+		missing_second.visible = false
 	if from_boot:
 		iris.begin_awakening_ritual()
 	else:
@@ -72,59 +86,55 @@ func show_home() -> void:
 	iris.settle()
 	IrisAudioConsumer.play_ambient_loop("res://assets/audio/iris/iris_breath_loop.ogg")
 	home.visible = true
-	reset_view.visible = false
+	if missing_second != null:
+		missing_second.visible = false
 	_emit_iris_event("iris_return")
 
-func show_witness_reset() -> void:
-	# Intentional empty entry state. The first bespoke experience is not yet wired.
+func start_missing_second() -> void:
+	if missing_second == null or iris_portal.state != IrisPortalTransition.PortalState.READY:
+		return
 	iris.visible = true
 	iris.set_home_environment(false)
-	iris.set_gameplay_environment(true)
-	iris.observe()
+	iris.set_gameplay_environment(false)
+	iris.iris_core.acquire_attention(Vector2.ZERO)
 	home.visible = false
-	reset_view.visible = true
+	missing_second.visible = false
+	iris_portal.begin_entry("missing_second", {
+		"title": "The Missing Second",
+		"subtitle": "A waiting room holds one missing second."
+	})
+
+func _on_portal_entry_arrived(entry_id: String) -> void:
+	if entry_id != "missing_second" or missing_second == null:
+		show_home()
+		return
+	iris.visible = false
+	missing_second.begin()
+
+func _on_missing_second_complete() -> void:
+	# The Iris receives the experience only at the threshold, never as in-memory guidance.
+	iris.visible = true
+	iris.set_gameplay_environment(true)
+	iris.reflect()
+	_emit_iris_event("iris_return")
+
+func return_from_missing_second() -> void:
+	if missing_second == null:
+		show_home()
+		return
+	missing_second.close()
+	iris.visible = true
+	iris.set_gameplay_environment(false)
+	iris.set_home_environment(false)
+	iris_portal.begin_return()
 
 func _emit_iris_event(event_name: String) -> void:
 	if iris_personality != null:
 		iris_personality.resolve(int(iris.iris_core.state), event_name)
 
-func _create_reset_view() -> Control:
-	var view := Control.new()
-	view.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	view.visible = false
-	var veil := ColorRect.new()
-	veil.color = Color(0.002, 0.012, 0.016, 0.68)
-	veil.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	veil.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	view.add_child(veil)
-	var title := _label("WITNESS", 27, Color("#effff8"), Vector2(32, 150), Vector2(476, 46))
-	view.add_child(title)
-	var body := _label("A new Witness experience is being built from one complete moment outward. The Iris remains open.", 16, Color("#cde7de"), Vector2(32, 214), Vector2(476, 90))
-	body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	view.add_child(body)
-	var return_button := Button.new()
-	return_button.text = "RETURN TO IRIS"
-	return_button.position = Vector2(42, 790)
-	return_button.size = Vector2(456, 48)
-	return_button.add_theme_font_size_override("font_size", 13)
-	return_button.pressed.connect(show_home)
-	view.add_child(return_button)
-	return view
-
-func _label(text_value: String, font_size: int, color: Color, position_value: Vector2, size_value: Vector2) -> Label:
-	var label := Label.new()
-	label.text = text_value
-	label.position = position_value
-	label.size = size_value
-	label.add_theme_font_size_override("font_size", font_size)
-	label.add_theme_color_override("font_color", color)
-	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	return label
-
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		if reset_view.visible:
-			show_home()
+		if missing_second != null and missing_second.visible:
+			return_from_missing_second()
 		elif home.visible:
 			show_iris()
