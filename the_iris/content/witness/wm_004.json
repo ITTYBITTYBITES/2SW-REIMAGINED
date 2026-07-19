@@ -3,7 +3,7 @@
   "moment_id": "WM_004",
   "incident_id": "INC_FAULTY_REACTOR",
   "title": "The Faulty Reactor",
-  "subtitle": "Chapter 01 · The First Fractures",
+  "subtitle": "Chapter 01 \u00b7 The First Fractures",
   "introduction": "A cleanroom console waits under diagnostic light. Witness the fraction of a millimeter that must not be missed.",
   "description": "The diagnostic console is at the central power grid. A sub-millimeter offset in the grid alignment represents a massive core failure that would blackout the entire city.",
   "observation": "A physicist steadies the console, follows the quartz grid, and pauses before a thin laser line.",
@@ -19,13 +19,19 @@
   "reveal": "res://assets/witness/wm_004_laser_reveal.png",
   "observation_duration": 2.0,
   "anomaly_definition": {
-    "location": {"x": 190.0, "y": 320.0},
-    "size": {"x": 120.0, "y": 120.0},
+    "location": {
+      "x": 190.0,
+      "y": 320.0
+    },
+    "size": {
+      "x": 120.0,
+      "y": 120.0
+    },
     "misstep_text": "Not there. Focus on the central quartz grid display.",
     "success_text": "Grid offset found. The diagnostic line bends before key rotation."
   },
   "capture_window": {
-    "start_time": 0.60,
+    "start_time": 0.6,
     "end_time": 1.05,
     "hold_duration": 0.28,
     "guidance_text": "HOLD WHEN THE LASER GRID IS DISTORTED.",
@@ -34,7 +40,10 @@
   "evidence_nodes": [
     {
       "identifier": "calibration_key",
-      "location": {"x": 150.0, "y": 200.0},
+      "location": {
+        "x": 150.0,
+        "y": 200.0
+      },
       "description": "The Reactor Key",
       "relevance": "THE REACTOR KEY SHOWS MICROSCOPIC INDENTATIONS. It is used to align core pressure levels, but the stress has already curved the diagnostic screen.",
       "truth_connection": "Structural stress matches anomalous curve.",
@@ -44,7 +53,10 @@
     },
     {
       "identifier": "quartz_grid",
-      "location": {"x": 150.0, "y": 250.0},
+      "location": {
+        "x": 150.0,
+        "y": 250.0
+      },
       "description": "The Quartz Grid Screen",
       "relevance": "THE CENTRAL GRID DISPLAY SHOWING SHIFTING VECTORS. It curves and shifts early, registering a future pressure spike.",
       "truth_connection": "Causal breakdown on console.",
@@ -54,7 +66,10 @@
     },
     {
       "identifier": "laser_sensor",
-      "location": {"x": 150.0, "y": 300.0},
+      "location": {
+        "x": 150.0,
+        "y": 300.0
+      },
       "description": "The Diagnostic Laser",
       "relevance": "THE LASER WAVELENGTH IS BLUESHIFTED. A diagnostic laser line that bends under spatial pressure, registering a temporal distortion index of 1.15.",
       "truth_connection": "Temporal blueshift detected.",
@@ -93,14 +108,87 @@
     "audio_assets": {
       "ambient": "res://assets/audio/environments/reactor_ambient.ogg",
       "anomaly": "res://assets/audio/witness/correct_detection.ogg",
-      "resolution": "res://assets/audio/witness/resolution.ogg"
+      "resolution": "res://assets/audio/witness/resolution.ogg",
+      "fracture_discovery": "res://assets/audio/iris/iris_attention.ogg",
+      "synchronization_complete": "res://assets/audio/iris/iris_confirm.ogg",
+      "reconstruction": "res://assets/audio/iris/iris_transition.ogg"
     },
     "visual_effects": {
-      "pulse_speed": 1.4
+      "pulse_speed": 1.4,
+      "cleanroom_stillness": 0.86,
+      "pressure_wave": 1.0,
+      "dust_motes": 10
     },
     "lighting_profile": {
       "modulate_color": "#a2ebd6",
       "vignette_intensity": 0.45
     }
+  },
+  "fractures": [
+    {
+      "fracture_id": "future_pressure",
+      "location": {
+        "x": 190.0,
+        "y": 320.0
+      },
+      "size": {
+        "x": 120.0,
+        "y": 120.0
+      },
+      "discovery_text": "The laser bends around pressure that the key has not had time to release.",
+      "misstep_text": "The key bears a mark, but it did not cause the fault. Follow the grid that is carrying tomorrow\u2019s pressure.",
+      "truth_fragment_reward": "fragment_early_warning",
+      "synchronization": {
+        "hold_duration": 1.3,
+        "stability_recovery": 1.0,
+        "audio": "res://assets/audio/iris/iris_focus.ogg",
+        "haptic": "light"
+      }
+    }
+  ],
+  "memory_stability": {
+    "initial": 0.71,
+    "collapse_at": 0.0,
+    "idle_drain_per_second": 0.12,
+    "misstep_cost": 0.18,
+    "recovery_on_synchronization": 1.0
+  },
+  "truth_fragment": {
+    "truth_fragment_id": "fragment_early_warning",
+    "title": "Early Warning",
+    "summary": "The console was not failing. It was giving a physicist the fraction of a second she needed to keep a city lit.",
+    "revelation_text": "The bent diagnostic line was not evidence that the physicist had misaligned the reactor. It was the future pressure of a failure already visible to the console, arriving early enough for her to turn the key and prevent it.",
+    "revelation_audio_hook": "res://assets/audio/witness/resolution.ogg",
+    "archive_entry": "Early Warning \u2014 a recovered intervention at the reactor console.",
+    "recovered_memory_summary": "A physicist reads an impossible pressure shift before a reactor catastrophe can begin.",
+    "truth_statement": "The grid was not predicting failure. It was giving her time to prevent it.",
+    "iris_reflection": "Sometimes the future speaks softly enough for someone to answer.",
+    "iris_reflection_event": "early_warning_reflection"
+  },
+  "iris_guidance": {
+    "observation_event": "wm004_observe",
+    "fracture_prompt_event": "wm004_fracture_prompt",
+    "fracture_discovered_event": "wm004_fracture_found",
+    "synchronization_event": "wm004_synchronize",
+    "synchronization_complete_event": "wm004_revelation",
+    "revelation_event": "wm004_revelation",
+    "fracture_resolved_event": "truth_fragment_absorbed"
+  },
+  "showcase": {
+    "enabled": true,
+    "intro_seconds": 1.75,
+    "reconstruction_seconds": 1.7,
+    "iris_presence_alpha": 0.57,
+    "observation_prompt": "Watch the key, then the quartz grid. The line bends before the hand can make a mistake.",
+    "fracture_prompt": "The key is not to blame. Find the pressure that reached the console before the reactor could create it.",
+    "synchronization_prompt": "Hold the warning with the Iris. Give the future enough time to become preventable.",
+    "false_leads": [
+      "The calibration key is marked, but it is a response to the warning, not the cause of it.",
+      "The console looks faulty, yet the bend begins inside pressure that has not arrived.",
+      "The laser is only the messenger. Follow the grid that knows about the failure too soon."
+    ],
+    "atmosphere_light_color": "#9be6d4",
+    "atmosphere_mote_color": "#c7f2e5",
+    "atmosphere_light_origin_x": 0.5
   }
 }

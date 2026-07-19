@@ -191,6 +191,54 @@
       "audio": "res://assets/audio/iris/iris_presence.ogg",
       "haptic": "safe_harbor_reflection_pulse",
       "voice": "voice_placeholder_safe_harbor_reflection"
+    },
+    "wm004_observe": {
+      "text": "The room is quiet. Watch for the line that knows too much.",
+      "accessibility_text": "The Iris guides you to observe the key, quartz grid, and diagnostic laser.",
+      "expression_mode": "GUIDING",
+      "audio": "res://assets/audio/iris/iris_presence.ogg",
+      "haptic": "wm004_observe_pulse",
+      "voice": "voice_placeholder_wm004_observe"
+    },
+    "wm004_fracture_prompt": {
+      "text": "Do not blame the hand. Find the pressure that arrived before its cause.",
+      "accessibility_text": "The Iris directs attention to future pressure visible in the diagnostic grid.",
+      "expression_mode": "CURIOUS",
+      "audio": "res://assets/audio/iris/iris_attention.ogg",
+      "haptic": "wm004_fracture_prompt_pulse",
+      "voice": "voice_placeholder_wm004_fracture_prompt"
+    },
+    "wm004_fracture_found": {
+      "text": "Yes. The warning reached the grid before the failure could.",
+      "accessibility_text": "The Iris confirms the future pressure fracture.",
+      "expression_mode": "ATTENTIVE",
+      "audio": "res://assets/audio/iris/iris_focus.ogg",
+      "haptic": "wm004_fracture_found_pulse",
+      "voice": "voice_placeholder_wm004_fracture_found"
+    },
+    "wm004_synchronize": {
+      "text": "Hold the warning with me. Give her the time to answer it.",
+      "accessibility_text": "The Iris asks you to stabilize the early warning at the reactor.",
+      "expression_mode": "GUIDING",
+      "audio": "res://assets/audio/iris/iris_focus.ogg",
+      "haptic": "wm004_synchronize_pulse",
+      "voice": "voice_placeholder_wm004_synchronize"
+    },
+    "wm004_revelation": {
+      "text": "The line did not condemn her. It gave her time.",
+      "accessibility_text": "The Iris recognizes the warning as an opportunity to prevent the reactor failure.",
+      "expression_mode": "REFLECTIVE",
+      "audio": "res://assets/audio/iris/iris_transition.ogg",
+      "haptic": "wm004_revelation_pulse",
+      "voice": "voice_placeholder_wm004_revelation"
+    },
+    "early_warning_reflection": {
+      "text": "Sometimes the future speaks softly enough for someone to answer.",
+      "accessibility_text": "The Iris reflects on the recovered truth called Early Warning.",
+      "expression_mode": "REFLECTIVE",
+      "audio": "res://assets/audio/iris/iris_presence.ogg",
+      "haptic": "early_warning_reflection_pulse",
+      "voice": "voice_placeholder_early_warning_reflection"
     }
   }
 }

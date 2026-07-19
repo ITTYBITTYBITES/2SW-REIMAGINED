@@ -570,3 +570,38 @@ Run when Godot is available:
 cd the_iris
 godot --headless -s tests/wm003_production_validation.gd
 ```
+
+---
+
+## Mission 061 — WM-004 Production Migration Pass
+
+Date: 2026-07-18
+Scope: author `WM_004` / *The Faulty Reactor* through the existing Living Iris 4.0 production contract. No gameplay, persistence, Archive, navigation, progression, chapter, or runtime authority was changed.
+
+### Production audit
+
+WM-004 already contained distinct cleanroom/action/laser assets, reactor ambience, legacy anomaly/capture data, evidence nodes, revelation seed, and reward definition. It lacked authored Fracture, stability, showcase, Truth Fragment, Iris guidance/reflection, and existing Iris cue manifest data.
+
+Detailed audit: `MISSION_061_WM004_PRODUCTION_AUDIT.md`.
+
+### Implemented
+
+- Authored WM-004 Fracture `future_pressure`: a diagnostic grid receives future reactor pressure before the physicist can turn the key.
+- Authored the false-history correction: the physicist is not responsible for a fault; the console’s impossible reading gives her time to prevent it.
+- Authored WM-004 stability pressure, 1.30-second synchronization, meaningful false leads, and existing Iris audio/haptic guidance hooks.
+- Authored cleanroom atmosphere/pacing data through existing optional showcase fields.
+- Authored Truth Fragment **Early Warning** (`fragment_early_warning`) with recovered-memory summary, truth statement, revelation, Archive entry, Iris reflection, and reflection event.
+- Added WM-004 observation, fracture, synchronization, revelation, and Archive reflection dialogue events through the existing Iris event architecture.
+- Added `tests/wm004_production_validation.gd` covering loader/runtime contract, audio/events, Archive persistence/projection, Chapter 01 membership, serialization, and WM-001–WM-003/WM-005–WM-012 compatibility.
+
+### Limitations
+
+- WM-004 uses existing cleanroom assets and procedural showcase presentation; final reactor animation, bespoke visual effects, and device-tuned audio/pacing remain later production polish.
+- The runtime remains intentionally one active Fracture per moment.
+
+Run when Godot is available:
+
+```bash
+cd the_iris
+godot --headless -s tests/wm004_production_validation.gd
+```
