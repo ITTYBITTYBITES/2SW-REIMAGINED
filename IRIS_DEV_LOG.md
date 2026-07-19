@@ -536,3 +536,37 @@ Run when Godot is available:
 cd the_iris
 godot --headless -s tests/chapter_pipeline_validation.gd
 ```
+
+---
+
+## Mission 060 — WM-003 Production Migration Pass
+
+Date: 2026-07-18
+Scope: author `WM_003` / *The Last Performance* through the stable Living Iris 4.0 production contract. No gameplay, persistence, Archive, navigation, progression, chapter, or runtime authority was changed.
+
+### Production audit
+
+WM-003 already contained distinct dressing-room/action/telegram assets, performance ambience, a valid legacy anomaly/capture definition, evidence nodes, revelation seed, and reward definition. It lacked authored Fracture, stability, showcase, Truth Fragment, Iris guidance/reflection, and existing Iris cue manifest data.
+
+Detailed audit: `MISSION_060_WM003_PRODUCTION_AUDIT.md`.
+
+### Implemented
+
+- Authored WM-003 Fracture `departing_echo`: Elena’s travel case and telegram answer the voyage before her final farewell can conclude.
+- Authored WM-003 stability pressure, 1.24-second synchronization, meaningful false leads, and existing Iris audio/haptic guidance hooks.
+- Authored backstage performance showcase pacing and violet dressing-room atmosphere data through existing optional showcase fields.
+- Authored Truth Fragment **Safe Harbor** (`fragment_safe_harbor`) with recovered-memory summary, truth statement, revelation, Archive entry, Iris reflection, and reflection event.
+- Added WM-003 observation, fracture, synchronization, revelation, and Archive reflection dialogue events through the existing Iris event architecture.
+- Added `tests/wm003_production_validation.gd` covering loader/runtime contract, audio/events, Archive persistence/projection, Chapter 01 membership, serialization, and WM-001/WM-002/WM-004–WM-012 compatibility.
+
+### Limitations
+
+- WM-003 uses existing dressing-room assets and procedural showcase presentation; final performance animation, bespoke visual effects, and device-tuned audio/pacing remain later production polish.
+- The runtime remains intentionally one active Fracture per moment.
+
+Run when Godot is available:
+
+```bash
+cd the_iris
+godot --headless -s tests/wm003_production_validation.gd
+```

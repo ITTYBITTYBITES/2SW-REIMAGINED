@@ -143,6 +143,54 @@
       "audio": "res://assets/audio/iris/iris_presence.ogg",
       "haptic": "inherited_warmth_reflection_pulse",
       "voice": "voice_placeholder_inherited_warmth_reflection"
+    },
+    "wm003_observe": {
+      "text": "The last note is still here. Listen for where it has already gone.",
+      "accessibility_text": "The Iris guides you to observe Elena, the bow, telegram, and travel case.",
+      "expression_mode": "GUIDING",
+      "audio": "res://assets/audio/iris/iris_presence.ogg",
+      "haptic": "wm003_observe_pulse",
+      "voice": "voice_placeholder_wm003_observe"
+    },
+    "wm003_fracture_prompt": {
+      "text": "Do not mistake leaving for loss. Find the journey that began too soon.",
+      "accessibility_text": "The Iris directs attention to Elena\u2019s case opening before her farewell is complete.",
+      "expression_mode": "CURIOUS",
+      "audio": "res://assets/audio/iris/iris_attention.ogg",
+      "haptic": "wm003_fracture_prompt_pulse",
+      "voice": "voice_placeholder_wm003_fracture_prompt"
+    },
+    "wm003_fracture_found": {
+      "text": "Yes. The voyage answered before the farewell could end.",
+      "accessibility_text": "The Iris confirms the departing echo fracture.",
+      "expression_mode": "ATTENTIVE",
+      "audio": "res://assets/audio/iris/iris_focus.ogg",
+      "haptic": "wm003_fracture_found_pulse",
+      "voice": "voice_placeholder_wm003_fracture_found"
+    },
+    "wm003_synchronize": {
+      "text": "Hold the note with me. Let its promise return to the right moment.",
+      "accessibility_text": "The Iris asks you to stabilize Elena\u2019s final note and journey.",
+      "expression_mode": "GUIDING",
+      "audio": "res://assets/audio/iris/iris_focus.ogg",
+      "haptic": "wm003_synchronize_pulse",
+      "voice": "voice_placeholder_wm003_synchronize"
+    },
+    "wm003_revelation": {
+      "text": "Her music arrived before fear could decide the ending.",
+      "accessibility_text": "The Iris recognizes that Elena\u2019s journey was a reunion, not an escape.",
+      "expression_mode": "REFLECTIVE",
+      "audio": "res://assets/audio/iris/iris_transition.ogg",
+      "haptic": "wm003_revelation_pulse",
+      "voice": "voice_placeholder_wm003_revelation"
+    },
+    "safe_harbor_reflection": {
+      "text": "Some goodbyes carry us forward before we know we can leave.",
+      "accessibility_text": "The Iris reflects on the recovered truth called Safe Harbor.",
+      "expression_mode": "REFLECTIVE",
+      "audio": "res://assets/audio/iris/iris_presence.ogg",
+      "haptic": "safe_harbor_reflection_pulse",
+      "voice": "voice_placeholder_safe_harbor_reflection"
     }
   }
 }

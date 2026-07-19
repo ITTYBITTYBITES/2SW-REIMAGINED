@@ -3,7 +3,7 @@
   "moment_id": "WM_003",
   "incident_id": "INC_LAST_PERFORMANCE",
   "title": "The Last Performance",
-  "subtitle": "Chapter 01 · The First Fractures",
+  "subtitle": "Chapter 01 \u00b7 The First Fractures",
   "introduction": "Backstage after the final applause, a violinist rests a bow in velvet and notices a telegram on the dressing table.",
   "description": "The violinist Elena is preparing to emigrate to escape a war. The telegram waiting on her table is from her brother, confirming his safe arrival across the ocean.",
   "observation": "The bow settles. The telegram waits. Elena's attention moves from the stage door to a message already opened.",
@@ -19,22 +19,31 @@
   "reveal": "res://assets/witness/wm_003_telegram_reveal.png",
   "observation_duration": 2.0,
   "anomaly_definition": {
-    "location": {"x": 280.0, "y": 390.0},
-    "size": {"x": 110.0, "y": 110.0},
+    "location": {
+      "x": 280.0,
+      "y": 390.0
+    },
+    "size": {
+      "x": 110.0,
+      "y": 110.0
+    },
     "misstep_text": "Not there. Watch the velvet case on the dressing table.",
     "success_text": "You found the break. Elena's travel case latch is unclicked before she can reach it."
   },
   "capture_window": {
     "start_time": 0.85,
-    "end_time": 1.30,
-    "hold_duration": 0.30,
+    "end_time": 1.3,
+    "hold_duration": 0.3,
     "guidance_text": "HOLD WHEN THE CASE LATCH ENCOUNTERS PRESSURE.",
     "success_text": "Timeline isolated: case opened before performer arrives."
   },
   "evidence_nodes": [
     {
       "identifier": "violin_bow",
-      "location": {"x": 140.0, "y": 200.0},
+      "location": {
+        "x": 140.0,
+        "y": 200.0
+      },
       "description": "Elena's Horsehair Bow",
       "relevance": "THE BOW RETAINS THE FINAL NOTE'S VIBRATION. A silver-wound bow vibrating backstage with Elena's final musical performance notes.",
       "truth_connection": "Resonance matches transatlantic timeline.",
@@ -44,7 +53,10 @@
     },
     {
       "identifier": "telegram_desk",
-      "location": {"x": 140.0, "y": 250.0},
+      "location": {
+        "x": 140.0,
+        "y": 250.0
+      },
       "description": "The Transatlantic Telegram",
       "relevance": "Elena's brother's message: 'Safe arrival. The sea is calm.' Ink is dry, but timestamp precedes Elena's final chord.",
       "truth_connection": "Message is registered before final string release.",
@@ -54,7 +66,10 @@
     },
     {
       "identifier": "travel_case",
-      "location": {"x": 140.0, "y": 300.0},
+      "location": {
+        "x": 140.0,
+        "y": 300.0
+      },
       "description": "Elena's Travel Case",
       "relevance": " Elena's tickets and passport are held inside. The latch carrying safe postmarks pops open early.",
       "truth_connection": "Transatlantic sequence verified.",
@@ -93,14 +108,87 @@
     "audio_assets": {
       "ambient": "res://assets/audio/environments/performance_ambient.ogg",
       "anomaly": "res://assets/audio/witness/correct_detection.ogg",
-      "resolution": "res://assets/audio/witness/resolution.ogg"
+      "resolution": "res://assets/audio/witness/resolution.ogg",
+      "fracture_discovery": "res://assets/audio/iris/iris_attention.ogg",
+      "synchronization_complete": "res://assets/audio/iris/iris_confirm.ogg",
+      "reconstruction": "res://assets/audio/iris/iris_transition.ogg"
     },
     "visual_effects": {
-      "pulse_speed": 0.85
+      "pulse_speed": 0.85,
+      "backstage_hush": 0.82,
+      "bow_resonance": 1.0,
+      "dust_motes": 16
     },
     "lighting_profile": {
       "modulate_color": "#c3b1e3",
       "vignette_intensity": 0.55
     }
+  },
+  "fractures": [
+    {
+      "fracture_id": "departing_echo",
+      "location": {
+        "x": 280.0,
+        "y": 390.0
+      },
+      "size": {
+        "x": 110.0,
+        "y": 110.0
+      },
+      "discovery_text": "The case has opened for a journey Elena has not yet chosen to begin.",
+      "misstep_text": "The bow still carries the final note, but the break is where departure arrives before farewell.",
+      "truth_fragment_reward": "fragment_safe_harbor",
+      "synchronization": {
+        "hold_duration": 1.24,
+        "stability_recovery": 1.0,
+        "audio": "res://assets/audio/iris/iris_focus.ogg",
+        "haptic": "light"
+      }
+    }
+  ],
+  "memory_stability": {
+    "initial": 0.73,
+    "collapse_at": 0.0,
+    "idle_drain_per_second": 0.11,
+    "misstep_cost": 0.18,
+    "recovery_on_synchronization": 1.0
+  },
+  "truth_fragment": {
+    "truth_fragment_id": "fragment_safe_harbor",
+    "title": "Safe Harbor",
+    "summary": "Elena\u2019s farewell was not an ending. Her final note had already made a path to the brother waiting across the sea.",
+    "revelation_text": "The telegram and opened case were not pulling Elena away before her applause. They were evidence that her music and her brother\u2019s safety had already crossed the distance, making the journey a reunion rather than an escape.",
+    "revelation_audio_hook": "res://assets/audio/witness/resolution.ogg",
+    "archive_entry": "Safe Harbor \u2014 a recovered passage from Elena\u2019s final performance.",
+    "recovered_memory_summary": "A violinist\u2019s last performance before crossing the ocean to join her brother.",
+    "truth_statement": "The journey was not a flight from home. It was a path opened by a note already received.",
+    "iris_reflection": "Some goodbyes carry us forward before we know we can leave.",
+    "iris_reflection_event": "safe_harbor_reflection"
+  },
+  "iris_guidance": {
+    "observation_event": "wm003_observe",
+    "fracture_prompt_event": "wm003_fracture_prompt",
+    "fracture_discovered_event": "wm003_fracture_found",
+    "synchronization_event": "wm003_synchronize",
+    "synchronization_complete_event": "wm003_revelation",
+    "revelation_event": "wm003_revelation",
+    "fracture_resolved_event": "truth_fragment_absorbed"
+  },
+  "showcase": {
+    "enabled": true,
+    "intro_seconds": 2.0,
+    "reconstruction_seconds": 1.8,
+    "iris_presence_alpha": 0.58,
+    "observation_prompt": "Watch the bow settle, then the case and telegram. One farewell has already become an arrival.",
+    "fracture_prompt": "The telegram is meaningful, but find the departure that occurs before Elena can choose it.",
+    "synchronization_prompt": "Hold the final note with the Iris. Let the room return the journey to its proper time.",
+    "false_leads": [
+      "The stage door invites escape, but the fracture is waiting in the case before Elena reaches it.",
+      "The telegram names safety, yet the impossible detail is that its answer has already opened her departure.",
+      "The bow remembers the applause. Follow the latch that remembers the voyage too soon."
+    ],
+    "atmosphere_light_color": "#c3b1e3",
+    "atmosphere_mote_color": "#e1d8f0",
+    "atmosphere_light_origin_x": 0.74
   }
 }
