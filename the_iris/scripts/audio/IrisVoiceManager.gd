@@ -23,6 +23,7 @@ const WHISPER_BUS := "IrisWhisper"
 const BARKS := {
 	"greeting": "res://assets/audio/iris/voice/voice_greeting.ogg",
 	"touch_light": "res://assets/audio/iris/voice/voice_touch_light.ogg",
+	"look_through": "res://assets/audio/iris/voice/voice_look_through.ogg",
 	"step_through": "res://assets/audio/iris/voice/voice_step_through.ogg",
 	"start_here": "res://assets/audio/iris/voice/voice_start_here.ogg",
 }

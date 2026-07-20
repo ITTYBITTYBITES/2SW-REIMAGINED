@@ -47,7 +47,7 @@ func _process(delta: float) -> void:
 		0:  # DARKNESS — hum building
 			if _elapsed >= 2.0:
 				_phase = 1
-				_voice.play_bark("greeting")
+				_voice.play_bark("greeting")  # "Witness... I am awake."
 				if _iris_core:
 					_iris_core.transition_to(IrisCore.State.CALIBRATING)
 		1:  # GREETING — whisper playing, iris begins to stir
@@ -58,7 +58,7 @@ func _process(delta: float) -> void:
 		2:  # WAKING — eyelids peeling open, saccadic flick
 			if _elapsed >= 6.5:
 				_phase = 3
-				_voice.play_bark("touch_light")
+				_voice.play_bark("look_through")
 				if _iris_core:
 					_iris_core.transition_to(IrisCore.State.WELCOMING)
 				transition_ready.emit()

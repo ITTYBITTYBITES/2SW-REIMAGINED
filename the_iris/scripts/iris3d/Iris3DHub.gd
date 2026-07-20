@@ -83,6 +83,15 @@ var _gaze_target: Vector2 = Vector2.ZERO
 var _current_gaze: Vector2 = Vector2.ZERO
 var _hippus_rng := RandomNumberGenerator.new()
 
+# --- Portal zoom state (the threshold transition) ---
+signal portal_zoom_requested
+signal portal_zoom_complete
+var _portal_zooming: bool = false
+var _portal_zoom_t: float = 0.0
+const PORTAL_ZOOM_DURATION := 1.2
+var _portal_zoom_from: float = 7.0
+var _portal_zoom_to: float = -0.5  # past the pupil mesh
+
 # --- Mood colors (driven by IrisCore mood system) ---
 var _mood_base := Color(0.020, 0.045, 0.075)
 var _mood_glow := Color(0.20, 0.62, 0.78)
@@ -174,7 +183,7 @@ func _build_3d_scene() -> void:
 	if cornea_shader is Shader:
 		_cornea_mat = ShaderMaterial.new()
 		_cornea_mat.shader = cornea_shader
-		_cornea_mat.render_priority = 1  # draw after stroma
+		_cornea_mat.render_priority = 2
 	_cornea_mesh.material_override = _cornea_mat
 	_eye_root.add_child(_cornea_mesh)
 
@@ -347,6 +356,7 @@ func _process(delta: float) -> void:
 		if evolution_profile != null:
 			base_behavior = IrisEvolutionVisualConsumer.apply_evolution(evolution_profile, base_behavior)
 		_drive_from_behavior(base_behavior, delta)
+	_update_portal_zoom(delta)
 	_push_shader_params()
 
 func _drive_from_behavior(b: Dictionary, delta: float) -> void:
@@ -422,6 +432,34 @@ func _drive_eyelids(blink_amount: float, focus: float) -> void:
 	var margin := lid_margin_color.lerp(glow_color, focus * 0.3)
 	_upper_lid_mat.albedo_color = lid_color.lerp(margin, 0.15)
 	_lower_lid_mat.albedo_color = lid_color.lerp(margin, 0.15)
+
+## Begin the portal zoom: camera flies from distance 7.0 through the pupil.
+## Fires portal_zoom_requested when the camera crosses the pupil threshold,
+## then portal_zoom_complete when the zoom finishes.
+func begin_portal_zoom() -> void:
+	if _portal_zooming:
+		return
+	_portal_zooming = true
+	_portal_zoom_t = 0.0
+	_portal_zoom_from = camera_distance
+
+func _update_portal_zoom(delta: float) -> void:
+	if not _portal_zooming:
+		return
+	_portal_zoom_t += delta / PORTAL_ZOOM_DURATION
+	var t := clampf(_portal_zoom_t, 0.0, 1.0)
+	# Ease in — accelerate into the pupil
+	var eased := t * t
+	_camera.position.z = lerpf(_portal_zoom_from, _portal_zoom_to, eased)
+	# Trigger the experience load at the threshold (camera passes the pupil)
+	if t >= 0.65 and not _portal_threshold_fired:
+		_portal_threshold_fired = true
+		portal_zoom_requested.emit()
+	if t >= 1.0:
+		_portal_zooming = false
+		portal_zoom_complete.emit()
+
+var _portal_threshold_fired := false
 
 func _push_shader_params() -> void:
 	if _stroma_mat:

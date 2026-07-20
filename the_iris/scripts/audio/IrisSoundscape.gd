@@ -16,8 +16,6 @@ class_name IrisSoundscape
 const AMBIENT_BUS := "IrisAmbient"
 const SFX_BUS := "IrisSFX"
 
-var _ambient_player: AudioStreamPlayer
-var _sub_bass: AudioStreamPlayer
 
 var _prev_gaze: Vector2 = Vector2.ZERO
 var _prev_blink: float = 0.0
@@ -52,25 +50,7 @@ func _setup_buses() -> void:
 		AudioServer.set_bus_send(idx2, "Master")
 
 func _load_drone() -> void:
-	# Neural Hum: the existing breath loop, pitched down for a sub-bass drone
-	var drone_path := "res://assets/audio/iris/iris_breath_loop.ogg"
-	if FileAccess.file_exists(drone_path):
-		var stream := load(drone_path)
-		if stream is AudioStreamOggVorbis:
-			stream.loop = true
-		_ambient_player = AudioStreamPlayer.new()
-		_ambient_player.stream = stream
-		_ambient_player.bus = AMBIENT_BUS
-		_ambient_player.pitch_scale = 0.5  # drop an octave for the drone
-		_ambient_player.volume_db = -8.0   # subtle bed
-		add_child(_ambient_player)
-		_ambient_player.play()
-
-	# Sub-bass oscillator for the "heartbeat" hum
-	_sub_bass = AudioStreamPlayer.new()
-	_sub_bass.bus = AMBIENT_BUS
-	_sub_bass.volume_db = -18.0
-	add_child(_sub_bass)
+	pass  # V4.0: no persistent hum. The Iris is silent until it speaks.
 
 ## Called every frame from IrisController with the IrisCore's live state.
 func update_from_core(core: IrisCore, delta: float) -> void:
@@ -81,12 +61,6 @@ func update_from_core(core: IrisCore, delta: float) -> void:
 	var blink := core.blink_amount
 	var focus := core.focus_amount
 	var presence := core.presence
-
-	# --- Stem A: pitch-shift the drone based on focus ---
-	if _ambient_player:
-		var target_pitch := 0.5 + focus * 0.15  # subtle rise with focus
-		_ambient_player.pitch_scale = lerpf(_ambient_player.pitch_scale, target_pitch, delta * 2.0)
-		_ambient_player.volume_db = lerpf(_ambient_player.volume_db, -12.0 + presence * 6.0, delta * 2.0)
 
 	# --- Stem B: Saccadic Tinks ---
 	var gaze_delta := (gaze - _prev_gaze).length()
@@ -100,6 +74,23 @@ func update_from_core(core: IrisCore, delta: float) -> void:
 		_play_blink_sound()
 		_blink_sound_cooldown = 0.5
 	_prev_blink = blink
+
+## Play the "glass chime" — a soft crystalline sound when the eye is touched.
+func play_glass_chime() -> void:
+	var chime_path := "res://assets/audio/iris/iris_focus.ogg"
+	if not FileAccess.file_exists(chime_path):
+		return
+	var stream := load(chime_path)
+	if not stream is AudioStream:
+		return
+	var player := AudioStreamPlayer.new()
+	player.stream = stream
+	player.bus = SFX_BUS
+	player.pitch_scale = 1.2
+	player.volume_db = -6.0
+	add_child(player)
+	player.play()
+	player.finished.connect(func(): player.queue_free())
 
 ## Play a crystalline tink (saccadic click).
 ## Uses the iris_attention.ogg cue pitched up + through the SFX bus.
@@ -138,5 +129,4 @@ func _play_blink_sound() -> void:
 	player.finished.connect(func(): player.queue_free())
 
 func stop_all() -> void:
-	if _ambient_player:
-		_ambient_player.stop()
+	pass  # V4.0: no persistent drone to stop.

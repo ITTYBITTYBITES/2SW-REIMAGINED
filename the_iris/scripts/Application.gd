@@ -72,6 +72,10 @@ func _ready() -> void:
 	diorama_player.experience_return_requested.connect(return_from_experience)
 	add_child(diorama_player)
 
+	# V4.0: Wire the 3D portal zoom from Iris3DHub
+	iris.living_iris.portal_zoom_requested.connect(_on_portal_zoom_threshold)
+	iris.living_iris.portal_zoom_complete.connect(_on_portal_zoom_done)
+
 	startup = StartupFlow.new()
 	startup.name = "StartupFlow"
 	startup.finished.connect(_on_startup_finished)
@@ -110,10 +114,12 @@ func show_home() -> void:
 	_hide_diorama()
 	_emit_iris_event("iris_return")
 
-## Experience launch: the Iris pupil opens onto the Diorama Player, which
-## reads the JSON definition and assembles the cinematic 3D scene.
+## Experience launch: the 3D camera zooms THROUGH the Iris pupil into the
+## Missing Second experience. A cinematic ritual, not a menu transition.
 func start_experience_one() -> void:
-	if not FileAccess.file_exists(EXPERIENCE_ONE_DEFINITION_PATH) or iris_portal.state != IrisPortalTransition.PortalState.READY:
+	if not FileAccess.file_exists(EXPERIENCE_ONE_DEFINITION_PATH):
+		return
+	if iris.living_iris == null:
 		return
 	iris.visible = true
 	iris.set_home_environment(false)
@@ -121,11 +127,22 @@ func start_experience_one() -> void:
 	iris.iris_core.acquire_attention(Vector2.ZERO)
 	home.visible = false
 	_hide_diorama()
-	iris_portal.begin_entry(EXPERIENCE_ONE_ID, {
-		"title": "The Missing Second",
-		"subtitle": "A waiting room holds one missing second."
-	})
+	# V4.0: Glass chime on touch
+	if iris.soundscape:
+		iris.soundscape.play_glass_chime()
+	# V4.0: Camera zoom through the pupil (replaces the old 2D portal overlay)
+	iris.living_iris.begin_portal_zoom()
 
+## Called when the 3D camera crosses the pupil threshold during the zoom.
+## This is where we actually load the Missing Second experience.
+func _on_portal_zoom_threshold() -> void:
+	diorama_player.load_and_play(EXPERIENCE_ONE_DEFINITION_PATH)
+
+## Called when the camera zoom animation finishes. The experience is now visible.
+func _on_portal_zoom_done() -> void:
+	iris.visible = false  # hide the Iris; the experience takes over
+
+## Legacy portal handler (kept for the old IrisPortalTransition if ever used).
 func _on_portal_entry_arrived(entry_id: String) -> void:
 	if entry_id != EXPERIENCE_ONE_ID or not FileAccess.file_exists(EXPERIENCE_ONE_DEFINITION_PATH):
 		_return_to_iris_presence()
@@ -149,7 +166,10 @@ func return_from_experience() -> void:
 	iris.visible = true
 	iris.set_gameplay_environment(false)
 	iris.set_home_environment(false)
-	iris_portal.begin_return()
+	# Reset the 3D camera back to its resting distance
+	if iris.living_iris and iris.living_iris._camera:
+		iris.living_iris._camera.position.z = iris.living_iris.camera_distance
+		iris.living_iris._portal_threshold_fired = false
 
 func _return_to_iris_presence() -> void:
 	iris.visible = true
