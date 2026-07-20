@@ -193,7 +193,7 @@ func set_home_environment(active: bool) -> void:
 	navigation_label.visible = not active
 	if active:
 		background.color = Color(0.002, 0.015, 0.021, 0.32)
-		living_iris.modulate = Color.WHITE
+		# (modulate is 2D-only; Iris3DHub is 3D)
 	else:
 		background.color = Color("#030a0d")
 
@@ -210,10 +210,10 @@ func set_gameplay_environment(active: bool) -> void:
 		# Make background fully transparent so gameplay is visible beneath
 		background.color = Color(0.0, 0.0, 0.0, 0.0)
 		# Semi-transparent watermark background effect for the Living Iris
-		living_iris.modulate = Color(1.0, 1.0, 1.0, 0.15)
+		# (modulate is 2D-only; Iris3DHub is 3D)
 	else:
 		background.color = Color("#030a0d")
-		living_iris.modulate = Color.WHITE
+		# (modulate is 2D-only; Iris3DHub is 3D)
 
 func present_response_intent(intent: IrisResponseIntent) -> void:
 	expression_overlay.present(intent)

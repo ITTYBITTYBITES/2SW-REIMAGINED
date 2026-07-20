@@ -46,6 +46,7 @@ var loader: DioramaLoader = null
 var bundle: DioramaLoader.DioramaBundle = null
 var objects: Dictionary = {}
 var interaction_nodes: Dictionary = {}
+var _actor_defs_cache: Array = []
 
 # --- Timeline / state machine ---
 var phases: Array = []
@@ -133,6 +134,7 @@ func _assemble_from_def(def: Dictionary) -> void:
 
 	# Spawn actors/objects
 	var actor_defs: Array = def.get("actors", def.get("objects", []))
+	_actor_defs_cache = actor_defs
 	for actor_def in actor_defs:
 		var node := _build_actor(actor_def, content_root)
 		if node != null and (actor_def as Dictionary).has("id"):
@@ -559,10 +561,11 @@ func _reveal_object(target: Node3D) -> void:
 				mat.emission_energy_multiplier = 1.0
 
 func _find_def_by_id(oid: String) -> Variant:
-	if bundle == null:
+	if _actor_defs_cache.is_empty():
 		return null
-	var actor_defs: Array = []
-	# Try to find from the original definition — not stored, so scan objects
+	for def in _actor_defs_cache:
+		if def is Dictionary and String(def.get("id", "")) == oid:
+			return def
 	return null
 
 func _set_property(target: Node3D, prop: String, value: float) -> void:

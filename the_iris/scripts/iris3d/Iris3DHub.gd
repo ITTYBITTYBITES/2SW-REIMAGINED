@@ -44,8 +44,8 @@ class_name Iris3DHub
 @export var glint_intensity: float = 1.8
 
 @export_group("Camera")
-@export var camera_fov: float = 28.0
-@export var camera_distance: float = 2.6
+@export var camera_fov: float = 32.0
+@export var camera_distance: float = 3.2
 @export var parallax_strength: float = 0.08
 
 @export_group("Lighting")
@@ -372,7 +372,8 @@ func _drive_from_behavior(b: Dictionary, delta: float) -> void:
 	_current_gaze = _current_gaze.lerp(_gaze_target, delta * 5.0)
 	var gaze_offset := _current_gaze * parallax_strength
 	_eye_root.position = Vector3(gaze_offset.x, -gaze_offset.y, 0.0)
-	_eye_root.look_at(Vector3(gaze_offset.x * 3.0, -gaze_offset.y * 3.0, camera_distance))
+	# Translate only — NEVER look_at (flips bowl away from camera = 1000% mag)
+	_eye_root.rotation = Vector3.ZERO
 
 	# Blink — drive eyelid coverage from IrisCore blink + autonomous blink timer
 	var core_blink := float(b.get("blink", 0.0))
