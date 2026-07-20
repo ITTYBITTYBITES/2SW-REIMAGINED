@@ -22,6 +22,7 @@ var home: IrisHome
 var startup: StartupFlow
 var iris_portal: IrisPortalTransition
 var diorama_player: DioramaPlayer
+var _preloaded_experience_def: Dictionary = {}
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -130,13 +131,26 @@ func start_experience_one() -> void:
 	# V4.0: Glass chime on touch
 	if iris.soundscape:
 		iris.soundscape.play_glass_chime()
+	# V4.0: Preload the experience definition NOW (before the zoom) so the
+	# threshold callback doesn't do synchronous file I/O mid-animation.
+	if _preloaded_experience_def.is_empty():
+		var raw := FileAccess.get_file_as_string(EXPERIENCE_ONE_DEFINITION_PATH)
+		var parsed = JSON.parse_string(raw)
+		if parsed is Dictionary:
+			_preloaded_experience_def = parsed
 	# V4.0: Camera zoom through the pupil (replaces the old 2D portal overlay)
 	iris.living_iris.begin_portal_zoom()
 
 ## Called when the 3D camera crosses the pupil threshold during the zoom.
 ## This is where we actually load the Missing Second experience.
 func _on_portal_zoom_threshold() -> void:
-	diorama_player.load_and_play(EXPERIENCE_ONE_DEFINITION_PATH)
+	# Use the preloaded definition if available (avoids synchronous file I/O
+	# during the camera move). Falls back to load_and_play if not preloaded.
+	if not _preloaded_experience_def.is_empty():
+		diorama_player.load_and_play_from_dict(_preloaded_experience_def)
+		_preloaded_experience_def = {}
+	else:
+		diorama_player.load_and_play(EXPERIENCE_ONE_DEFINITION_PATH)
 
 ## Called when the camera zoom animation finishes. The experience is now visible.
 func _on_portal_zoom_done() -> void:

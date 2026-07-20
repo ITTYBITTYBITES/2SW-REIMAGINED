@@ -417,17 +417,21 @@ func _blink_phase_to_coverage() -> float:
 	return smoothstep(1.0, 0.5, _blink_phase)
 
 func _drive_eyelids(blink_amount: float, focus: float) -> void:
-	# blink_amount 0..1. Upper lid covers more than lower.
-	var upper_cov := resting_upper_coverage + blink_amount * (0.55 - resting_upper_coverage)
-	var lower_cov := resting_lower_coverage + blink_amount * (0.55 - resting_lower_coverage)
-	# Position eyelids: slide them inward to occlude the iris.
-	_upper_lid.position.y = lerpf(-0.3, 1.0, upper_cov)
-	_lower_lid.position.y = lerpf(0.3, -1.0, lower_cov)
-	# Squint: focus narrows the aperture
-	var squint := 1.0 - focus * 0.15
+	# ALMOND APERTURE: the lids permanently frame the circular iris into a
+	# wider-than-tall almond shape. At rest (blink=0), the upper lid covers the
+	# top ~30% and the lower lid covers the bottom ~12% of the iris.
+	var upper_rest_cov := 0.28 + resting_upper_coverage  # ~0.43 total
+	var lower_rest_cov := 0.06 + resting_lower_coverage  # ~0.12 total
+	var upper_cov := clampf(upper_rest_cov + blink_amount * 0.50, 0.0, 0.95)
+	var lower_cov := clampf(lower_rest_cov + blink_amount * 0.55, 0.0, 0.95)
+	# Slide lids to occlude the iris top/bottom. The lid mesh arcs over the
+	# iris; positioning it higher (upper) or lower (lower) increases coverage.
+	_upper_lid.position.y = lerpf(0.15, 1.15, upper_cov)
+	_lower_lid.position.y = lerpf(-0.05, -1.15, lower_cov)
+	# Squint on focus — narrows the almond vertically
+	var squint := 1.0 - focus * 0.10
 	_upper_lid.position.y *= squint
 	_lower_lid.position.y *= squint
-
 	# Lid margin color brightens with focus
 	var margin := lid_margin_color.lerp(glow_color, focus * 0.3)
 	_upper_lid_mat.albedo_color = lid_color.lerp(margin, 0.15)
