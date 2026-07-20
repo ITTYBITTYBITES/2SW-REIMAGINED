@@ -45,11 +45,11 @@ class_name Iris3DHub
 
 @export_group("Camera")
 @export var camera_fov: float = 32.0
-@export var camera_distance: float = 3.2
+@export var camera_distance: float = 7.0
 @export var parallax_strength: float = 0.08
 
 @export_group("Lighting")
-@export var key_light_energy: float = 0.8
+@export var key_light_energy: float = 1.2
 @export var key_light_color: Color = Color(0.9, 0.95, 1.0)
 @export var ambient_energy: float = 0.4
 
